@@ -16,3 +16,7 @@ defaults:
       path: "technologies"
     values:
       sitemap: false
+  - scope:
+      path: "googlea55071e38e388e37.html"
+    values:
+      sitemap: false

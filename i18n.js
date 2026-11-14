@@ -536,10 +536,17 @@
     }
   }
 
+  var titleOrig = null;
   function applyTitle() {
-    if (titleSrc === null) titleSrc = keyFor(document.title);
+    // The English <title> is written for search engines; other languages translate the short key in <meta name="i18n-title">
+    if (titleSrc === null) {
+      titleOrig = document.title;
+      var tm = document.querySelector('meta[name="i18n-title"]');
+      titleSrc = keyFor(tm ? tm.getAttribute('content') : document.title);
+    }
+    if (current === 'en') { document.title = titleOrig; return; }
     var out = translate(titleSrc, current);
-    if (out) document.title = out;
+    document.title = out || titleOrig;
   }
 
   function labelFor(lang) {
