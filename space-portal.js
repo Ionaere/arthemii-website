@@ -35,7 +35,7 @@
     'background:radial-gradient(1.5px 1.5px at 72% 62%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 86% 34%,#fff 50%,transparent 51%),' +
     'radial-gradient(1px 1px at 58% 88%,#cfe3ff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 90% 80%,#ffe6c7 50%,transparent 51%),' +
     'radial-gradient(1px 1px at 78% 92%,#fff 50%,transparent 51%),' +
-    'radial-gradient(circle at 100% 100%,#ff6a3d 0,#c2337a 18%,#4b2a9b 42%,#121230 72%,#07070f 100%)}' +
+    'radial-gradient(circle at 100% 100%,#3346c9 0,#1f2370 24%,#121233 52%,#08081a 78%,#040409 100%)}' +
     '.sp-curl__flap{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,0 100%);' +
     'background:linear-gradient(135deg,#ffffff 0%,#f4f3f1 38%,#dedcd8 62%,#b9b6b0 100%)}' +
     '.sp-curl__flap::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 46%,rgba(255,255,255,.9) 50%,transparent 54%);opacity:.6}' +
@@ -48,9 +48,9 @@
     '.sp-curl:hover,.sp-curl:focus-visible,.sp-curl.is-drag{animation:none}' +
     '@keyframes sp-breathe{0%,55%,100%{transform:scale(1)}20%{transform:scale(1.32)}32%{transform:scale(1.18)}}' +
     '.sp-curl__under{animation:sp-shimmer 6s linear infinite}' +
-    '@keyframes sp-shimmer{0%,100%{filter:hue-rotate(0deg) brightness(1)}50%{filter:hue-rotate(35deg) brightness(1.3)}}' +
+    '@keyframes sp-shimmer{0%,100%{filter:brightness(1)}50%{filter:brightness(1.4)}}' +
     '.sp-curl__glow{position:absolute;right:-35%;bottom:-35%;width:140%;height:140%;border-radius:50%;pointer-events:none;' +
-    'background:radial-gradient(circle at 100% 100%,rgba(255,106,61,.6),rgba(194,51,122,.38) 35%,rgba(75,42,155,0) 70%);animation:sp-glow 3.2s ease-in-out infinite}' +
+    'background:radial-gradient(circle at 100% 100%,rgba(70,100,255,.5),rgba(35,40,140,.35) 35%,rgba(20,20,60,0) 70%);animation:sp-glow 3.2s ease-in-out infinite}' +
     '@keyframes sp-glow{0%,55%,100%{opacity:.4}20%{opacity:1}}' +
     '.sp-curl__flap::after{animation:sp-shine 3.2s ease-in-out infinite}' +
     '@keyframes sp-shine{0%,12%{opacity:0}24%{opacity:.95}45%,100%{opacity:0}}' +
@@ -60,7 +60,7 @@
     'background:radial-gradient(2px 2px at 20% 30%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 70% 20%,#fff 50%,transparent 51%),' +
     'radial-gradient(1.5px 1.5px at 40% 75%,#cfe3ff 50%,transparent 51%),radial-gradient(2px 2px at 85% 60%,#ffe6c7 50%,transparent 51%),' +
     'radial-gradient(1px 1px at 55% 45%,#fff 50%,transparent 51%),' +
-    'radial-gradient(ellipse at 100% 100%,#ff6a3d 0,#c2337a 16%,#4b2a9b 38%,#121230 66%,#07070f 100%);' +
+    'radial-gradient(ellipse at 100% 100%,#3346c9 0,#1f2370 20%,#121233 46%,#08081a 72%,#040409 100%);' +
     'clip-path:polygon(100% calc(100% - var(--p,0px)),100% 100%,calc(100% - var(--p,0px)) 100%);transition:clip-path .75s cubic-bezier(.65,0,.35,1)}' +
     '.sp-peel.is-go{--p:300vmax}' +
     '@media (max-width:640px){.sp-curl{--sp-s:52px}.sp-curl:hover{--sp-s:52px}}' +
