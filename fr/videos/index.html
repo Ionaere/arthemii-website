@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vidéos de sculptures en verre, prismes cinétiques et installations lumineuses de l'artiste berlinois Arthemii Ionaere — le verre, la couleur et la lumière en mouvement.">
+    <meta name="theme-color" content="#fafafa">
+    <title>Vidéos — Sculptures en verre cinétiques et installations lumineuses | Arthemii Ionaere</title>
+    <link rel="canonical" href="https://arthemii.com/fr/videos/">
+    <link rel="alternate" hreflang="en" href="https://arthemii.com/videos/">
+    <link rel="alternate" hreflang="de" href="https://arthemii.com/de/videos/">
+    <link rel="alternate" hreflang="es" href="https://arthemii.com/es/videos/">
+    <link rel="alternate" hreflang="fr" href="https://arthemii.com/fr/videos/">
+    <link rel="alternate" hreflang="it" href="https://arthemii.com/it/videos/">
+    <link rel="alternate" hreflang="x-default" href="https://arthemii.com/videos/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Arthemii Ionaere">
+    <meta property="og:title" content="Vidéos — Sculptures en verre cinétiques et installations lumineuses | Arthemii Ionaere">
+    <meta property="og:description" content="Vidéos de sculptures en verre, prismes cinétiques et installations lumineuses de l'artiste berlinois Arthemii Ionaere — le verre, la couleur et la lumière en mouvement.">
+    <meta property="og:url" content="https://arthemii.com/fr/videos/">
+    <meta property="og:image" content="https://arthemii.com/img/og-default.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .header { transform: none !important; animation: none !important; }
+        .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+            opacity: 1 !important; transform: none !important; transition: none !important;
+        }
+        .hero__eyebrow, .hero__title, .hero__subtitle, .hero__desc, .hero__actions, .hero__image {
+            opacity: 1 !important; transform: none !important; animation: none !important;
+        }
+    
+        /* ===== YouTube channel link (Video section) ===== */
+        .yt-channel {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.625rem;
+            margin-top: var(--spacing-md);
+            padding: 0.5rem 1.125rem 0.5rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--bg-elevated, #fff);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            color: var(--text);
+            text-decoration: none;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .yt-channel svg { width: 28px; height: 28px; flex-shrink: 0; display: block; }
+        .yt-channel:hover {
+            border-color: #ff0000;
+            box-shadow: 0 6px 18px rgba(255,0,0,0.16);
+            transform: translateY(-1px);
+        }
+        .section__toggle > .yt-channel { max-width: none; }
+        /* ===== AI Content Video subsection ===== */
+        .ai-arch { margin-top: var(--spacing-2xl); }
+        .ai-arch__header { margin-bottom: var(--spacing-md); max-width: 640px; }
+        .ai-arch__title { font-family: var(--font-serif); font-size: clamp(1.375rem, 2.6vw, 1.75rem); font-weight: 400; margin-bottom: var(--spacing-xs); }
+        .ai-arch__desc { color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; }
+        .ai-arch__videos video { width: 100%; height: 100%; object-fit: cover; display: block; background: #111; }
+        /* 13 videos in 3 columns: the first and the last span two columns, so every row is full (2+11+2 = 15 cells) */
+        .ai-arch__videos > .video-card:first-child,
+        .ai-arch__videos > .video-card:last-child { grid-column: span 2; }
+        .ai-arch__videos > .video-card:first-child .video-card__embed,
+        .ai-arch__videos > .video-card:last-child .video-card__embed { aspect-ratio: auto; height: 100%; }
+        .ai-arch__videos > .video-card:first-child video,
+        .ai-arch__videos > .video-card:last-child video { position: absolute; inset: 0; }
+        /* 2 columns (phones): only the first spans the full width (2+12 = 14 cells) */
+        @media (max-width: 768px) {
+            .ai-arch__videos > .video-card:first-child .video-card__embed { aspect-ratio: 16/9; height: auto; }
+            .ai-arch__videos > .video-card:last-child { grid-column: auto; }
+            .ai-arch__videos > .video-card:last-child .video-card__embed { aspect-ratio: 16/10; height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="../" class="header__logo">Arthemii Ionaere</a>
+        <nav class="header__nav">
+            <a href="../about/" class="header__link">À propos</a>
+            <a href="../works/" class="header__link">Œuvres</a>
+            <a href="../projects/" class="header__link">Projets</a>
+            <a href="../drawings/" class="header__link">Dessins</a>
+            <a href="../ai-content/" class="header__link">Contenu IA</a>
+            <a href="../videos/" class="header__link">Vidéos</a>
+            <a href="../gallery/" class="header__link">Galerie</a>
+            <a href="../contact/" class="header__link">Contact</a>
+            <div class="header__lang" role="group" aria-label="Language">
+                <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+                <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+                <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+                <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+                <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+            </div>
+        </nav>
+        <button class="header__menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span></button>
+    </header>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close"></button>
+        <a href="../about/" class="mobile-nav__link">À propos</a>
+        <a href="../works/" class="mobile-nav__link">Œuvres</a>
+        <a href="../projects/" class="mobile-nav__link">Projets</a>
+        <a href="../drawings/" class="mobile-nav__link">Dessins</a>
+        <a href="../ai-content/" class="mobile-nav__link">Contenu IA</a>
+        <a href="../videos/" class="mobile-nav__link">Vidéos</a>
+        <a href="../gallery/" class="mobile-nav__link">Galerie</a>
+        <a href="../contact/" class="mobile-nav__link">Contact</a>
+        <div class="header__lang" role="group" aria-label="Language">
+            <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+            <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+            <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+            <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+            <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+        </div>
+    </div>
+    <main style="padding-top:calc(72px + 2rem)">
+<!-- ========== VIDEO ========== -->
+        <section class="section" id="videos">
+            <div class="container">
+                <header class="section__header reveal">
+                    <div class="section__label" data-i18n="video_label">Vidéo</div>
+                    <h1 class="section__title" data-i18n="video_title">Images en mouvement et récits</h1>
+                    <p class="section__desc" data-i18n="video_desc">Des œuvres vidéo qui explorent le monde abstrait de la lumière et du mouvement — des objets d’art cinétique aux explorations visuelles immersives.</p>
+                    <a class="yt-channel" href="https://www.youtube.com/@IonaereArthe" target="_blank" rel="noopener" aria-label="YouTube channel @IonaereArthe">
+                        <svg viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" rx="5.5" fill="#FF0000"/><path d="M11.2 5.6v8.8l7.6-4.4z" fill="#fff"/></svg>
+                        <span>YouTube · @IonaereArthe</span>
+                    </a>
+                </header>
+
+                <div class="video-grid">
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="IXjQng5fbfo" style="background-image:url(../../video-posters/yt-IXjQng5fbfo.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Sculpture en verre</h3>
+                            <p class="video-card__desc">Œuvre sculpturale en verre — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="Uxb35qkESOg" style="background-image:url(../../video-posters/yt-Uxb35qkESOg.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Vortex Void</h3>
+                            <p class="video-card__desc">Exploration visuelle abstraite — 2024</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="5ePSaUFmFHs" style="background-image:url(../../video-posters/yt-5ePSaUFmFHs.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Kaléidoscope de vitrail</h3>
+                            <p class="video-card__desc">18 œuvres — le chaos formant une composition harmonieuse</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/kinetic3.jpg" src="../../video-files/kinetic3.mp4" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Prisme cinétique</h3>
+                            <p class="video-card__desc">Sculpture cinétique en verre projetant la lumière — 2026</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="Hn2z6ov6tIU" style="background-image:url(../../video-posters/yt-Hn2z6ov6tIU.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Objets d’art cinétique</h3>
+                            <p class="video-card__desc">Mouvement et forme en harmonie — 2024</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/chromatic-flow.jpg" src="../../video-files/chromatic-flow.m4v" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Flux chromatique</h3>
+                            <p class="video-card__desc">Transitions de couleur à travers le verre — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/glass-rotation.jpg" src="../../video-files/glass-rotation.m4v" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Rotation de verre</h3>
+                            <p class="video-card__desc">Lumière tournoyante à travers le vitrail — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/installation-orbit.jpg" src="../../video-files/installation-orbit.mp4" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Orbite de l’installation</h3>
+                            <p class="video-card__desc">Mouvement de caméra autour d’une installation de verre — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/prismatic-dance.jpg" src="../../video-files/prismatic-dance.m4v" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Danse prismatique</h3>
+                            <p class="video-card__desc">Lumière réfractée en mouvement — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/spectrum-shift.jpg" src="../../video-files/spectrum-shift.m4v" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Glissement spectral</h3>
+                            <p class="video-card__desc">Transformations du spectre des couleurs — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/glass-meditation.jpg" src="../../video-files/glass-meditation.m4v" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Méditation de verre</h3>
+                            <p class="video-card__desc">Étude contemplative en verre — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/geometric-harmony.jpg" src="../../video-files/geometric-harmony.mp4" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Harmonie géométrique</h3>
+                            <p class="video-card__desc">Équilibre de formes géométriques en verre — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/crystal-structure.jpg" src="../../video-files/crystal-structure.mp4" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Structure cristalline</h3>
+                            <p class="video-card__desc">Clarté structurelle de la composition en verre — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/color-field.jpg" src="../../video-files/color-field.mp4" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Champ de couleur</h3>
+                            <p class="video-card__desc">Plans de couleur saturée dans le verre — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/stained-mosaic.jpg" src="../../video-files/stained-mosaic.mp4" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Mosaïque de vitrail</h3>
+                            <p class="video-card__desc">Motifs de mosaïque dans le vitrail — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/light-architecture.jpg" src="../../video-files/light-architecture.mp4" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Architecture de lumière</h3>
+                            <p class="video-card__desc">Lumière architecturale à travers le verre — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <video poster="../../video-posters/radiant-forms.jpg" src="../../video-files/radiant-forms.m4v" muted loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Formes rayonnantes</h3>
+                            <p class="video-card__desc">Formes abstraites lumineuses — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="2gF1fXEd0kY" style="background-image:url(../../video-posters/yt-2gF1fXEd0kY.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Genèse d’une œuvre en verre</h3>
+                            <p class="video-card__desc">Processus créatif — 2025</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="RKBr6lzgKU8" style="background-image:url(../../video-posters/yt-RKBr6lzgKU8.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Exposition néogothique</h3>
+                            <p class="video-card__desc">Enter the Void — Centre Bachmet, 2023</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="lsR-ovRNJD4" style="background-image:url(../../video-posters/yt-lsR-ovRNJD4.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Club der Visionäre</h3>
+                            <p class="video-card__desc">Installation de verre — Berlin, 2024</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="nUtuL68gty0" style="background-image:url(../../video-posters/yt-nUtuL68gty0.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Sculptures de lumière</h3>
+                            <p class="video-card__desc">Verre coloré et lumière — 2024</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="ai-arch ai-arch--videos">
+                    <header class="ai-arch__header reveal">
+                        <h3 class="ai-arch__title" data-i18n="ai_video_title">Vidéo de contenu IA</h3>
+                        <p class="ai-arch__desc" data-i18n="ai_arch_desc">Études animées de bâtiments et de sculptures bioniques dans des paysages et des villes réels, générées par IA.</p>
+                    </header>
+                    <div class="video-grid ai-arch__videos">
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-02-poster.jpg" src="../../video-files/ai/ai-02.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-01-poster.jpg" src="../../video-files/ai/ai-01.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-03-poster.jpg" src="../../video-files/ai/ai-03.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-04-poster.jpg" src="../../video-files/ai/ai-04.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-05-poster.jpg" src="../../video-files/ai/ai-05.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-06-poster.jpg" src="../../video-files/ai/ai-06.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-07-poster.jpg" src="../../video-files/ai/ai-07.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-08-poster.jpg" src="../../video-files/ai/ai-08.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-09-poster.jpg" src="../../video-files/ai/ai-09.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-10-poster.jpg" src="../../video-files/ai/ai-10.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-11-poster.jpg" src="../../video-files/ai/ai-11.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-12-poster.jpg" src="../../video-files/ai/ai-12.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-13-poster.jpg" src="../../video-files/ai/ai-13.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__brand">Arthemii Ionaere</div>
+                <nav class="footer__nav">
+                    <a href="../about/" class="footer__link">À propos</a>
+                    <a href="../works/" class="footer__link">Œuvres</a>
+                    <a href="../exhibitions/" class="footer__link">Expositions</a>
+                    <a href="../gallery/" class="footer__link">Galerie</a>
+                    <a href="../contact/" class="footer__link">Contact</a>
+                </nav>
+                <a class="footer__instagram" href="https://www.instagram.com/ionaerestudio/" target="_blank" rel="noopener" aria-label="Instagram @ionaerestudio">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="footerIgGradient" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset="0.05" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6.5" fill="url(#footerIgGradient)"/><rect x="5" y="5" width="14" height="14" rx="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="16.4" cy="7.6" r="1.05" fill="#fff"/></svg>
+                    <span>@ionaerestudio</span>
+                </a>
+                <div class="footer__copy">&copy; 2026 Arthemii Ionaere</div>
+            </div>
+        </div>
+    </footer>
+    <script>
+    var mb=document.getElementById("menuBtn"),mn=document.getElementById("mobileNav"),mc=document.getElementById("mobileNavClose");
+    if(mb&&mn)mb.onclick=function(){mn.classList.add("is-open")};
+    if(mc&&mn)mc.onclick=function(){mn.classList.remove("is-open")};
+    if(mn){var ls=mn.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].onclick=function(){mn.classList.remove("is-open")}};
+    var yts=document.querySelectorAll(".yt-placeholder");
+    for(var i=0;i<yts.length;i++){(function(el){
+        el.onclick=function(){
+            var id=this.getAttribute("data-yt");
+            var f=document.createElement("iframe");
+            f.src="https://www.youtube.com/embed/"+id+"?autoplay=1&mute=0&controls=1&rel=0";
+            f.allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+            f.allowFullscreen=true;
+            f.style.cssText="width:100%;height:100%;border:none";
+            this.parentNode.replaceChild(f,this);
+        };
+    })(yts[i])};
+    var vcs=document.querySelectorAll(".video-card");
+    // Videos play by themselves (muted) while they are on screen and pause when scrolled away —
+    // on phones and on computers. Click still opens the full-screen viewer with sound.
+    var autoVids=[];
+    for(var i=0;i<vcs.length;i++){(function(c){
+        var v=c.querySelector("video");
+        if(!v){
+            // YouTube cards: play their local copy silently inside the card
+            var ph=c.querySelector(".yt-placeholder[data-yt]");
+            if(!ph)return;
+            v=document.createElement("video");
+            v.preload="none";
+            v.setAttribute("data-src","../../video-files/yt-"+ph.getAttribute("data-yt")+".mp4");
+            v.poster="../../video-posters/yt-"+ph.getAttribute("data-yt")+".jpg";
+            v.style.cssText="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none";
+            if(getComputedStyle(ph).position==="static")ph.style.position="relative";
+            ph.appendChild(v);
+        }
+        v.muted=true;v.loop=true;v.playsInline=true;
+        v.setAttribute("muted","");v.setAttribute("loop","");v.setAttribute("playsinline","");
+        autoVids.push(v);
+    })(vcs[i])};
+    function playV(v){
+        if(!v.getAttribute("src")&&v.getAttribute("data-src"))v.src=v.getAttribute("data-src");
+        var p=v.play();if(p&&p.catch)p.catch(function(){});
+    }
+    if("IntersectionObserver" in window){
+        var vio=new IntersectionObserver(function(entries){
+            entries.forEach(function(e){
+                if(e.isIntersecting&&!document.hidden)playV(e.target);else e.target.pause();
+            });
+        },{threshold:0.35});
+        autoVids.forEach(function(v){vio.observe(v);});
+        document.addEventListener("visibilitychange",function(){
+            autoVids.forEach(function(v){
+                if(document.hidden){v.pause();return;}
+                var r=v.getBoundingClientRect();
+                if(r.bottom>0&&r.top<innerHeight)playV(v);
+            });
+        });
+    }else{autoVids.forEach(playV);}
+    </script>
+    <script src="../../video-lightbox.js"></script>
+    <script src="../../smooth-scroll.js" defer></script>
+    <script src="../../i18n.js?v=20261115a"></script>
+</body>
+</html>
