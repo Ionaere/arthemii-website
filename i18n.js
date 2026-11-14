@@ -828,7 +828,7 @@
   // The page corner that peels away into the 3D space (space-portal.js), on every page except the space itself
   if (!/^\/space(\/|$)/.test(location.pathname)) {
     var portal = document.createElement('script');
-    portal.src = BASE + 'space-portal.js?v=20261115a';
+    portal.src = BASE + 'space-portal.js?v=20261115b';
     portal.defer = true;
     document.head.appendChild(portal);
   }
