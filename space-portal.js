@@ -43,8 +43,18 @@
     'background:#111;color:#fff;font:600 11px/1 system-ui,-apple-system,sans-serif;letter-spacing:.04em;opacity:0;transform:translateY(4px);' +
     'transition:opacity .25s ease,transform .25s ease;pointer-events:none}' +
     '.sp-curl:hover .sp-curl__hint,.sp-curl:focus-visible .sp-curl__hint,.sp-curl.is-drag .sp-curl__hint{opacity:1;transform:none}' +
-    '.sp-curl.is-nudge{animation:sp-nudge 1.6s cubic-bezier(.16,1,.3,1) 1}' +
-    '@keyframes sp-nudge{0%,100%{width:58px;height:58px}35%{width:92px;height:92px}}' +
+    // Alive: the corner keeps lifting a little, the space underneath shimmers and glows
+    '.sp-curl{transform-origin:100% 100%;animation:sp-breathe 3.2s ease-in-out infinite}' +
+    '.sp-curl:hover,.sp-curl:focus-visible,.sp-curl.is-drag{animation:none}' +
+    '@keyframes sp-breathe{0%,55%,100%{transform:scale(1)}20%{transform:scale(1.32)}32%{transform:scale(1.18)}}' +
+    '.sp-curl__under{animation:sp-shimmer 6s linear infinite}' +
+    '@keyframes sp-shimmer{0%,100%{filter:hue-rotate(0deg) brightness(1)}50%{filter:hue-rotate(35deg) brightness(1.3)}}' +
+    '.sp-curl__glow{position:absolute;right:-35%;bottom:-35%;width:140%;height:140%;border-radius:50%;pointer-events:none;' +
+    'background:radial-gradient(circle at 100% 100%,rgba(255,106,61,.6),rgba(194,51,122,.38) 35%,rgba(75,42,155,0) 70%);animation:sp-glow 3.2s ease-in-out infinite}' +
+    '@keyframes sp-glow{0%,55%,100%{opacity:.4}20%{opacity:1}}' +
+    '.sp-curl__flap::after{animation:sp-shine 3.2s ease-in-out infinite}' +
+    '@keyframes sp-shine{0%,12%{opacity:0}24%{opacity:.95}45%,100%{opacity:0}}' +
+    '.sp-curl.is-hint .sp-curl__hint{opacity:1;transform:none}' +
     // Full-screen peel when entering
     '.sp-peel{position:fixed;inset:0;z-index:9999;pointer-events:none;' +
     'background:radial-gradient(2px 2px at 20% 30%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 70% 20%,#fff 50%,transparent 51%),' +
@@ -53,8 +63,8 @@
     'radial-gradient(ellipse at 100% 100%,#ff6a3d 0,#c2337a 16%,#4b2a9b 38%,#121230 66%,#07070f 100%);' +
     'clip-path:polygon(100% calc(100% - var(--p,0px)),100% 100%,calc(100% - var(--p,0px)) 100%);transition:clip-path .75s cubic-bezier(.65,0,.35,1)}' +
     '.sp-peel.is-go{--p:300vmax}' +
-    '@media (max-width:640px){.sp-curl{--sp-s:46px}.sp-curl:hover{--sp-s:46px}}' +
-    '@media (prefers-reduced-motion:reduce){.sp-curl,.sp-peel{transition:none}.sp-curl.is-nudge{animation:none}}' +
+    '@media (max-width:640px){.sp-curl{--sp-s:52px}.sp-curl:hover{--sp-s:52px}}' +
+    '@media (prefers-reduced-motion:reduce){.sp-curl,.sp-peel{transition:none}.sp-curl,.sp-curl__under,.sp-curl__glow,.sp-curl__flap::after{animation:none}}' +
     '@media print{.sp-curl{display:none}}';
 
   function init() {
@@ -69,7 +79,7 @@
     a.setAttribute('aria-label', HINT[lang()]);
     a.setAttribute('data-no-i18n', '');
     a.setAttribute('translate', 'no');
-    a.innerHTML = '<span class="sp-curl__under"></span><span class="sp-curl__flap"></span><span class="sp-curl__hint"></span>';
+    a.innerHTML = '<span class="sp-curl__glow"></span><span class="sp-curl__under"></span><span class="sp-curl__flap"></span><span class="sp-curl__hint"></span>';
     var hint = a.querySelector('.sp-curl__hint');
     hint.textContent = HINT[lang()];
     document.body.appendChild(a);
@@ -79,11 +89,12 @@
     a.addEventListener('mouseenter', refresh);
     a.addEventListener('focus', refresh);
 
-    // Show visitors once that the corner can be turned
+    // Once per visit, say what the corner is for
     try {
-      if (!sessionStorage.getItem('spNudge')) {
-        sessionStorage.setItem('spNudge', '1');
-        setTimeout(function () { a.classList.add('is-nudge'); }, 2500);
+      if (!sessionStorage.getItem('spHint')) {
+        sessionStorage.setItem('spHint', '1');
+        setTimeout(function () { a.classList.add('is-hint'); }, 1800);
+        setTimeout(function () { a.classList.remove('is-hint'); }, 6800);
       }
     } catch (e) {}
 
