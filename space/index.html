@@ -345,28 +345,6 @@ function nebula() {
   sky.renderOrder = -1;
   scene.add(sky);
 }
-function planet(x, y, z, r, colors, ringColor) {
-  const tex = canvasTex(512, 256, (g, W, H) => {
-    const grd = g.createLinearGradient(0, 0, 0, H);
-    colors.forEach((col, i) => grd.addColorStop(i / (colors.length - 1), col));
-    g.fillStyle = grd; g.fillRect(0, 0, W, H);
-    for (let i = 0; i < 46; i++) {
-      g.fillStyle = 'rgba(255,255,255,' + (Math.random() * 0.07).toFixed(3) + ')';
-      g.fillRect(0, Math.random() * H, W, 1 + Math.random() * 7);
-    }
-  });
-  const m = new THREE.Mesh(new THREE.SphereGeometry(r, 64, 40), new THREE.MeshLambertMaterial({ map: tex, fog: false }));
-  m.position.set(x, y, z);
-  m.rotation.z = 0.35;
-  if (ringColor) {
-    const rg = new THREE.Mesh(new THREE.RingGeometry(r * 1.45, r * 2.3, 128), new THREE.MeshBasicMaterial({ color: ringColor, side: THREE.DoubleSide, transparent: true, opacity: 0.32, fog: false, depthWrite: false }));
-    rg.rotation.x = Math.PI / 2.3;
-    m.add(rg);
-  }
-  scene.add(m);
-  planets.push(m);
-}
-
 async function build(data) {
   await Promise.race([document.fonts.load('300 64px Hahmlet'), new Promise(r => setTimeout(r, 2500))]).catch(() => {});
   // Every work from every part of the site, shuffled and scattered through space: a different flight on every visit
@@ -393,11 +371,6 @@ async function build(data) {
   scene.add(title);
   stars();
   nebula();
-  const d = RADIUS + 70;
-  planet(-d * 0.8, 24, -d * 0.6, 16, ['#f7c78a', '#d9825b', '#9b4b5e', '#5b2d6b'], 0xf3d9b0);
-  planet(d, -12, d * 0.3, 22, ['#8fd3ff', '#4f7fd9', '#2d3f9b', '#1a1d4f']);
-  planet(-d * 0.4, -30, d * 0.9, 11, ['#ffd6f0', '#c46bd1', '#6b3aa1', '#2a1650'], 0xc9a6ff);
-  planet(d * 0.3, 40, -d, 8, ['#c9ffe8', '#5cc7a8', '#2b6e78', '#14304a']);
   // Start just outside the cloud of works, looking into it
   camera.position.set(0, 0, RADIUS + 7);
 }
