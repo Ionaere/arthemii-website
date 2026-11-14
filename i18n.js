@@ -48,6 +48,19 @@
   var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1 };
   var EXT_VERSION = '20261114b';
   var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT' };
+  // German, Spanish, French and Italian also have their own pre-translated pages (/de/, /es/, /fr/, /it/),
+  // which search engines can index. Every other language is translated in place on the English pages.
+  var STATIC = ['de', 'es', 'fr', 'it'];
+  var PAGE_LANG = (function () {
+    var m = location.pathname.match(/^\/(de|es|fr|it)(\/|$)/);
+    return m ? m[1] : null;
+  })();
+  function urlFor(lang) {
+    var p = location.pathname;
+    if (PAGE_LANG) p = p.slice(PAGE_LANG.length + 1) || '/';
+    if (STATIC.indexOf(lang) !== -1) p = '/' + lang + p;
+    return p + location.search + location.hash;
+  }
   var BASE = (function () {
     var cs = document.currentScript;
     var src = cs && cs.src ? cs.src : '';
@@ -754,8 +767,11 @@
     e.preventDefault();
     var lang = b.getAttribute('data-lang');
     closeMenus();
-    setLang(lang);
     try { localStorage.setItem(PICKED, lang); } catch (err) {}
+    // Go to the page of that language if it has its own pages (or back to the English page for the others)
+    var target = STATIC.indexOf(lang) !== -1 ? lang : null;
+    if (target !== PAGE_LANG) { location.href = urlFor(lang); return; }
+    setLang(lang);
   });
 
   // Keyboard: Esc closes the menu, arrow keys move between languages
@@ -802,7 +818,10 @@
   }
 
   function init() {
-    setLang(pickedLang() || browserLang());
+    var picked = pickedLang();
+    // A visitor who chose German, Spanish, French or Italian in the menu gets that language's own page
+    if (!PAGE_LANG && picked && STATIC.indexOf(picked) !== -1) { location.replace(urlFor(picked)); return; }
+    setLang(PAGE_LANG || picked || browserLang());
     observer.observe(document.body, { childList: true, subtree: true, characterData: true });
   }
 

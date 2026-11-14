@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Art IA d'Arthemii Ionaere : rendus numériques et études animées où l'architecture gothique et abstraite se fond en formes bioniques — les idées derrière le verre, explorées avant d'être construites.">
+    <meta name="theme-color" content="#fafafa">
+    <title>Art IA — Rendus Bionic Gothic d'Arthemii Ionaere</title>
+    <link rel="canonical" href="https://arthemii.com/fr/ai-content/">
+    <link rel="alternate" hreflang="en" href="https://arthemii.com/ai-content/">
+    <link rel="alternate" hreflang="de" href="https://arthemii.com/de/ai-content/">
+    <link rel="alternate" hreflang="es" href="https://arthemii.com/es/ai-content/">
+    <link rel="alternate" hreflang="fr" href="https://arthemii.com/fr/ai-content/">
+    <link rel="alternate" hreflang="it" href="https://arthemii.com/it/ai-content/">
+    <link rel="alternate" hreflang="x-default" href="https://arthemii.com/ai-content/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Arthemii Ionaere">
+    <meta property="og:title" content="Art IA — Rendus Bionic Gothic d'Arthemii Ionaere">
+    <meta property="og:description" content="Art IA d'Arthemii Ionaere : rendus numériques et études animées où l'architecture gothique et abstraite se fond en formes bioniques — les idées derrière le verre, explorées avant d'être construites.">
+    <meta property="og:url" content="https://arthemii.com/fr/ai-content/">
+    <meta property="og:image" content="https://arthemii.com/img/og-default.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+    <link rel="stylesheet" href="../../styles.css?v=20261113b">
+    <style>
+        .header { transform: none !important; animation: none !important; }
+        .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+            opacity: 1 !important; transform: none !important; transition: none !important;
+        }
+        .hero__eyebrow, .hero__title, .hero__subtitle, .hero__desc, .hero__actions, .hero__image {
+            opacity: 1 !important; transform: none !important; animation: none !important;
+        }
+    
+        /* ===== YouTube channel link (Video section) ===== */
+        .yt-channel {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.625rem;
+            margin-top: var(--spacing-md);
+            padding: 0.5rem 1.125rem 0.5rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--bg-elevated, #fff);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            color: var(--text);
+            text-decoration: none;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .yt-channel svg { width: 28px; height: 28px; flex-shrink: 0; display: block; }
+        .yt-channel:hover {
+            border-color: #ff0000;
+            box-shadow: 0 6px 18px rgba(255,0,0,0.16);
+            transform: translateY(-1px);
+        }
+        .section__toggle > .yt-channel { max-width: none; }
+
+        /* ===== AI Content page ===== */
+        .yt-channel.ig-channel svg { width: 28px; height: 28px; }
+        .renders__photos { margin-bottom: var(--spacing-lg); }
+        .renders__poster { width: 100%; height: 100%; object-fit: cover; display: block; background: var(--bg-alt); }
+        .renders__videos .video-card__embed { background: #111; }
+        .ai-arch { margin-top: var(--spacing-2xl); }
+        .ai-arch__header { margin-bottom: var(--spacing-md); max-width: 640px; }
+        .ai-arch__title { font-family: var(--font-serif); font-size: clamp(1.375rem, 2.6vw, 1.75rem); font-weight: 400; margin-bottom: var(--spacing-xs); }
+        .ai-arch__desc { color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; }
+        .ai-arch__videos video { width: 100%; height: 100%; object-fit: cover; display: block; background: #111; }
+        /* 13 videos in 3 columns: the first and the last span two columns, so every row is full (2+11+2 = 15 cells) */
+        .ai-arch__videos > .video-card:first-child,
+        .ai-arch__videos > .video-card:last-child { grid-column: span 2; }
+        .ai-arch__videos > .video-card:first-child .video-card__embed,
+        .ai-arch__videos > .video-card:last-child .video-card__embed { aspect-ratio: auto; height: 100%; }
+        .ai-arch__videos > .video-card:first-child video,
+        .ai-arch__videos > .video-card:last-child video { position: absolute; inset: 0; }
+        /* 2 columns (phones): only the first spans the full width (2+12 = 14 cells) */
+        @media (max-width: 768px) {
+            .ai-arch__videos > .video-card:first-child .video-card__embed { aspect-ratio: 16/9; height: auto; }
+            .ai-arch__videos > .video-card:last-child { grid-column: auto; }
+            .ai-arch__videos > .video-card:last-child .video-card__embed { aspect-ratio: 16/10; height: auto; }
+        }
+        .renders__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="../" class="header__logo">Arthemii Ionaere</a>
+        <nav class="header__nav">
+            <a href="../about/" class="header__link">À propos</a>
+            <a href="../works/" class="header__link">Œuvres</a>
+            <a href="../projects/" class="header__link">Projets</a>
+            <a href="../drawings/" class="header__link">Dessins</a>
+            <a href="../ai-content/" class="header__link">Contenu IA</a>
+            <a href="../videos/" class="header__link">Vidéos</a>
+            <a href="../gallery/" class="header__link">Galerie</a>
+            <a href="../contact/" class="header__link">Contact</a>
+            <div class="header__lang" role="group" aria-label="Language">
+                <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+                <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+                <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+                <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+                <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+            </div>
+        </nav>
+        <button class="header__menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span></button>
+    </header>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close"></button>
+        <a href="../about/" class="mobile-nav__link">À propos</a>
+        <a href="../works/" class="mobile-nav__link">Œuvres</a>
+        <a href="../projects/" class="mobile-nav__link">Projets</a>
+        <a href="../drawings/" class="mobile-nav__link">Dessins</a>
+        <a href="../ai-content/" class="mobile-nav__link">Contenu IA</a>
+        <a href="../videos/" class="mobile-nav__link">Vidéos</a>
+        <a href="../gallery/" class="mobile-nav__link">Galerie</a>
+        <a href="../contact/" class="mobile-nav__link">Contact</a>
+        <div class="header__lang" role="group" aria-label="Language">
+            <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+            <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+            <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+            <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+            <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+        </div>
+    </div>
+    <main style="padding-top:calc(72px + 2rem)">
+        <!-- ========== AI CONTENT ========== -->
+        <section class="section" id="ai-content">
+            <div class="container">
+                <header class="section__header reveal">
+                    <div class="section__label" data-i18n="ai_label">Contenu IA</div>
+                    <h1 class="section__title" data-i18n="renders_title">Gothique bionique, en rendu</h1>
+                    <p class="section__desc" data-i18n="renders_desc">Rendus numériques et études animées où l'architecture gothique et abstraite fusionne en formes bioniques — les idées derrière le verre, explorées avant d'être construites.</p>
+                    <a class="yt-channel ig-channel" href="https://www.instagram.com/lonaere/" target="_blank" rel="noopener" aria-label="Instagram @lonaere">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="rendersIgGradient" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset="0.05" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6.5" fill="url(#rendersIgGradient)"/><rect x="5" y="5" width="14" height="14" rx="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="16.4" cy="7.6" r="1.05" fill="#fff"/></svg>
+                        <span>Instagram · @lonaere</span>
+                    </a>
+                </header>
+
+                <div class="ai-source" data-no-thumbs>
+                    <p class="ai-source__text">Toutes les œuvres de cette section sont générées à partir de mes propres dessins. Tout commence toujours par un dessin sur papier — au fond, un schéma précis. L’intelligence artificielle en lit facilement les lignes, ce qui permet d’en faire naître n’importe quoi : de l’architecture, des bijoux ou tout ce que l’idée demande.</p>
+                    <a href="../drawings/" class="ai-source__link">Voir les dessins <span aria-hidden="true">→</span></a>
+                    <div class="ai-source__drawings">
+                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.825" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-01-800.webp 800w" sizes="160px"><img src="../../img/drawings/drawing-01-1600.jpg" alt="Drawing 01 — the source of the AI renders" loading="lazy" decoding="async"></picture></a>
+                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.796" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-08-800.webp 800w" sizes="160px"><img src="../../img/drawings/drawing-08-1600.jpg" alt="Drawing 08 — the source of the AI renders" loading="lazy" decoding="async"></picture></a>
+                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.81" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-16-800.webp 800w" sizes="160px"><img src="../../img/drawings/drawing-16-1600.jpg" alt="Drawing 16 — the source of the AI renders" loading="lazy" decoding="async"></picture></a>
+                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.837" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-20-800.webp 800w" sizes="160px"><img src="../../img/drawings/drawing-20-1600.jpg" alt="Drawing 20 — the source of the AI renders" loading="lazy" decoding="async"></picture></a>
+                    </div>
+                </div>
+
+                <div class="gallery__rows renders__photos">
+                    <div class="gallery__row gallery__row--wide">
+                        <div class="gallery__item" style="--r:1.776"><picture><source type="image/webp" srcset="../../img/renders/DQz7gIWjB1K-800.webp 800w, ../../img/renders/DQz7gIWjB1K.webp 1160w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DQz7gIWjB1K.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:1.777"><picture><source type="image/webp" srcset="../../img/renders/DQzk_FEDLWP-800.webp 800w, ../../img/renders/DQzk_FEDLWP.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DQzk_FEDLWP.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:1.429"><picture><source type="image/webp" srcset="../../img/renders/DLYRSOatKe8-800.webp 800w, ../../img/renders/DLYRSOatKe8.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYRSOatKe8.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:1.0"><picture><source type="image/webp" srcset="../../img/renders/DLYPa33tFhj-800.webp 800w, ../../img/renders/DLYPa33tFhj.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYPa33tFhj.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                    </div>
+                    <div class="gallery__row gallery__row--tall">
+                        <div class="gallery__item" style="--r:0.801"><picture><source type="image/webp" srcset="../../img/renders/DLYRNOoNzgs-800.webp 800w, ../../img/renders/DLYRNOoNzgs.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYRNOoNzgs.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:0.801"><picture><source type="image/webp" srcset="../../img/renders/DLYPO9vt64e-800.webp 800w, ../../img/renders/DLYPO9vt64e.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYPO9vt64e.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:0.799"><picture><source type="image/webp" srcset="../../img/renders/DLYORUJNpNI-800.webp 800w, ../../img/renders/DLYORUJNpNI.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYORUJNpNI.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:0.8"><picture><source type="image/webp" srcset="../../img/renders/DJC2v00N5dh-800.webp 800w, ../../img/renders/DJC2v00N5dh.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DJC2v00N5dh.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:0.8"><picture><source type="image/webp" srcset="../../img/renders/DIXzTh1tzQR-800.webp 800w, ../../img/renders/DIXzTh1tzQR.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DIXzTh1tzQR.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                    </div>
+                    <div class="gallery__row gallery__row--wide">
+                        <div class="gallery__item" style="--r:1.041"><picture><source type="image/webp" srcset="../../img/renders/DLYPVHXNwOJ-800.webp 800w, ../../img/renders/DLYPVHXNwOJ.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYPVHXNwOJ.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:1.777"><picture><source type="image/webp" srcset="../../img/renders/DHw90RHsCvf-800.webp 800w, ../../img/renders/DHw90RHsCvf.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DHw90RHsCvf.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:1.777"><picture><source type="image/webp" srcset="../../img/renders/DHwdRMayRNe-800.webp 800w, ../../img/renders/DHwdRMayRNe.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DHwdRMayRNe.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        <div class="gallery__item" style="--r:1.335"><picture><source type="image/webp" srcset="../../img/renders/DHwcuj9y5sb-800.webp 800w, ../../img/renders/DHwcuj9y5sb.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DHwcuj9y5sb.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                    </div>
+                </div>
+
+                <div class="video-grid renders__videos">
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DU1s3q2jKUI">
+                            <img class="renders__poster" src="../../img/renders/DU1s3q2jKUI-poster.jpg" alt="Video render by Arthemii Ionaere" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DQzmLB1DOBI">
+                            <img class="renders__poster" src="../../img/renders/DQzmLB1DOBI-poster.jpg" alt="Video render by Arthemii Ionaere" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DQzlbliDL78">
+                            <img class="renders__poster" src="../../img/renders/DQzlbliDL78-poster.jpg" alt="Video render by Arthemii Ionaere" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DQzkiFcjDCT">
+                            <img class="renders__poster" src="../../img/renders/DQzkiFcjDCT-poster.jpg" alt="Video render by Arthemii Ionaere" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="p/DP9xonZjFye">
+                            <img class="renders__poster" src="../../img/renders/DP9xonZjFye-poster.jpg" alt="Video render by Arthemii Ionaere" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DKM9-1mMwzQ">
+                            <img class="renders__poster" src="../../img/renders/DKM9-1mMwzQ-poster.jpg" alt="Video render by Arthemii Ionaere" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DIpVR_kSUfi">
+                            <img class="renders__poster" src="../../img/renders/DIpVR_kSUfi-poster.jpg" alt="Architecture of the Synthetic Century" loading="lazy" decoding="async">
+                        </div>
+                        <div class="video-card__info renders__sr">
+                            <h3 class="video-card__title">Architecture du siècle synthétique</h3>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DIK1MQdtd6h">
+                            <img class="renders__poster" src="../../img/renders/DIK1MQdtd6h-poster.jpg" alt="Abstract Gothic" loading="lazy" decoding="async">
+                        </div>
+                        <div class="video-card__info renders__sr">
+                            <h3 class="video-card__title">Gothique abstrait</h3>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DIAZhfytCBD">
+                            <img class="renders__poster" src="../../img/renders/DIAZhfytCBD-poster.jpg" alt="Portal of Light and Shadow" loading="lazy" decoding="async">
+                        </div>
+                        <div class="video-card__info renders__sr">
+                            <h3 class="video-card__title">Portail de lumière et d'ombre</h3>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DIARRTwSKP1">
+                            <img class="renders__poster" src="../../img/renders/DIARRTwSKP1-poster.jpg" alt="Ethereal Structures" loading="lazy" decoding="async">
+                        </div>
+                        <div class="video-card__info renders__sr">
+                            <h3 class="video-card__title">Structures éthérées</h3>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DIAGISoyhBK">
+                            <img class="renders__poster" src="../../img/renders/DIAGISoyhBK-poster.jpg" alt="Video render by Arthemii Ionaere" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed" data-ig="reel/DH_8NNkS-e-">
+                            <img class="renders__poster" src="../../img/renders/DH_8NNkS-e--poster.jpg" alt="Video render by Arthemii Ionaere" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                </div>
+                <div class="ai-arch">
+                    <header class="ai-arch__header reveal">
+                        <h3 class="ai-arch__title" data-i18n="ai_arch_title">Architecture IA</h3>
+                        <p class="ai-arch__desc" data-i18n="ai_arch_desc">Études animées de bâtiments et de sculptures bioniques dans des paysages et des villes réels, générées par IA.</p>
+                    </header>
+                    <div class="video-grid ai-arch__videos">
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-02-poster.jpg" src="../../video-files/ai/ai-02.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-01-poster.jpg" src="../../video-files/ai/ai-01.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-03-poster.jpg" src="../../video-files/ai/ai-03.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-04-poster.jpg" src="../../video-files/ai/ai-04.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-05-poster.jpg" src="../../video-files/ai/ai-05.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-06-poster.jpg" src="../../video-files/ai/ai-06.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-07-poster.jpg" src="../../video-files/ai/ai-07.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-08-poster.jpg" src="../../video-files/ai/ai-08.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-09-poster.jpg" src="../../video-files/ai/ai-09.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-10-poster.jpg" src="../../video-files/ai/ai-10.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-11-poster.jpg" src="../../video-files/ai/ai-11.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-12-poster.jpg" src="../../video-files/ai/ai-12.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                        <article class="video-card">
+                            <div class="video-card__embed">
+                                <video poster="../../img/renders/ai-13-poster.jpg" src="../../video-files/ai/ai-13.mp4" muted loop playsinline preload="metadata" aria-label="AI architecture video by Arthemii Ionaere"></video>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__brand">Arthemii Ionaere</div>
+                <nav class="footer__nav">
+                    <a href="../about/" class="footer__link">À propos</a>
+                    <a href="../works/" class="footer__link">Œuvres</a>
+                    <a href="../exhibitions/" class="footer__link">Expositions</a>
+                    <a href="../gallery/" class="footer__link">Galerie</a>
+                    <a href="../contact/" class="footer__link">Contact</a>
+                </nav>
+                <a class="footer__instagram" href="https://www.instagram.com/ionaerestudio/" target="_blank" rel="noopener" aria-label="Instagram @ionaerestudio">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="footerIgGradient" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset="0.05" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6.5" fill="url(#footerIgGradient)"/><rect x="5" y="5" width="14" height="14" rx="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="16.4" cy="7.6" r="1.05" fill="#fff"/></svg>
+                    <span>@ionaerestudio</span>
+                </a>
+                <div class="footer__copy">&copy; 2026 Arthemii Ionaere</div>
+            </div>
+        </div>
+    </footer>
+    <script>
+    var mb=document.getElementById("menuBtn"),mn=document.getElementById("mobileNav"),mc=document.getElementById("mobileNavClose");
+    if(mb&&mn)mb.onclick=function(){mn.classList.add("is-open")};
+    if(mc&&mn)mc.onclick=function(){mn.classList.remove("is-open")};
+    if(mn){var ls=mn.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].onclick=function(){mn.classList.remove("is-open")}};
+    var yts=document.querySelectorAll(".yt-placeholder");
+    for(var i=0;i<yts.length;i++){(function(el){
+        el.onclick=function(){
+            var id=this.getAttribute("data-yt");
+            var f=document.createElement("iframe");
+            f.src="https://www.youtube.com/embed/"+id+"?autoplay=1&mute=0&controls=1&rel=0";
+            f.allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+            f.allowFullscreen=true;
+            f.style.cssText="width:100%;height:100%;border:none";
+            this.parentNode.replaceChild(f,this);
+        };
+    })(yts[i])};
+    var vcs=document.querySelectorAll(".video-card");
+    for(var i=0;i<vcs.length;i++){(function(c){
+        var v=c.querySelector("video");if(!v)return;
+        c.onmouseenter=function(){v.play().catch(function(){})};
+        c.onmouseleave=function(){v.pause();v.currentTime=0};
+    })(vcs[i])};
+    </script>
+    <script src="../../lightbox.js"></script>
+    <script src="../../video-lightbox.js"></script>
+    <script src="../../smooth-scroll.js" defer></script>
+    <script src="../../i18n.js?v=20261115a"></script>
+</body>
+</html>
