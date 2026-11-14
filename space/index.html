@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#07070f">
+<title>3D Space — Arthemii Ionaere</title>
+<link rel="canonical" href="https://arthemii.com/space/">
+<link rel="icon" type="image/jpeg" href="../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #111; --paper: #f4f3f0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #07070f; color: #fff; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  canvas { display: block; outline: none; touch-action: none; }
+  .ui { position: fixed; z-index: 10; }
+  .back { top: 16px; left: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px 9px 11px; border-radius: 999px;
+    background: rgba(255,255,255,.88); color: var(--ink); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: .02em;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 20px rgba(0,0,0,.12); border: 0; cursor: pointer; }
+  .back:hover { background: #fff; }
+  .back svg { width: 16px; height: 16px; }
+  .sections { top: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 4px; border-radius: 999px;
+    background: rgba(255,255,255,.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 20px rgba(0,0,0,.12);
+    max-width: calc(100vw - 32px); overflow-x: auto; scrollbar-width: none; }
+  .sections::-webkit-scrollbar { display: none; }
+  .sections button { flex: none; border: 0; background: transparent; color: var(--ink); padding: 8px 13px; border-radius: 999px;
+    font: 500 12.5px/1 system-ui, -apple-system, sans-serif; cursor: pointer; white-space: nowrap; transition: background .2s ease, color .2s ease; }
+  .sections button:hover { background: rgba(0,0,0,.06); }
+  .sections button.is-on { background: var(--ink); color: #fff; }
+  .hint { bottom: 18px; left: 50%; transform: translateX(-50%); padding: 9px 16px; border-radius: 999px; background: rgba(17,17,17,.72); color: #fff;
+    font-size: 12px; letter-spacing: .03em; white-space: nowrap; pointer-events: none; transition: opacity .6s ease; max-width: calc(100vw - 32px);
+    overflow: hidden; text-overflow: ellipsis; }
+  .hint.is-hidden { opacity: 0; }
+  .tip { pointer-events: none; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,.95); color: var(--ink); font-size: 13px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18); transform: translate(14px, 14px); opacity: 0; transition: opacity .15s ease; max-width: 260px; }
+  .tip.is-on { opacity: 1; }
+  .tip b { display: block; font-family: Hahmlet, Georgia, serif; font-weight: 400; font-size: 15px; margin-bottom: 2px; }
+  .tip small { color: #666; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+  .stick { left: 22px; bottom: 22px; width: 116px; height: 116px; border-radius: 50%; background: rgba(255,255,255,.22);
+    border: 1px solid rgba(255,255,255,.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; touch-action: none; }
+  .stick i { position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: rgba(255,255,255,.92);
+    box-shadow: 0 4px 14px rgba(0,0,0,.2); }
+  .touch .stick { display: block; }
+  .touch .hint { bottom: 152px; }
+  .intro { inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center;
+    background: radial-gradient(2px 2px at 20% 30%, #fff 50%, transparent 51%), radial-gradient(1.5px 1.5px at 70% 20%, #fff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 40% 75%, #cfe3ff 50%, transparent 51%), radial-gradient(2px 2px at 85% 60%, #ffe6c7 50%, transparent 51%),
+      radial-gradient(1px 1px at 55% 45%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 12% 82%, #fff 50%, transparent 51%),
+      radial-gradient(ellipse at 100% 100%, #ff6a3d 0, #c2337a 16%, #4b2a9b 38%, #121230 66%, #07070f 100%);
+    transition: opacity .9s ease, visibility .9s; }
+  .intro.is-gone { opacity: 0; visibility: hidden; }
+  .intro h1 { font-family: Hahmlet, Georgia, serif; font-weight: 300; font-size: clamp(2rem, 6vw, 4rem); margin: 0 0 .5rem; letter-spacing: .01em; }
+  .intro p { margin: 0 auto 2rem; max-width: 34rem; color: rgba(255,255,255,.78); line-height: 1.6; font-size: 15px; }
+  .intro button { border: 0; border-radius: 999px; padding: 15px 34px; background: #fff; color: var(--ink); font: 600 14px/1 system-ui, sans-serif;
+    letter-spacing: .06em; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,.3); transition: transform .2s ease; }
+  .intro button:hover { transform: translateY(-2px); }
+  .intro button[disabled] { opacity: .6; cursor: progress; transform: none; }
+  .intro .keys { margin-top: 1.6rem; font-size: 12px; color: rgba(255,255,255,.6); letter-spacing: .04em; }
+  .intro .keys kbd { display: inline-block; min-width: 22px; padding: 3px 6px; margin: 0 1px; border-radius: 5px; border: 1px solid rgba(255,255,255,.35);
+    font: 600 11px/1.2 system-ui, sans-serif; color: #fff; }
+  .fade { inset: 0; z-index: 30; background: #f4f3f0; opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+  .fade.is-on { opacity: 1; }
+  .err { inset: 0; z-index: 40; display: none; align-items: center; justify-content: center; padding: 24px; text-align: center; background: #07070f; }
+  .err a { color: #fff; }
+  @media (max-width: 640px) {
+    .back span { display: none; }
+    .back { padding: 10px; }
+    .sections { top: 64px; }
+  }
+</style>
+</head>
+<body>
+<button class="ui back" type="button" id="back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span id="backTxt">arthemii.com</span></button>
+<nav class="ui sections" id="sections" aria-label="Sections"></nav>
+<div class="ui hint is-hidden" id="hint"></div>
+<div class="ui tip" id="tip"></div>
+<div class="ui stick" id="stick" aria-hidden="true"><i></i></div>
+<div class="ui intro" id="intro">
+  <div>
+    <h1>Arthemii Ionaere</h1>
+    <p id="introTxt"></p>
+    <button type="button" id="enter" disabled></button>
+    <div class="keys" id="keys"></div>
+  </div>
+</div>
+<div class="ui fade" id="fade"></div>
+<div class="ui err" id="err"><p id="errTxt"></p></div>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+/* ---------- language ---------- */
+const params = new URLSearchParams(location.search);
+const STATIC = ['de', 'es', 'fr', 'it'];
+function pickLang() {
+  const q = params.get('lang');
+  if (q) return q.toLowerCase();
+  try { const p = localStorage.getItem('langPicked'); if (p) return p; } catch (e) {}
+  return (navigator.language || 'en').toLowerCase().split('-')[0];
+}
+const LANG = pickLang();
+const T = {
+  en: { intro: 'A walk through the work: stained glass, sculptures, videos, drawings and AI studies — every window leads to its page on the site.', enter: 'Enter', loading: 'Loading…',
+        keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows — walk · <kbd>Shift</kbd> — faster · drag — look around · click a work — open it',
+        hint: 'W A S D / arrows — walk · drag — look · click a work — open it', hintTouch: 'Joystick — walk · drag — look · tap a work — open it',
+        back: 'arthemii.com', open: 'Open', start: 'Back to the entrance', err: 'Your browser cannot show the 3D space (WebGL is off).', site: 'Back to the site',
+        s: { gallery: 'Gallery', videos: 'Videos', projects: 'Projects', drawings: 'Drawings', ai: 'AI Art', exhibitions: 'Exhibitions' }, welcome: 'Walk through the work' },
+  de: { intro: 'Ein Rundgang durch das Werk: Glasmalerei, Skulpturen, Videos, Zeichnungen und KI-Studien — jedes Fenster führt zu seiner Seite.', enter: 'Eintreten', loading: 'Wird geladen…',
+        keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> oder Pfeiltasten — gehen · <kbd>Shift</kbd> — schneller · ziehen — umsehen · Werk anklicken — öffnen',
+        hint: 'W A S D / Pfeiltasten — gehen · ziehen — umsehen · Werk anklicken — öffnen', hintTouch: 'Joystick — gehen · ziehen — umsehen · Werk antippen — öffnen',
+        back: 'arthemii.com', open: 'Öffnen', start: 'Zurück zum Eingang', err: 'Dein Browser kann den 3D-Raum nicht anzeigen (WebGL ist aus).', site: 'Zurück zur Website',
+        s: { gallery: 'Galerie', videos: 'Videos', projects: 'Projekte', drawings: 'Zeichnungen', ai: 'KI-Kunst', exhibitions: 'Ausstellungen' }, welcome: 'Ein Gang durch das Werk' },
+  es: { intro: 'Un paseo por la obra: vitrales, esculturas, vídeos, dibujos y estudios con IA — cada ventana lleva a su página.', enter: 'Entrar', loading: 'Cargando…',
+        keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> o flechas — caminar · <kbd>Shift</kbd> — más rápido · arrastrar — mirar · clic en una obra — abrirla',
+        hint: 'W A S D / flechas — caminar · arrastrar — mirar · clic en una obra — abrirla', hintTouch: 'Joystick — caminar · arrastrar — mirar · toca una obra — abrirla',
+        back: 'arthemii.com', open: 'Abrir', start: 'Volver a la entrada', err: 'Tu navegador no puede mostrar el espacio 3D (WebGL desactivado).', site: 'Volver al sitio',
+        s: { gallery: 'Galería', videos: 'Vídeos', projects: 'Proyectos', drawings: 'Dibujos', ai: 'Arte IA', exhibitions: 'Exposiciones' }, welcome: 'Un paseo por la obra' },
+  fr: { intro: "Une promenade dans l'œuvre : vitraux, sculptures, vidéos, dessins et études IA — chaque fenêtre mène à sa page.", enter: 'Entrer', loading: 'Chargement…',
+        keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> ou flèches — marcher · <kbd>Shift</kbd> — plus vite · glisser — regarder · clic sur une œuvre — l’ouvrir',
+        hint: 'W A S D / flèches — marcher · glisser — regarder · clic sur une œuvre — l’ouvrir', hintTouch: 'Joystick — marcher · glisser — regarder · toucher une œuvre — l’ouvrir',
+        back: 'arthemii.com', open: 'Ouvrir', start: "Retour à l'entrée", err: "Votre navigateur ne peut pas afficher l'espace 3D (WebGL désactivé).", site: 'Retour au site',
+        s: { gallery: 'Galerie', videos: 'Vidéos', projects: 'Projets', drawings: 'Dessins', ai: 'Art IA', exhibitions: 'Expositions' }, welcome: "Une promenade dans l'œuvre" },
+  it: { intro: "Una passeggiata nell'opera: vetrate, sculture, video, disegni e studi IA — ogni finestra porta alla sua pagina.", enter: 'Entra', loading: 'Caricamento…',
+        keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> o frecce — cammina · <kbd>Shift</kbd> — più veloce · trascina — guarda · clic su un’opera — aprila',
+        hint: 'W A S D / frecce — cammina · trascina — guarda · clic su un’opera — aprila', hintTouch: 'Joystick — cammina · trascina — guarda · tocca un’opera — aprila',
+        back: 'arthemii.com', open: 'Apri', start: "Torna all'ingresso", err: 'Il tuo browser non può mostrare lo spazio 3D (WebGL disattivato).', site: 'Torna al sito',
+        s: { gallery: 'Galleria', videos: 'Video', projects: 'Progetti', drawings: 'Disegni', ai: 'Arte IA', exhibitions: 'Mostre' }, welcome: "Una passeggiata nell'opera" },
+  ru: { intro: 'Прогулка по работам: витражи, скульптуры, видео, рисунки и AI-этюды — каждое окно ведёт на свою страницу сайта.', enter: 'Войти', loading: 'Загрузка…',
+        keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> или стрелки — идти · <kbd>Shift</kbd> — быстрее · тянуть мышью — осмотреться · клик по работе — открыть',
+        hint: 'W A S D / стрелки — идти · тянуть — осмотреться · клик по работе — открыть', hintTouch: 'Джойстик — идти · свайп — осмотреться · тап по работе — открыть',
+        back: 'arthemii.com', open: 'Открыть', start: 'Назад ко входу', err: 'Браузер не может показать 3D-пространство (WebGL выключен).', site: 'Вернуться на сайт',
+        s: { gallery: 'Галерея', videos: 'Видео', projects: 'Проекты', drawings: 'Рисунки', ai: 'AI-арт', exhibitions: 'Выставки' }, welcome: 'Прогулка по работам' }
+};
+const L = T[LANG] || T.en;
+document.documentElement.lang = T[LANG] ? LANG : 'en';
+const PREFIX = STATIC.includes(LANG) ? '/' + LANG : '';
+function pageUrl(u) {
+  if (!u) return PREFIX + '/';
+  if (/^https?:/.test(u)) return u;
+  return PREFIX + (u.startsWith('/') ? u : '/' + u);
+}
+function asset(p) { return /^(https?:|\/)/.test(p) ? p : '/' + p; }
+
+const $ = id => document.getElementById(id);
+$('introTxt').textContent = L.intro;
+$('enter').textContent = L.loading;
+$('keys').innerHTML = L.keys;
+$('backTxt').textContent = L.back;
+const isTouch = matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+if (isTouch) document.body.classList.add('touch');
+$('hint').textContent = isTouch ? L.hintTouch : L.hint;
+
+function leave(url) {
+  $('fade').classList.add('is-on');
+  setTimeout(() => { location.href = url; }, 280);
+}
+$('back').addEventListener('click', () => {
+  try {
+    if (document.referrer && new URL(document.referrer).origin === location.origin && !/\/space\//.test(document.referrer) && history.length > 1) { history.back(); return; }
+  } catch (e) {}
+  leave(PREFIX + '/');
+});
+window.addEventListener('pageshow', () => $('fade').classList.remove('is-on'));
+
+/* ---------- renderer ---------- */
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+} catch (e) {
+  $('errTxt').innerHTML = L.err + '<br><br><a href="' + PREFIX + '/">' + L.site + '</a>';
+  $('err').style.display = 'flex';
+  throw e;
+}
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NoToneMapping;
+document.body.prepend(renderer.domElement);
+renderer.domElement.tabIndex = 0;
+
+const BG = 0xeceae6;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(BG);
+scene.fog = new THREE.Fog(BG, 14, 58);
+const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.05, 140);
+const EYE = 1.62;
+camera.rotation.order = 'YXZ';
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0xcdc6bb, 1.15));
+const sun = new THREE.DirectionalLight(0xfff4e6, 0.55);
+sun.position.set(3, 8, 4);
+scene.add(sun);
+
+/* ---------- small canvas helpers ---------- */
+function canvasTex(w, h, draw) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
+  return t;
+}
+function textTex(text, { size = 64, color = '#111', font = 'Hahmlet, Georgia, serif', weight = 300, w = 1024, h = 160, align = 'center', sub = '', subColor = '#777' } = {}) {
+  return canvasTex(w, h, (g, W, H) => {
+    g.clearRect(0, 0, W, H);
+    g.fillStyle = color;
+    g.textAlign = align;
+    g.textBaseline = 'middle';
+    let s = size;
+    g.font = `${weight} ${s}px ${font}`;
+    while (g.measureText(text).width > W * 0.94 && s > 12) { s -= 2; g.font = `${weight} ${s}px ${font}`; }
+    const x = align === 'center' ? W / 2 : align === 'left' ? W * 0.03 : W * 0.97;
+    g.fillText(text, x, sub ? H * 0.4 : H / 2);
+    if (sub) {
+      g.fillStyle = subColor;
+      g.font = `500 ${Math.round(size * 0.34)}px system-ui, sans-serif`;
+      g.fillText(sub.toUpperCase(), x, H * 0.78);
+    }
+  });
+}
+const glowTex = canvasTex(128, 128, (g, W, H) => {
+  const r = g.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W / 2);
+  r.addColorStop(0, 'rgba(255,255,255,1)');
+  r.addColorStop(0.45, 'rgba(255,255,255,.45)');
+  r.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = r; g.fillRect(0, 0, W, H);
+});
+const floorTex = canvasTex(512, 512, (g, W, H) => {
+  g.fillStyle = '#d9d6d0'; g.fillRect(0, 0, W, H);
+  const img = g.getImageData(0, 0, W, H), d = img.data;
+  for (let i = 0; i < d.length; i += 4) { const n = (Math.random() - 0.5) * 14; d[i] += n; d[i + 1] += n; d[i + 2] += n; }
+  g.putImageData(img, 0, 0);
+  g.strokeStyle = 'rgba(0,0,0,.06)'; g.lineWidth = 2;
+  g.strokeRect(0, 0, W, H);
+});
+floorTex.wrapS = floorTex.wrapT = THREE.RepeatWrapping;
+
+/* ---------- content ---------- */
+const W = 14, H = 5.2, HALF = W / 2, SP = 3.25, FRAME_MAXW = 2.5, FRAME_MAXH = 2.05;
+const items = [];          // every clickable thing
+const sectionsAt = [];     // { id, z0, z1 }
+let zStart = 8, zEnd = 0;
+
+const loader = new THREE.TextureLoader();
+const wallMat = new THREE.MeshLambertMaterial({ color: 0xf5f4f1 });
+const darkMat = new THREE.MeshLambertMaterial({ color: 0x1b1b1b });
+const placeholderMat = new THREE.MeshBasicMaterial({ color: 0xe2dfda });
+const plane = new THREE.PlaneGeometry(1, 1);
+
+function addFrame(it, x, z, facing) {
+  const g = new THREE.Group();
+  g.position.set(x, 2.05, z);
+  g.rotation.y = facing;
+  const back = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 0.06), darkMat);
+  back.position.z = -0.035;
+  const pic = new THREE.Mesh(plane, placeholderMat);
+  g.add(back, pic);
+  const label = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 0.3), new THREE.MeshBasicMaterial({ map: textTex(it.t || '', { size: 30, w: 512, h: 84, sub: it.kind === 'video' ? '▶ ' + L.s.videos : '' }), transparent: true, depthWrite: false }));
+  g.add(label);
+  scene.add(g);
+  const o = { ...it, group: g, pic, back, label, w: 1.7, h: 1.25, state: 'idle', z };
+  setSize(o, 1.7, 1.25);
+  pic.userData.item = o; back.userData.item = o; label.userData.item = o;
+  items.push(o);
+  return o;
+}
+function setSize(o, w, h) {
+  const s = Math.min(FRAME_MAXW / w, FRAME_MAXH / h);
+  const fw = w * s, fh = h * s;
+  o.w = fw; o.h = fh;
+  o.pic.scale.set(fw, fh, 1);
+  o.back.scale.set(fw + 0.12, fh + 0.12, 1);
+  o.label.position.set(0, -fh / 2 - 0.3, 0.01);
+  if (o.glow) o.glow.scale.set(2.6, fw * 1.5, 1);
+}
+function addGlow(o, color) {
+  if (o.glow) return;
+  const m = new THREE.Mesh(plane, new THREE.MeshBasicMaterial({ map: glowTex, color, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false }));
+  m.rotation.x = -Math.PI / 2;
+  const wx = o.group.position.x, dir = wx < 0 ? 1 : -1;
+  m.position.set(wx + dir * 1.25, 0.012, o.group.position.z);
+  m.scale.set(2.6, o.w * 1.5, 1);
+  scene.add(m);
+  o.glow = m;
+}
+function averageColor(img) {
+  try {
+    const c = document.createElement('canvas'); c.width = c.height = 8;
+    const g = c.getContext('2d'); g.drawImage(img, 0, 0, 8, 8);
+    const d = g.getImageData(0, 0, 8, 8).data; let r = 0, gg = 0, b = 0;
+    for (let i = 0; i < d.length; i += 4) { r += d[i]; gg += d[i + 1]; b += d[i + 2]; }
+    const col = new THREE.Color(r / 64 / 255, gg / 64 / 255, b / 64 / 255);
+    const hsl = {}; col.getHSL(hsl);
+    col.setHSL(hsl.h, Math.min(1, hsl.s * 1.8 + 0.15), 0.55);
+    return col;
+  } catch (e) { return new THREE.Color(0xffffff); }
+}
+
+function signPlane(text, z, sub) {
+  // Two faces back to back, so the name reads correctly from both directions
+  const tex = textTex(text, { size: 120, w: 1600, h: 300, weight: 300, sub });
+  const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false });
+  const geo = new THREE.PlaneGeometry(8, 1.5);
+  const front = new THREE.Mesh(geo, mat);
+  front.position.set(0, H - 1.05, z);
+  const back = new THREE.Mesh(geo, mat);
+  back.position.set(0, H - 1.05, z - 0.02);
+  back.rotation.y = Math.PI;
+  scene.add(front, back);
+}
+function arch(z) {
+  const t = 0.18;
+  const top = new THREE.Mesh(new THREE.BoxGeometry(W, t, t), darkMat); top.position.set(0, H - 0.02, z);
+  const l = new THREE.Mesh(new THREE.BoxGeometry(t, H, t), darkMat); l.position.set(-HALF + 0.05, H / 2, z);
+  const r = l.clone(); r.position.x = HALF - 0.05;
+  scene.add(top, l, r);
+}
+
+async function build(data) {
+  await Promise.race([document.fonts.load('300 64px Hahmlet'), new Promise(r => setTimeout(r, 2500))]).catch(() => {});
+  // Entrance
+  const title = new THREE.Mesh(new THREE.PlaneGeometry(10, 1.9), new THREE.MeshBasicMaterial({ map: textTex('Arthemii Ionaere', { size: 150, w: 1600, h: 300, weight: 300, sub: L.welcome }), transparent: true }));
+  title.position.set(0, 2.55, zStart + 1.9);
+  title.rotation.y = Math.PI;
+  scene.add(title);
+  // Title is seen when turning around; a second one ahead greets the visitor
+  let z = zStart - 4;
+  const nav = $('sections');
+  data.sections.forEach((s, si) => {
+    const list = s.items.filter(i => i.img || i.clip);
+    if (!list.length) return;
+    const z0 = z;
+    arch(z0);
+    signPlane(L.s[s.id] || s.title || s.id, z0 - 0.4);
+    let zi = z0 - 2.6;
+    list.forEach((it, i) => {
+      const left = i % 2 === 0;
+      const slot = Math.floor(i / 2);
+      const iz = zi - slot * SP;
+      it.kind = it.clip ? 'video' : 'image';
+      it.section = s.id;
+      addFrame(it, left ? -HALF + 0.04 : HALF - 0.04, iz, left ? Math.PI / 2 : -Math.PI / 2);
+    });
+    z = zi - Math.ceil(list.length / 2) * SP - 1.2;
+    sectionsAt.push({ id: s.id, z0, z1: z });
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = L.s[s.id] || s.title || s.id;
+    b.addEventListener('click', () => glideTo(z0 - 1.2));
+    b.dataset.id = s.id;
+    nav.appendChild(b);
+  });
+  zEnd = z - 1;
+  // End wall: back to the entrance
+  const endSign = new THREE.Mesh(new THREE.PlaneGeometry(9, 1.7), new THREE.MeshBasicMaterial({ map: textTex('↺  ' + L.start, { size: 96, w: 1600, h: 300, weight: 300 }), transparent: true }));
+  endSign.position.set(0, 2.3, zEnd + 0.06);
+  endSign.userData.item = { action: 'start', t: L.start };
+  scene.add(endSign);
+  items.push({ group: endSign, pic: endSign, back: endSign, label: endSign, action: 'start', t: L.start, z: zEnd, state: 'static' });
+
+  // Room
+  const len = zStart + 2 - zEnd;
+  const zMid = (zStart + 2 + zEnd) / 2;
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(W, len), new THREE.MeshLambertMaterial({ map: floorTex }));
+  floorTex.repeat.set(W / 3, len / 3);
+  floor.rotation.x = -Math.PI / 2; floor.position.set(0, 0, zMid);
+  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(W, len), new THREE.MeshLambertMaterial({ color: 0xfbfaf8 }));
+  ceil.rotation.x = Math.PI / 2; ceil.position.set(0, H, zMid);
+  const wl = new THREE.Mesh(new THREE.PlaneGeometry(len, H), wallMat); wl.rotation.y = Math.PI / 2; wl.position.set(-HALF, H / 2, zMid);
+  const wr = new THREE.Mesh(new THREE.PlaneGeometry(len, H), wallMat); wr.rotation.y = -Math.PI / 2; wr.position.set(HALF, H / 2, zMid);
+  const we = new THREE.Mesh(new THREE.PlaneGeometry(W, H), wallMat); we.position.set(0, H / 2, zEnd);
+  const ws = new THREE.Mesh(new THREE.PlaneGeometry(W, H), wallMat); ws.rotation.y = Math.PI; ws.position.set(0, H / 2, zStart + 2);
+  scene.add(floor, ceil, wl, wr, we, ws);
+  // Light strips on the ceiling
+  const stripMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  for (const x of [-2.2, 2.2]) {
+    const s = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.04, len - 2), stripMat);
+    s.position.set(x, H - 0.03, zMid);
+    scene.add(s);
+  }
+  // Skirting
+  for (const x of [-HALF + 0.02, HALF - 0.02]) {
+    const s = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.12, len), darkMat);
+    s.position.set(x, 0.06, zMid);
+    scene.add(s);
+  }
+}
+
+/* ---------- lazy textures and videos ---------- */
+const LOAD_R = 30, UNLOAD_R = 48, PLAY_R = 9, STOP_R = 13, MAX_PLAYING = 4, HEAVY_R = 5.5;
+let loadingCount = 0;
+function loadImage(o) {
+  if (!o.img || o.state !== 'idle' || loadingCount > 6) return;
+  o.state = 'loading';
+  loadingCount++;
+  loader.load(asset(o.img), tex => {
+    loadingCount--;
+    if (o.state !== 'loading') { tex.dispose(); return; }
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy ? Math.min(8, renderer.capabilities.getMaxAnisotropy()) : 4;
+    o.tex = tex;
+    if (!o.video) o.pic.material = new THREE.MeshBasicMaterial({ map: tex, toneMapped: false });
+    const im = tex.image;
+    setSize(o, im.width || 4, im.height || 3);
+    if (o.section === 'gallery' || o.section === 'projects' || o.section === 'exhibitions') addGlow(o, averageColor(im));
+    o.state = 'ready';
+  }, undefined, () => { loadingCount--; o.state = 'failed'; });
+}
+function unloadImage(o) {
+  if (o.state === 'ready' || o.state === 'loading') {
+    if (o.tex) { o.tex.dispose(); o.tex = null; }
+    if (o.pic.material !== placeholderMat && !o.video) { o.pic.material.dispose(); o.pic.material = placeholderMat; }
+    o.state = 'idle';
+  }
+}
+function startVideo(o) {
+  if (o.video || !o.clip) return;
+  const v = document.createElement('video');
+  v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
+  v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+  v.src = asset(o.clip);
+  o.video = v;
+  v.addEventListener('loadeddata', () => {
+    if (o.video !== v) return;
+    const vt = new THREE.VideoTexture(v);
+    vt.colorSpace = THREE.SRGBColorSpace;
+    o.vtex = vt;
+    o.pic.material = new THREE.MeshBasicMaterial({ map: vt, toneMapped: false });
+    if (v.videoWidth) setSize(o, v.videoWidth, v.videoHeight);
+  }, { once: true });
+  const p = v.play(); if (p && p.catch) p.catch(() => {});
+}
+function stopVideo(o) {
+  if (!o.video) return;
+  const v = o.video; o.video = null;
+  v.pause(); v.removeAttribute('src'); v.load();
+  if (o.vtex) { o.vtex.dispose(); o.vtex = null; }
+  if (o.pic.material !== placeholderMat) { o.pic.material.dispose(); }
+  o.pic.material = o.tex ? new THREE.MeshBasicMaterial({ map: o.tex, toneMapped: false }) : placeholderMat;
+}
+let lastStream = 0;
+function stream(now) {
+  if (now - lastStream < 250) return;
+  lastStream = now;
+  const cz = camera.position.z, cx = camera.position.x;
+  const near = [];
+  for (const o of items) {
+    if (o.state === 'static') continue;
+    const d = Math.abs(o.z - cz);
+    if (d < LOAD_R) loadImage(o);
+    else if (d > UNLOAD_R) unloadImage(o);
+    if (o.clip) {
+      const dist = Math.hypot(o.z - cz, o.group.position.x - cx);
+      if (dist < PLAY_R) near.push([dist, o]);
+      else if (dist > STOP_R) stopVideo(o);
+    }
+  }
+  near.sort((a, b) => a[0] - b[0]);
+  // Short clips play in a wider circle; full-length films only right in front of you, one at a time
+  let n = 0, heavy = 0;
+  near.forEach(([dist, o]) => {
+    const ok = o.heavy ? (dist < HEAVY_R && heavy < 1) : n < MAX_PLAYING;
+    if (ok) { startVideo(o); if (o.heavy) heavy++; else n++; }
+    else stopVideo(o);
+  });
+}
+
+/* ---------- movement ---------- */
+const keys = {};
+let yaw = 0, pitch = 0, glide = null;
+const vel = new THREE.Vector3();
+addEventListener('keydown', e => {
+  if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  keys[e.code] = true;
+  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) e.preventDefault();
+  if (e.code === 'Escape') $('back').click();
+  glide = null;
+  hideHint();
+});
+addEventListener('keyup', e => { keys[e.code] = false; });
+addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
+
+function glideTo(z) { glide = { z: Math.min(zStart, Math.max(zEnd + 1.5, z)), x: 0 }; yaw = 0; }
+
+const el = renderer.domElement;
+let drag = null;
+el.addEventListener('pointerdown', e => {
+  el.focus();
+  drag = { id: e.pointerId, x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, t: performance.now(), moved: false };
+  try { el.setPointerCapture(e.pointerId); } catch (err) {}
+});
+el.addEventListener('pointermove', e => {
+  mouse.x = e.clientX; mouse.y = e.clientY; mouse.in = true;
+  if (!drag || drag.id !== e.pointerId) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  drag.x = e.clientX; drag.y = e.clientY;
+  if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 6) { drag.moved = true; hideHint(); }
+  if (drag.moved) {
+    const k = isTouch ? 0.0055 : 0.0038;
+    yaw += dx * k;
+    pitch = Math.max(-0.7, Math.min(0.7, pitch + dy * k));
+    glide = null;
+  }
+});
+el.addEventListener('pointerup', e => {
+  if (!drag || drag.id !== e.pointerId) return;
+  const d = drag; drag = null;
+  if (!d.moved && performance.now() - d.t < 600) clickAt(e.clientX, e.clientY);
+});
+el.addEventListener('pointercancel', () => { drag = null; });
+el.addEventListener('pointerleave', () => { mouse.in = false; });
+el.addEventListener('wheel', e => { e.preventDefault(); wheelPush += Math.sign(e.deltaY) * -0.9; glide = null; }, { passive: false });
+let wheelPush = 0;
+
+// Touch joystick
+const stick = $('stick'), knob = stick.querySelector('i');
+const joy = { x: 0, y: 0, id: null };
+stick.addEventListener('pointerdown', e => { joy.id = e.pointerId; stick.setPointerCapture(e.pointerId); moveJoy(e); hideHint(); glide = null; e.stopPropagation(); });
+stick.addEventListener('pointermove', e => { if (joy.id === e.pointerId) moveJoy(e); });
+const endJoy = () => { joy.id = null; joy.x = joy.y = 0; knob.style.transform = ''; };
+stick.addEventListener('pointerup', endJoy);
+stick.addEventListener('pointercancel', endJoy);
+function moveJoy(e) {
+  const r = stick.getBoundingClientRect();
+  let x = (e.clientX - (r.left + r.width / 2)) / (r.width / 2), y = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+  const l = Math.hypot(x, y); if (l > 1) { x /= l; y /= l; }
+  joy.x = x; joy.y = y;
+  knob.style.transform = `translate(${x * 34}px, ${y * 34}px)`;
+}
+
+/* ---------- picking ---------- */
+const ray = new THREE.Raycaster();
+const mouse = { x: 0, y: 0, in: false };
+const ndc = new THREE.Vector2();
+function pick(x, y) {
+  ndc.set((x / innerWidth) * 2 - 1, -(y / innerHeight) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  ray.far = 16;
+  const meshes = [];
+  for (const o of items) { if (Math.abs(o.z - camera.position.z) < 18) { meshes.push(o.pic); if (o.back !== o.pic) meshes.push(o.back); } }
+  const hit = ray.intersectObjects(meshes, false)[0];
+  return hit ? hit.object.userData.item : null;
+}
+function clickAt(x, y) {
+  const o = pick(x, y);
+  if (!o) return;
+  if (o.action === 'start') { glideTo(zStart - 1); return; }
+  leave(pageUrl(o.url));
+}
+const tip = $('tip');
+let hoverT = 0;
+function hover(now) {
+  if (isTouch || !mouse.in || drag) { tip.classList.remove('is-on'); el.style.cursor = drag ? 'grabbing' : 'grab'; return; }
+  if (now - hoverT < 60) return;
+  hoverT = now;
+  const o = pick(mouse.x, mouse.y);
+  if (o) {
+    el.style.cursor = 'pointer';
+    tip.innerHTML = '';
+    const b = document.createElement('b'); b.textContent = o.t || '';
+    const s = document.createElement('small'); s.textContent = (o.action === 'start' ? '↺' : L.open + ' →');
+    tip.append(b, s);
+    tip.style.left = mouse.x + 'px'; tip.style.top = mouse.y + 'px';
+    tip.classList.add('is-on');
+  } else {
+    el.style.cursor = 'grab';
+    tip.classList.remove('is-on');
+  }
+}
+
+/* ---------- hint ---------- */
+let hintTimer = null;
+function showHint() { $('hint').classList.remove('is-hidden'); clearTimeout(hintTimer); hintTimer = setTimeout(hideHint, 9000); }
+function hideHint() { $('hint').classList.add('is-hidden'); }
+
+/* ---------- loop ---------- */
+const clock = new THREE.Clock();
+const fwd = new THREE.Vector3(), right = new THREE.Vector3();
+let curSection = null;
+function tick() {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  const now = performance.now();
+  // turning with arrows
+  const turn = (keys.ArrowLeft ? 1 : 0) - (keys.ArrowRight ? 1 : 0);
+  yaw += turn * 1.9 * dt;
+  let f = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0) - joy.y;
+  let s = (keys.KeyD ? 1 : 0) - (keys.KeyA ? 1 : 0) + joy.x;
+  const run = keys.ShiftLeft || keys.ShiftRight ? 2.3 : 1;
+  const speed = 4.6 * run;
+  fwd.set(-Math.sin(yaw), 0, -Math.cos(yaw));
+  right.set(Math.cos(yaw), 0, -Math.sin(yaw));
+  const target = new THREE.Vector3().addScaledVector(fwd, f).addScaledVector(right, s);
+  if (target.lengthSq() > 1) target.normalize();
+  target.multiplyScalar(speed);
+  if (wheelPush) { target.addScaledVector(fwd, wheelPush * 6); wheelPush *= 0.82; if (Math.abs(wheelPush) < 0.02) wheelPush = 0; }
+  vel.lerp(target, 1 - Math.pow(0.0008, dt));
+  if (glide) {
+    const dz = glide.z - camera.position.z, dx = glide.x - camera.position.x;
+    camera.position.z += dz * Math.min(1, dt * 3.2);
+    camera.position.x += dx * Math.min(1, dt * 3.2);
+    vel.set(0, 0, 0);
+    if (Math.abs(dz) < 0.05) glide = null;
+  } else {
+    camera.position.addScaledVector(vel, dt);
+  }
+  camera.position.x = Math.max(-HALF + 0.9, Math.min(HALF - 0.9, camera.position.x));
+  camera.position.z = Math.max(zEnd + 1.2, Math.min(zStart + 1.2, camera.position.z));
+  // gentle head bob while walking
+  const sp = vel.length();
+  camera.position.y = EYE + Math.sin(now * 0.009) * 0.025 * Math.min(1, sp / 4);
+  camera.rotation.set(pitch, yaw, 0);
+  if (!drag && sp > 0.3) pitch *= Math.pow(0.35, dt);
+
+  stream(now);
+  hover(now);
+  for (const o of items) if (o.vtex && o.video && o.video.readyState >= 2) o.vtex.needsUpdate = true;
+
+  // section chips
+  const cz = camera.position.z;
+  const sec = sectionsAt.find(x => cz <= x.z0 + 0.5 && cz > x.z1);
+  const id = sec ? sec.id : null;
+  if (id !== curSection) {
+    curSection = id;
+    document.querySelectorAll('#sections button').forEach(b => b.classList.toggle('is-on', b.dataset.id === id));
+  }
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+document.addEventListener('visibilitychange', () => {
+  for (const o of items) if (o.video) { if (document.hidden) o.video.pause(); else { const p = o.video.play(); if (p && p.catch) p.catch(() => {}); } }
+});
+
+/* ---------- start ---------- */
+camera.position.set(0, EYE, zStart);
+fetch('content.json', { cache: 'no-cache' })
+  .then(r => r.json())
+  .then(build)
+  .then(() => {
+    stream(1e9);
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+    const btn = $('enter');
+    btn.disabled = false;
+    btn.textContent = L.enter;
+    const go = () => {
+      $('intro').classList.add('is-gone');
+      el.focus();
+      showHint();
+      // a user gesture lets every browser start the videos
+      for (const o of items) if (o.video) { const p = o.video.play(); if (p && p.catch) p.catch(() => {}); }
+    };
+    btn.addEventListener('click', go);
+    addEventListener('keydown', function k(e) { if (e.code === 'Enter' || e.code === 'Space') { removeEventListener('keydown', k); go(); } });
+  })
+  .catch(err => {
+    console.error(err);
+    $('errTxt').innerHTML = L.err + '<br><br><a href="' + PREFIX + '/">' + L.site + '</a>';
+    $('err').style.display = 'flex';
+  });
+</script>
+</body>
+</html>
