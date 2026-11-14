@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Progetti e tecniche di Arthemii Ionaere, Berlino: scultura su telaio metallico, scultura con parti in vetro, Falling Shadows, il prisma cinetico e la classica vetrata Tiffany.">
+    <meta name="theme-color" content="#fafafa">
+    <title>Progetti — Scultura in vetro, prismi cinetici e vetrata Tiffany | Arthemii Ionaere</title>
+    <link rel="canonical" href="https://arthemii.com/it/projects/">
+    <link rel="alternate" hreflang="en" href="https://arthemii.com/projects/">
+    <link rel="alternate" hreflang="de" href="https://arthemii.com/de/projects/">
+    <link rel="alternate" hreflang="es" href="https://arthemii.com/es/projects/">
+    <link rel="alternate" hreflang="fr" href="https://arthemii.com/fr/projects/">
+    <link rel="alternate" hreflang="it" href="https://arthemii.com/it/projects/">
+    <link rel="alternate" hreflang="x-default" href="https://arthemii.com/projects/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:site_name" content="Arthemii Ionaere">
+    <meta property="og:title" content="Progetti — Scultura in vetro, prismi cinetici e vetrata Tiffany | Arthemii Ionaere">
+    <meta property="og:description" content="Progetti e tecniche di Arthemii Ionaere, Berlino: scultura su telaio metallico, scultura con parti in vetro, Falling Shadows, il prisma cinetico e la classica vetrata Tiffany.">
+    <meta property="og:url" content="https://arthemii.com/it/projects/">
+    <meta property="og:image" content="https://arthemii.com/img/og-default.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .header { transform: none !important; animation: none !important; }
+        .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+            opacity: 1 !important; transform: none !important; transition: none !important;
+        }
+        .hero__eyebrow, .hero__title, .hero__subtitle, .hero__desc, .hero__actions, .hero__image {
+            opacity: 1 !important; transform: none !important; animation: none !important;
+        }
+        /* ===== Projects page: all photos visible inside the screen, uncropped =====
+           Photos sit in rows of equal height that fill the width exactly (each keeps its proportions, --r);
+           the row grouping is computed by the script at the bottom and redone on resize. */
+        .tech-block__inner { grid-template-columns: 1fr; gap: var(--spacing-md); }
+        .tech-block__inner > div:first-child { max-width: 720px; }
+        .tech-gallery { display: flex; flex-wrap: wrap; gap: var(--gap); --gap: 8px; min-width: 0; }
+        /* Fallback before the script runs: proportional flex rows */
+        .tech-gallery .tech-block__photo {
+            flex: var(--r) 1 calc(var(--r) * 220px);
+            aspect-ratio: var(--r);
+            min-width: 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+        .tech-gallery .tech-video {
+            flex: var(--r) 1 calc(var(--r) * 220px);
+            aspect-ratio: var(--r);
+            min-width: 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: #111;
+        }
+        .tech-gallery .tech-video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .tech-gallery.is-laid-out .tech-block__photo, .tech-gallery.is-laid-out .tech-video { flex: none; }
+        .tech-gallery .tech-block__photo picture,
+        .tech-gallery .tech-block__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        @media (max-width: 768px) { .tech-gallery { --gap: 6px; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="../" class="header__logo">Arthemii Ionaere</a>
+        <nav class="header__nav">
+            <a href="../about/" class="header__link">Chi sono</a>
+            <a href="../works/" class="header__link">Opere</a>
+            <a href="../projects/" class="header__link">Progetti</a>
+            <a href="../drawings/" class="header__link">Disegni</a>
+            <a href="../ai-content/" class="header__link">Contenuti AI</a>
+            <a href="../videos/" class="header__link">Video</a>
+            <a href="../gallery/" class="header__link">Galleria</a>
+            <a href="../contact/" class="header__link">Contatti</a>
+            <div class="header__lang" role="group" aria-label="Language">
+                <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+                <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+                <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+                <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+                <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+            </div>
+        </nav>
+        <button class="header__menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span></button>
+    </header>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close"></button>
+        <a href="../about/" class="mobile-nav__link">Chi sono</a>
+        <a href="../works/" class="mobile-nav__link">Opere</a>
+        <a href="../projects/" class="mobile-nav__link">Progetti</a>
+        <a href="../drawings/" class="mobile-nav__link">Disegni</a>
+        <a href="../ai-content/" class="mobile-nav__link">Contenuti AI</a>
+        <a href="../videos/" class="mobile-nav__link">Video</a>
+        <a href="../gallery/" class="mobile-nav__link">Galleria</a>
+        <a href="../contact/" class="mobile-nav__link">Contatti</a>
+        <div class="header__lang" role="group" aria-label="Language">
+            <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+            <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+            <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+            <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+            <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+        </div>
+    </div>
+    <main style="padding-top:calc(72px + 2rem)">
+<!-- ========== PROJECTS ========== -->
+        <section class="section" id="projects">
+            <div class="container">
+                <header class="section__header reveal">
+                    <div class="section__label">Progetti</div>
+                    <h1 class="section__title">Artigianato e tecniche</h1>
+                    <p class="section__desc">Cinque approcci distinti alla lavorazione del vetro colorato — dalla tradizionale tecnica Tiffany alle installazioni sperimentali con prismi d’ombra.</p>
+                </header>
+
+                <!-- Tech 1: Metal Frame -->
+                <article class="tech-block reveal">
+                    <div class="tech-block__inner">
+                        <div>
+                            <div class="tech-block__num">01</div>
+                            <h3 class="tech-block__title">Sculture su telaio metallico</h3>
+                            <p class="tech-block__desc">Speciali forme metalliche fanno da scheletro alla vetrata, realizzate con una tecnica «edge» proprietaria per angoli precisi e grande durata. Le forme metalliche vengono piegate al raggio richiesto da ogni progetto. Gli elementi di vetro vengono cotti in forno per seguire la curvatura del telaio. Quasi tutte le creazioni hanno un impianto elettrico integrato per l’illuminazione. Possono essere installate a soffitto, a pavimento o a parete. Circa 1,5 mesi dal progetto iniziale alla realizzazione finale.</p>
+                        </div>
+                        <div class="tech-gallery">
+                            <div class="tech-block__photo" style="--r:0.361"><picture><source type="image/webp" srcset="../../img/opt/2024-02-IMG_1548-800.webp 800w, ../../img/opt/2024-02-IMG_1548-1600.webp 1600w, ../../img/opt/2024-02-IMG_1548-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-02-IMG_1548-1600.jpg" alt="Assembly — Metal Frame Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:0.361"><picture><source type="image/webp" srcset="../../img/opt/2024-02-IMG_1555-800.webp 800w, ../../img/opt/2024-02-IMG_1555-1600.webp 1600w, ../../img/opt/2024-02-IMG_1555-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-02-IMG_1555-1600.jpg" alt="Finished sculpture — Metal Frame Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:0.361"><picture><source type="image/webp" srcset="../../img/opt/2024-05-D7E9A648-1E0A-4ECC-BCD6-D96AF5511CB3-800.webp 800w, ../../img/opt/2024-05-D7E9A648-1E0A-4ECC-BCD6-D96AF5511CB3-1600.webp 1600w, ../../img/opt/2024-05-D7E9A648-1E0A-4ECC-BCD6-D96AF5511CB3-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-D7E9A648-1E0A-4ECC-BCD6-D96AF5511CB3-1600.jpg" alt="Lit sculpture — Metal Frame Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:2.333"><picture><source type="image/webp" srcset="../../img/opt/2024-02-IMG_1539-800.webp 800w, ../../img/opt/2024-02-IMG_1539-1600.webp 1600w, ../../img/opt/2024-02-IMG_1539-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-02-IMG_1539-1600.jpg" alt="Metal frame — Metal Frame Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:2.332"><picture><source type="image/webp" srcset="../../img/opt/2024-02-IMG_1542-800.webp 800w, ../../img/opt/2024-02-IMG_1542-1600.webp 1600w, ../../img/opt/2024-02-IMG_1542-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-02-IMG_1542-1600.jpg" alt="Frame bending — Metal Frame Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:2.332"><picture><source type="image/webp" srcset="../../img/opt/2024-02-IMG_1546-800.webp 800w, ../../img/opt/2024-02-IMG_1546-1600.webp 1600w, ../../img/opt/2024-02-IMG_1546-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-02-IMG_1546-1600.jpg" alt="Glass fitting — Metal Frame Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.5"><picture><source type="image/webp" srcset="../../img/opt/2024-05-Screenshot-2024-05-13-at-22.24.31-800.webp 800w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-22.24.31-1600.webp 1600w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-22.24.31-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-Screenshot-2024-05-13-at-22.24.31-1600.jpg" alt="Design detail — Metal Frame Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.5"><picture><source type="image/webp" srcset="../../img/opt/2024-05-Screenshot-2024-05-13-at-22.25.06-800.webp 800w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-22.25.06-1600.webp 1600w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-22.25.06-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-Screenshot-2024-05-13-at-22.25.06-1600.jpg" alt="Final piece — Metal Frame Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        </div>
+                    </div>
+                    <div class="tech-block__divider"></div>
+                </article>
+
+                <!-- Tech 2: Falling Shadows -->
+                <article class="tech-block reveal">
+                    <div class="tech-block__inner">
+                        <div>
+                            <div class="tech-block__num">02</div>
+                            <h3 class="tech-block__title">Ombre cadenti</h3>
+                            <p class="tech-block__desc">Tecnologia a prismi d’ombra pensata per un trasporto facile e un’installazione rapida. Elementi di vetro appositamente preparati vengono assemblati sul posto per creare sculture che funzionano come prismi. Quando sono illuminate, il vetro rifrange la luce e proietta affascinanti giochi di luce e ombra sulle superfici circostanti. Il montaggio si può completare nei giorni precedenti l’evento — circa 2–3 ore per installazione. Ideale per mostre temporanee e ambienti immersivi.</p>
+                        </div>
+                        <div class="tech-gallery">
+                            <div class="tech-block__photo" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/opt/2024-02-IMG_7255-800.webp 800w, ../../img/opt/2024-02-IMG_7255-1600.webp 1600w, ../../img/opt/2024-02-IMG_7255-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-02-IMG_7255-1600.jpg" alt="Shadow prism — Falling Shadows, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.34"><picture><source type="image/webp" srcset="../../img/opt/2024-02-IMG_7291-800.webp 800w, ../../img/opt/2024-02-IMG_7291-1600.webp 1600w, ../../img/opt/2024-02-IMG_7291-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-02-IMG_7291-1600.jpg" alt="Light patterns — Falling Shadows, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.34"><picture><source type="image/webp" srcset="../../img/opt/2024-02-Untitled-800.webp 800w, ../../img/opt/2024-02-Untitled-1600.webp 1600w, ../../img/opt/2024-02-Untitled-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-02-Untitled-1600.jpg" alt="Shadow installation — Falling Shadows, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.381"><picture><source type="image/webp" srcset="../../img/opt/2024-05-IMG_2352-800.webp 800w, ../../img/opt/2024-05-IMG_2352-1600.webp 1600w, ../../img/opt/2024-05-IMG_2352-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-IMG_2352-1600.jpg" alt="Prism assembly — Falling Shadows, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/opt/2024-05-IMG_7250-800.webp 800w, ../../img/opt/2024-05-IMG_7250-1600.webp 1600w, ../../img/opt/2024-05-IMG_7250-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-IMG_7250-1600.jpg" alt="Falling shadows result — Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        </div>
+                    </div>
+                    <div class="tech-block__divider"></div>
+                </article>
+
+                <article class="tech-block reveal">
+                    <div class="tech-block__inner">
+                        <div>
+                            <div class="tech-block__num">03</div>
+                            <h3 class="tech-block__title">Prisma cinetico</h3>
+                            <p class="tech-block__desc">Opere in movimento attraversate dalla luce: ruotando, le loro ombre creano sorprendenti effetti visivi analogici. Per questo progetto è stato sviluppato un motore apposito che permette di regolare la velocità di rotazione.</p>
+                        </div>
+                        <div class="tech-gallery">
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-08.jpg" data-src="../../video-files/kinetic/kinetic-08.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-04.jpg" data-src="../../video-files/kinetic/kinetic-04.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-07.jpg" data-src="../../video-files/kinetic/kinetic-07.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-05.jpg" data-src="../../video-files/kinetic/kinetic-05.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-10.jpg" data-src="../../video-files/kinetic/kinetic-10.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-02.jpg" data-src="../../video-files/kinetic/kinetic-02.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-06.jpg" data-src="../../video-files/kinetic/kinetic-06.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-09.jpg" data-src="../../video-files/kinetic/kinetic-09.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-03.jpg" data-src="../../video-files/kinetic/kinetic-03.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-11.jpg" data-src="../../video-files/kinetic/kinetic-11.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-13.jpg" data-src="../../video-files/kinetic/kinetic-13.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-12.jpg" data-src="../../video-files/kinetic/kinetic-12.mp4"></video></div>
+                            <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../video-files/kinetic/kinetic-01.jpg" data-src="../../video-files/kinetic/kinetic-01.mp4"></video></div>
+                        </div>
+                    </div>
+                    <div class="tech-block__divider"></div>
+                </article>
+
+                <!-- Tech 3: Glass Parts -->
+                <article class="tech-block reveal">
+                    <div class="tech-block__inner">
+                        <div>
+                            <div class="tech-block__num">04</div>
+                            <h3 class="tech-block__title">Sculture in elementi di vetro</h3>
+                            <p class="tech-block__desc">Sculture costruite con numerosi elementi di vetro saldati con cura tra loro. Prima si realizza un telaio metallico con l’impianto elettrico per l’illuminazione. I pezzi di vetro sono incorniciati in uno speciale bordo che li collega tra loro. Queste sculture abbracciano la libertà dell’espressione artistica — la disposizione del vetro segue l’intuizione creativa, non piani rigidi. Le opere mostrano forme caotiche che tendono alla simmetria, in un dinamico equilibrio tra struttura e spontaneità.</p>
+                        </div>
+                        <div class="tech-gallery">
+                            <div class="tech-block__photo" style="--r:0.75"><picture><source type="image/webp" srcset="../../img/opt/2024-02-23b3926c-da00-4b16-af7b-1eee929d9fb8-800.webp 800w, ../../img/opt/2024-02-23b3926c-da00-4b16-af7b-1eee929d9fb8-1600.webp 1600w, ../../img/opt/2024-02-23b3926c-da00-4b16-af7b-1eee929d9fb8-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-02-23b3926c-da00-4b16-af7b-1eee929d9fb8-1600.jpg" alt="Finished form — Glass Parts Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:0.75"><picture><source type="image/webp" srcset="../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.20-800.webp 800w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.20-1600.webp 1600w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.20-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.20-1600.jpg" alt="Detail — Glass Parts Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/opt/2024-05-Screenshot-2024-05-13-at-22.25.18-800.webp 800w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-22.25.18-1600.webp 1600w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-22.25.18-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-Screenshot-2024-05-13-at-22.25.18-1600.jpg" alt="Glass parts — Glass Parts Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.339"><picture><source type="image/webp" srcset="../../img/opt/2024-05-IMG_7517-800.webp 800w, ../../img/opt/2024-05-IMG_7517-1600.webp 1600w, ../../img/opt/2024-05-IMG_7517-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-IMG_7517-1600.jpg" alt="Soldering process — Glass Parts Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.339"><picture><source type="image/webp" srcset="../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.05-800.webp 800w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.05-1600.webp 1600w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.05-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.05-1600.jpg" alt="Assembly — Glass Parts Sculpting, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        </div>
+                    </div>
+                    <div class="tech-block__divider"></div>
+                </article>
+
+                <!-- Tech 4: Tiffany -->
+                <article class="tech-block reveal">
+                    <div class="tech-block__inner">
+                        <div>
+                            <div class="tech-block__num">05</div>
+                            <h3 class="tech-block__title">Vetrata Tiffany</h3>
+                            <p class="tech-block__desc">Il metodo della lamina di rame perfezionato da Louis Comfort Tiffany. Il processo inizia con disegni dettagliati suddivisi nei singoli pezzi. Le lastre di vetro colorato vengono scelte, ricalcate e tagliate con precisione. Ogni pezzo viene avvolto in lamina di rame adesiva, poi assemblato e saldato con lega di stagno e piombo. Le opere (60×90 cm o 80×120 cm) vengono montate in light box su misura con retroilluminazione LED — i colori caldi creano comfort e gioia, quelli freddi inducono calma e contemplazione.</p>
+                        </div>
+                        <div class="tech-gallery">
+                            <div class="tech-block__photo" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/opt/2024-05-IMG_1008-800.webp 800w, ../../img/opt/2024-05-IMG_1008-1600.webp 1600w, ../../img/opt/2024-05-IMG_1008-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-IMG_1008-1600.jpg" alt="Glass cutting — Tiffany Vitrage, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/opt/2024-05-IMG_1012-800.webp 800w, ../../img/opt/2024-05-IMG_1012-1600.webp 1600w, ../../img/opt/2024-05-IMG_1012-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-IMG_1012-1600.jpg" alt="Foiling process — Tiffany Vitrage, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/opt/2024-05-IMG_1013-800.webp 800w, ../../img/opt/2024-05-IMG_1013-1600.webp 1600w, ../../img/opt/2024-05-IMG_1013-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-IMG_1013-1600.jpg" alt="Soldering — Tiffany Vitrage, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.339"><picture><source type="image/webp" srcset="../../img/opt/2024-05-IMG_2361-800.webp 800w, ../../img/opt/2024-05-IMG_2361-1600.webp 1600w, ../../img/opt/2024-05-IMG_2361-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-IMG_2361-1600.jpg" alt="Finished piece — Tiffany Vitrage, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/opt/2024-05-IMG_1010-800.webp 800w, ../../img/opt/2024-05-IMG_1010-1600.webp 1600w, ../../img/opt/2024-05-IMG_1010-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-IMG_1010-1600.jpg" alt="Light box — Tiffany Vitrage, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                            <div class="tech-block__photo" style="--r:1.34"><picture><source type="image/webp" srcset="../../img/opt/2024-05-IMG_6880-800.webp 800w, ../../img/opt/2024-05-IMG_6880-1600.webp 1600w, ../../img/opt/2024-05-IMG_6880-2400.webp 2400w" sizes="(max-width: 640px) 80vw, 600px"><img src="../../img/opt/2024-05-IMG_6880-1600.jpg" alt="Installation — Tiffany Vitrage, stained glass by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__brand">Arthemii Ionaere</div>
+                <nav class="footer__nav">
+                    <a href="../about/" class="footer__link">Chi sono</a>
+                    <a href="../works/" class="footer__link">Opere</a>
+                    <a href="../exhibitions/" class="footer__link">Mostre</a>
+                    <a href="../gallery/" class="footer__link">Galleria</a>
+                    <a href="../contact/" class="footer__link">Contatti</a>
+                </nav>
+                <a class="footer__instagram" href="https://www.instagram.com/ionaerestudio/" target="_blank" rel="noopener" aria-label="Instagram @ionaerestudio">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="footerIgGradient" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset="0.05" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6.5" fill="url(#footerIgGradient)"/><rect x="5" y="5" width="14" height="14" rx="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="16.4" cy="7.6" r="1.05" fill="#fff"/></svg>
+                    <span>@ionaerestudio</span>
+                </a>
+                <div class="footer__copy">&copy; 2026 Arthemii Ionaere</div>
+            </div>
+        </div>
+    </footer>
+    <script>
+    var mb=document.getElementById("menuBtn"),mn=document.getElementById("mobileNav"),mc=document.getElementById("mobileNavClose");
+    if(mb&&mn)mb.onclick=function(){mn.classList.add("is-open")};
+    if(mc&&mn)mc.onclick=function(){mn.classList.remove("is-open")};
+    if(mn){var ls=mn.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].onclick=function(){mn.classList.remove("is-open")}};
+    var yts=document.querySelectorAll(".yt-placeholder");
+    for(var i=0;i<yts.length;i++){(function(el){
+        el.onclick=function(){
+            var id=this.getAttribute("data-yt");
+            var f=document.createElement("iframe");
+            f.src="https://www.youtube.com/embed/"+id+"?autoplay=1&mute=0&controls=1&rel=0";
+            f.allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+            f.allowFullscreen=true;
+            f.style.cssText="width:100%;height:100%;border:none";
+            this.parentNode.replaceChild(f,this);
+        };
+    })(yts[i])};
+    var vcs=document.querySelectorAll(".video-card");
+    for(var i=0;i<vcs.length;i++){(function(c){
+        var v=c.querySelector("video");if(!v)return;
+        c.onmouseenter=function(){v.play().catch(function(){})};
+        c.onmouseleave=function(){v.pause();v.currentTime=0};
+    })(vcs[i])};
+    </script>
+    <script>
+    /* Projects page: justified rows — every photo visible, uncropped, nothing wider than the screen */
+    (function () {
+        var galleries = document.querySelectorAll('.tech-gallery');
+        function target(w) { return w < 500 ? 150 : w < 900 ? 210 : 300; }   // preferred row height (px)
+        function layout(g) {
+            var W = g.clientWidth; if (!W) return;
+            var gap = parseFloat(getComputedStyle(g).columnGap) || 8;
+            var items = Array.prototype.slice.call(g.querySelectorAll('.tech-block__photo, .tech-video'));
+            var H = target(W);
+            var maxH = Math.min(H * 1.6, window.innerHeight * 0.8);
+            var row = [], sum = 0, lastH = 0;
+            function place(r, h) {
+                lastH = h;
+                r.forEach(function (it) {
+                    it.style.width = Math.floor(it._r * h * 100) / 100 + 'px';
+                    it.style.height = Math.floor(h * 100) / 100 + 'px';
+                });
+            }
+            items.forEach(function (it) {
+                it._r = parseFloat(getComputedStyle(it).getPropertyValue('--r')) || 1.5;
+                row.push(it); sum += it._r;
+                var h = (W - gap * (row.length - 1)) / sum;
+                if (h <= H) { place(row, Math.min(h, maxH)); row = []; sum = 0; }
+            });
+            if (row.length) {
+                // last row: same height as the rows above (fills the width only if that makes it smaller)
+                var h = (W - gap * (row.length - 1)) / sum;
+                place(row, Math.min(h, lastH || H, maxH));
+            }
+            g.classList.add('is-laid-out');
+        }
+        function all() { for (var i = 0; i < galleries.length; i++) layout(galleries[i]); }
+        all();
+        var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(all, 100); });
+    })();
+    </script>
+    <script src="../../lightbox.js"></script>
+    <script src="../../tech-video.js"></script>
+    <script src="../../smooth-scroll.js" defer></script>
+    <script src="../../i18n.js?v=20261115a"></script>
+</body>
+</html>
