@@ -189,7 +189,7 @@ renderer.domElement.tabIndex = 0;
 const BG = 0x05040c;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(BG);
-scene.fog = new THREE.FogExp2(0x0a0718, 0.018);
+scene.fog = new THREE.FogExp2(0x0a0718, 0.013);
 const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.05, 420);
 const EYE = 1.62;
 camera.rotation.order = 'YXZ';
@@ -373,7 +373,7 @@ async function build(data) {
   const all = [];
   data.sections.forEach(s => s.items.forEach(it => { if (it.img || it.clip) all.push({ ...it, section: s.id, kind: it.clip ? 'video' : 'image' }); }));
   for (let i = all.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [all[i], all[j]] = [all[j], all[i]]; }
-  RADIUS = Math.max(14, Math.cbrt(all.length * 95 * 3 / (4 * Math.PI)));
+  RADIUS = Math.max(14, Math.cbrt(all.length * 260 * 3 / (4 * Math.PI)));
   const placed = [];
   all.forEach(it => {
     let p = new THREE.Vector3();
@@ -383,7 +383,7 @@ async function build(data) {
       if (p.lengthSq() > 1) { tries--; continue; }
       p.multiplyScalar(RADIUS);
       if (p.length() < 5) continue;
-      if (placed.every(q => q.distanceToSquared(p) > 13)) break;
+      if (placed.every(q => q.distanceToSquared(p) > 22)) break;
     }
     placed.push(p.clone());
     addFrame(it, p.x, p.y, p.z, Math.random() * 6.28);
