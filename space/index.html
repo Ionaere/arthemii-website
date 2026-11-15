@@ -65,6 +65,8 @@
   .fade.is-on { opacity: 1; }
   .err { inset: 0; z-index: 40; display: none; align-items: center; justify-content: center; padding: 24px; text-align: center; background: #07070f; }
   .err a { color: #fff; }
+  .credit { right: 12px; bottom: 10px; font-size: 10px; letter-spacing: .03em; color: rgba(255,255,255,.4); text-decoration: none; }
+  .credit:hover { color: rgba(255,255,255,.8); }
   @media (max-width: 640px) {
     .back span { display: none; }
     .back { padding: 10px; }
@@ -78,16 +80,9 @@
 <div class="ui hint is-hidden" id="hint"></div>
 <div class="ui tip" id="tip"></div>
 <div class="ui stick" id="stick" aria-hidden="true"><i></i></div>
-<div class="ui intro" id="intro">
-  <div>
-    <h1>Arthemii Ionaere</h1>
-    <p id="introTxt"></p>
-    <button type="button" id="enter" disabled></button>
-    <div class="keys" id="keys"></div>
-  </div>
-</div>
 <div class="ui fade" id="fade"></div>
 <div class="ui err" id="err"><p id="errTxt"></p></div>
+<a class="ui credit" href="https://www.eso.org/public/images/eso0932a/" target="_blank" rel="noopener">Milky Way: ESO/S. Brunier · CC BY 4.0</a>
 
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
@@ -148,11 +143,8 @@ function pageUrl(u) {
 function asset(p) { return /^(https?:|\/)/.test(p) ? p : '/' + p; }
 
 const $ = id => document.getElementById(id);
-$('introTxt').textContent = L.intro;
-$('enter').textContent = L.loading;
 const UPDOWN = { en: 'up / down', de: 'hoch / runter', es: 'subir / bajar', fr: 'monter / descendre', it: 'su / giù', ru: 'вверх / вниз' };
 const UD = UPDOWN[T[LANG] ? LANG : 'en'];
-$('keys').innerHTML = L.keys + ' · <kbd>E</kbd> <kbd>Q</kbd> — ' + UD;
 $('backTxt').textContent = L.back;
 const isTouch = matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
 if (isTouch) document.body.classList.add('touch');
@@ -186,10 +178,10 @@ renderer.toneMapping = THREE.NoToneMapping;
 document.body.prepend(renderer.domElement);
 renderer.domElement.tabIndex = 0;
 
-const BG = 0x05040c;
+const BG = 0x000000;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(BG);
-scene.fog = new THREE.FogExp2(0x0a0718, 0.013);
+scene.fog = new THREE.FogExp2(0x000000, 0.013);
 const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.05, 420);
 const EYE = 1.62;
 camera.rotation.order = 'YXZ';
@@ -318,33 +310,27 @@ function stars() {
     geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
     scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ size, sizeAttenuation: true, vertexColors: true, map: glowTex, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending, fog: false })));
   }
-  cloud(9000, 0.9, 1, false);
+  cloud(2500, 0.6, 0.8, false);
   cloud(3000, 0.07, 0.75, true);
 }
 function nebula() {
-  const tex = canvasTex(2048, 1024, (g, W, H) => {
-    g.fillStyle = '#05040c'; g.fillRect(0, 0, W, H);
-    const blobs = [[0.22, 0.42, 0.24, '255,70,160'], [0.35, 0.55, 0.3, '110,60,220'], [0.62, 0.38, 0.26, '40,120,255'], [0.78, 0.6, 0.22, '255,140,60'],
-                   [0.5, 0.48, 0.38, '70,30,140'], [0.12, 0.62, 0.16, '60,200,255'], [0.88, 0.45, 0.14, '200,60,255']];
-    g.globalCompositeOperation = 'lighter';
-    for (const [x, y, r, rgb] of blobs) {
-      const grd = g.createRadialGradient(x * W, y * H, 0, x * W, y * H, r * W);
-      grd.addColorStop(0, 'rgba(' + rgb + ',.55)');
-      grd.addColorStop(0.4, 'rgba(' + rgb + ',.18)');
-      grd.addColorStop(1, 'rgba(' + rgb + ',0)');
-      g.fillStyle = grd; g.fillRect(0, 0, W, H);
-    }
-    g.globalCompositeOperation = 'source-over';
-    for (let i = 0; i < 2600; i++) {
-      g.fillStyle = 'rgba(255,255,255,' + (0.25 + Math.random() * 0.75).toFixed(2) + ')';
-      const s = Math.random() < 0.97 ? 1 : 2;
-      g.fillRect(Math.random() * W, Math.random() * H, s, s);
-    }
-  });
-  sky = new THREE.Mesh(new THREE.SphereGeometry(330, 48, 32), new THREE.MeshBasicMaterial({ map: tex, side: THREE.BackSide, fog: false, depthWrite: false }));
+  // A real photograph of the whole sky (the Milky Way panorama by ESO/S. Brunier), wrapped around you as a sphere
+  const geo = new THREE.SphereGeometry(330, 64, 40);
+  geo.scale(-1, 1, 1);
+  const mat = new THREE.MeshBasicMaterial({ color: 0x000000, fog: false, depthWrite: false });
+  sky = new THREE.Mesh(geo, mat);
   sky.renderOrder = -1;
+  sky.rotation.set(0.35, 0, 0.6);
   scene.add(sky);
+  loader.load('/img/space/milky-way.jpg', tex => {
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+    mat.map = tex;
+    mat.color.set(0xffffff);
+    mat.needsUpdate = true;
+  });
 }
+
 async function build(data) {
   await Promise.race([document.fonts.load('300 64px Hahmlet'), new Promise(r => setTimeout(r, 2500))]).catch(() => {});
   // Every work from every part of the site, shuffled and scattered through space: a different flight on every visit
@@ -618,18 +604,13 @@ fetch('content.json', { cache: 'no-cache' })
     stream(performance.now() + 300);
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
-    const btn = $('enter');
-    btn.disabled = false;
-    btn.textContent = L.enter;
-    const go = () => {
-      $('intro').classList.add('is-gone');
-      el.focus();
-      showHint();
-      // a user gesture lets every browser start the videos
-      for (const o of items) if (o.video) { const p = o.video.play(); if (p && p.catch) p.catch(() => {}); }
-    };
-    btn.addEventListener('click', go);
-    addEventListener('keydown', function k(e) { if (e.code === 'Enter' || e.code === 'Space') { removeEventListener('keydown', k); go(); } });
+    // Straight into space: no start screen
+    el.focus();
+    showHint();
+    // the first touch or click makes sure every browser lets the videos play
+    addEventListener('pointerdown', () => {
+      for (const o of items) if (o.video && o.video.paused) { const p = o.video.play(); if (p && p.catch) p.catch(() => {}); }
+    }, { once: true });
   })
   .catch(err => {
     console.error(err);
