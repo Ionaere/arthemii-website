@@ -145,6 +145,7 @@ function asset(p) { return /^(https?:|\/)/.test(p) ? p : '/' + p; }
 const $ = id => document.getElementById(id);
 const UPDOWN = { en: 'up / down', de: 'hoch / runter', es: 'subir / bajar', fr: 'monter / descendre', it: 'su / giù', ru: 'вверх / вниз' };
 const UD = UPDOWN[T[LANG] ? LANG : 'en'];
+const ZOOM = ({ en: 'Fly closer', de: 'Näher heran', es: 'Acercarse', fr: 'Se rapprocher', it: 'Avvicinarsi', ru: 'Приблизиться' })[T[LANG] ? LANG : 'en'];
 $('backTxt').textContent = L.back;
 const isTouch = matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
 if (isTouch) document.body.classList.add('touch');
@@ -269,7 +270,7 @@ function setSize(o, w, h) {
 function addGlow(o, color) {
   // A soft halo in the work's own colour behind it, like light passing through glass
   if (o.glow) return;
-  const m = new THREE.Mesh(plane, new THREE.MeshBasicMaterial({ map: glowTex, color, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const m = new THREE.Mesh(plane, new THREE.MeshBasicMaterial({ map: glowTex, color, transparent: true, opacity: 0.14, blending: THREE.AdditiveBlending, depthWrite: false }));
   m.position.z = -0.12;
   m.scale.set(o.w * 1.9 + 0.6, o.h * 1.9 + 0.6, 1);
   o.group.add(m);
@@ -451,7 +452,7 @@ addEventListener('keydown', e => {
   if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
   keys[e.code] = true;
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) e.preventDefault();
-  if (e.code === 'Escape') $('back').click();
+  if (e.code === 'Escape') { if (focus) focus = null; else $('back').click(); }
   glide = null;
   hideHint();
 });
@@ -476,6 +477,7 @@ el.addEventListener('pointermove', e => {
     yaw += dx * k;
     pitch = Math.max(-1.45, Math.min(1.45, pitch + dy * k));
     glide = null;
+    focus = null;
   }
 });
 el.addEventListener('pointerup', e => {
@@ -513,14 +515,28 @@ function pick(x, y) {
   ray.setFromCamera(ndc, camera);
   ray.far = 16;
   const meshes = [];
-  for (const o of items) { if (o.dist !== undefined && o.dist < 20) { meshes.push(o.pic); meshes.push(o.back); } }
+  for (const o of items) { if (o.dist !== undefined && o.dist < 40) { meshes.push(o.pic); meshes.push(o.back); } }
   const hit = ray.intersectObjects(meshes, false)[0];
   return hit ? hit.object.userData.item : null;
+}
+// First click: fly up to the work until it almost fills the screen. Second click: open its page.
+let focus = null;
+function flyTo(o) {
+  const p = o.group.position;
+  const half = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), fill = 0.9;
+  const d = Math.max(o.h / fill / (2 * half), o.w / fill / (2 * half * camera.aspect)) + 0.02;
+  const dir = new THREE.Vector3().subVectors(camera.position, p);
+  if (dir.lengthSq() < 1e-6) dir.set(0, 0, 1);
+  dir.normalize();
+  focus = { o, from: camera.position.clone(), to: p.clone().addScaledVector(dir, d), yaw0: yaw, pitch0: pitch, t: 0, done: false };
+  vel.set(0, 0, 0);
+  hideHint();
 }
 function clickAt(x, y) {
   const o = pick(x, y);
   if (!o) return;
-  leave(pageUrl(o.url));
+  if (focus && focus.o === o && focus.done) { leave(pageUrl(o.url)); return; }
+  flyTo(o);
 }
 const tip = $('tip');
 let hoverT = 0;
@@ -533,7 +549,7 @@ function hover(now) {
     el.style.cursor = 'pointer';
     tip.innerHTML = '';
     const b = document.createElement('b'); b.textContent = o.t || '';
-    const s = document.createElement('small'); s.textContent = (o.action === 'start' ? '↺' : L.open + ' →');
+    const s = document.createElement('small'); s.textContent = (focus && focus.o === o && focus.done) ? L.open + ' →' : ZOOM;
     tip.append(b, s);
     tip.style.left = mouse.x + 'px'; tip.style.top = mouse.y + 'px';
     tip.classList.add('is-on');
@@ -561,16 +577,33 @@ function tick() {
   const s = (keys.KeyD ? 1 : 0) - (keys.KeyA ? 1 : 0) + joy.x;
   const u = (keys.KeyE || keys.Space ? 1 : 0) - (keys.KeyQ || keys.KeyC ? 1 : 0);
   const run = keys.ShiftLeft || keys.ShiftRight ? 2.3 : 1;
-  camera.rotation.set(pitch, yaw, 0);
-  // fly where you look: up, down, any direction
-  camera.getWorldDirection(fwd);
-  right.crossVectors(fwd, upV).normalize();
-  target.set(0, 0, 0).addScaledVector(fwd, f).addScaledVector(right, s).addScaledVector(upV, u);
-  if (target.lengthSq() > 1) target.normalize();
-  target.multiplyScalar(4.6 * run);
-  if (wheelPush) { target.addScaledVector(fwd, wheelPush * 6); wheelPush *= 0.82; if (Math.abs(wheelPush) < 0.02) wheelPush = 0; }
-  vel.lerp(target, 1 - Math.pow(0.002, dt));
-  camera.position.addScaledVector(vel, dt);
+  // any steering hands control back after flying up to a work
+  if (focus && (f || s || u || turn || wheelPush)) focus = null;
+  if (focus) {
+    focus.t = Math.min(1, focus.t + dt / 0.9);
+    const e = focus.t < 0.5 ? 4 * focus.t * focus.t * focus.t : 1 - Math.pow(-2 * focus.t + 2, 3) / 2;
+    camera.position.lerpVectors(focus.from, focus.to, e);
+    const p = focus.o.group.position;
+    const dx = p.x - camera.position.x, dy = p.y - camera.position.y, dz = p.z - camera.position.z;
+    let dyaw = Math.atan2(-dx, -dz) - focus.yaw0;
+    dyaw = Math.atan2(Math.sin(dyaw), Math.cos(dyaw));
+    yaw = focus.yaw0 + dyaw * e;
+    pitch = focus.pitch0 + (Math.atan2(dy, Math.hypot(dx, dz)) - focus.pitch0) * e;
+    camera.rotation.set(pitch, yaw, 0);
+    vel.set(0, 0, 0);
+    if (focus.t >= 1) focus.done = true;
+  } else {
+    camera.rotation.set(pitch, yaw, 0);
+    // fly where you look: up, down, any direction
+    camera.getWorldDirection(fwd);
+    right.crossVectors(fwd, upV).normalize();
+    target.set(0, 0, 0).addScaledVector(fwd, f).addScaledVector(right, s).addScaledVector(upV, u);
+    if (target.lengthSq() > 1) target.normalize();
+    target.multiplyScalar(4.6 * run);
+    if (wheelPush) { target.addScaledVector(fwd, wheelPush * 6); wheelPush *= 0.82; if (Math.abs(wheelPush) < 0.02) wheelPush = 0; }
+    vel.lerp(target, 1 - Math.pow(0.002, dt));
+    camera.position.addScaledVector(vel, dt);
+  }
   // stay inside the sky around the works
   const maxR = RADIUS + 28, r = camera.position.length();
   if (r > maxR) camera.position.multiplyScalar(maxR / r);
@@ -578,6 +611,7 @@ function tick() {
   // works drift a little and always turn their face to you
   const t = now * 0.001;
   for (const o of floaters) {
+    if (focus && focus.o === o) { o.group.lookAt(camera.position); continue; }
     if (o.dist !== undefined && o.dist > 45) continue;
     o.group.position.y = o.baseY + Math.sin(t * 0.7 + o.phase) * 0.12;
     o.group.lookAt(camera.position);
