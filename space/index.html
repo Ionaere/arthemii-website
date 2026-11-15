@@ -248,6 +248,7 @@ function addFrame(it, x, y, z, phase) {
   g.add(back, pic);
   const label = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 0.3), new THREE.MeshBasicMaterial({ map: textTex(it.t || '', { size: 30, w: 512, h: 84, color: '#f4f1ff', subColor: '#a99cff', weight: 400, sub: it.kind === 'video' ? '▶' : '' }), transparent: true, depthWrite: false }));
   g.add(label);
+  g.visible = false;   // appears once its picture has arrived
   scene.add(g);
   const o = { ...it, group: g, pic, back, label, w: 1.7, h: 1.25, state: 'idle', baseY: y, phase };
   setSize(o, 1.7, 1.25);
@@ -378,6 +379,7 @@ function loadImage(o) {
     const im = tex.image;
     setSize(o, im.width || 4, im.height || 3);
     addGlow(o, averageColor(im));
+    o.group.visible = true;
     o.state = 'ready';
   }, undefined, () => { loadingCount--; o.state = 'failed'; });
 }
@@ -385,6 +387,7 @@ function unloadImage(o) {
   if (o.state === 'ready' || o.state === 'loading') {
     if (o.tex) { o.tex.dispose(); o.tex = null; }
     if (o.pic.material !== placeholderMat && !o.video) { o.pic.material.dispose(); o.pic.material = placeholderMat; }
+    if (!o.video) o.group.visible = false;
     o.state = 'idle';
   }
 }
@@ -402,6 +405,7 @@ function startVideo(o) {
     o.vtex = vt;
     o.pic.material = new THREE.MeshBasicMaterial({ map: vt, toneMapped: false });
     if (v.videoWidth) setSize(o, v.videoWidth, v.videoHeight);
+    o.group.visible = true;
   }, { once: true });
   const p = v.play(); if (p && p.catch) p.catch(() => {});
 }
@@ -412,6 +416,7 @@ function stopVideo(o) {
   if (o.vtex) { o.vtex.dispose(); o.vtex = null; }
   if (o.pic.material !== placeholderMat) { o.pic.material.dispose(); }
   o.pic.material = o.tex ? new THREE.MeshBasicMaterial({ map: o.tex, toneMapped: false }) : placeholderMat;
+  if (!o.tex) o.group.visible = false;
 }
 let lastStream = 0;
 function stream(now) {
