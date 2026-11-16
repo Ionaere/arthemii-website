@@ -345,7 +345,15 @@ async function build(data) {
 }
 
 /* ---------- lazy textures and videos ---------- */
-const LOAD_R = 30, UNLOAD_R = 48, PLAY_R = 9, STOP_R = 13, MAX_PLAYING = 4, HEAVY_R = 5.5;
+const LOAD_R = 30, UNLOAD_R = 48, PLAY_R = 9, STOP_R = 13, HEAVY_R = 5.5;
+// phones decode only a few videos at once
+const MAX_PLAYING = isTouch ? 2 : 4;
+// the videos live in the page (hidden) so that every phone browser keeps them playing and updating
+const videoBox = document.createElement('div');
+videoBox.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;overflow:hidden;opacity:0.01;pointer-events:none;z-index:-1';
+document.body.appendChild(videoBox);
+const isHeavy = o => o.heavy && !(isTouch && o.m);
+function playV(v) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
 let loadingCount = 0;
 function loadImage(o) {
   if (!o.img || o.state !== 'idle' || loadingCount > 6) return;
@@ -393,10 +401,14 @@ function unloadImage(o) {
 function startVideo(o) {
   if (o.video || !o.clip) return;
   const v = document.createElement('video');
-  v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
-  v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
-  v.src = asset(o.clip);
+  v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = 'auto';
+  v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', '');
+  v.width = 2; v.height = 2;
+  // phones get a light 960 px version (a few seconds, small file) that starts at once
+  v.src = asset(isTouch && o.m ? o.m : o.clip);
+  videoBox.appendChild(v);
   o.video = v;
+  v.addEventListener('canplay', () => { if (o.video === v && v.paused) playV(v); });
   v.addEventListener('loadeddata', () => {
     if (o.video !== v) return;
     const vt = new THREE.VideoTexture(v);
@@ -406,12 +418,12 @@ function startVideo(o) {
     if (v.videoWidth) setSize(o, v.videoWidth, v.videoHeight);
     o.group.visible = true;
   }, { once: true });
-  const p = v.play(); if (p && p.catch) p.catch(() => {});
+  playV(v);
 }
 function stopVideo(o) {
   if (!o.video) return;
   const v = o.video; o.video = null;
-  v.pause(); v.removeAttribute('src'); v.load();
+  v.pause(); v.removeAttribute('src'); v.load(); v.remove();
   if (o.vtex) { o.vtex.dispose(); o.vtex = null; }
   if (o.pic.material !== placeholderMat) { o.pic.material.dispose(); }
   o.pic.material = o.tex ? new THREE.MeshBasicMaterial({ map: o.tex, toneMapped: false }) : placeholderMat;
@@ -422,6 +434,8 @@ function stream(now) {
   if (now - lastStream < 250) return;
   lastStream = now;
   const near = [];
+  // the work the tour is flying to comes first, so its video is already running on arrival
+  const tgt = tour && tour.leg && tour.leg.o.clip ? tour.leg.o : null;
   for (const o of items) {
     const dist = o.group.position.distanceTo(camera.position);
     o.dist = dist;
@@ -429,15 +443,16 @@ function stream(now) {
     else if (dist > UNLOAD_R) unloadImage(o);
     if (o.clip) {
       if (dist < PLAY_R) near.push([dist, o]);
-      else if (dist > STOP_R) stopVideo(o);
+      else if (dist > STOP_R && o !== tgt) stopVideo(o);
     }
   }
+  if (tgt) { for (let i = near.length - 1; i >= 0; i--) if (near[i][1] === tgt) near.splice(i, 1); near.push([-1, tgt]); }
   near.sort((a, b) => a[0] - b[0]);
   // Short clips play in a wider circle; full-length films only right in front of you, one at a time
   let n = 0, heavy = 0;
   near.forEach(([dist, o]) => {
-    const ok = o.heavy ? (dist < HEAVY_R && heavy < 1) : n < MAX_PLAYING;
-    if (ok) { startVideo(o); if (o.heavy) heavy++; else n++; }
+    const ok = isHeavy(o) ? ((dist < HEAVY_R || dist < 0) && heavy < 1) : n < MAX_PLAYING;
+    if (ok) { startVideo(o); if (isHeavy(o)) heavy++; else n++; }
     else stopVideo(o);
   });
 }
@@ -643,7 +658,7 @@ function pickNext() {
 }
 // how far from a work the camera stops so that the work fills almost the whole screen
 function tourDist(o) {
-  const half = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), fill = 0.94;
+  const half = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), fill = 0.82;
   return Math.max((o.h + 0.1) / (fill * 2 * half), (o.w + 0.1) / (fill * 2 * half * camera.aspect));
 }
 function endLeg() {
@@ -818,10 +833,10 @@ fetch('content.json', { cache: 'no-cache' })
     showHint();
     // nobody touches anything for 3 seconds: the slow automatic tour starts (the idle check runs in every frame)
     if (!lastInput) lastInput = performance.now();
-    // the first touch or click makes sure every browser lets the videos play
-    addEventListener('pointerdown', () => {
-      for (const o of items) if (o.video && o.video.paused) { const p = o.video.play(); if (p && p.catch) p.catch(() => {}); }
-    }, { once: true });
+    // every touch or click restarts any video the browser held back (e.g. iPhone in Low Power Mode)
+    const kick = () => { for (const o of items) if (o.video && o.video.paused) playV(o.video); };
+    addEventListener('pointerdown', kick, { passive: true });
+    addEventListener('touchend', kick, { passive: true });
   })
   .catch(err => {
     console.error(err);
