@@ -1,0 +1,24 @@
+name: Apply space tip patch
+
+on:
+  push:
+    branches: [space-tour-tip]
+    paths: ['tt-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary tt-update/space-tip.patch
+          git rm -r -q tt-update
+          git add -A
+          git commit -m "3D space: no name tooltip under the mouse during the auto tour"
+          git push
