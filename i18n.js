@@ -825,10 +825,10 @@
     observer.observe(document.body, { childList: true, subtree: true, characterData: true });
   }
 
-  // The page corner that peels away into the 3D space (space-portal.js), on every page except the space itself
+  // The stained-glass prism in the corner that opens the 3D space (space-portal.js), on every page except the space itself
   if (!/^\/space(\/|$)/.test(location.pathname)) {
     var portal = document.createElement('script');
-    portal.src = BASE + 'space-portal.js?v=20261115c';
+    portal.src = BASE + 'space-portal.js?v=20261116a';
     portal.defer = true;
     document.head.appendChild(portal);
   }
