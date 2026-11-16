@@ -542,32 +542,56 @@ let hintTimer = null;
 function showHint() { $('hint').classList.remove('is-hidden'); clearTimeout(hintTimer); hintTimer = setTimeout(hideHint, 9000); }
 function hideHint() { $('hint').classList.add('is-hidden'); }
 
-/* ---------- automatic slow tour (starts after 3 s without any input) ---------- */
-// First it visits every video, then the rest of the works, then everything again.
+/* ---------- automatic slow tour (starts after 3 s without any input, at the start and at any time later) ---------- */
+// Default order: the videos, the AI videos only after all the other videos, then the photos, the drawings and the rest.
+// The bar at the top picks one theme: the tour then flies only through those works.
 const TOUR_HINT = {
   en: ['Auto tour · press any key or click to take control', 'Auto tour · touch the screen to take control'],
-  de: ['Automatischer Rundflug · Taste drücken oder klicken, um selbst zu steuern', 'Automatischer Rundflug · Bildschirm berühren, um selbst zu steuern'],
-  es: ['Recorrido automático · pulsa una tecla o haz clic para tomar el control', 'Recorrido automático · toca la pantalla para tomar el control'],
-  fr: ['Visite automatique · appuyez sur une touche ou cliquez pour reprendre la main', "Visite automatique · touchez l'écran pour reprendre la main"],
-  it: ['Volo automatico · premi un tasto o clicca per prendere il controllo', 'Volo automatico · tocca lo schermo per prendere il controllo'],
-  ru: ['Автопролёт · нажмите любую клавишу или кликните, чтобы управлять самому', 'Автопролёт · коснитесь экрана, чтобы управлять самому']
+  de: ['Automatischer Rundflug · Taste drücken oder klicken, um selbst zu steuern', 'Rundflug · Bildschirm berühren, um selbst zu steuern'],
+  es: ['Recorrido automático · pulsa una tecla o haz clic para tomar el control', 'Recorrido · toca la pantalla para tomar el control'],
+  fr: ['Visite automatique · appuyez sur une touche ou cliquez pour reprendre la main', "Visite · touchez l'écran pour reprendre la main"],
+  it: ['Volo automatico · premi un tasto o clicca per prendere il controllo', 'Volo · tocca lo schermo per prendere il controllo'],
+  ru: ['Автопролёт · нажмите любую клавишу или кликните, чтобы управлять самому', 'Автопролёт · коснитесь экрана, чтобы управлять']
 };
 const TOUR_TXT = (TOUR_HINT[T[LANG] ? LANG : 'en'] || TOUR_HINT.en)[isTouch ? 1 : 0];
-const IDLE_START = 3000;
-let tour = null, lastInput = 0;
-const tourDir = new THREE.Vector3();
-function tourQueue(phase) {
-  if (phase === 'videos') return items.filter(o => o.clip);
-  if (phase === 'works') return items.filter(o => !o.clip && o.state !== 'failed');
-  return items.filter(o => o.clip || o.state !== 'failed');
+const CATS = ['all', 'kaleidoscope', 'prisms', 'sculpture', 'stained', 'video', 'ai-video', 'ai-arch', 'ai', 'drawings', 'photos', 'exhibitions'];
+const CAT_NAMES = {
+  en: ['All', 'Kaleidoscope', 'Prisms', 'Sculptures', 'Stained glass', 'Videos', 'AI video', 'AI architecture', 'AI', 'Drawings', 'Photos', 'Exhibitions'],
+  de: ['Alles', 'Kaleidoskop', 'Prismen', 'Skulpturen', 'Glasmalerei', 'Videos', 'KI-Video', 'KI-Architektur', 'KI', 'Zeichnungen', 'Fotos', 'Ausstellungen'],
+  es: ['Todo', 'Caleidoscopio', 'Prismas', 'Esculturas', 'Vitrales', 'Vídeos', 'Vídeo IA', 'Arquitectura IA', 'IA', 'Dibujos', 'Fotos', 'Exposiciones'],
+  fr: ['Tout', 'Kaléidoscope', 'Prismes', 'Sculptures', 'Vitraux', 'Vidéos', 'Vidéo IA', 'Architecture IA', 'IA', 'Dessins', 'Photos', 'Expositions'],
+  it: ['Tutto', 'Caleidoscopio', 'Prismi', 'Sculture', 'Vetrate', 'Video', 'Video IA', 'Architettura IA', 'IA', 'Disegni', 'Foto', 'Mostre'],
+  ru: ['Всё', 'Калейдоскоп', 'Призмы', 'Скульптуры', 'Витражи', 'Видео', 'AI-видео', 'AI-архитектура', 'AI', 'Рисунки', 'Фото', 'Выставки']
+};
+const CAT_L = CAT_NAMES[T[LANG] ? LANG : 'en'] || CAT_NAMES.en;
+const IDLE_START = 3000, IDLE_FOCUS = 8000;   // after flying up to a work there is time to tap it again and open it
+let tour = null, plan = null, cat = 'all', lastInput = 0;
+const has = (o, c) => {
+  const tg = o.tags || [];
+  if (c === 'all') return true;
+  if (c === 'ai') return tg.includes('ai-video') || tg.includes('ai-arch') || tg.includes('ai-art');
+  return tg.includes(c);
+};
+const PHASES = [
+  o => o.clip && !has(o, 'ai-video'),   // the videos
+  o => has(o, 'ai-video'),              // the AI videos: only at the very end of all the videos
+  o => has(o, 'photos'),                // then the photos
+  o => has(o, 'drawings'),
+  () => true                            // and everything else (AI renders)
+];
+function tourHint() {
+  const h = $('hint');
+  h.textContent = (cat !== 'all' ? CAT_L[CATS.indexOf(cat)] + ' · ' : '') + TOUR_TXT;
+  h.classList.remove('is-hidden'); clearTimeout(hintTimer);
 }
 function startTour() {
-  if (tour || matchMedia('(prefers-reduced-motion: reduce)').matches || !items.length) return;
-  focus = null;
-  tour = { phase: 'videos', queue: tourQueue('videos'), leg: null };
-  if (!tour.queue.length) { tour.phase = 'works'; tour.queue = tourQueue('works'); }
+  if (tour || !items.length) return;
+  // the same plan goes on after a break, so the tour does not start over with the same works
+  if (!plan || plan.cat !== cat) plan = { cat, i: 0, done: new Set() };
+  focus = null; glide = null;
+  tour = { leg: null };
   vel.set(0, 0, 0);
-  const h = $('hint'); h.textContent = TOUR_TXT; h.classList.remove('is-hidden'); clearTimeout(hintTimer);
+  tourHint();
 }
 function stopTour() {
   if (!tour) return;
@@ -575,16 +599,29 @@ function stopTour() {
   $('hint').textContent = isTouch ? L.hintTouch : L.hint + ' · E / Q — ' + UD;
   showHint();
 }
-function nextLeg() {
-  if (!tour.queue.length) {
-    tour.phase = tour.phase === 'videos' ? 'works' : 'all';
-    tour.queue = tourQueue(tour.phase);
-    if (!tour.queue.length) return false;
+function pickNext() {
+  for (let round = 0; round < 2; round++) {
+    while (plan.i < PHASES.length) {
+      const ph = PHASES[plan.i];
+      // the nearest work that is still waiting, so the flight never jumps around
+      let best = null, bd = Infinity;
+      for (const o of items) {
+        if (plan.done.has(o) || o.state === 'failed' || !has(o, plan.cat) || !ph(o)) continue;
+        const d = o.group.position.distanceToSquared(camera.position);
+        if (d < bd) { bd = d; best = o; }
+      }
+      if (best) return best;
+      plan.i++;
+    }
+    if (!plan.done.size) return null;   // nothing in this theme
+    plan.i = 0; plan.done.clear();      // all seen: once more from the beginning
   }
-  // the nearest work that is still waiting, so the flight never jumps around
-  let bi = 0, bd = Infinity;
-  tour.queue.forEach((o, i) => { const d = o.group.position.distanceToSquared(camera.position); if (d < bd) { bd = d; bi = i; } });
-  const o = tour.queue.splice(bi, 1)[0];
+  return null;
+}
+function nextLeg() {
+  const o = pickNext();
+  if (!o) return false;
+  plan.done.add(o);
   const p = o.group.position;
   const half = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), fill = 0.6;
   const d = Math.min(4.6, Math.max(2.6, Math.max(o.h / (fill * 2 * half), o.w / (fill * 2 * half * camera.aspect))));
@@ -619,11 +656,37 @@ function tourTick(dt) {
   pitch += (wantPitch - pitch) * k;
   camera.rotation.set(pitch, yaw, 0);
 }
-// any key, click, touch or wheel hands the controls back at once
-['keydown', 'pointerdown', 'wheel', 'touchstart'].forEach(ev => addEventListener(ev, () => {
-  lastInput = performance.now();
-  if (tour) stopTour();
-}, { capture: true, passive: true }));
+// nobody touches anything for 3 seconds: the tour starts (again)
+function idleCheck(now) {
+  if (tour || !lastInput || drag || joy.id !== null || wheelPush) return;
+  for (const k in keys) if (keys[k]) return;
+  if (focus && !focus.done) return;
+  if (now - lastInput > (focus ? IDLE_FOCUS : IDLE_START)) startTour();
+}
+// any key, click, touch or wheel hands the controls back at once; moving the mouse only keeps the tour from starting
+const poke = () => { lastInput = performance.now(); if (tour) stopTour(); };
+['keydown', 'pointerdown', 'wheel', 'touchstart'].forEach(ev => addEventListener(ev, poke, { capture: true, passive: true }));
+addEventListener('pointermove', e => { if (!tour && e.pointerType === 'mouse') lastInput = performance.now(); }, { passive: true });
+addEventListener('touchmove', () => { lastInput = performance.now(); }, { passive: true });
+
+// The theme bar
+const nav = $('sections');
+CATS.forEach((c, i) => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.textContent = CAT_L[i]; b.dataset.cat = c;
+  if (c === cat) b.classList.add('is-on');
+  b.addEventListener('click', () => {
+    cat = c;
+    nav.querySelectorAll('button').forEach(x => x.classList.toggle('is-on', x === b));
+    b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    if (tour) tour = null;
+    plan = null;
+    startTour();
+    el.focus();
+  });
+  nav.appendChild(b);
+});
+window.__spaceTour = () => tour ? 'on ' + plan.cat + ' ' + plan.i + ' ' + plan.done.size : 'off';
 
 /* ---------- loop ---------- */
 const clock = new THREE.Clock();
@@ -686,6 +749,7 @@ function tick() {
 
   stream(now);
   hover(now);
+  idleCheck(now);
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 }
@@ -710,8 +774,8 @@ fetch('content.json', { cache: 'no-cache' })
     // Straight into space: no start screen
     el.focus();
     showHint();
-    // nobody touches anything for 3 seconds: start the slow automatic tour (videos first)
-    setTimeout(() => { if (!lastInput && !focus) startTour(); }, IDLE_START);
+    // nobody touches anything for 3 seconds: the slow automatic tour starts (the idle check runs in every frame)
+    if (!lastInput) lastInput = performance.now();
     // the first touch or click makes sure every browser lets the videos play
     addEventListener('pointerdown', () => {
       for (const o of items) if (o.video && o.video.paused) { const p = o.video.play(); if (p && p.catch) p.catch(() => {}); }
