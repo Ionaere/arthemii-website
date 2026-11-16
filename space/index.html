@@ -65,8 +65,6 @@
   .fade.is-on { opacity: 1; }
   .err { inset: 0; z-index: 40; display: none; align-items: center; justify-content: center; padding: 24px; text-align: center; background: #07070f; }
   .err a { color: #fff; }
-  .credit { right: 12px; bottom: 10px; font-size: 10px; letter-spacing: .03em; color: rgba(255,255,255,.4); text-decoration: none; }
-  .credit:hover { color: rgba(255,255,255,.8); }
   @media (max-width: 640px) {
     .back span { display: none; }
     .back { padding: 10px; }
@@ -82,7 +80,6 @@
 <div class="ui stick" id="stick" aria-hidden="true"><i></i></div>
 <div class="ui fade" id="fade"></div>
 <div class="ui err" id="err"><p id="errTxt"></p></div>
-<a class="ui credit" href="https://www.eso.org/public/images/eso0932a/" target="_blank" rel="noopener">Milky Way: ESO/S. Brunier · CC BY 4.0</a>
 
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
@@ -315,24 +312,6 @@ function stars() {
   cloud(2500, 0.6, 0.8, false);
   cloud(3000, 0.07, 0.75, true);
 }
-function nebula() {
-  // A real photograph of the whole sky (the Milky Way panorama by ESO/S. Brunier), wrapped around you as a sphere
-  const geo = new THREE.SphereGeometry(330, 64, 40);
-  geo.scale(-1, 1, 1);
-  const mat = new THREE.MeshBasicMaterial({ color: 0x000000, fog: false, depthWrite: false });
-  sky = new THREE.Mesh(geo, mat);
-  sky.renderOrder = -1;
-  sky.rotation.set(0.35, 0, 0.6);
-  scene.add(sky);
-  loader.load('/img/space/milky-way.jpg', tex => {
-    tex.colorSpace = THREE.SRGBColorSpace;
-    tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
-    mat.map = tex;
-    mat.color.set(0xffffff);
-    mat.needsUpdate = true;
-  });
-}
-
 async function build(data) {
   await Promise.race([document.fonts.load("300 64px 'Cormorant Garamond'"), new Promise(r => setTimeout(r, 2500))]).catch(() => {});
   // Every work from every part of the site, shuffled and scattered through space: a different flight on every visit
@@ -358,7 +337,6 @@ async function build(data) {
   title = new THREE.Mesh(new THREE.PlaneGeometry(9, 1.7), new THREE.MeshBasicMaterial({ map: textTex('Arthemii Ionaere', { size: 150, w: 1600, h: 300, weight: 300, color: '#ffffff', sub: L.welcome, subColor: '#b9a8ff' }), transparent: true, depthWrite: false }));
   scene.add(title);
   stars();
-  nebula();
   // Start just outside the cloud of works, looking into it
   camera.position.set(0, 0, RADIUS + 7);
 }
