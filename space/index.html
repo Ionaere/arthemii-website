@@ -24,7 +24,7 @@
   .back svg { width: 16px; height: 16px; }
   .sections { display: none; top: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 4px; border-radius: 999px;
     background: rgba(255,255,255,.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 20px rgba(0,0,0,.12);
-    max-width: calc(100vw - 32px); overflow-x: auto; scrollbar-width: none; }
+    max-width: calc(100vw - 360px); overflow-x: auto; scrollbar-width: none; }
   .sections::-webkit-scrollbar { display: none; }
   .sections button { flex: none; border: 0; background: transparent; color: var(--ink); padding: 8px 13px; border-radius: 999px;
     font: 500 12.5px/1 system-ui, -apple-system, sans-serif; cursor: pointer; white-space: nowrap; transition: background .2s ease, color .2s ease; }
@@ -65,10 +65,13 @@
   .fade.is-on { opacity: 1; }
   .err { inset: 0; z-index: 40; display: none; align-items: center; justify-content: center; padding: 24px; text-align: center; background: #07070f; }
   .err a { color: #fff; }
+  /* the theme bar never covers the back button: below it on narrower screens */
+  @media (max-width: 1100px) {
+    .sections { top: 64px; max-width: calc(100vw - 32px); }
+  }
   @media (max-width: 640px) {
     .back span { display: none; }
     .back { padding: 10px; }
-    .sections { top: 64px; }
   }
 </style>
 </head>
