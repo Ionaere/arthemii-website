@@ -586,7 +586,7 @@ const CAT_NAMES = {
 };
 const CAT_L = CAT_NAMES[T[LANG] ? LANG : 'en'] || CAT_NAMES.en;
 const IDLE_START = 3000, IDLE_FOCUS = 8000;   // after flying up to a work there is time to tap it again and open it
-let tour = null, plan = null, cat = 'all', lastInput = 0;
+let tour = null, plan = null, cat = 'all', lastInput = 0, lastShown = null;
 const has = (o, c) => {
   const tg = o.tags || [];
   if (c === 'all') return true;
@@ -610,7 +610,8 @@ function startTour() {
   // the same plan goes on after a break, so the tour does not start over with the same works
   if (!plan || plan.cat !== cat) plan = { cat, i: 0, done: new Set() };
   focus = null; glide = null;
-  tour = { leg: null };
+  // still right in front of the last work shown? back away from it first
+  tour = { leg: null, prev: lastShown && lastShown.group.position.distanceTo(camera.position) < 5 ? lastShown : null };
   vel.set(0, 0, 0);
   tourHint();
 }
@@ -646,7 +647,7 @@ function tourDist(o) {
   return Math.max((o.h + 0.1) / (fill * 2 * half), (o.w + 0.1) / (fill * 2 * half * camera.aspect));
 }
 function endLeg() {
-  if (tour && tour.leg) { tour.leg.o.label.visible = true; tour.leg = null; }
+  if (tour && tour.leg) { tour.leg.o.label.visible = true; tour.prev = lastShown = tour.leg.o; tour.leg = null; }
 }
 function nextLeg() {
   const o = pickNext();
@@ -658,7 +659,11 @@ function nextLeg() {
   dir.normalize();
   const len = Math.max(0, camera.position.distanceTo(p) - tourDist(o));
   o.label.visible = false;   // no title under the work while it is shown up close
-  tour.leg = { o, dir, from: camera.position.clone(), t: 0, dur: Math.min(10, Math.max(3.5, len / 1.4)), phase: 'fly',
+  // leaving a work seen up close: first back away from it, then curve over to the next one (never brush past it)
+  const from = camera.position.clone(), ctrl = from.clone();
+  if (tour.prev) ctrl.addScaledVector(new THREE.Vector3().subVectors(from, tour.prev.group.position).normalize(), Math.min(4, 1.5 + len * 0.25));
+  else ctrl.lerp(p, 0.4);
+  tour.leg = { o, dir, from, ctrl, t: 0, dur: Math.min(10, Math.max(3.5, len / 1.4)), phase: 'fly',
                hold: 5, left: 0 };   // 5 seconds at every work before moving on
   return true;
 }
@@ -672,7 +677,9 @@ function tourTick(dt) {
     g.t = Math.min(1, g.t + dt / g.dur);
     const e = g.t < 0.5 ? 4 * g.t * g.t * g.t : 1 - Math.pow(-2 * g.t + 2, 3) / 2;
     tourTo.copy(p).addScaledVector(g.dir, d);
-    camera.position.lerpVectors(g.from, tourTo, e);
+    // quadratic curve: start -> (back away) -> in front of the next work
+    const a = (1 - e) * (1 - e), b = 2 * (1 - e) * e, c = e * e;
+    camera.position.set(a * g.from.x + b * g.ctrl.x + c * tourTo.x, a * g.from.y + b * g.ctrl.y + c * tourTo.y, a * g.from.z + b * g.ctrl.z + c * tourTo.z);
     if (g.t > 0.6) upgradeImage(o);
     if (g.t >= 1) { g.phase = 'hold'; g.left = g.hold; }
   } else {
