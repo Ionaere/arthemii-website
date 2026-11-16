@@ -1,0 +1,24 @@
+name: Apply space video quality patch
+
+on:
+  push:
+    branches: [space-video-quality]
+    paths: ['vq-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary vq-update/space-video.patch
+          git rm -r -q vq-update
+          git add -A
+          git commit -m "3D space: full-quality clips instead of small previews, sharper rendering on retina"
+          git push
