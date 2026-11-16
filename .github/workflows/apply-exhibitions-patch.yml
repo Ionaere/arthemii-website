@@ -1,0 +1,24 @@
+name: Apply exhibitions patch
+
+on:
+  push:
+    branches: [exhibition-pages]
+    paths: ['exhibition-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary exhibition-update/exhibitions.patch
+          git rm -r -q exhibition-update
+          git add -A
+          git commit -m "Exhibition pages: separate page for each exhibition, buttons on home and exhibitions list"
+          git push
