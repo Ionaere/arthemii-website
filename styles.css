@@ -9,8 +9,8 @@
             --border: #e5e5e3;
             --border-strong: #ccccca;
 
-            --font-sans: 'Hahmlet', Georgia, 'Times New Roman', serif;
-            --font-serif: 'Hahmlet', Georgia, serif;
+            --font-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
