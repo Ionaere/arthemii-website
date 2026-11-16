@@ -1,0 +1,24 @@
+name: Apply mobile animation patch
+
+on:
+  push:
+    branches: [mobile-animation]
+    paths: ['ma-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary ma-update/mobile-animation.patch
+          git rm -r -q ma-update
+          git add -A
+          git commit -m "Home page: surfacing section animation on phones"
+          git push
