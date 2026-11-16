@@ -1,0 +1,24 @@
+name: Apply space patch
+
+on:
+  push:
+    branches: [space-no-milkyway]
+    paths: ['sp-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary sp-update/space-no-milkyway.patch
+          git rm -r -q sp-update
+          git add -A
+          git commit -m "3D space: remove the Milky Way panorama, keep black sky with stars"
+          git push
