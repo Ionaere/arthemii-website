@@ -1,0 +1,24 @@
+name: Apply aol photos patch
+
+on:
+  push:
+    branches: [aol-photos]
+    paths: ['ap-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary ap-update/aol-photos.patch
+          git rm -r -q ap-update
+          git add -A
+          git commit -m "Architecture of Light: remove wrong photos, real exhibition photos on event page, list and home slider"
+          git push
