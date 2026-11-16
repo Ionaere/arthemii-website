@@ -1,0 +1,24 @@
+name: Apply space icon patch
+
+on:
+  push:
+    branches: [space-icon]
+    paths: ['si-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary si-update/space-icon.patch
+          git rm -r -q si-update
+          git add -A
+          git commit -m "3D space entrance: animated stained-glass prism icon"
+          git push
