@@ -1,0 +1,24 @@
+name: Apply space closer patch
+
+on:
+  push:
+    branches: [space-closer]
+    paths: ['cl-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary cl-update/space-closer.patch
+          git rm -r -q cl-update
+          git add -A
+          git commit -m "3D space: almost transparent theme bar; tour flies right up to each work (fills the screen, no title), large pictures up close"
+          git push
