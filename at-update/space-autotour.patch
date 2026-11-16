@@ -1,0 +1,115 @@
+diff --git a/space/index.html b/space/index.html
+index 58742ed..392a93e 100644
+--- a/space/index.html
++++ b/space/index.html
+@@ -542,6 +542,89 @@ let hintTimer = null;
+ function showHint() { $('hint').classList.remove('is-hidden'); clearTimeout(hintTimer); hintTimer = setTimeout(hideHint, 9000); }
+ function hideHint() { $('hint').classList.add('is-hidden'); }
+ 
++/* ---------- automatic slow tour (starts after 3 s without any input) ---------- */
++// First it visits every video, then the rest of the works, then everything again.
++const TOUR_HINT = {
++  en: ['Auto tour · press any key or click to take control', 'Auto tour · touch the screen to take control'],
++  de: ['Automatischer Rundflug · Taste drücken oder klicken, um selbst zu steuern', 'Automatischer Rundflug · Bildschirm berühren, um selbst zu steuern'],
++  es: ['Recorrido automático · pulsa una tecla o haz clic para tomar el control', 'Recorrido automático · toca la pantalla para tomar el control'],
++  fr: ['Visite automatique · appuyez sur une touche ou cliquez pour reprendre la main', "Visite automatique · touchez l'écran pour reprendre la main"],
++  it: ['Volo automatico · premi un tasto o clicca per prendere il controllo', 'Volo automatico · tocca lo schermo per prendere il controllo'],
++  ru: ['Автопролёт · нажмите любую клавишу или кликните, чтобы управлять самому', 'Автопролёт · коснитесь экрана, чтобы управлять самому']
++};
++const TOUR_TXT = (TOUR_HINT[T[LANG] ? LANG : 'en'] || TOUR_HINT.en)[isTouch ? 1 : 0];
++const IDLE_START = 3000;
++let tour = null, lastInput = 0;
++const tourDir = new THREE.Vector3();
++function tourQueue(phase) {
++  if (phase === 'videos') return items.filter(o => o.clip);
++  if (phase === 'works') return items.filter(o => !o.clip && o.state !== 'failed');
++  return items.filter(o => o.clip || o.state !== 'failed');
++}
++function startTour() {
++  if (tour || matchMedia('(prefers-reduced-motion: reduce)').matches || !items.length) return;
++  focus = null;
++  tour = { phase: 'videos', queue: tourQueue('videos'), leg: null };
++  if (!tour.queue.length) { tour.phase = 'works'; tour.queue = tourQueue('works'); }
++  vel.set(0, 0, 0);
++  const h = $('hint'); h.textContent = TOUR_TXT; h.classList.remove('is-hidden'); clearTimeout(hintTimer);
++}
++function stopTour() {
++  if (!tour) return;
++  tour = null;
++  $('hint').textContent = isTouch ? L.hintTouch : L.hint + ' · E / Q — ' + UD;
++  showHint();
++}
++function nextLeg() {
++  if (!tour.queue.length) {
++    tour.phase = tour.phase === 'videos' ? 'works' : 'all';
++    tour.queue = tourQueue(tour.phase);
++    if (!tour.queue.length) return false;
++  }
++  // the nearest work that is still waiting, so the flight never jumps around
++  let bi = 0, bd = Infinity;
++  tour.queue.forEach((o, i) => { const d = o.group.position.distanceToSquared(camera.position); if (d < bd) { bd = d; bi = i; } });
++  const o = tour.queue.splice(bi, 1)[0];
++  const p = o.group.position;
++  const half = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), fill = 0.6;
++  const d = Math.min(4.6, Math.max(2.6, Math.max(o.h / (fill * 2 * half), o.w / (fill * 2 * half * camera.aspect))));
++  const dir = new THREE.Vector3().subVectors(camera.position, p);
++  if (dir.lengthSq() < 1e-6) dir.set(0, 0, 1);
++  dir.normalize();
++  const to = p.clone().addScaledVector(dir, d);
++  const len = to.distanceTo(camera.position);
++  tour.leg = { o, dir, from: camera.position.clone(), to, t: 0, dur: Math.min(10, Math.max(3.5, len / 1.4)), phase: 'fly',
++               hold: 5, left: 0 };   // 5 seconds at every work before moving on
++  return true;
++}
++function tourTick(dt) {
++  if (!tour.leg && !nextLeg()) { stopTour(); return; }
++  const g = tour.leg, p = g.o.group.position;
++  if (g.phase === 'fly') {
++    g.t = Math.min(1, g.t + dt / g.dur);
++    const e = g.t < 0.5 ? 4 * g.t * g.t * g.t : 1 - Math.pow(-2 * g.t + 2, 3) / 2;
++    camera.position.lerpVectors(g.from, g.to, e);
++    if (g.t >= 1) { g.phase = 'hold'; g.left = g.hold; }
++  } else {
++    // a very slow drift towards the work while it is on screen
++    camera.position.addScaledVector(g.dir, -0.05 * dt);
++    g.left -= dt;
++    if (g.left <= 0) tour.leg = null;
++  }
++  // turn smoothly to face the work
++  const dx = p.x - camera.position.x, dy = p.y - camera.position.y, dz = p.z - camera.position.z;
++  const wantYaw = Math.atan2(-dx, -dz), wantPitch = Math.atan2(dy, Math.hypot(dx, dz));
++  const k = 1 - Math.pow(0.18, dt);
++  yaw += Math.atan2(Math.sin(wantYaw - yaw), Math.cos(wantYaw - yaw)) * k;
++  pitch += (wantPitch - pitch) * k;
++  camera.rotation.set(pitch, yaw, 0);
++}
++// any key, click, touch or wheel hands the controls back at once
++['keydown', 'pointerdown', 'wheel', 'touchstart'].forEach(ev => addEventListener(ev, () => {
++  lastInput = performance.now();
++  if (tour) stopTour();
++}, { capture: true, passive: true }));
++
+ /* ---------- loop ---------- */
+ const clock = new THREE.Clock();
+ const fwd = new THREE.Vector3(), right = new THREE.Vector3(), upV = new THREE.Vector3(0, 1, 0), target = new THREE.Vector3();
+@@ -557,7 +640,10 @@ function tick() {
+   const run = keys.ShiftLeft || keys.ShiftRight ? 2.3 : 1;
+   // any steering hands control back after flying up to a work
+   if (focus && (f || s || u || turn || wheelPush)) focus = null;
+-  if (focus) {
++  if (tour) {
++    tourTick(dt);
++    vel.set(0, 0, 0);
++  } else if (focus) {
+     focus.t = Math.min(1, focus.t + dt / 0.9);
+     const e = focus.t < 0.5 ? 4 * focus.t * focus.t * focus.t : 1 - Math.pow(-2 * focus.t + 2, 3) / 2;
+     camera.position.lerpVectors(focus.from, focus.to, e);
+@@ -624,6 +710,8 @@ fetch('content.json', { cache: 'no-cache' })
+     // Straight into space: no start screen
+     el.focus();
+     showHint();
++    // nobody touches anything for 3 seconds: start the slow automatic tour (videos first)
++    setTimeout(() => { if (!lastInput && !focus) startTour(); }, IDLE_START);
+     // the first touch or click makes sure every browser lets the videos play
+     addEventListener('pointerdown', () => {
+       for (const o of items) if (o.video && o.video.paused) { const p = o.video.play(); if (p && p.catch) p.catch(() => {}); }
