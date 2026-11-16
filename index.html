@@ -1979,6 +1979,13 @@
                 transition: opacity 0.9s var(--ease-out-expo), transform 1.1s var(--ease-out-expo);
             }
             html.no-sda main > section.section.is-surfaced { opacity: 1; transform: none; }
+            /* Phones / touch screens: driven by JS (works in every mobile browser) */
+            html.surface-js main > section.section {
+                animation: none !important;
+                transition: none !important;
+                transform-origin: 50% 0;
+                will-change: transform, opacity;
+            }
         }
 
         /* ========== SCROLL REVEAL ========== */
@@ -3846,6 +3853,41 @@
             }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
             document.querySelectorAll('main > section.section').forEach(el => surfaceObserver.observe(el));
         }
+
+        /* ===== SECTIONS SURFACE ON PHONES / TOUCH SCREENS (scroll-linked, JS) ===== */
+        (function () {
+            if (!window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const html = document.documentElement;
+            const secs = Array.from(document.querySelectorAll('main > section.section'));
+            if (!secs.length) return;
+            html.classList.remove('no-sda');
+            html.classList.add('surface-js');
+            secs.forEach(function (s) { s.classList.remove('is-surfaced'); });
+            let ticking = false;
+            function update() {
+                ticking = false;
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+                const dist = vh * 0.6;               // the section is fully grown after rising ~60% of the screen
+                for (let i = 0; i < secs.length; i++) {
+                    const s = secs[i];
+                    const top = s.getBoundingClientRect().top;
+                    let p = (vh - top) / dist;
+                    p = p < 0 ? 0 : (p > 1 ? 1 : p);
+                    const e = 1 - (1 - p) * (1 - p);    // gentle ease-out
+                    if (s._p === e) continue;
+                    s._p = e;
+                    if (e >= 1) { s.style.transform = ''; s.style.opacity = ''; continue; }
+                    s.style.transform = 'translate3d(0,' + (60 * (1 - e)).toFixed(1) + 'px,0) scale(' + (0.9 + 0.1 * e).toFixed(4) + ')';
+                    s.style.opacity = (0.2 + 0.8 * e).toFixed(3);
+                }
+            }
+            function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+            document.addEventListener('scroll', onScroll, { passive: true, capture: true });
+            window.addEventListener('resize', onScroll, { passive: true });
+            window.addEventListener('load', onScroll);
+            update();
+        })();
 
         /* ===== SCROLL REVEAL (IntersectionObserver) ===== */
         const revealObserver = new IntersectionObserver((entries) => {
