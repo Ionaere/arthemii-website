@@ -1432,6 +1432,29 @@
 
         .gallery__item:hover img { transform: scale(1.08); }
 
+        /* ========== GALLERY CAPTIONS ========== */
+        .gallery__item { position: relative; }
+        .gallery__caption {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            padding: 1.6rem 0.65rem 0.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.6875rem;
+            line-height: 1.3;
+            letter-spacing: 0.02em;
+            color: #fff;
+            background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0));
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .gallery__caption span { opacity: 0.75; }
+        @media (max-width: 640px) {
+            .gallery__caption { font-size: 0.625rem; padding: 1.2rem 0.5rem 0.4rem; }
+        }
+
         /* ========== GALLERY PHOTO PAGE: previous / next ========== */
         /* The photo scales fluidly with the window (pure CSS, no jumps):
            at most the container width and a share of the screen height;
