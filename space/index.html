@@ -39,10 +39,13 @@
   .tip.is-on { opacity: 1; }
   .tip b { display: block; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 15px; margin-bottom: 2px; }
   .tip small { color: #666; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
-  .stick { left: 22px; bottom: 22px; width: 116px; height: 116px; border-radius: 50%; background: rgba(255,255,255,.22);
-    border: 1px solid rgba(255,255,255,.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; touch-action: none; }
-  .stick i { position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: rgba(255,255,255,.92);
-    box-shadow: 0 4px 14px rgba(0,0,0,.2); }
+  /* the joystick is almost invisible: a faint ring, a little clearer only while the finger is on it */
+  .stick { left: 22px; bottom: 22px; width: 116px; height: 116px; border-radius: 50%; background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.1); display: none; touch-action: none; transition: background .3s ease, border-color .3s ease; }
+  .stick i { position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.14); transition: background .3s ease; }
+  .stick:active { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.2); }
+  .stick:active i { background: rgba(255,255,255,.28); }
   .touch .stick { display: block; }
   .touch .hint { bottom: 152px; }
   .intro { inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center;
@@ -615,11 +618,8 @@ const PHASES = [
   o => has(o, 'drawings'),
   () => true                            // and everything else (AI renders)
 ];
-function tourHint() {
-  const h = $('hint');
-  h.textContent = (cat !== 'all' ? CAT_L[CATS.indexOf(cat)] + ' · ' : '') + TOUR_TXT;
-  h.classList.remove('is-hidden'); clearTimeout(hintTimer);
-}
+// no caption while the tour flies: only the works on screen
+function tourHint() { clearTimeout(hintTimer); hideHint(); }
 function startTour() {
   if (tour || !items.length) return;
   // the same plan goes on after a break, so the tour does not start over with the same works
