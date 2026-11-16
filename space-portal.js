@@ -58,7 +58,6 @@
     'clip-path:circle(0 at var(--x,100%) var(--y,100%));transition:clip-path .75s cubic-bezier(.65,0,.35,1)}' +
     '.sp-peel.is-go{clip-path:circle(150vmax at var(--x,100%) var(--y,100%))}' +
     '@media (max-width:640px){.sp-prism{right:10px;bottom:10px;width:52px;height:52px}.sp-prism__stage{transform:rotateX(-18deg) scale(.86)}}' +
-    '@media (prefers-reduced-motion:reduce){.sp-prism,.sp-peel{transition:none}.sp-prism__spin,.sp-prism__glint,.sp-prism__rays{animation:none}}' +
     '@media print{.sp-prism{display:none}}';
 
   function init() {
@@ -109,11 +108,10 @@
       p.style.setProperty('--x', Math.round(r.left + r.width / 2) + 'px');
       p.style.setProperty('--y', Math.round(r.top + r.height / 2) + 'px');
       document.body.appendChild(p);
-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       requestAnimationFrame(function () {
         requestAnimationFrame(function () { p.classList.add('is-go'); });
       });
-      setTimeout(function () { location.href = a.href; }, reduce ? 0 : 700);
+      setTimeout(function () { location.href = a.href; }, 700);
     }
     a.addEventListener('click', function (e) {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return; // open in a new tab as usual
