@@ -1,0 +1,24 @@
+name: Apply mobile motion patch
+
+on:
+  push:
+    branches: [mobile-motion]
+    paths: ['mm-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary mm-update/mobile-motion.patch
+          git rm -r -q mm-update
+          git add -A
+          git commit -m "Phones: prism icon spins and home sections surface also with reduced-motion / battery saver"
+          git push
