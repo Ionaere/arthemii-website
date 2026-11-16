@@ -1,0 +1,24 @@
+name: Apply space path patch
+
+on:
+  push:
+    branches: [space-tour-path]
+    paths: ['tp-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary tp-update/space-path.patch
+          git rm -r -q tp-update
+          git add -A
+          git commit -m "3D space tour: back away from the work just shown before curving to the next one"
+          git push
