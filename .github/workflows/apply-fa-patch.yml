@@ -1,0 +1,24 @@
+name: Apply fonts and animation patch
+
+on:
+  push:
+    branches: [fonts-animation]
+    paths: ['fa-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary fa-update/fonts-animation.patch
+          git rm -r -q fa-update
+          git add -A
+          git commit -m "New fonts (Cormorant Garamond + Manrope) and surfacing section animation on the home page"
+          git push
