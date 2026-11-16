@@ -45,39 +45,24 @@
 })();
 
 /*
- * The photo fits the screen: as large as it can be without scrolling, centred on
- * the page, and brought to the middle of the screen when the page opens.
+ * The photo size itself is pure CSS (it scales smoothly with the window).
+ * Here we only mark tall (portrait) photos so CSS can give them a lower height
+ * limit, and bring the photo to the middle of the screen when the page opens.
  */
 (function () {
   'use strict';
   var view = document.querySelector('.photo-view');
   var img = view && view.querySelector('img');
   if (!img) return;
-  var pic = img.closest('picture');
   var centred = false;
 
   function headerH() {
     var h = document.querySelector('.header');
     return h ? h.offsetHeight : 72;
   }
-  function fit() {
+  function mark() {
     var nw = img.naturalWidth, nh = img.naturalHeight;
-    if (!nw || !nh) return;
-    view.style.width = '';
-    if (pic) pic.style.width = '';
-    var box = view.clientWidth;
-    var maxH = Math.max(220, window.innerHeight - headerH() - 40);
-    var s = Math.min(box / nw, maxH / nh);
-    var w = Math.round(nw * s);
-    img.style.width = w + 'px';
-    img.style.height = 'auto';
-    img.style.maxWidth = '100%';
-    img.style.margin = '0 auto';
-    if (pic) pic.style.width = w + 'px';
-    view.style.width = w + 'px';
-    view.style.maxWidth = '100%';
-    view.style.marginLeft = 'auto';
-    view.style.marginRight = 'auto';
+    if (nw && nh) view.classList.toggle('is-tall', nh > nw * 1.1);
   }
   function centre() {
     if (centred) return;
@@ -89,9 +74,7 @@
     var y = window.scrollY + r.top - hh - Math.max(0, (avail - r.height) / 2);
     if (y > 4) window.scrollTo({ top: y, behavior: 'smooth' });
   }
-  function ready() { fit(); requestAnimationFrame(centre); }
+  function ready() { mark(); requestAnimationFrame(function () { requestAnimationFrame(centre); }); }
   if (img.complete && img.naturalWidth) ready();
   else img.addEventListener('load', ready);
-  var t;
-  window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(fit, 120); });
 })();

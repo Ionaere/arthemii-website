@@ -1433,15 +1433,37 @@
         .gallery__item:hover img { transform: scale(1.08); }
 
         /* ========== GALLERY PHOTO PAGE: previous / next ========== */
-        .photo-view { position: relative; }
-        .photo-view picture, .photo-view img { display: block; width: 100%; }
+        /* The photo scales fluidly with the window (pure CSS, no jumps):
+           at most the container width and a share of the screen height;
+           tall (portrait) photos get a lower height limit. */
+        .photo-view {
+            position: relative;
+            width: fit-content;
+            max-width: 100%;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        .photo-view picture { display: block; }
+        .photo-view img {
+            display: block;
+            width: auto !important;
+            max-width: 100%;
+            height: auto;
+            max-height: min(78vh, 820px);
+            max-height: min(78svh, 820px);
+            transition: max-height 0.35s ease, opacity 0.35s ease;
+        }
+        .photo-view.is-tall img { max-height: min(64vh, 680px); max-height: min(64svh, 680px); }
+        .photo-extra img { max-height: min(64vh, 640px); max-height: min(64svh, 640px); width: 100% !important; object-fit: cover; }
 
+        /* Arrows stay fixed in the lower corners of the screen
+           (the right one sits above the 3D-portal corner) */
         .photo-view__arrow {
-            position: absolute;
-            top: 50%;
+            position: fixed;
+            bottom: 88px;
+            z-index: 900;
             width: 48px;
             height: 48px;
-            margin-top: -24px;
             border-radius: 50%;
             background: rgba(17,17,17,0.45);
             color: #fff;
@@ -1451,11 +1473,13 @@
             opacity: 0.85;
             transition: background 0.2s, opacity 0.2s;
             -webkit-tap-highlight-color: transparent;
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
         }
         .photo-view__arrow:hover, .photo-view__arrow:focus-visible { background: rgba(17,17,17,0.75); opacity: 1; outline: none; }
         .photo-view__arrow svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-        .photo-view__arrow--prev { left: 12px; }
-        .photo-view__arrow--next { right: 12px; }
+        .photo-view__arrow--prev { left: 24px; }
+        .photo-view__arrow--next { right: 24px; }
 
         .photo-nav {
             display: grid;
@@ -1474,9 +1498,12 @@
         .photo-nav__count { font-size: 0.8125rem; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
 
         @media (max-width: 640px) {
-            .photo-view__arrow { width: 40px; height: 40px; margin-top: -20px; }
-            .photo-view__arrow--prev { left: 8px; }
-            .photo-view__arrow--next { right: 8px; }
+            .photo-view img { max-height: min(70vh, 640px); max-height: min(70svh, 640px); }
+            .photo-view.is-tall img { max-height: min(60vh, 560px); max-height: min(60svh, 560px); }
+            .photo-view__arrow { width: 38px; height: 38px; bottom: 72px; background: rgba(17,17,17,0.32); }
+            .photo-view__arrow svg { width: 18px; height: 18px; }
+            .photo-view__arrow--prev { left: 12px; }
+            .photo-view__arrow--next { right: 12px; }
             .photo-nav__title { display: none; }
         }
 
