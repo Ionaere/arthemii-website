@@ -1,0 +1,208 @@
+diff --git a/de/index.html b/de/index.html
+index 926f99d..bc4d834 100644
+--- a/de/index.html
++++ b/de/index.html
+@@ -1979,13 +1979,14 @@
+                 transition: opacity 0.9s var(--ease-out-expo), transform 1.1s var(--ease-out-expo);
+             }
+             html.no-sda main > section.section.is-surfaced { opacity: 1; transform: none; }
+-            /* Phones / touch screens: driven by JS (works in every mobile browser) */
+-            html.surface-js main > section.section {
+-                animation: none !important;
+-                transition: none !important;
+-                transform-origin: 50% 0;
+-                will-change: transform, opacity;
+-            }
++        }
++        /* Phones / touch screens: driven by JS (works in every mobile browser,
++           also when the phone asks for less motion, e.g. battery saver) */
++        html.surface-js main > section.section {
++            animation: none !important;
++            transition: none !important;
++            transform-origin: 50% 0;
++            will-change: transform, opacity;
+         }
+ 
+         /* ========== GALLERY CAPTIONS ========== */
+@@ -3879,7 +3880,6 @@
+         /* ===== SECTIONS SURFACE ON PHONES / TOUCH SCREENS (scroll-linked, JS) ===== */
+         (function () {
+             if (!window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches) return;
+-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+             const html = document.documentElement;
+             const secs = Array.from(document.querySelectorAll('main > section.section'));
+             if (!secs.length) return;
+diff --git a/es/index.html b/es/index.html
+index e1115bb..61e2407 100644
+--- a/es/index.html
++++ b/es/index.html
+@@ -1979,13 +1979,14 @@
+                 transition: opacity 0.9s var(--ease-out-expo), transform 1.1s var(--ease-out-expo);
+             }
+             html.no-sda main > section.section.is-surfaced { opacity: 1; transform: none; }
+-            /* Phones / touch screens: driven by JS (works in every mobile browser) */
+-            html.surface-js main > section.section {
+-                animation: none !important;
+-                transition: none !important;
+-                transform-origin: 50% 0;
+-                will-change: transform, opacity;
+-            }
++        }
++        /* Phones / touch screens: driven by JS (works in every mobile browser,
++           also when the phone asks for less motion, e.g. battery saver) */
++        html.surface-js main > section.section {
++            animation: none !important;
++            transition: none !important;
++            transform-origin: 50% 0;
++            will-change: transform, opacity;
+         }
+ 
+         /* ========== GALLERY CAPTIONS ========== */
+@@ -3879,7 +3880,6 @@
+         /* ===== SECTIONS SURFACE ON PHONES / TOUCH SCREENS (scroll-linked, JS) ===== */
+         (function () {
+             if (!window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches) return;
+-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+             const html = document.documentElement;
+             const secs = Array.from(document.querySelectorAll('main > section.section'));
+             if (!secs.length) return;
+diff --git a/fr/index.html b/fr/index.html
+index 80b8999..da88576 100644
+--- a/fr/index.html
++++ b/fr/index.html
+@@ -1979,13 +1979,14 @@
+                 transition: opacity 0.9s var(--ease-out-expo), transform 1.1s var(--ease-out-expo);
+             }
+             html.no-sda main > section.section.is-surfaced { opacity: 1; transform: none; }
+-            /* Phones / touch screens: driven by JS (works in every mobile browser) */
+-            html.surface-js main > section.section {
+-                animation: none !important;
+-                transition: none !important;
+-                transform-origin: 50% 0;
+-                will-change: transform, opacity;
+-            }
++        }
++        /* Phones / touch screens: driven by JS (works in every mobile browser,
++           also when the phone asks for less motion, e.g. battery saver) */
++        html.surface-js main > section.section {
++            animation: none !important;
++            transition: none !important;
++            transform-origin: 50% 0;
++            will-change: transform, opacity;
+         }
+ 
+         /* ========== GALLERY CAPTIONS ========== */
+@@ -3879,7 +3880,6 @@
+         /* ===== SECTIONS SURFACE ON PHONES / TOUCH SCREENS (scroll-linked, JS) ===== */
+         (function () {
+             if (!window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches) return;
+-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+             const html = document.documentElement;
+             const secs = Array.from(document.querySelectorAll('main > section.section'));
+             if (!secs.length) return;
+diff --git a/i18n.js b/i18n.js
+index 4d150cd..9c2cd78 100644
+--- a/i18n.js
++++ b/i18n.js
+@@ -828,7 +828,7 @@
+   // The stained-glass prism in the corner that opens the 3D space (space-portal.js), on every page except the space itself
+   if (!/^\/space(\/|$)/.test(location.pathname)) {
+     var portal = document.createElement('script');
+-    portal.src = BASE + 'space-portal.js?v=20261116a';
++    portal.src = BASE + 'space-portal.js?v=20261116b';
+     portal.defer = true;
+     document.head.appendChild(portal);
+   }
+diff --git a/index.html b/index.html
+index fac02e4..a7352ed 100644
+--- a/index.html
++++ b/index.html
+@@ -1979,13 +1979,14 @@
+                 transition: opacity 0.9s var(--ease-out-expo), transform 1.1s var(--ease-out-expo);
+             }
+             html.no-sda main > section.section.is-surfaced { opacity: 1; transform: none; }
+-            /* Phones / touch screens: driven by JS (works in every mobile browser) */
+-            html.surface-js main > section.section {
+-                animation: none !important;
+-                transition: none !important;
+-                transform-origin: 50% 0;
+-                will-change: transform, opacity;
+-            }
++        }
++        /* Phones / touch screens: driven by JS (works in every mobile browser,
++           also when the phone asks for less motion, e.g. battery saver) */
++        html.surface-js main > section.section {
++            animation: none !important;
++            transition: none !important;
++            transform-origin: 50% 0;
++            will-change: transform, opacity;
+         }
+ 
+         /* ========== GALLERY CAPTIONS ========== */
+@@ -3879,7 +3880,6 @@
+         /* ===== SECTIONS SURFACE ON PHONES / TOUCH SCREENS (scroll-linked, JS) ===== */
+         (function () {
+             if (!window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches) return;
+-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+             const html = document.documentElement;
+             const secs = Array.from(document.querySelectorAll('main > section.section'));
+             if (!secs.length) return;
+diff --git a/it/index.html b/it/index.html
+index 13e6e7e..dc40ee0 100644
+--- a/it/index.html
++++ b/it/index.html
+@@ -1979,13 +1979,14 @@
+                 transition: opacity 0.9s var(--ease-out-expo), transform 1.1s var(--ease-out-expo);
+             }
+             html.no-sda main > section.section.is-surfaced { opacity: 1; transform: none; }
+-            /* Phones / touch screens: driven by JS (works in every mobile browser) */
+-            html.surface-js main > section.section {
+-                animation: none !important;
+-                transition: none !important;
+-                transform-origin: 50% 0;
+-                will-change: transform, opacity;
+-            }
++        }
++        /* Phones / touch screens: driven by JS (works in every mobile browser,
++           also when the phone asks for less motion, e.g. battery saver) */
++        html.surface-js main > section.section {
++            animation: none !important;
++            transition: none !important;
++            transform-origin: 50% 0;
++            will-change: transform, opacity;
+         }
+ 
+         /* ========== GALLERY CAPTIONS ========== */
+@@ -3879,7 +3880,6 @@
+         /* ===== SECTIONS SURFACE ON PHONES / TOUCH SCREENS (scroll-linked, JS) ===== */
+         (function () {
+             if (!window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches) return;
+-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+             const html = document.documentElement;
+             const secs = Array.from(document.querySelectorAll('main > section.section'));
+             if (!secs.length) return;
+diff --git a/space-portal.js b/space-portal.js
+index 66c8cf0..16f9ceb 100644
+--- a/space-portal.js
++++ b/space-portal.js
+@@ -58,7 +58,6 @@
+     'clip-path:circle(0 at var(--x,100%) var(--y,100%));transition:clip-path .75s cubic-bezier(.65,0,.35,1)}' +
+     '.sp-peel.is-go{clip-path:circle(150vmax at var(--x,100%) var(--y,100%))}' +
+     '@media (max-width:640px){.sp-prism{right:10px;bottom:10px;width:52px;height:52px}.sp-prism__stage{transform:rotateX(-18deg) scale(.86)}}' +
+-    '@media (prefers-reduced-motion:reduce){.sp-prism,.sp-peel{transition:none}.sp-prism__spin,.sp-prism__glint,.sp-prism__rays{animation:none}}' +
+     '@media print{.sp-prism{display:none}}';
+ 
+   function init() {
+@@ -109,11 +108,10 @@
+       p.style.setProperty('--x', Math.round(r.left + r.width / 2) + 'px');
+       p.style.setProperty('--y', Math.round(r.top + r.height / 2) + 'px');
+       document.body.appendChild(p);
+-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+       requestAnimationFrame(function () {
+         requestAnimationFrame(function () { p.classList.add('is-go'); });
+       });
+-      setTimeout(function () { location.href = a.href; }, reduce ? 0 : 700);
++      setTimeout(function () { location.href = a.href; }, 700);
+     }
+     a.addEventListener('click', function (e) {
+       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return; // open in a new tab as usual
