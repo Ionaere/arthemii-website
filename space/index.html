@@ -22,14 +22,14 @@
     backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 20px rgba(0,0,0,.12); border: 0; cursor: pointer; }
   .back:hover { background: rgba(60,48,110,.8); }
   .back svg { width: 16px; height: 16px; }
-  .sections { display: none; top: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 4px; border-radius: 999px;
-    background: rgba(255,255,255,.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 20px rgba(0,0,0,.12);
+  .sections { top: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 4px; border-radius: 999px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
     max-width: calc(100vw - 360px); overflow-x: auto; scrollbar-width: none; }
   .sections::-webkit-scrollbar { display: none; }
-  .sections button { flex: none; border: 0; background: transparent; color: var(--ink); padding: 8px 13px; border-radius: 999px;
+  .sections button { flex: none; border: 0; background: transparent; color: rgba(255,255,255,.78); padding: 8px 13px; border-radius: 999px; text-shadow: 0 1px 3px rgba(0,0,0,.6);
     font: 500 12.5px/1 system-ui, -apple-system, sans-serif; cursor: pointer; white-space: nowrap; transition: background .2s ease, color .2s ease; }
-  .sections button:hover { background: rgba(0,0,0,.06); }
-  .sections button.is-on { background: var(--ink); color: #fff; }
+  .sections button:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .sections button.is-on { background: rgba(255,255,255,.2); color: #fff; }
   .hint { bottom: 18px; left: 50%; transform: translateX(-50%); padding: 9px 16px; border-radius: 999px; background: rgba(17,17,17,.72); color: #fff;
     font-size: 12px; letter-spacing: .03em; white-space: nowrap; pointer-events: none; transition: opacity .6s ease; max-width: calc(100vw - 32px);
     overflow: hidden; text-overflow: ellipsis; }
@@ -365,7 +365,24 @@ function loadImage(o) {
     o.state = 'ready';
   }, undefined, () => { loadingCount--; o.state = 'failed'; });
 }
+// Right in front of a work: swap the small picture for the large one
+function upgradeImage(o) {
+  if (!o.hi || o.hiState || o.state !== 'ready' || o.video) return;
+  o.hiState = 'loading';
+  loader.load(asset(o.hi), tex => {
+    if (o.state !== 'ready' || o.hiState !== 'loading' || o.video) { tex.dispose(); return; }
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy ? Math.min(8, renderer.capabilities.getMaxAnisotropy()) : 4;
+    if (o.tex) o.tex.dispose();
+    o.tex = tex;
+    const old = o.pic.material;
+    o.pic.material = new THREE.MeshBasicMaterial({ map: tex, toneMapped: false });
+    if (old !== placeholderMat) old.dispose();
+    o.hiState = 'ready';
+  }, undefined, () => { o.hiState = 'failed'; });
+}
 function unloadImage(o) {
+  o.hiState = null;
   if (o.state === 'ready' || o.state === 'loading') {
     if (o.tex) { o.tex.dispose(); o.tex = null; }
     if (o.pic.material !== placeholderMat && !o.video) { o.pic.material.dispose(); o.pic.material = placeholderMat; }
@@ -510,6 +527,7 @@ function flyTo(o) {
   if (dir.lengthSq() < 1e-6) dir.set(0, 0, 1);
   dir.normalize();
   focus = { o, from: camera.position.clone(), to: p.clone().addScaledVector(dir, d), yaw0: yaw, pitch0: pitch, t: 0, done: false };
+  upgradeImage(o);
   vel.set(0, 0, 0);
   hideHint();
 }
@@ -598,6 +616,7 @@ function startTour() {
 }
 function stopTour() {
   if (!tour) return;
+  endLeg();
   tour = null;
   $('hint').textContent = isTouch ? L.hintTouch : L.hint + ' · E / Q — ' + UD;
   showHint();
@@ -621,40 +640,53 @@ function pickNext() {
   }
   return null;
 }
+// how far from a work the camera stops so that the work fills almost the whole screen
+function tourDist(o) {
+  const half = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), fill = 0.94;
+  return Math.max((o.h + 0.1) / (fill * 2 * half), (o.w + 0.1) / (fill * 2 * half * camera.aspect));
+}
+function endLeg() {
+  if (tour && tour.leg) { tour.leg.o.label.visible = true; tour.leg = null; }
+}
 function nextLeg() {
   const o = pickNext();
   if (!o) return false;
   plan.done.add(o);
   const p = o.group.position;
-  const half = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), fill = 0.6;
-  const d = Math.min(4.6, Math.max(2.6, Math.max(o.h / (fill * 2 * half), o.w / (fill * 2 * half * camera.aspect))));
   const dir = new THREE.Vector3().subVectors(camera.position, p);
   if (dir.lengthSq() < 1e-6) dir.set(0, 0, 1);
   dir.normalize();
-  const to = p.clone().addScaledVector(dir, d);
-  const len = to.distanceTo(camera.position);
-  tour.leg = { o, dir, from: camera.position.clone(), to, t: 0, dur: Math.min(10, Math.max(3.5, len / 1.4)), phase: 'fly',
+  const len = Math.max(0, camera.position.distanceTo(p) - tourDist(o));
+  o.label.visible = false;   // no title under the work while it is shown up close
+  tour.leg = { o, dir, from: camera.position.clone(), t: 0, dur: Math.min(10, Math.max(3.5, len / 1.4)), phase: 'fly',
                hold: 5, left: 0 };   // 5 seconds at every work before moving on
   return true;
 }
+const tourTo = new THREE.Vector3();
 function tourTick(dt) {
   if (!tour.leg && !nextLeg()) { stopTour(); return; }
-  const g = tour.leg, p = g.o.group.position;
+  const g = tour.leg, o = g.o, p = o.group.position;
+  // the end point follows the work (its real size is known once the picture has loaded, and it floats a little)
+  const d = tourDist(o);
   if (g.phase === 'fly') {
     g.t = Math.min(1, g.t + dt / g.dur);
     const e = g.t < 0.5 ? 4 * g.t * g.t * g.t : 1 - Math.pow(-2 * g.t + 2, 3) / 2;
-    camera.position.lerpVectors(g.from, g.to, e);
+    tourTo.copy(p).addScaledVector(g.dir, d);
+    camera.position.lerpVectors(g.from, tourTo, e);
+    if (g.t > 0.6) upgradeImage(o);
     if (g.t >= 1) { g.phase = 'hold'; g.left = g.hold; }
   } else {
-    // a very slow drift towards the work while it is on screen
-    camera.position.addScaledVector(g.dir, -0.05 * dt);
+    upgradeImage(o);
+    // a very slow push in while the work is on screen
+    const k = 1 - 0.03 * (1 - g.left / g.hold);
+    camera.position.copy(p).addScaledVector(g.dir, d * k);
     g.left -= dt;
-    if (g.left <= 0) tour.leg = null;
+    if (g.left <= 0) { endLeg(); return; }
   }
   // turn smoothly to face the work
   const dx = p.x - camera.position.x, dy = p.y - camera.position.y, dz = p.z - camera.position.z;
   const wantYaw = Math.atan2(-dx, -dz), wantPitch = Math.atan2(dy, Math.hypot(dx, dz));
-  const k = 1 - Math.pow(0.18, dt);
+  const k = 1 - Math.pow(g.phase === 'hold' ? 0.002 : 0.18, dt);
   yaw += Math.atan2(Math.sin(wantYaw - yaw), Math.cos(wantYaw - yaw)) * k;
   pitch += (wantPitch - pitch) * k;
   camera.rotation.set(pitch, yaw, 0);
@@ -682,7 +714,7 @@ CATS.forEach((c, i) => {
     cat = c;
     nav.querySelectorAll('button').forEach(x => x.classList.toggle('is-on', x === b));
     b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-    if (tour) tour = null;
+    if (tour) { endLeg(); tour = null; }
     plan = null;
     startTour();
     el.focus();
