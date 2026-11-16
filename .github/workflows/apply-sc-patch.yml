@@ -1,0 +1,24 @@
+name: Apply space categories patch
+
+on:
+  push:
+    branches: [space-categories]
+    paths: ['sc-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary sc-update/space-categories.patch
+          git rm -r -q sc-update
+          git add -A
+          git commit -m "3D space: no repeated works, theme bar for the tour, AI videos after the other videos, tour restarts after 3 s idle (mobile too)"
+          git push
