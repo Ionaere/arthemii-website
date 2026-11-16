@@ -1,0 +1,24 @@
+name: Apply kaleidoscope patch
+
+on:
+  push:
+    branches: [kaleidoscope-36]
+    paths: ['gk-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary gk-update/kaleidoscope-36.patch
+          git rm -r -q gk-update
+          git add -A
+          git commit -m "Glass Kaleidoscope: 36 panels"
+          git push
