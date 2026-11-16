@@ -540,7 +540,7 @@ function clickAt(x, y) {
 const tip = $('tip');
 let hoverT = 0;
 function hover(now) {
-  if (isTouch || !mouse.in || drag) { tip.classList.remove('is-on'); el.style.cursor = drag ? 'grabbing' : 'grab'; return; }
+  if (isTouch || !mouse.in || drag || tour) { tip.classList.remove('is-on'); el.style.cursor = drag ? 'grabbing' : 'grab'; return; }
   if (now - hoverT < 60) return;
   hoverT = now;
   const o = pick(mouse.x, mouse.y);
