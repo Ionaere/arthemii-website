@@ -403,5 +403,22 @@ window.I18N_DATA["da"] = {
   "Vertical glass work — Arthemii Ionaere": "Lodret glasværk — Arthemii Ionaere",
   "Vertical glass work — contemporary stained glass artwork by Arthemii Ionaere.": "Lodret glasværk — nutidig glasmaleri af Arthemii Ionaere.",
   "Workshop scene — Arthemii Ionaere": "Værkstedsscene — Arthemii Ionaere",
-  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Værkstedsscene — nutidig glasmaleri af Arthemii Ionaere."
+  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Værkstedsscene — nutidig glasmaleri af Arthemii Ionaere.",
+  "Working moments": "Arbejdsøjeblikke",
+  "Working moments — Arthemii Ionaere": "Arbejdsøjeblikke — Arthemii Ionaere",
+  "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Glimt fra atelieret: at skære, slibe, lodde og samle glasset — det arbejde, der sker, før et værk overhovedet møder lyset.",
+  "← Back to the studio": "← Tilbage til atelieret",
+  "Working moments →": "Arbejdsøjeblikke →",
+  "The studio after dark": "Atelieret efter mørkets frembrud",
+  "A glass form on the workbench": "En glasform på arbejdsbænken",
+  "The same form against the window light": "Samme form mod lyset fra vinduet",
+  "Dichroic strips, cut and laid out": "Dikroiske strimler, skåret og lagt ud",
+  "Three frames: steel, stained glass, brass": "Tre rammer: stål, blyindfattet glas, messing",
+  "Edged pieces ready for assembly": "Slebne stykker klar til samling",
+  "Edged glass pieces before assembly": "Slebne glasstykker før samlingen",
+  "A corner full of works in progress": "Et hjørne fyldt med igangværende værker",
+  "A sculpture in the making": "En skulptur under tilblivelse",
+  "Red glass ribbons on the work table": "Røde glasbånd på arbejdsbordet",
+  "A finished form out in the street": "En færdig form ude på gaden",
+  "Soldering by the window at sunset": "Lodning ved vinduet i solnedgangen"
 };

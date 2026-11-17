@@ -403,5 +403,22 @@ window.I18N_DATA["fi"] = {
   "Vertical glass work — Arthemii Ionaere": "Pystysuora lasiteos — Arthemii Ionaere",
   "Vertical glass work — contemporary stained glass artwork by Arthemii Ionaere.": "Pystysuora lasiteos — Arthemii Ionaeren nykyaikainen lasimaalaus.",
   "Workshop scene — Arthemii Ionaere": "Työpajanäkymä — Arthemii Ionaere",
-  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Työpajanäkymä — Arthemii Ionaeren nykyaikainen lasimaalaus."
+  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Työpajanäkymä — Arthemii Ionaeren nykyaikainen lasimaalaus.",
+  "Working moments": "Työhetkiä",
+  "Working moments — Arthemii Ionaere": "Työhetkiä — Arthemii Ionaere",
+  "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Välähdyksiä studiosta: lasin leikkaamista, hiontaa, juottamista ja kokoamista — työtä, joka tapahtuu ennen kuin teos kohtaa valon.",
+  "← Back to the studio": "← Takaisin studioon",
+  "Working moments →": "Työhetkiä →",
+  "The studio after dark": "Studio pimeän tultua",
+  "A glass form on the workbench": "Lasimuoto työpöydällä",
+  "The same form against the window light": "Sama muoto ikkunan valoa vasten",
+  "Dichroic strips, cut and laid out": "Leikattuja ja aseteltuja dikroisia suikaleita",
+  "Three frames: steel, stained glass, brass": "Kolme kehystä: teräs, lasimaalaus, messinki",
+  "Edged pieces ready for assembly": "Hiotut palat valmiina kokoamiseen",
+  "Edged glass pieces before assembly": "Hiottuja lasipaloja ennen kokoamista",
+  "A corner full of works in progress": "Nurkka täynnä keskeneräisiä töitä",
+  "A sculpture in the making": "Veistos syntymässä",
+  "Red glass ribbons on the work table": "Punaisia lasinauhoja työpöydällä",
+  "A finished form out in the street": "Valmis muoto kadulla",
+  "Soldering by the window at sunset": "Juottamista ikkunan ääressä auringonlaskussa"
 };

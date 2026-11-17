@@ -403,5 +403,22 @@ window.I18N_DATA["tr"] = {
   "Vertical glass work — Arthemii Ionaere": "Dikey cam çalışması — Arthemii Ionaere",
   "Vertical glass work — contemporary stained glass artwork by Arthemii Ionaere.": "Dikey cam çalışması — Arthemii Ionaere’nin çağdaş vitray eseri.",
   "Workshop scene — Arthemii Ionaere": "Atölye sahnesi — Arthemii Ionaere",
-  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Atölye sahnesi — Arthemii Ionaere’nin çağdaş vitray eseri."
+  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Atölye sahnesi — Arthemii Ionaere’nin çağdaş vitray eseri.",
+  "Working moments": "Çalışma anları",
+  "Working moments — Arthemii Ionaere": "Çalışma anları — Arthemii Ionaere",
+  "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Atölyeden kareler: camı kesmek, kenarlarını işlemek, lehimlemek ve birleştirmek — bir eser ışıkla buluşmadan önce yapılan emek.",
+  "← Back to the studio": "← Atölyeye dön",
+  "Working moments →": "Çalışma anları →",
+  "The studio after dark": "Akşam karanlığında atölye",
+  "A glass form on the workbench": "Tezgâhta bir cam form",
+  "The same form against the window light": "Aynı form pencere ışığında",
+  "Dichroic strips, cut and laid out": "Kesilip dizilmiş dikroik şeritler",
+  "Three frames: steel, stained glass, brass": "Üç çerçeve: çelik, vitray, pirinç",
+  "Edged pieces ready for assembly": "Birleştirmeye hazır, kenarları işlenmiş parçalar",
+  "Edged glass pieces before assembly": "Birleştirme öncesi kenarları işlenmiş cam parçaları",
+  "A corner full of works in progress": "Yapım aşamasındaki eserlerle dolu bir köşe",
+  "A sculpture in the making": "Yapım aşamasında bir heykel",
+  "Red glass ribbons on the work table": "Çalışma masasında kırmızı cam şeritler",
+  "A finished form out in the street": "Sokakta bitmiş bir form",
+  "Soldering by the window at sunset": "Gün batımında pencere kenarında lehimleme"
 };

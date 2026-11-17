@@ -403,5 +403,22 @@ window.I18N_DATA["ko"] = {
   "Vertical glass work — Arthemii Ionaere": "세로 유리 작품 — Arthemii Ionaere",
   "Vertical glass work — contemporary stained glass artwork by Arthemii Ionaere.": "세로 유리 작품 — Arthemii Ionaere의 현대 스테인드글라스 작품.",
   "Workshop scene — Arthemii Ionaere": "공방 풍경 — Arthemii Ionaere",
-  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "공방 풍경 — Arthemii Ionaere의 현대 스테인드글라스 작품."
+  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "공방 풍경 — Arthemii Ionaere의 현대 스테인드글라스 작품.",
+  "Working moments": "작업의 순간",
+  "Working moments — Arthemii Ionaere": "작업의 순간 — Arthemii Ionaere",
+  "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "작업실의 한 장면들: 유리를 자르고, 다듬고, 납땜하고, 조립하는 과정 — 작품이 빛을 만나기 전에 이루어지는 작업.",
+  "← Back to the studio": "← 작업실로 돌아가기",
+  "Working moments →": "작업의 순간 →",
+  "The studio after dark": "어두워진 뒤의 작업실",
+  "A glass form on the workbench": "작업대 위의 유리 형태",
+  "The same form against the window light": "창가 빛을 받은 같은 형태",
+  "Dichroic strips, cut and laid out": "잘라서 늘어놓은 다이크로익 유리 조각",
+  "Three frames: steel, stained glass, brass": "세 개의 프레임: 강철, 스테인드글라스, 황동",
+  "Edged pieces ready for assembly": "조립을 기다리는 다듬은 조각들",
+  "Edged glass pieces before assembly": "조립 전 가장자리를 다듬은 유리 조각",
+  "A corner full of works in progress": "진행 중인 작품으로 가득한 구석",
+  "A sculpture in the making": "만들어지고 있는 조각",
+  "Red glass ribbons on the work table": "작업대 위의 붉은 유리 리본",
+  "A finished form out in the street": "거리로 나온 완성된 형태",
+  "Soldering by the window at sunset": "해 질 녘 창가에서의 납땜"
 };

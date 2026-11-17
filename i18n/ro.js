@@ -403,5 +403,22 @@ window.I18N_DATA["ro"] = {
   "Vertical glass work — Arthemii Ionaere": "Lucrare verticală din sticlă — Arthemii Ionaere",
   "Vertical glass work — contemporary stained glass artwork by Arthemii Ionaere.": "Lucrare verticală din sticlă — lucrare contemporană de vitraliu de Arthemii Ionaere.",
   "Workshop scene — Arthemii Ionaere": "Scenă din atelier — Arthemii Ionaere",
-  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Scenă din atelier — lucrare contemporană de vitraliu de Arthemii Ionaere."
+  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Scenă din atelier — lucrare contemporană de vitraliu de Arthemii Ionaere.",
+  "Working moments": "Momente de lucru",
+  "Working moments — Arthemii Ionaere": "Momente de lucru — Arthemii Ionaere",
+  "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Imagini din atelier: tăierea, șlefuirea, lipirea și asamblarea sticlei — munca ce are loc înainte ca o lucrare să întâlnească lumina.",
+  "← Back to the studio": "← Înapoi la atelier",
+  "Working moments →": "Momente de lucru →",
+  "The studio after dark": "Atelierul după lăsarea întunericului",
+  "A glass form on the workbench": "O formă de sticlă pe bancul de lucru",
+  "The same form against the window light": "Aceeași formă în lumina ferestrei",
+  "Dichroic strips, cut and laid out": "Fâșii dicroice, tăiate și așezate",
+  "Three frames: steel, stained glass, brass": "Trei rame: oțel, vitraliu, alamă",
+  "Edged pieces ready for assembly": "Piese șlefuite, gata de asamblare",
+  "Edged glass pieces before assembly": "Piese de sticlă șlefuite înainte de asamblare",
+  "A corner full of works in progress": "Un colț plin de lucrări în curs",
+  "A sculpture in the making": "O sculptură în devenire",
+  "Red glass ribbons on the work table": "Panglici de sticlă roșie pe masa de lucru",
+  "A finished form out in the street": "O formă finalizată, afară pe stradă",
+  "Soldering by the window at sunset": "Lipire lângă fereastră la apus"
 };
