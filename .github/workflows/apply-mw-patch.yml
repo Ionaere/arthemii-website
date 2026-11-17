@@ -1,0 +1,24 @@
+name: Apply media wave patch
+
+on:
+  push:
+    branches: [media-wave]
+    paths: ['mw-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary mw-update/media-wave.patch
+          git rm -r -q mw-update
+          git add -A
+          git commit -m "Gallery, Drawings, Videos, AI Content: photos and videos zoom strongly over each other on scroll"
+          git push
