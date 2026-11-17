@@ -9,7 +9,7 @@
 (function () {
   'use strict';
 
-  var CONTAINERS = ['.gallery__item', '.drawing', '.exhibition-block__photo', '.side-product', '.workspace__photo', '.tech-block__photo'];
+  var CONTAINERS = ['.gallery__item', '.drawing', '.exhibition-block__photo', '.side-product', '.workspace__photo', '.tech-block__photo', '.moment'];
 
   var css = '' +
     '.lightbox{position:fixed;inset:0;background:rgba(10,10,10,.94);display:flex;align-items:center;justify-content:center;' +
