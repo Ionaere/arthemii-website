@@ -1,0 +1,334 @@
+diff --git a/ai-content/index.html b/ai-content/index.html
+index 382b221..a0e49d3 100644
+--- a/ai-content/index.html
++++ b/ai-content/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../styles.css?v=20261113b">
++    <link rel="stylesheet" href="../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+@@ -89,7 +90,7 @@
+         .renders__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+     </style>
+ </head>
+-<body>
++<body class="ai-content-page">
+     <header class="header">
+         <a href="../" class="header__logo">Arthemii Ionaere</a>
+         <nav class="header__nav">
+diff --git a/de/ai-content/index.html b/de/ai-content/index.html
+index 97c151d..492a1ad 100644
+--- a/de/ai-content/index.html
++++ b/de/ai-content/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css?v=20261113b">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+@@ -89,7 +90,7 @@
+         .renders__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+     </style>
+ </head>
+-<body>
++<body class="ai-content-page">
+     <header class="header">
+         <a href="../" class="header__logo">Arthemii Ionaere</a>
+         <nav class="header__nav">
+diff --git a/de/drawings/index.html b/de/drawings/index.html
+index 47b9505..385f6fd 100644
+--- a/de/drawings/index.html
++++ b/de/drawings/index.html
+@@ -20,6 +20,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css?v=20261113c">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/de/gallery/index.html b/de/gallery/index.html
+index 728e19b..75beefb 100644
+--- a/de/gallery/index.html
++++ b/de/gallery/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/de/videos/index.html b/de/videos/index.html
+index 9453546..cc299a0 100644
+--- a/de/videos/index.html
++++ b/de/videos/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/drawings/index.html b/drawings/index.html
+index 10b9ca8..198f46a 100644
+--- a/drawings/index.html
++++ b/drawings/index.html
+@@ -21,6 +21,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../styles.css?v=20261113c">
++    <link rel="stylesheet" href="../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/es/ai-content/index.html b/es/ai-content/index.html
+index eeae00b..201ad2b 100644
+--- a/es/ai-content/index.html
++++ b/es/ai-content/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css?v=20261113b">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+@@ -89,7 +90,7 @@
+         .renders__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+     </style>
+ </head>
+-<body>
++<body class="ai-content-page">
+     <header class="header">
+         <a href="../" class="header__logo">Arthemii Ionaere</a>
+         <nav class="header__nav">
+diff --git a/es/drawings/index.html b/es/drawings/index.html
+index 99589b4..648d71d 100644
+--- a/es/drawings/index.html
++++ b/es/drawings/index.html
+@@ -20,6 +20,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css?v=20261113c">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/es/gallery/index.html b/es/gallery/index.html
+index ba9aa7a..d2e6e6e 100644
+--- a/es/gallery/index.html
++++ b/es/gallery/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/es/videos/index.html b/es/videos/index.html
+index 0d8de6b..8e8f0ec 100644
+--- a/es/videos/index.html
++++ b/es/videos/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/fr/ai-content/index.html b/fr/ai-content/index.html
+index d89ef4a..6e21050 100644
+--- a/fr/ai-content/index.html
++++ b/fr/ai-content/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css?v=20261113b">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+@@ -89,7 +90,7 @@
+         .renders__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+     </style>
+ </head>
+-<body>
++<body class="ai-content-page">
+     <header class="header">
+         <a href="../" class="header__logo">Arthemii Ionaere</a>
+         <nav class="header__nav">
+diff --git a/fr/drawings/index.html b/fr/drawings/index.html
+index 53fe1f0..a5cb67d 100644
+--- a/fr/drawings/index.html
++++ b/fr/drawings/index.html
+@@ -20,6 +20,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css?v=20261113c">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/fr/gallery/index.html b/fr/gallery/index.html
+index 957b1cc..cfe4799 100644
+--- a/fr/gallery/index.html
++++ b/fr/gallery/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/fr/videos/index.html b/fr/videos/index.html
+index eb09705..1f3ae6d 100644
+--- a/fr/videos/index.html
++++ b/fr/videos/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/gallery/index.html b/gallery/index.html
+index 97dcfa5..8ae2c49 100644
+--- a/gallery/index.html
++++ b/gallery/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../styles.css">
++    <link rel="stylesheet" href="../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/it/ai-content/index.html b/it/ai-content/index.html
+index bc570c2..b9eefe8 100644
+--- a/it/ai-content/index.html
++++ b/it/ai-content/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css?v=20261113b">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+@@ -89,7 +90,7 @@
+         .renders__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+     </style>
+ </head>
+-<body>
++<body class="ai-content-page">
+     <header class="header">
+         <a href="../" class="header__logo">Arthemii Ionaere</a>
+         <nav class="header__nav">
+diff --git a/it/drawings/index.html b/it/drawings/index.html
+index 59ceb3a..5bae8fb 100644
+--- a/it/drawings/index.html
++++ b/it/drawings/index.html
+@@ -20,6 +20,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css?v=20261113c">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/it/gallery/index.html b/it/gallery/index.html
+index 9991c2b..341fa48 100644
+--- a/it/gallery/index.html
++++ b/it/gallery/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/it/videos/index.html b/it/videos/index.html
+index b3bec6b..180f580 100644
+--- a/it/videos/index.html
++++ b/it/videos/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../../styles.css">
++    <link rel="stylesheet" href="../../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+diff --git a/scroll-zoom.css b/scroll-zoom.css
+new file mode 100644
+index 0000000..ac609ec
+--- /dev/null
++++ b/scroll-zoom.css
+@@ -0,0 +1,43 @@
++/*
++ * Gallery, Drawings, Videos and AI Content pages: every photo, drawing and video is tied to the scroll.
++ * It comes up small and faint, grows well past its own size while it passes the middle of the screen
++ * (sliding over its neighbours, with a deep shadow), and shrinks away again as it scrolls off.
++ * Runs on the GPU with scroll-driven animations (computers and phones that support them);
++ * other browsers simply show the pictures as before.
++ */
++main { overflow-x: clip; }
++
++@keyframes media-wave {
++  0%   { opacity: .1; transform: scale(.5);  z-index: 1;  box-shadow: 0 0 0 rgba(0,0,0,0);
++         animation-timing-function: cubic-bezier(.33,0,.2,1); }
++  45%  { opacity: 1;  transform: scale(1.22); z-index: 30; box-shadow: 0 34px 80px rgba(0,0,0,.30);
++         animation-timing-function: linear; }
++  55%  { opacity: 1;  transform: scale(1.22); z-index: 30; box-shadow: 0 34px 80px rgba(0,0,0,.30);
++         animation-timing-function: cubic-bezier(.8,0,.67,1); }
++  100% { opacity: .1; transform: scale(.5);  z-index: 1;  box-shadow: 0 0 0 rgba(0,0,0,0); }
++}
++@media (max-width: 768px), (hover: none) and (pointer: coarse) {
++  @keyframes media-wave {
++    0%   { opacity: .1; transform: scale(.55); z-index: 1;  box-shadow: 0 0 0 rgba(0,0,0,0);
++           animation-timing-function: cubic-bezier(.33,0,.2,1); }
++    45%  { opacity: 1;  transform: scale(1.15); z-index: 30; box-shadow: 0 24px 60px rgba(0,0,0,.30);
++           animation-timing-function: linear; }
++    55%  { opacity: 1;  transform: scale(1.15); z-index: 30; box-shadow: 0 24px 60px rgba(0,0,0,.30);
++           animation-timing-function: cubic-bezier(.8,0,.67,1); }
++    100% { opacity: .1; transform: scale(.55); z-index: 1;  box-shadow: 0 0 0 rgba(0,0,0,0); }
++  }
++}
++
++@supports (animation-timeline: view()) {
++  .gallery__rows .gallery__item,
++  .ai-content-page .gallery__item,
++  .drawings__rows .drawing,
++  .ai-source__drawing,
++  .video-card__embed {
++    position: relative;
++    transform-origin: 50% 50%;
++    animation: media-wave linear both;
++    animation-timeline: view();
++    animation-range: cover 0% cover 100%;
++  }
++}
+diff --git a/videos/index.html b/videos/index.html
+index 26f008c..a38e7ab 100644
+--- a/videos/index.html
++++ b/videos/index.html
+@@ -28,6 +28,7 @@
+     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+     <link rel="icon" href="../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+     <link rel="stylesheet" href="../styles.css">
++    <link rel="stylesheet" href="../scroll-zoom.css?v=20261117a">
+     <style>
+         .header { transform: none !important; animation: none !important; }
+         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
