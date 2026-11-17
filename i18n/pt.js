@@ -403,5 +403,22 @@ window.I18N_DATA["pt"] = {
   "Vertical glass work — Arthemii Ionaere": "Obra vertical em vidro — Arthemii Ionaere",
   "Vertical glass work — contemporary stained glass artwork by Arthemii Ionaere.": "Obra vertical em vidro — obra contemporânea de vitral de Arthemii Ionaere.",
   "Workshop scene — Arthemii Ionaere": "Cena da oficina — Arthemii Ionaere",
-  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Cena da oficina — obra contemporânea de vitral de Arthemii Ionaere."
+  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Cena da oficina — obra contemporânea de vitral de Arthemii Ionaere.",
+  "Working moments": "Momentos de trabalho",
+  "Working moments — Arthemii Ionaere": "Momentos de trabalho — Arthemii Ionaere",
+  "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Vislumbres do ateliê: cortar, lapidar, soldar e montar o vidro — o trabalho que acontece antes de uma peça encontrar a luz.",
+  "← Back to the studio": "← Voltar ao ateliê",
+  "Working moments →": "Momentos de trabalho →",
+  "The studio after dark": "O ateliê ao anoitecer",
+  "A glass form on the workbench": "Uma forma de vidro na bancada",
+  "The same form against the window light": "A mesma forma contra a luz da janela",
+  "Dichroic strips, cut and laid out": "Tiras dicroicas, cortadas e dispostas",
+  "Three frames: steel, stained glass, brass": "Três molduras: aço, vitral, latão",
+  "Edged pieces ready for assembly": "Peças lapidadas prontas para montagem",
+  "Edged glass pieces before assembly": "Peças de vidro lapidadas antes da montagem",
+  "A corner full of works in progress": "Um canto cheio de obras em curso",
+  "A sculpture in the making": "Uma escultura em construção",
+  "Red glass ribbons on the work table": "Fitas de vidro vermelho na mesa de trabalho",
+  "A finished form out in the street": "Uma forma concluída na rua",
+  "Soldering by the window at sunset": "Soldando junto à janela ao pôr do sol"
 };

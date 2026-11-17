@@ -403,5 +403,22 @@ window.I18N_DATA["nl"] = {
   "Vertical glass work — Arthemii Ionaere": "Verticaal glaswerk — Arthemii Ionaere",
   "Vertical glass work — contemporary stained glass artwork by Arthemii Ionaere.": "Verticaal glaswerk — hedendaags glas-in-loodkunstwerk van Arthemii Ionaere.",
   "Workshop scene — Arthemii Ionaere": "Atelierscène — Arthemii Ionaere",
-  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Atelierscène — hedendaags glas-in-loodkunstwerk van Arthemii Ionaere."
+  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Atelierscène — hedendaags glas-in-loodkunstwerk van Arthemii Ionaere.",
+  "Working moments": "Werkmomenten",
+  "Working moments — Arthemii Ionaere": "Werkmomenten — Arthemii Ionaere",
+  "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Blikken in het atelier: glas snijden, slijpen, solderen en samenvoegen — het werk dat gebeurt voordat een stuk ooit het licht ontmoet.",
+  "← Back to the studio": "← Terug naar het atelier",
+  "Working moments →": "Werkmomenten →",
+  "The studio after dark": "Het atelier na zonsondergang",
+  "A glass form on the workbench": "Een glazen vorm op de werkbank",
+  "The same form against the window light": "Dezelfde vorm in het licht van het raam",
+  "Dichroic strips, cut and laid out": "Dichroïsche stroken, gesneden en uitgelegd",
+  "Three frames: steel, stained glass, brass": "Drie frames: staal, glas-in-lood, messing",
+  "Edged pieces ready for assembly": "Geslepen stukken klaar voor montage",
+  "Edged glass pieces before assembly": "Geslepen glasstukken vóór de montage",
+  "A corner full of works in progress": "Een hoek vol werk in uitvoering",
+  "A sculpture in the making": "Een sculptuur in wording",
+  "Red glass ribbons on the work table": "Rode glazen linten op de werktafel",
+  "A finished form out in the street": "Een voltooide vorm buiten op straat",
+  "Soldering by the window at sunset": "Solderen bij het raam bij zonsondergang"
 };

@@ -26,6 +26,7 @@
     ['en', 'EN', 'English'],
     ['de', 'DE', 'Deutsch'],
     ['de-at', 'AT', 'Deutsch (Österreich)'],
+    ['de-ch', 'CH', 'Deutsch (Schweiz)'],
     ['es', 'ES', 'Español'],
     ['fr', 'FR', 'Français'],
     ['it', 'IT', 'Italiano'],
@@ -43,11 +44,13 @@
     ['ko', '한국어', '한국어']
   ];
   var LANGS = MENU.map(function (m) { return m[0]; });
-  var IDX = { de: 0, 'de-at': 0, es: 1, fr: 2, ru: 3, zh: 4, ja: 5 };
+  var IDX = { de: 0, 'de-at': 0, 'de-ch': 0, es: 1, fr: 2, ru: 3, zh: 4, ja: 5 };
   // Languages kept in their own file (i18n/<code>.js), loaded on demand
   var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1 };
-  var EXT_VERSION = '20261117a';
-  var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT' };
+  var EXT_VERSION = '20261117c';
+  var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT', 'de-ch': 'de-CH' };
+  // Regional variants: the short code shown in the menu
+  var CODE_LABEL = { 'de-at': 'AT', 'de-ch': 'CH' };
   // German, Spanish, French and Italian also have their own pre-translated pages (/de/, /es/, /fr/, /it/),
   // which search engines can index. Every other language is translated in place on the English pages.
   var STATIC = ['de', 'es', 'fr', 'it'];
@@ -162,6 +165,7 @@
     "Workspace": ["Atelier", "Taller", "Atelier", "Мастерская", "工作室", "アトリエ"],
     "Workshop": ["Werkstatt", "Taller", "Atelier", "Мастерская", "工作室", "工房"],
     "Working moments": ["Arbeitsmomente", "Momentos de trabajo", "Moments de travail", "Рабочие моменты", "工作瞬间", "制作のひととき"],
+    "Working moments — Arthemii Ionaere": ["Arbeitsmomente — Arthemii Ionaere", "Momentos de trabajo — Arthemii Ionaere", "Moments de travail — Arthemii Ionaere", "Рабочие моменты — Arthemii Ionaere", "工作瞬间 — Arthemii Ionaere", "制作のひととき — Arthemii Ionaere"],
     "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": ["Einblicke ins Atelier: Schneiden, Einfassen, Löten und Zusammensetzen des Glases — die Arbeit, bevor ein Werk zum ersten Mal ins Licht kommt.", "Escenas del estudio: cortar, ribetear, soldar y montar el vidrio — el trabajo que ocurre antes de que una obra encuentre la luz.", "Instants d’atelier : découper, sertir, souder et assembler le verre — le travail qui précède la rencontre d’une œuvre avec la lumière.", "Кадры из мастерской: резка, окантовка, пайка и сборка стекла — работа, которая происходит до того, как работа впервые встретится со светом.", "工作室的片段：切割、包边、焊接与组装玻璃——作品第一次与光相遇之前的工作。", "アトリエの断片：ガラスを切り、縁取り、はんだ付けし、組み上げる——作品が初めて光に出会う前の仕事。"],
     "← Back to the studio": ["← Zurück zum Atelier", "← Volver al estudio", "← Retour à l’atelier", "← Назад в мастерскую", "← 返回工作室", "← アトリエに戻る"],
     "Working moments →": ["Arbeitsmomente →", "Momentos de trabajo →", "Moments de travail →", "Рабочие моменты →", "工作瞬间 →", "制作のひととき →"],
@@ -520,7 +524,10 @@
       return d && d[key] ? d[key] : null;
     }
     var e = T[key];
-    return e ? e[IDX[lang]] : null;
+    var t = e ? e[IDX[lang]] : null;
+    // Swiss Standard German writes no ß: "Strasse", "gross"
+    if (t && lang === 'de-ch') t = t.replace(/ß/g, 'ss');
+    return t;
   }
 
   function skipNode(node) {
@@ -668,7 +675,7 @@
         var name = document.createElement('span');
         name.textContent = m[2];
         var code = document.createElement('small');
-        code.textContent = m[0] === 'de-at' ? 'AT' : m[0].toUpperCase();
+        code.textContent = CODE_LABEL[m[0]] || m[0].toUpperCase();
         b.appendChild(name);
         b.appendChild(code);
         menu.appendChild(b);
@@ -820,7 +827,7 @@
     return null;
   }
 
-  // First language in the browser's list that the site has: de-AT -> de-at, de-CH -> de, zh-TW -> zh, ...
+  // First language in the browser's list that the site has: de-AT -> de-at, de-CH -> de-ch, zh-TW -> zh, ...
   function browserLang() {
     var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || navigator.userLanguage || ''];
     for (var i = 0; i < list.length; i++) {

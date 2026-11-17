@@ -403,5 +403,22 @@ window.I18N_DATA["pl"] = {
   "Vertical glass work — Arthemii Ionaere": "Pionowa praca w szkle — Arthemii Ionaere",
   "Vertical glass work — contemporary stained glass artwork by Arthemii Ionaere.": "Pionowa praca w szkle — współczesny witraż autorstwa Arthemii Ionaere.",
   "Workshop scene — Arthemii Ionaere": "Scena z warsztatu — Arthemii Ionaere",
-  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Scena z warsztatu — współczesny witraż autorstwa Arthemii Ionaere."
+  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Scena z warsztatu — współczesny witraż autorstwa Arthemii Ionaere.",
+  "Working moments": "Chwile pracy",
+  "Working moments — Arthemii Ionaere": "Chwile pracy — Arthemii Ionaere",
+  "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Migawki z pracowni: cięcie, szlifowanie, lutowanie i składanie szkła — praca, która dzieje się, zanim dzieło spotka światło.",
+  "← Back to the studio": "← Powrót do pracowni",
+  "Working moments →": "Chwile pracy →",
+  "The studio after dark": "Pracownia po zmroku",
+  "A glass form on the workbench": "Szklana forma na stole warsztatowym",
+  "The same form against the window light": "Ta sama forma w świetle okna",
+  "Dichroic strips, cut and laid out": "Dichroiczne paski, pocięte i rozłożone",
+  "Three frames: steel, stained glass, brass": "Trzy ramy: stal, witraż, mosiądz",
+  "Edged pieces ready for assembly": "Oszlifowane elementy gotowe do montażu",
+  "Edged glass pieces before assembly": "Oszlifowane kawałki szkła przed montażem",
+  "A corner full of works in progress": "Kąt pełen prac w toku",
+  "A sculpture in the making": "Rzeźba w trakcie powstawania",
+  "Red glass ribbons on the work table": "Czerwone szklane wstęgi na stole roboczym",
+  "A finished form out in the street": "Gotowa forma na ulicy",
+  "Soldering by the window at sunset": "Lutowanie przy oknie o zachodzie słońca"
 };
