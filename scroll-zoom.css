@@ -1,0 +1,43 @@
+/*
+ * Gallery, Drawings, Videos and AI Content pages: every photo, drawing and video is tied to the scroll.
+ * It comes up small and faint, grows well past its own size while it passes the middle of the screen
+ * (sliding over its neighbours, with a deep shadow), and shrinks away again as it scrolls off.
+ * Runs on the GPU with scroll-driven animations (computers and phones that support them);
+ * other browsers simply show the pictures as before.
+ */
+main { overflow-x: clip; }
+
+@keyframes media-wave {
+  0%   { opacity: .1; transform: scale(.5);  z-index: 1;  box-shadow: 0 0 0 rgba(0,0,0,0);
+         animation-timing-function: cubic-bezier(.33,0,.2,1); }
+  45%  { opacity: 1;  transform: scale(1.22); z-index: 30; box-shadow: 0 34px 80px rgba(0,0,0,.30);
+         animation-timing-function: linear; }
+  55%  { opacity: 1;  transform: scale(1.22); z-index: 30; box-shadow: 0 34px 80px rgba(0,0,0,.30);
+         animation-timing-function: cubic-bezier(.8,0,.67,1); }
+  100% { opacity: .1; transform: scale(.5);  z-index: 1;  box-shadow: 0 0 0 rgba(0,0,0,0); }
+}
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  @keyframes media-wave {
+    0%   { opacity: .1; transform: scale(.55); z-index: 1;  box-shadow: 0 0 0 rgba(0,0,0,0);
+           animation-timing-function: cubic-bezier(.33,0,.2,1); }
+    45%  { opacity: 1;  transform: scale(1.15); z-index: 30; box-shadow: 0 24px 60px rgba(0,0,0,.30);
+           animation-timing-function: linear; }
+    55%  { opacity: 1;  transform: scale(1.15); z-index: 30; box-shadow: 0 24px 60px rgba(0,0,0,.30);
+           animation-timing-function: cubic-bezier(.8,0,.67,1); }
+    100% { opacity: .1; transform: scale(.55); z-index: 1;  box-shadow: 0 0 0 rgba(0,0,0,0); }
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .gallery__rows .gallery__item,
+  .ai-content-page .gallery__item,
+  .drawings__rows .drawing,
+  .ai-source__drawing,
+  .video-card__embed {
+    position: relative;
+    transform-origin: 50% 50%;
+    animation: media-wave linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
