@@ -1,0 +1,24 @@
+name: Apply sections wave patch
+
+on:
+  push:
+    branches: [sections-wave]
+    paths: ['sw-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Gallery Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary sw-update/sections-wave.patch
+          git rm -r -q sw-update
+          git add -A
+          git commit -m "Home page: sections grow past the screen edges in the middle and shrink as they scroll away"
+          git push
