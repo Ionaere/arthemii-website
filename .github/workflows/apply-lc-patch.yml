@@ -1,0 +1,24 @@
+name: Apply language patch
+
+on:
+  push:
+    branches: [i18n-tr-ch]
+    paths: ['lc-update/**']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch and commit
+        run: |
+          git config user.name "Language Patch Bot"
+          git config user.email "bot@arthemii.com"
+          git apply --binary lc-update/lang-tr-ch.patch
+          git rm -r -q lc-update
+          git add -A
+          git commit -m "Turkish completed and Swiss German (CH) added, translated in place on the English pages"
+          git push
