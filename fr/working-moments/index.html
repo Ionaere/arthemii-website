@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Moments de travail dans l’atelier d’Arthemii Ionaere : découpe, sertissage, soudure et assemblage de sculptures en verre.">
+    <meta name="theme-color" content="#fafafa">
+    <title>Moments de travail — Dans l’atelier d’Arthemii Ionaere</title>
+    <link rel="canonical" href="https://arthemii.com/fr/working-moments/">
+    <link rel="alternate" hreflang="en" href="https://arthemii.com/working-moments/">
+    <link rel="alternate" hreflang="de" href="https://arthemii.com/de/working-moments/">
+    <link rel="alternate" hreflang="es" href="https://arthemii.com/es/working-moments/">
+    <link rel="alternate" hreflang="fr" href="https://arthemii.com/fr/working-moments/">
+    <link rel="alternate" hreflang="it" href="https://arthemii.com/it/working-moments/">
+    <link rel="alternate" hreflang="x-default" href="https://arthemii.com/working-moments/">
+    <meta property="og:title" content="Moments de travail — Dans l’atelier d’Arthemii Ionaere">
+    <meta property="og:image" content="https://arthemii.com/img/working/working-08-1600.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+    <link rel="stylesheet" href="../../styles.css?v=20261113c">
+    <style>
+        .header { transform: none !important; animation: none !important; }
+        .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+            opacity: 1 !important; transform: none !important; transition: none !important;
+        }
+        .hero__eyebrow, .hero__title, .hero__subtitle, .hero__desc, .hero__actions, .hero__image {
+            opacity: 1 !important; transform: none !important; animation: none !important;
+        }
+
+        /* ========== WORKING MOMENTS ========== */
+        .moments { display: flex; flex-direction: column; gap: clamp(0.5rem, 1.2vw, 0.9rem); margin-top: var(--spacing-lg); }
+        .moments__row { display: flex; gap: clamp(0.5rem, 1.2vw, 0.9rem); }
+        .moment { position: relative; flex: var(--r) 1 0; aspect-ratio: var(--r); margin: 0; overflow: hidden; border-radius: var(--radius-md); background: var(--bg-alt);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06); opacity: 0; transform: translateY(24px); transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+        .moment.is-in { opacity: 1; transform: none; }
+        .moment picture, .moment img { display: block; width: 100%; height: 100%; }
+        .moment img { object-fit: cover; transition: transform 1.2s cubic-bezier(.16,1,.3,1), filter .6s ease; }
+        .moment:hover img { transform: scale(1.035); }
+        .moment figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.2rem 0.9rem 0.75rem; color: #fff; font-family: var(--font-sans);
+            font-size: 0.75rem; letter-spacing: 0.02em; line-height: 1.35; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0));
+            opacity: 0; transform: translateY(6px); transition: opacity .4s ease, transform .4s ease; pointer-events: none; }
+        .moment:hover figcaption, .moment:focus-within figcaption { opacity: 1; transform: none; }
+        .moment figcaption span { opacity: .6; margin-right: .45rem; font-variant-numeric: tabular-nums; }
+        .moments__back { display: inline-block; margin-top: var(--spacing-lg); }
+        @media (hover: none) { .moment figcaption { opacity: 1; transform: none; padding-top: 1.6rem; font-size: 0.6875rem; } }
+        @media (max-width: 640px) {
+            .moments__row { flex-wrap: wrap; }
+            .moment { flex: 1 1 100%; }
+            .moment--port { flex: 1 1 calc(50% - 0.5rem); }
+            .moment--solo { flex: 1 1 100%; }
+        }
+        @media (prefers-reduced-motion: reduce) { .moment { opacity: 1; transform: none; transition: none; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="../" class="header__logo">Arthemii Ionaere</a>
+        <nav class="header__nav">
+            <a href="../about/" class="header__link">À propos</a>
+            <a href="../works/" class="header__link">Œuvres</a>
+            <a href="../projects/" class="header__link">Projets</a>
+            <a href="../drawings/" class="header__link">Dessins</a>
+            <a href="../ai-content/" class="header__link">Contenu IA</a>
+            <a href="../videos/" class="header__link">Vidéos</a>
+            <a href="../gallery/" class="header__link">Galerie</a>
+            <a href="../contact/" class="header__link">Contact</a>
+            <div class="header__lang" role="group" aria-label="Language">
+                <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+                <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+                <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+                <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+                <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+            </div>
+        </nav>
+        <button class="header__menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span></button>
+    </header>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close"></button>
+        <a href="../about/" class="mobile-nav__link">À propos</a>
+        <a href="../works/" class="mobile-nav__link">Œuvres</a>
+        <a href="../projects/" class="mobile-nav__link">Projets</a>
+        <a href="../drawings/" class="mobile-nav__link">Dessins</a>
+        <a href="../ai-content/" class="mobile-nav__link">Contenu IA</a>
+        <a href="../videos/" class="mobile-nav__link">Vidéos</a>
+        <a href="../gallery/" class="mobile-nav__link">Galerie</a>
+        <a href="../contact/" class="mobile-nav__link">Contact</a>
+        <div class="header__lang" role="group" aria-label="Language">
+            <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+            <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+            <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+            <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+            <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+        </div>
+    </div>
+    <main style="padding-top:calc(72px + 2rem)">
+        <section class="section" id="working-moments">
+            <div class="container">
+                <header class="section__header reveal">
+                    <div class="section__label">Atelier</div>
+                    <h1 class="section__title">Moments de travail</h1>
+                    <p class="section__desc">Instants d’atelier : découper, sertir, souder et assembler le verre — le travail qui précède la rencontre d’une œuvre avec la lumière.</p>
+                </header>
+                <div class="moments">
+                    <div class="moments__row">
+                        <figure class="moment" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/working/working-08-800.webp 800w, ../../img/working/working-08-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-08-1600.jpg" alt="Un coin rempli d’œuvres en cours — Arthemii Ionaere" loading="eager" decoding="async"></picture><figcaption><span>01</span>Un coin rempli d’œuvres en cours</figcaption></figure>
+                        <figure class="moment" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/working/working-01-800.webp 800w, ../../img/working/working-01-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-01-1600.jpg" alt="L’atelier à la nuit tombée — Arthemii Ionaere" loading="eager" decoding="async"></picture><figcaption><span>02</span>L’atelier à la nuit tombée</figcaption></figure>
+                    </div>
+                    <div class="moments__row">
+                        <figure class="moment" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/working/working-02-800.webp 800w, ../../img/working/working-02-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-02-1600.jpg" alt="Une forme de verre sur l’établi — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>03</span>Une forme de verre sur l’établi</figcaption></figure>
+                        <figure class="moment" style="--r:1.333"><picture><source type="image/webp" srcset="../../img/working/working-03-800.webp 800w, ../../img/working/working-03-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-03-1600.jpg" alt="La même forme à contre-jour de la fenêtre — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>04</span>La même forme à contre-jour de la fenêtre</figcaption></figure>
+                    </div>
+                    <div class="moments__row">
+                        <figure class="moment moment--port" style="--r:0.71"><picture><source type="image/webp" srcset="../../img/working/working-04-800.webp 800w, ../../img/working/working-04-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-04-1600.jpg" alt="Bandes dichroïques, découpées et disposées — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>05</span>Bandes dichroïques, découpées et disposées</figcaption></figure>
+                        <figure class="moment moment--port" style="--r:0.736"><picture><source type="image/webp" srcset="../../img/working/working-05-800.webp 800w, ../../img/working/working-05-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-05-1600.jpg" alt="Trois structures : acier, vitrail, laiton — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>06</span>Trois structures : acier, vitrail, laiton</figcaption></figure>
+                        <figure class="moment moment--port" style="--r:0.75"><picture><source type="image/webp" srcset="../../img/working/working-06-800.webp 800w, ../../img/working/working-06-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-06-1600.jpg" alt="Pièces serties prêtes à l’assemblage — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>07</span>Pièces serties prêtes à l’assemblage</figcaption></figure>
+                        <figure class="moment moment--port" style="--r:0.75"><picture><source type="image/webp" srcset="../../img/working/working-07-800.webp 800w, ../../img/working/working-07-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-07-1600.jpg" alt="Pièces de verre serties avant l’assemblage — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>08</span>Pièces de verre serties avant l’assemblage</figcaption></figure>
+                    </div>
+                    <div class="moments__row">
+                        <figure class="moment" style="--r:1.328"><picture><source type="image/webp" srcset="../../img/working/working-09-800.webp 800w, ../../img/working/working-09-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-09-1600.jpg" alt="Une sculpture en cours de création — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>09</span>Une sculpture en cours de création</figcaption></figure>
+                        <figure class="moment" style="--r:1.198"><picture><source type="image/webp" srcset="../../img/working/working-10-800.webp 800w, ../../img/working/working-10-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-10-1600.jpg" alt="Rubans de verre rouge sur la table de travail — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>10</span>Rubans de verre rouge sur la table de travail</figcaption></figure>
+                    </div>
+                    <div class="moments__row">
+                        <figure class="moment" style="--r:1.4"><picture><source type="image/webp" srcset="../../img/working/working-11-800.webp 800w, ../../img/working/working-11-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-11-1600.jpg" alt="Une forme achevée dans la rue — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>11</span>Une forme achevée dans la rue</figcaption></figure>
+                        <figure class="moment moment--port moment--solo" style="--r:0.763"><picture><source type="image/webp" srcset="../../img/working/working-12-800.webp 800w, ../../img/working/working-12-1600.webp 1600w" sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"><img src="../../img/working/working-12-1600.jpg" alt="Soudure près de la fenêtre au coucher du soleil — Arthemii Ionaere" loading="lazy" decoding="async"></picture><figcaption><span>12</span>Soudure près de la fenêtre au coucher du soleil</figcaption></figure>
+                    </div>
+                </div>
+                <a href="../#workspace" class="btn btn--outline moments__back">← Retour à l’atelier</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__brand">Arthemii Ionaere</div>
+                <nav class="footer__nav">
+                    <a href="../about/" class="footer__link">À propos</a>
+                    <a href="../works/" class="footer__link">Œuvres</a>
+                    <a href="../exhibitions/" class="footer__link">Expositions</a>
+                    <a href="../gallery/" class="footer__link">Galerie</a>
+                    <a href="../contact/" class="footer__link">Contact</a>
+                </nav>
+                <a class="footer__instagram" href="https://www.instagram.com/ionaerestudio/" target="_blank" rel="noopener" aria-label="Instagram @ionaerestudio">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="footerIgGradient" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset="0.05" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6.5" fill="url(#footerIgGradient)"/><rect x="5" y="5" width="14" height="14" rx="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="16.4" cy="7.6" r="1.05" fill="#fff"/></svg>
+                    <span>@ionaerestudio</span>
+                </a>
+                <div class="footer__copy">&copy; 2026 Arthemii Ionaere</div>
+            </div>
+        </div>
+    </footer>
+    <script>
+    var mb=document.getElementById("menuBtn"),mn=document.getElementById("mobileNav"),mc=document.getElementById("mobileNavClose");
+    if(mb&&mn)mb.onclick=function(){mn.classList.add("is-open")};
+    if(mc&&mn)mc.onclick=function(){mn.classList.remove("is-open")};
+    if(mn){var ls=mn.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].onclick=function(){mn.classList.remove("is-open")}};
+    var yts=document.querySelectorAll(".yt-placeholder");
+    for(var i=0;i<yts.length;i++){(function(el){
+        el.onclick=function(){
+            var id=this.getAttribute("data-yt");
+            var f=document.createElement("iframe");
+            f.src="https://www.youtube.com/embed/"+id+"?autoplay=1&mute=0&controls=1&rel=0";
+            f.allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+            f.allowFullscreen=true;
+            f.style.cssText="width:100%;height:100%;border:none";
+            this.parentNode.replaceChild(f,this);
+        };
+    })(yts[i])};
+    var vcs=document.querySelectorAll(".video-card");
+    for(var i=0;i<vcs.length;i++){(function(c){
+        var v=c.querySelector("video");if(!v)return;
+        c.onmouseenter=function(){v.play().catch(function(){})};
+        c.onmouseleave=function(){v.pause();v.currentTime=0};
+    })(vcs[i])};
+    window.addEventListener('load', function() {
+        document.querySelectorAll('.exhibition-block__desc').forEach(function(desc) {
+            var btn = desc.nextElementSibling;
+            if (!btn || !btn.classList.contains('exhibition-block__toggle')) return;
+            if (desc.scrollHeight > desc.clientHeight + 2) {
+                btn.classList.add('is-visible');
+            }
+            btn.addEventListener('click', function() {
+                var expanded = desc.classList.toggle('is-expanded');
+                btn.classList.toggle('is-open', expanded);
+                btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                btn.querySelector('.exhibition-block__toggle-label').textContent = expanded ? 'Show less' : 'Show more';
+            });
+        });
+    });
+    </script>
+    <script>
+    (function () {
+      var els = document.querySelectorAll('.moment');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('is-in'); }); return; }
+      var io = new IntersectionObserver(function (en) {
+        en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -6% 0px' });
+      els.forEach(function (e, i) { e.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(e); });
+    })();
+    </script>
+    <script src="../../lightbox.js"></script>
+    <script src="../../smooth-scroll.js" defer></script>
+    <script src="../../i18n.js?v=20261115a"></script>
+</body>
+</html>
