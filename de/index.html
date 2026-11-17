@@ -1956,21 +1956,31 @@
         }
 
         /* ========== SECTIONS SURFACE ON SCROLL ========== */
-        /* Each homepage section zooms in from its centre as it comes into view, with a long, soft ease.
-           Computers with scroll-driven animations: tied to the scroll (GPU, smooth).
-           Phones, tablets and older browsers (html.surf-io): the section glides and zooms in
-           when it appears, and gets ready again when it leaves at the bottom. */
-        @keyframes section-surface {
-            from { opacity: 0.08; transform: translate3d(0, 40px, 0) scale(0.72); }
-            to   { opacity: 1;    transform: none; }
+        /* Each homepage section is tied to the scroll: it zooms in from its centre as it comes up,
+           grows a little past the screen edges while it passes through the middle, and shrinks
+           back as it scrolls away. Runs on the GPU (scroll-driven animations, computers and phones).
+           Browsers without them (html.surf-io) get a one-time glide-and-zoom when a section appears. */
+        main { overflow-x: clip; }
+        @keyframes section-wave {
+            0%   { opacity: 0.08; transform: scale(0.72); animation-timing-function: cubic-bezier(.33,0,.2,1); }
+            45%  { opacity: 1;    transform: scale(1.08); animation-timing-function: linear; }
+            55%  { opacity: 1;    transform: scale(1.08); animation-timing-function: cubic-bezier(.8,0,.67,1); }
+            100% { opacity: 0.08; transform: scale(0.72); }
+        }
+        @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+            @keyframes section-wave {
+                0%   { opacity: 0.08; transform: scale(0.74); animation-timing-function: cubic-bezier(.33,0,.2,1); }
+                45%  { opacity: 1;    transform: scale(1.06); animation-timing-function: linear; }
+                55%  { opacity: 1;    transform: scale(1.06); animation-timing-function: cubic-bezier(.8,0,.67,1); }
+                100% { opacity: 0.08; transform: scale(0.74); }
+            }
         }
         @supports (animation-timeline: view()) {
             html:not(.surf-io) main > section.section {
                 transform-origin: 50% 50%;
-                animation: section-surface both;
-                animation-timing-function: cubic-bezier(.33,0,.2,1);
+                animation: section-wave linear both;
                 animation-timeline: view();
-                animation-range: cover 0px cover 65vh;
+                animation-range: cover 0% cover 100%;
             }
         }
         html.surf-io main > section.section {
@@ -2158,7 +2168,7 @@
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://arthemii.com/#artist","name":"Arthemii Ionaere","url":"https://arthemii.com/de/","image":"https://arthemii.com/img/opt/portrait-arthemii-1600.jpg","jobTitle":"Stained glass artist","description":"Berlin-based contemporary stained glass artist creating three-dimensional glass sculptures in the Tiffany technique, kinetic prisms, lamps and light installations.","email":"mailto:info@arthemii.com","address":{"@type":"PostalAddress","addressLocality":"Berlin","addressCountry":"DE"},"knowsAbout":["Stained glass","Tiffany technique","Glass sculpture","Kinetic art","Light installation","Contemporary art"],"sameAs":["https://www.instagram.com/ionaerestudio/","https://www.instagram.com/ionaere/","https://www.instagram.com/lonaere/","https://www.youtube.com/@IonaereArthe"]},{"@type":"WebSite","@id":"https://arthemii.com/#website","url":"https://arthemii.com/de/","name":"Arthemii Ionaere","description":"Contemporary stained glass art by Arthemii Ionaere, Berlin","inLanguage":"en","publisher":{"@id":"https://arthemii.com/#artist"}}{% for ex in site.data.exhibitions.items %}{% assign ds = ex.date_start | strip | split: "." %}{% if ds.size == 3 %},{"@type":"ExhibitionEvent","name":{{ ex.title | jsonify }},"startDate":"{{ ds[2] }}-{{ ds[1] }}-{{ ds[0] }}"{% assign de = ex.date_end | strip | split: "." %}{% if de.size == 3 %},"endDate":"{{ de[2] }}-{{ de[1] }}-{{ de[0] }}"{% endif %},"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode"{% if ex.location and ex.location != "" %},"location":{"@type":"Place","name":{{ ex.location | strip | jsonify }},"address":{{ ex.location | strip | jsonify }}}{% endif %}{% if ex.photos.size > 0 %},"image":"https://arthemii.com{{ ex.photos[0] | relative_url }}"{% endif %},"organizer":{"@id":"https://arthemii.com/#artist"},"performer":{"@id":"https://arthemii.com/#artist"}}{% endif %}{% endfor %}]}
     </script>
-    <script>(function(){var d=document.documentElement,sda=window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()');if(!sda)d.classList.add('no-sda');if(!sda||matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches)d.classList.add('surf-io');})();</script>
+    <script>(function(){var d=document.documentElement,sda=window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()');if(!sda)d.classList.add('no-sda');if(!sda)d.classList.add('surf-io');})();</script>
 </head>
 <body>
     <!-- ========== LOADER ========== -->
