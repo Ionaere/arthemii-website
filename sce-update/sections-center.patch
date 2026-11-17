@@ -1,0 +1,280 @@
+diff --git a/de/index.html b/de/index.html
+index bbad49f..f805303 100644
+--- a/de/index.html
++++ b/de/index.html
+@@ -1956,32 +1956,30 @@
+         }
+ 
+         /* ========== SECTIONS SURFACE ON SCROLL ========== */
+-        /* Each homepage section rises and zooms in as it comes into view.
++        /* Each homepage section zooms in from its centre as it comes into view, with a long, soft ease.
+            Computers with scroll-driven animations: tied to the scroll (GPU, smooth).
+            Phones, tablets and older browsers (html.surf-io): the section glides and zooms in
+            when it appears, and gets ready again when it leaves at the bottom. */
+         @keyframes section-surface {
+-            from { opacity: 0.15; transform: translate3d(0, 90px, 0) scale(0.86); }
++            from { opacity: 0.08; transform: translate3d(0, 40px, 0) scale(0.72); }
+             to   { opacity: 1;    transform: none; }
+         }
+         @supports (animation-timeline: view()) {
+             html:not(.surf-io) main > section.section {
+-                transform-origin: 50% 0;
+-                animation: section-surface linear both;
++                transform-origin: 50% 50%;
++                animation: section-surface both;
++                animation-timing-function: cubic-bezier(.33,0,.2,1);
+                 animation-timeline: view();
+-                animation-range: cover 0px cover 45vh;
++                animation-range: cover 0px cover 65vh;
+             }
+         }
+         html.surf-io main > section.section {
+-            transform-origin: 50% 0;
+-            opacity: 0.12;
+-            transform: translate3d(0, 90px, 0) scale(0.86);
+-            transition: opacity 1s cubic-bezier(.22,.61,.36,1), transform 1.25s cubic-bezier(.16,1,.3,1);
++            transform-origin: 50% 50%;
++            opacity: 0.06;
++            transform: translate3d(0, 40px, 0) scale(0.72);
++            transition: opacity 1.4s cubic-bezier(.22,1,.36,1), transform 1.9s cubic-bezier(.22,1,.36,1);
+             will-change: transform, opacity;
+         }
+-        @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+-            html.surf-io main > section.section { transform: translate3d(0, 64px, 0) scale(0.84); }
+-        }
+         html.surf-io main > section.section.is-surfaced { opacity: 1; transform: none; }
+ 
+         .workspace__more { display: flex; justify-content: center; margin-top: var(--spacing-lg); }
+@@ -3866,7 +3864,7 @@
+                     if (entry.isIntersecting) entry.target.classList.add('is-surfaced');
+                     else if (entry.boundingClientRect.top > 0) entry.target.classList.remove('is-surfaced');
+                 });
+-            }, { threshold: 0, rootMargin: '0px 0px -6% 0px' });
++            }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
+             document.querySelectorAll('main > section.section').forEach(el => surfaceObserver.observe(el));
+         }
+         else if (document.documentElement.classList.contains('surf-io')) {
+diff --git a/es/index.html b/es/index.html
+index d59d23c..1f63ba4 100644
+--- a/es/index.html
++++ b/es/index.html
+@@ -1956,32 +1956,30 @@
+         }
+ 
+         /* ========== SECTIONS SURFACE ON SCROLL ========== */
+-        /* Each homepage section rises and zooms in as it comes into view.
++        /* Each homepage section zooms in from its centre as it comes into view, with a long, soft ease.
+            Computers with scroll-driven animations: tied to the scroll (GPU, smooth).
+            Phones, tablets and older browsers (html.surf-io): the section glides and zooms in
+            when it appears, and gets ready again when it leaves at the bottom. */
+         @keyframes section-surface {
+-            from { opacity: 0.15; transform: translate3d(0, 90px, 0) scale(0.86); }
++            from { opacity: 0.08; transform: translate3d(0, 40px, 0) scale(0.72); }
+             to   { opacity: 1;    transform: none; }
+         }
+         @supports (animation-timeline: view()) {
+             html:not(.surf-io) main > section.section {
+-                transform-origin: 50% 0;
+-                animation: section-surface linear both;
++                transform-origin: 50% 50%;
++                animation: section-surface both;
++                animation-timing-function: cubic-bezier(.33,0,.2,1);
+                 animation-timeline: view();
+-                animation-range: cover 0px cover 45vh;
++                animation-range: cover 0px cover 65vh;
+             }
+         }
+         html.surf-io main > section.section {
+-            transform-origin: 50% 0;
+-            opacity: 0.12;
+-            transform: translate3d(0, 90px, 0) scale(0.86);
+-            transition: opacity 1s cubic-bezier(.22,.61,.36,1), transform 1.25s cubic-bezier(.16,1,.3,1);
++            transform-origin: 50% 50%;
++            opacity: 0.06;
++            transform: translate3d(0, 40px, 0) scale(0.72);
++            transition: opacity 1.4s cubic-bezier(.22,1,.36,1), transform 1.9s cubic-bezier(.22,1,.36,1);
+             will-change: transform, opacity;
+         }
+-        @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+-            html.surf-io main > section.section { transform: translate3d(0, 64px, 0) scale(0.84); }
+-        }
+         html.surf-io main > section.section.is-surfaced { opacity: 1; transform: none; }
+ 
+         .workspace__more { display: flex; justify-content: center; margin-top: var(--spacing-lg); }
+@@ -3866,7 +3864,7 @@
+                     if (entry.isIntersecting) entry.target.classList.add('is-surfaced');
+                     else if (entry.boundingClientRect.top > 0) entry.target.classList.remove('is-surfaced');
+                 });
+-            }, { threshold: 0, rootMargin: '0px 0px -6% 0px' });
++            }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
+             document.querySelectorAll('main > section.section').forEach(el => surfaceObserver.observe(el));
+         }
+         else if (document.documentElement.classList.contains('surf-io')) {
+diff --git a/fr/index.html b/fr/index.html
+index 84d5841..22c8e2f 100644
+--- a/fr/index.html
++++ b/fr/index.html
+@@ -1956,32 +1956,30 @@
+         }
+ 
+         /* ========== SECTIONS SURFACE ON SCROLL ========== */
+-        /* Each homepage section rises and zooms in as it comes into view.
++        /* Each homepage section zooms in from its centre as it comes into view, with a long, soft ease.
+            Computers with scroll-driven animations: tied to the scroll (GPU, smooth).
+            Phones, tablets and older browsers (html.surf-io): the section glides and zooms in
+            when it appears, and gets ready again when it leaves at the bottom. */
+         @keyframes section-surface {
+-            from { opacity: 0.15; transform: translate3d(0, 90px, 0) scale(0.86); }
++            from { opacity: 0.08; transform: translate3d(0, 40px, 0) scale(0.72); }
+             to   { opacity: 1;    transform: none; }
+         }
+         @supports (animation-timeline: view()) {
+             html:not(.surf-io) main > section.section {
+-                transform-origin: 50% 0;
+-                animation: section-surface linear both;
++                transform-origin: 50% 50%;
++                animation: section-surface both;
++                animation-timing-function: cubic-bezier(.33,0,.2,1);
+                 animation-timeline: view();
+-                animation-range: cover 0px cover 45vh;
++                animation-range: cover 0px cover 65vh;
+             }
+         }
+         html.surf-io main > section.section {
+-            transform-origin: 50% 0;
+-            opacity: 0.12;
+-            transform: translate3d(0, 90px, 0) scale(0.86);
+-            transition: opacity 1s cubic-bezier(.22,.61,.36,1), transform 1.25s cubic-bezier(.16,1,.3,1);
++            transform-origin: 50% 50%;
++            opacity: 0.06;
++            transform: translate3d(0, 40px, 0) scale(0.72);
++            transition: opacity 1.4s cubic-bezier(.22,1,.36,1), transform 1.9s cubic-bezier(.22,1,.36,1);
+             will-change: transform, opacity;
+         }
+-        @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+-            html.surf-io main > section.section { transform: translate3d(0, 64px, 0) scale(0.84); }
+-        }
+         html.surf-io main > section.section.is-surfaced { opacity: 1; transform: none; }
+ 
+         .workspace__more { display: flex; justify-content: center; margin-top: var(--spacing-lg); }
+@@ -3866,7 +3864,7 @@
+                     if (entry.isIntersecting) entry.target.classList.add('is-surfaced');
+                     else if (entry.boundingClientRect.top > 0) entry.target.classList.remove('is-surfaced');
+                 });
+-            }, { threshold: 0, rootMargin: '0px 0px -6% 0px' });
++            }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
+             document.querySelectorAll('main > section.section').forEach(el => surfaceObserver.observe(el));
+         }
+         else if (document.documentElement.classList.contains('surf-io')) {
+diff --git a/index.html b/index.html
+index 8db596a..ab567b3 100644
+--- a/index.html
++++ b/index.html
+@@ -1956,32 +1956,30 @@
+         }
+ 
+         /* ========== SECTIONS SURFACE ON SCROLL ========== */
+-        /* Each homepage section rises and zooms in as it comes into view.
++        /* Each homepage section zooms in from its centre as it comes into view, with a long, soft ease.
+            Computers with scroll-driven animations: tied to the scroll (GPU, smooth).
+            Phones, tablets and older browsers (html.surf-io): the section glides and zooms in
+            when it appears, and gets ready again when it leaves at the bottom. */
+         @keyframes section-surface {
+-            from { opacity: 0.15; transform: translate3d(0, 90px, 0) scale(0.86); }
++            from { opacity: 0.08; transform: translate3d(0, 40px, 0) scale(0.72); }
+             to   { opacity: 1;    transform: none; }
+         }
+         @supports (animation-timeline: view()) {
+             html:not(.surf-io) main > section.section {
+-                transform-origin: 50% 0;
+-                animation: section-surface linear both;
++                transform-origin: 50% 50%;
++                animation: section-surface both;
++                animation-timing-function: cubic-bezier(.33,0,.2,1);
+                 animation-timeline: view();
+-                animation-range: cover 0px cover 45vh;
++                animation-range: cover 0px cover 65vh;
+             }
+         }
+         html.surf-io main > section.section {
+-            transform-origin: 50% 0;
+-            opacity: 0.12;
+-            transform: translate3d(0, 90px, 0) scale(0.86);
+-            transition: opacity 1s cubic-bezier(.22,.61,.36,1), transform 1.25s cubic-bezier(.16,1,.3,1);
++            transform-origin: 50% 50%;
++            opacity: 0.06;
++            transform: translate3d(0, 40px, 0) scale(0.72);
++            transition: opacity 1.4s cubic-bezier(.22,1,.36,1), transform 1.9s cubic-bezier(.22,1,.36,1);
+             will-change: transform, opacity;
+         }
+-        @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+-            html.surf-io main > section.section { transform: translate3d(0, 64px, 0) scale(0.84); }
+-        }
+         html.surf-io main > section.section.is-surfaced { opacity: 1; transform: none; }
+ 
+         .workspace__more { display: flex; justify-content: center; margin-top: var(--spacing-lg); }
+@@ -3866,7 +3864,7 @@
+                     if (entry.isIntersecting) entry.target.classList.add('is-surfaced');
+                     else if (entry.boundingClientRect.top > 0) entry.target.classList.remove('is-surfaced');
+                 });
+-            }, { threshold: 0, rootMargin: '0px 0px -6% 0px' });
++            }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
+             document.querySelectorAll('main > section.section').forEach(el => surfaceObserver.observe(el));
+         }
+         else if (document.documentElement.classList.contains('surf-io')) {
+diff --git a/it/index.html b/it/index.html
+index 006f4bc..8c5e962 100644
+--- a/it/index.html
++++ b/it/index.html
+@@ -1956,32 +1956,30 @@
+         }
+ 
+         /* ========== SECTIONS SURFACE ON SCROLL ========== */
+-        /* Each homepage section rises and zooms in as it comes into view.
++        /* Each homepage section zooms in from its centre as it comes into view, with a long, soft ease.
+            Computers with scroll-driven animations: tied to the scroll (GPU, smooth).
+            Phones, tablets and older browsers (html.surf-io): the section glides and zooms in
+            when it appears, and gets ready again when it leaves at the bottom. */
+         @keyframes section-surface {
+-            from { opacity: 0.15; transform: translate3d(0, 90px, 0) scale(0.86); }
++            from { opacity: 0.08; transform: translate3d(0, 40px, 0) scale(0.72); }
+             to   { opacity: 1;    transform: none; }
+         }
+         @supports (animation-timeline: view()) {
+             html:not(.surf-io) main > section.section {
+-                transform-origin: 50% 0;
+-                animation: section-surface linear both;
++                transform-origin: 50% 50%;
++                animation: section-surface both;
++                animation-timing-function: cubic-bezier(.33,0,.2,1);
+                 animation-timeline: view();
+-                animation-range: cover 0px cover 45vh;
++                animation-range: cover 0px cover 65vh;
+             }
+         }
+         html.surf-io main > section.section {
+-            transform-origin: 50% 0;
+-            opacity: 0.12;
+-            transform: translate3d(0, 90px, 0) scale(0.86);
+-            transition: opacity 1s cubic-bezier(.22,.61,.36,1), transform 1.25s cubic-bezier(.16,1,.3,1);
++            transform-origin: 50% 50%;
++            opacity: 0.06;
++            transform: translate3d(0, 40px, 0) scale(0.72);
++            transition: opacity 1.4s cubic-bezier(.22,1,.36,1), transform 1.9s cubic-bezier(.22,1,.36,1);
+             will-change: transform, opacity;
+         }
+-        @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+-            html.surf-io main > section.section { transform: translate3d(0, 64px, 0) scale(0.84); }
+-        }
+         html.surf-io main > section.section.is-surfaced { opacity: 1; transform: none; }
+ 
+         .workspace__more { display: flex; justify-content: center; margin-top: var(--spacing-lg); }
+@@ -3866,7 +3864,7 @@
+                     if (entry.isIntersecting) entry.target.classList.add('is-surfaced');
+                     else if (entry.boundingClientRect.top > 0) entry.target.classList.remove('is-surfaced');
+                 });
+-            }, { threshold: 0, rootMargin: '0px 0px -6% 0px' });
++            }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
+             document.querySelectorAll('main > section.section').forEach(el => surfaceObserver.observe(el));
+         }
+         else if (document.documentElement.classList.contains('surf-io')) {
