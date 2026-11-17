@@ -1956,41 +1956,33 @@
         }
 
         /* ========== SECTIONS SURFACE ON SCROLL ========== */
-        /* Each homepage section rises and grows as it scrolls into view.
-           Where the browser supports scroll-driven animations it is tied to the scroll and runs
-           on the GPU (perfectly smooth, also on phones); elsewhere it glides in once (html.no-sda). */
+        /* Each homepage section rises and zooms in as it comes into view.
+           Computers with scroll-driven animations: tied to the scroll (GPU, smooth).
+           Phones, tablets and older browsers (html.surf-io): the section glides and zooms in
+           when it appears, and gets ready again when it leaves at the bottom. */
         @keyframes section-surface {
-            from { opacity: 0.25; transform: translate3d(0, 56px, 0) scale(0.94); }
+            from { opacity: 0.15; transform: translate3d(0, 90px, 0) scale(0.86); }
             to   { opacity: 1;    transform: none; }
         }
-        @keyframes section-surface-m {
-            from { opacity: 0.3; transform: translate3d(0, 36px, 0) scale(0.96); }
-            to   { opacity: 1;   transform: none; }
-        }
         @supports (animation-timeline: view()) {
-            main > section.section {
+            html:not(.surf-io) main > section.section {
                 transform-origin: 50% 0;
                 animation: section-surface linear both;
                 animation-timeline: view();
-                animation-range: cover 0px cover 38vh;
-            }
-            @media (max-width: 768px), (hover: none) and (pointer: coarse) {
-                main > section.section {
-                    animation-name: section-surface-m;
-                    animation-range: entry 0% entry 70%;
-                }
+                animation-range: cover 0px cover 45vh;
             }
         }
-        html.no-sda main > section.section {
+        html.surf-io main > section.section {
             transform-origin: 50% 0;
-            opacity: 0.25;
-            transform: translate3d(0, 56px, 0) scale(0.94);
-            transition: opacity 0.9s cubic-bezier(.22,.61,.36,1), transform 1.1s cubic-bezier(.22,.61,.36,1);
+            opacity: 0.12;
+            transform: translate3d(0, 90px, 0) scale(0.86);
+            transition: opacity 1s cubic-bezier(.22,.61,.36,1), transform 1.25s cubic-bezier(.16,1,.3,1);
+            will-change: transform, opacity;
         }
         @media (max-width: 768px), (hover: none) and (pointer: coarse) {
-            html.no-sda main > section.section { opacity: 0.3; transform: translate3d(0, 36px, 0) scale(0.96); }
+            html.surf-io main > section.section { transform: translate3d(0, 64px, 0) scale(0.84); }
         }
-        html.no-sda main > section.section.is-surfaced { opacity: 1; transform: none; }
+        html.surf-io main > section.section.is-surfaced { opacity: 1; transform: none; }
 
         .workspace__more { display: flex; justify-content: center; margin-top: var(--spacing-lg); }
         /* ========== GALLERY CAPTIONS ========== */
@@ -2168,7 +2160,7 @@
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://arthemii.com/#artist","name":"Arthemii Ionaere","url":"https://arthemii.com/fr/","image":"https://arthemii.com/img/opt/portrait-arthemii-1600.jpg","jobTitle":"Stained glass artist","description":"Berlin-based contemporary stained glass artist creating three-dimensional glass sculptures in the Tiffany technique, kinetic prisms, lamps and light installations.","email":"mailto:info@arthemii.com","address":{"@type":"PostalAddress","addressLocality":"Berlin","addressCountry":"DE"},"knowsAbout":["Stained glass","Tiffany technique","Glass sculpture","Kinetic art","Light installation","Contemporary art"],"sameAs":["https://www.instagram.com/ionaerestudio/","https://www.instagram.com/ionaere/","https://www.instagram.com/lonaere/","https://www.youtube.com/@IonaereArthe"]},{"@type":"WebSite","@id":"https://arthemii.com/#website","url":"https://arthemii.com/fr/","name":"Arthemii Ionaere","description":"Contemporary stained glass art by Arthemii Ionaere, Berlin","inLanguage":"en","publisher":{"@id":"https://arthemii.com/#artist"}}{% for ex in site.data.exhibitions.items %}{% assign ds = ex.date_start | strip | split: "." %}{% if ds.size == 3 %},{"@type":"ExhibitionEvent","name":{{ ex.title | jsonify }},"startDate":"{{ ds[2] }}-{{ ds[1] }}-{{ ds[0] }}"{% assign de = ex.date_end | strip | split: "." %}{% if de.size == 3 %},"endDate":"{{ de[2] }}-{{ de[1] }}-{{ de[0] }}"{% endif %},"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode"{% if ex.location and ex.location != "" %},"location":{"@type":"Place","name":{{ ex.location | strip | jsonify }},"address":{{ ex.location | strip | jsonify }}}{% endif %}{% if ex.photos.size > 0 %},"image":"https://arthemii.com{{ ex.photos[0] | relative_url }}"{% endif %},"organizer":{"@id":"https://arthemii.com/#artist"},"performer":{"@id":"https://arthemii.com/#artist"}}{% endif %}{% endfor %}]}
     </script>
-    <script>if(!(window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()')))document.documentElement.classList.add('no-sda');</script>
+    <script>(function(){var d=document.documentElement,sda=window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()');if(!sda)d.classList.add('no-sda');if(!sda||matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches)d.classList.add('surf-io');})();</script>
 </head>
 <body>
     <!-- ========== LOADER ========== -->
@@ -3868,7 +3860,7 @@
         /* ===== SECTIONS SURFACE (browsers without scroll-driven animations, e.g. older iPhones) ===== */
         // No work on every scroll frame: a section simply glides in (GPU transition) when it comes into view,
         // and gets ready again when it leaves at the bottom, so it surfaces again on the way down.
-        if (document.documentElement.classList.contains('no-sda') && 'IntersectionObserver' in window) {
+        if (document.documentElement.classList.contains('surf-io') && 'IntersectionObserver' in window) {
             const surfaceObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) entry.target.classList.add('is-surfaced');
@@ -3876,6 +3868,9 @@
                 });
             }, { threshold: 0, rootMargin: '0px 0px -6% 0px' });
             document.querySelectorAll('main > section.section').forEach(el => surfaceObserver.observe(el));
+        }
+        else if (document.documentElement.classList.contains('surf-io')) {
+            document.querySelectorAll('main > section.section').forEach(el => el.classList.add('is-surfaced'));
         }
 
         /* ===== SCROLL REVEAL (IntersectionObserver) ===== */
