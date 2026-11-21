@@ -1,0 +1,61 @@
+name: Web versions of AI architecture photos
+
+# Drop full-size photos into img/uploads/ai-architecture/ and this makes the
+# light versions the site uses: img/renders/ai-arch/<name>-800.webp,
+# <name>.webp (1600 px) and <name>.jpg (1600 px).
+on:
+  push:
+    paths:
+      - 'img/uploads/ai-architecture/**'
+  workflow_dispatch:
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install pillow
+
+      - name: Make web versions
+        run: |
+          python3 << 'PYEOF'
+          import glob, os
+          from PIL import Image, ImageOps
+
+          src = 'img/uploads/ai-architecture'
+          out = 'img/renders/ai-arch'
+          os.makedirs(out, exist_ok=True)
+          for path in sorted(glob.glob(f'{src}/*')):
+              if not path.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')):
+                  continue
+              stem = os.path.splitext(os.path.basename(path))[0]
+              if os.path.exists(f'{out}/{stem}.jpg'):
+                  continue
+              im = ImageOps.exif_transpose(Image.open(path)).convert('RGB')
+
+              def fit(width):
+                  if im.width <= width:
+                      return im.copy()
+                  return im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
+
+              big, small = fit(1600), fit(800)
+              big.save(f'{out}/{stem}.jpg', 'JPEG', quality=82, optimize=True, progressive=True)
+              big.save(f'{out}/{stem}.webp', 'WEBP', quality=80, method=6)
+              small.save(f'{out}/{stem}-800.webp', 'WEBP', quality=78, method=6)
+              print('made', stem)
+          PYEOF
+
+      - name: Commit web versions
+        run: |
+          git config user.name "Auto Gallery Bot"
+          git config user.email "bot@arthemii.com"
+          git add img/renders/ai-arch
+          git diff --staged --quiet || git commit -m "Web versions of AI architecture photos"
+          git push
