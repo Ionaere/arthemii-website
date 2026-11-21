@@ -20,7 +20,3 @@ defaults:
       path: "googlea55071e38e388e37.html"
     values:
       sitemap: false
-  - scope:
-      path: "space"
-    values:
-      sitemap: false
