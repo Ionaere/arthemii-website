@@ -2499,6 +2499,8 @@
                 left: 150px;             /* starts in the middle of the photo */
                 justify-content: flex-start;
             }
+            /* photo on the right: the open/close arrow goes before the name, on the white field, not on the photo */
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs:not(.thumbs-left) .section__chevron { order: -1; }
             .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label {
                 font-size: clamp(2rem, 3.4vw, 3.4rem);
                 color: #111;
