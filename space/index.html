@@ -319,8 +319,8 @@ function stars() {
 
 /* ---------- the room: a huge many-faceted glass prism floating in space ---------- */
 // Every facet is a slightly tinted, mirror-like glass pane: through it you see the stars outside,
-// and on it the works and the cosmos are reflected (a cube camera films the scene around you a few
-// times a second), with a thin rainbow sheen like dichroic glass.
+// and on it the works and the cosmos are reflected, sharp like in a mirror (a cube camera films the
+// scene around you several times a second).
 let room = null, roomEdges = null, cubeCam = null, ROOM_R = 40, ROOM_H = 40, ROOM_IN = 38;
 const CUBE_EVERY = isTouch ? 12 : 4;
 function crystalGeometry(R, H, S, bands, cap) {
@@ -356,13 +356,13 @@ function buildRoom() {
   ROOM_R = RADIUS * 1.6 + 14;
   ROOM_H = RADIUS * 1.45 + 10;
   ROOM_IN = ROOM_R * 0.93 * Math.cos(Math.PI / S) - 1.8;   // how far from the axis you can fly
-  const cube = new THREE.WebGLCubeRenderTarget(isTouch ? 256 : 512, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter });
+  const cube = new THREE.WebGLCubeRenderTarget(isTouch ? 512 : 1024, { generateMipmaps: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter });
   cubeCam = new THREE.CubeCamera(0.1, 600, cube);
   const geo = crystalGeometry(ROOM_R, ROOM_H, S, bands, ROOM_R * 0.55);
-  const mat = new THREE.MeshPhysicalMaterial({
-    color: 0x7a8098, metalness: 0.9, roughness: 0.03, envMap: cube.texture, envMapIntensity: 0.85,
-    iridescence: 0.75, iridescenceIOR: 1.7, iridescenceThicknessRange: [180, 820],
-    transparent: true, opacity: 0.64, depthWrite: false, side: THREE.DoubleSide, flatShading: true, fog: false
+  // a sharp mirror reflection (a plain cube-map lookup, no blur), darkened and slightly tinted like smoked glass
+  const mat = new THREE.MeshBasicMaterial({
+    color: 0x8a90a8, envMap: cube.texture, combine: THREE.MultiplyOperation, reflectivity: 1,
+    transparent: true, opacity: 0.66, depthWrite: false, side: THREE.DoubleSide, fog: false
   });
   room = new THREE.Mesh(geo, mat);
   room.renderOrder = -1;          // after the works, before the glows, labels and stars
