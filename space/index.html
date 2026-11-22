@@ -361,17 +361,17 @@ function buildRoom() {
   const geo = crystalGeometry(ROOM_R, ROOM_H, S, bands, ROOM_R * 0.55);
   // a sharp mirror reflection (a plain cube-map lookup, no blur), darkened and slightly tinted like smoked glass
   const mat = new THREE.MeshBasicMaterial({
-    color: 0x8a90a8, envMap: cube.texture, combine: THREE.MultiplyOperation, reflectivity: 1,
+    color: 0xc4c8d6, envMap: cube.texture, combine: THREE.MultiplyOperation, reflectivity: 1,
     transparent: true, opacity: 0.66, depthWrite: false, side: THREE.DoubleSide, fog: false
   });
   room = new THREE.Mesh(geo, mat);
   room.renderOrder = -1;          // after the works, before the glows, labels and stars
   scene.add(room);
-  // the edges of the facets catch the light
+  // no visible edge lines: the facets show only through what they reflect
   roomEdges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 1),
     new THREE.LineBasicMaterial({ color: 0xcfd8ff, transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
   roomEdges.renderOrder = -1;
-  scene.add(roomEdges);
+  roomEdges.visible = false;
 }
 let cubeFrame = 0;
 function updateReflections() {
@@ -379,7 +379,7 @@ function updateReflections() {
   room.visible = false; roomEdges.visible = false;
   cubeCam.position.copy(camera.position);
   cubeCam.update(renderer, scene);
-  room.visible = true; roomEdges.visible = true;
+  room.visible = true;
 }
 
 async function build(data) {
