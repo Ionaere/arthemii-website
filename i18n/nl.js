@@ -10,7 +10,7 @@ window.I18N_DATA["nl"] = {
   "Sending…": "Bezig met verzenden…",
   "Please fill in your name, email and message.": "Vul je naam, e-mailadres en bericht in.",
   "Please enter a valid email address.": "Vul een geldig e-mailadres in.",
-  "Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.": "Sorry, het bericht kon niet worden verzonden. Probeer het later opnieuw of schrijf naar info@arthemii.com.",
+  "Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.": "Sorry, het bericht kon niet worden verzonden. Probeer het later opnieuw of schrijf naar info@ionaere.com.",
   "About": "Over",
   "Exhibitions": "Tentoonstellingen",
   "Projects": "Projecten",

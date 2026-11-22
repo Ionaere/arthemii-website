@@ -1,8 +1,8 @@
 /*
- * Contact form → email (info@arthemii.com) via FormSubmit (https://formsubmit.co).
+ * Contact form → email (info@ionaere.com) via FormSubmit (https://formsubmit.co).
  *
  * The site is static (GitHub Pages), so messages are relayed by FormSubmit.
- * The very first message triggers an activation email to info@arthemii.com:
+ * The very first message triggers an activation email to info@ionaere.com:
  * click "Activate Form" in it once, and all messages arrive from then on
  * (FormSubmit keeps messages sent before activation and delivers them after).
  *
@@ -12,7 +12,7 @@
 (function () {
   'use strict';
 
-  var ENDPOINT_ID = 'info' + '@' + 'arthemii.com';
+  var ENDPOINT_ID = 'info' + '@' + 'ionaere.com';
   var ENDPOINT = 'https://formsubmit.co/ajax/' + ENDPOINT_ID;
 
   var MSG = {
@@ -20,7 +20,7 @@
     success: 'Thank you! I will get back to you soon.',
     missing: 'Please fill in your name, email and message.',
     badEmail: 'Please enter a valid email address.',
-    error: 'Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.'
+    error: 'Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.'
   };
 
   function t(s) { return window.I18N ? window.I18N.t(s) : s; }

@@ -10,7 +10,7 @@ window.I18N_DATA["pl"] = {
   "Sending…": "Wysyłanie…",
   "Please fill in your name, email and message.": "Podaj imię, adres e-mail i wiadomość.",
   "Please enter a valid email address.": "Podaj prawidłowy adres e-mail.",
-  "Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.": "Niestety nie udało się wysłać wiadomości. Spróbuj ponownie później lub napisz na info@arthemii.com.",
+  "Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.": "Niestety nie udało się wysłać wiadomości. Spróbuj ponownie później lub napisz na info@ionaere.com.",
   "About": "O mnie",
   "Exhibitions": "Wystawy",
   "Projects": "Projekty",

@@ -10,7 +10,7 @@ window.I18N_DATA["sv"] = {
   "Sending…": "Skickar…",
   "Please fill in your name, email and message.": "Fyll i ditt namn, din e-postadress och ditt meddelande.",
   "Please enter a valid email address.": "Ange en giltig e-postadress.",
-  "Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.": "Tyvärr kunde meddelandet inte skickas. Försök igen senare eller skriv till info@arthemii.com.",
+  "Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.": "Tyvärr kunde meddelandet inte skickas. Försök igen senare eller skriv till info@ionaere.com.",
   "About": "Om",
   "Exhibitions": "Utställningar",
   "Projects": "Projekt",
