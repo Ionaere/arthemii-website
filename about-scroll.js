@@ -1,12 +1,13 @@
 /*
- * About page: scroll-driven text lens + drifting watermark.
+ * About page: scroll-driven text lens + name wordmark.
  *
  * 1. Every line of text is small near the top and bottom edges of the screen
  *    and grows to its full size as it approaches the middle (a soft "lens").
  *    Each word is wrapped in a span; words on the same line scale together
  *    around the line's start, so lines stay aligned and nothing overlaps.
- * 2. The "Arthemii Ionaere" wordmark behind the header drifts down very
- *    slowly while the page scrolls (its drop-in on page open is CSS).
+ * 2. The "Arthemii Ionaere" wordmark at the top behaves like "Ionaere Studio"
+ *    on the home page: drops in when the page opens (CSS), flies away while
+ *    scrolling down and comes back on the way up.
  *
  * Works together with i18n.js: word spans are marked data-no-i18n, and when
  * the language changes the original text is put back for i18n.js to translate,
@@ -24,8 +25,6 @@
   var MIN_SCALE = 0.72;    // size of a line at the very edge of the screen
   var MIN_OPACITY = 0.35;  // its opacity there
   var PLATEAU = 0.18;      // middle share of the screen where text stays at full size
-  var WM_SPEED = 0.7;      // watermark moves down at 70% of the scroll speed (on screen: drifts up slowly)
-  var WM_EASE = 0.06;      // extra easing per frame for the watermark
 
   var SELECTOR = [
     '.section__label', '.section__title', '.section__desc',
@@ -37,8 +36,7 @@
   var st = document.createElement('style');
   st.textContent =
     '.tl-chunk{display:inline}' +
-    '.tl-w{display:inline-block;transform-origin:50% 50%;will-change:auto}' +
-    '.about-watermark{will-change:transform}';
+    '.tl-w{display:inline-block;transform-origin:50% 50%}';
   document.head.appendChild(st);
 
   var blocks = [];       // { el, align, words: [span], lines: [{ cy, words: [{ el, cx }] , ref }] }
@@ -164,40 +162,26 @@
     }
   }
 
-  /* ---------- watermark ---------- */
+  /* ---------- name wordmark (same as Ionaere Studio on the home page) ---------- */
 
-  var wm = document.querySelector('.about-watermark');
-  var wmSection = wm ? wm.parentElement : null;
-  var wmY = 0, wmRunning = false;
+  // Flies up and out of the screen while scrolling down, comes back on the way up
+  var wm = document.querySelector('.about-studio__inner');
 
-  function wmTarget() {
-    var sy = window.scrollY || window.pageYOffset;
-    var top = wmSection.getBoundingClientRect().top + sy;
-    var maxY = Math.max(0, wmSection.offsetHeight - wm.offsetHeight - wm.offsetTop);
-    return Math.max(0, Math.min(maxY, (sy - top + 72) * WM_SPEED));
-  }
-
-  function wmTick() {
-    var target = wmTarget();
-    wmY += (target - wmY) * WM_EASE;
-    if (Math.abs(target - wmY) < 0.1) wmY = target;
-    wm.style.transform = 'translate3d(0,' + wmY.toFixed(2) + 'px,0)';
-    if (wmY !== target) requestAnimationFrame(wmTick); else wmRunning = false;
-  }
-
-  function wmKick() {
-    if (!wm || wmRunning) return;
-    wmRunning = true;
-    requestAnimationFrame(wmTick);
+  function wmUpdate() {
+    if (!wm) return;
+    var h = window.innerHeight;
+    var p = Math.min(Math.max((window.scrollY || window.pageYOffset) / Math.max(h * 0.6, 280), 0), 1);
+    var e = p * p * (3 - 2 * p); /* smoothstep */
+    wm.style.transform = 'translate3d(0,' + (-e * h * 1.1).toFixed(1) + 'px,0) scale(' + (1 + e * 0.9).toFixed(3) + ')';
+    wm.style.opacity = (1 - e * e).toFixed(3);
   }
 
   /* ---------- wiring ---------- */
 
   function onScroll() {
-    wmKick();
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(function () { ticking = false; render(); });
+    requestAnimationFrame(function () { ticking = false; wmUpdate(); render(); });
   }
 
   function relayout() { dirty = true; onScroll(); }
@@ -228,5 +212,5 @@
 
   split();
   render();
-  wmKick();
+  wmUpdate();
 })();
