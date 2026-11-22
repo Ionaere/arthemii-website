@@ -645,14 +645,23 @@
             25%  { opacity: 1; }
             100% { opacity: 1; transform: none; }
         }
-        @media (prefers-reduced-motion: reduce) {
-            .hero__studio { animation: none; opacity: 1; }
-        }
         @media (max-width: 768px) {
-            .hero__studio { font-size: 6vw; }
+            /* phones: two lines (IONAERE / STUDIO), the second one running onto the video */
+            .hero__studio {
+                font-size: 11vw;
+                margin-bottom: calc(-2.1em - var(--spacing-2xl));
+                top: calc(var(--spacing-2xl) - 1.6em);
+            }
             .hero__studio-inner { gap: 0.6rem; }
-            .hero__studio-name { letter-spacing: 0.28em; margin-right: -0.28em; white-space: nowrap; }
-            .hero__studio-rule { max-width: 28px; }
+            .hero__studio-name {
+                white-space: normal;
+                width: min-content;      /* breaks at the space: one word per line */
+                text-align: center;
+                line-height: 1.05;
+                letter-spacing: 0.18em;
+                margin-right: -0.18em;
+            }
+            .hero__studio-rule { max-width: 24px; }
         }
 
         /* ===== Hero text column ===== */
@@ -4212,7 +4221,7 @@
     /* Ionaere Studio wordmark: flies away while scrolling down, comes back on the way up */
     (function () {
         var el = document.querySelector('.hero__studio-inner');
-        if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (!el) return;
         var ticking = false;
         function update() {
             ticking = false;
