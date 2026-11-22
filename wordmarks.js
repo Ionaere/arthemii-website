@@ -2,8 +2,7 @@
  * Subsection titles in the "Ionaere Studio" style, on every page.
  * Loaded by i18n.js. Titles such as "Metal Frame Sculpting", "Tiffany Vitrage", the exhibition
  * names and "Architecture" become wide-spaced Italiana capitals with thin rules on both sides,
- * a little smaller than the section names. While scrolling, each title rolls in as it comes up
- * from the bottom of the screen and rolls away (up, growing and fading) as it leaves at the top.
+ * a little smaller than the section names. They stay still (no animation).
  */
 (function () {
   'use strict';
@@ -85,13 +84,10 @@
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
 
   function init() {
+    // static titles: no scroll animation (owner's choice)
     setup();
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    // titles added later (exhibitions are built by the page, sections open and close)
-    new MutationObserver(function () { setup(); onScroll(); }).observe(document.body, { childList: true, subtree: true });
-    document.addEventListener('click', function () { setTimeout(onScroll, 50); setTimeout(onScroll, 700); }, true);
+    // titles added later (exhibitions are built by the page)
+    new MutationObserver(function () { setup(); }).observe(document.body, { childList: true, subtree: true });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
