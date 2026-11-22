@@ -34,7 +34,7 @@
     <!-- Fonts: Cormorant Garamond (headings) + Manrope (text) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Italiana&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Italiana&family=Montserrat:wght@200&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" href="img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
@@ -801,6 +801,15 @@
                 line-height: 1.45;
                 max-width: 580px;
             }
+        }
+
+        /* Home page: section subtitles in Montserrat Light, wide tracking */
+        .section__title {
+            font-family: 'Montserrat', var(--font-sans) !important;
+            font-weight: 200 !important;
+            letter-spacing: 0.08em !important;
+            font-size: clamp(1.4rem, 2.6vw, 2.1rem) !important;
+            line-height: 1.25 !important;
         }
 
         /* On mobile: instant hero content */
