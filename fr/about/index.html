@@ -53,30 +53,32 @@
         /* Full-width photo between paragraphs */
         .about-image--wide { clear: both; margin: var(--spacing-lg) 0 var(--spacing-xl); overflow: visible; border-radius: 0; }
         .about-image--wide img { display: block; border-radius: var(--radius-md); }
-        /* Artist name behind the About header, in the Ionaere Studio wordmark style
-           (wide-tracked Italiana capitals with side rules); drops in when the page
-           opens, then drifts down slowly with the scroll (about-scroll.js) */
-        #about { position: relative; overflow: hidden; }
-        #about > .container { position: relative; z-index: 1; }
-        .about-watermark {
-            position: absolute; z-index: 0; left: 0; right: 0; top: 2.5rem;
+        /* Artist name at the top of the About page: the same wordmark as "Ionaere Studio"
+           on the home page (wide-tracked Italiana capitals with side rules, drops in
+           from above when the page opens, flies away while scrolling down) */
+        .about-studio {
+            position: relative; z-index: 3;
             padding: 0 var(--spacing-md);
-            font-size: clamp(1.4rem, 4.6vw, 5.4rem);
-            color: #1a1a1a; opacity: 0.09;
-            pointer-events: none; user-select: none;
+            margin: 0 0 var(--spacing-xl);
+            font-size: clamp(1.4rem, 5.4vw, 6rem);
+            pointer-events: none;
+            mix-blend-mode: difference;
+            opacity: 0;
+            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
         }
-        .about-watermark__inner {
+        .about-studio__inner {
             display: flex; align-items: center; justify-content: center;
             gap: clamp(0.75rem, 2.5vw, 2.5rem);
             transform-origin: 50% 60%;
-            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
         }
-        .about-watermark__rule { flex: 1 1 0; max-width: 180px; height: 1px; background: currentColor; }
-        .about-watermark__name {
+        .about-studio__rule { flex: 1 1 0; max-width: 220px; height: 1px; background: rgba(255, 255, 255, 0.55); }
+        .about-studio__name {
+            margin: 0;
             font-family: 'Italiana', var(--font-serif); font-weight: 400;
             font-size: 1em; line-height: 1;
             letter-spacing: 0.38em; margin-right: -0.38em;
             text-transform: uppercase; white-space: nowrap;
+            color: #fff;
         }
         @keyframes studioFlyIn {
             0%   { opacity: 0; transform: translate3d(0, -110vh, 0) scale(1.9); }
@@ -84,13 +86,36 @@
             100% { opacity: 1; transform: none; }
         }
         @media (max-width: 768px) {
-            .about-watermark { top: 1.5rem; font-size: 11vw; }
-            .about-watermark__inner { gap: 0.6rem; }
-            .about-watermark__name { white-space: normal; width: min-content; text-align: center; line-height: 1.05; letter-spacing: 0.18em; margin-right: -0.18em; }
-            .about-watermark__rule { max-width: 24px; }
+            .about-studio { font-size: 11vw; }
+            .about-studio__inner { gap: 0.6rem; }
+            .about-studio__name { white-space: normal; width: min-content; text-align: center; line-height: 1.05; letter-spacing: 0.18em; margin-right: -0.18em; }
+            .about-studio__rule { max-width: 24px; }
         }
         @media (prefers-reduced-motion: reduce) {
-            .about-watermark__inner { animation: none; }
+            .about-studio { animation: none; opacity: 1; }
+        }
+        /* Top of the About page: portrait on the right from the very top, header text on
+           the left, the name wordmark running across both and over the photo */
+        #about { position: relative; padding-top: var(--spacing-md); }
+        .about-top {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 40%);
+            column-gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+        .about-top > .about-studio {
+            grid-column: 1 / -1; grid-row: 1; align-self: start;
+            padding: 0;
+            margin: clamp(4rem, 17.5vw, 15rem) 0 var(--spacing-xl);
+        }
+        .about-top > .section__header { grid-column: 1; grid-row: 2; align-self: start; margin-bottom: 0; }
+        .about-portrait { grid-column: 2; grid-row: 1 / span 2; align-self: start; margin: 0; }
+        .about-portrait img { display: block; }
+        @media (max-width: 768px) {
+            .about-top { grid-template-columns: minmax(0, 1fr); }
+            .about-portrait { grid-column: 1; grid-row: 1; }
+            .about-top > .about-studio { grid-row: 1; margin-top: 56vw; }
+            .about-top > .section__header { grid-column: 1; grid-row: 2; margin-top: var(--spacing-lg); }
         }
         /* Artist name opening the About text */
         .about-name {
@@ -153,23 +178,23 @@
     <main style="padding-top:calc(72px + 2rem)">
 <!-- ========== ABOUT ========== -->
         <section class="section" id="about">
-            <div class="about-watermark" aria-hidden="true"><div class="about-watermark__inner"><span class="about-watermark__rule"></span><span class="about-watermark__name">Arthemii Ionaere</span><span class="about-watermark__rule"></span></div></div>
             <div class="container">
-                <header class="section__header reveal">
-                    <div class="section__label" data-i18n="about_label">À propos</div>
-                    <h1 class="section__title" data-i18n="about_title">Un nouveau langage architectural dans le style bionique, réalisé par le verre.</h1>
-                </header>
+                <div class="about-top">
+                    <div class="about-studio" aria-label="Arthemii Ionaere"><div class="about-studio__inner"><span class="about-studio__rule" aria-hidden="true"></span><div class="about-studio__name">Arthemii Ionaere</div><span class="about-studio__rule" aria-hidden="true"></span></div></div>
+                    <header class="section__header reveal">
+                        <div class="section__label" data-i18n="about_label">À propos</div>
+                        <h1 class="section__title" data-i18n="about_title">Un nouveau langage architectural dans le style bionique, réalisé par le verre.</h1>
+                    </header>
+                    <figure class="about-image about-portrait">
+                        <picture><source type="image/webp" srcset="../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-800.webp 800w, ../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-1600.webp 1600w, ../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-2400.webp 2400w" sizes="(max-width: 768px) 92vw, 560px"><img src="../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-1600.jpg" alt="Arthemii Ionaere portrait, 2025" fetchpriority="high" decoding="async"></picture>
+                        <figcaption class="about-image__caption" data-i18n="about_image_caption">Portrait de l’artiste — 2025</figcaption>
+                    </figure>
+                </div>
 
 
                 <div class="about-grid">
                     <div class="about-text reveal">
-                        <figure class="about-image about-inline about-inline--right">
-                            <picture><source type="image/webp" srcset="../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-800.webp 800w, ../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-1600.webp 1600w, ../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-2400.webp 2400w" sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 800px"><img src="../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-1600.jpg" alt="Arthemii Ionaere portrait, 2025" loading="lazy" decoding="async"></picture>
-                            <figcaption class="about-image__caption" data-i18n="about_image_caption">Portrait de l’artiste — 2025</figcaption>
-                        </figure>
-
-
-                        <p data-i18n="about_p1">L’approche abstraite et contemporaine du verre et de la couleur s’éloigne du symbolisme chrétien traditionnel du vitrail, qui représente généralement de manière concrète des saints, des scènes bibliques ou des symboles. Pourtant, même sous cette forme abstraite, l’exploration des symboles et des significations possibles par une approche innovante du symbolisme reste pertinente.</p>
+<p data-i18n="about_p1">L’approche abstraite et contemporaine du verre et de la couleur s’éloigne du symbolisme chrétien traditionnel du vitrail, qui représente généralement de manière concrète des saints, des scènes bibliques ou des symboles. Pourtant, même sous cette forme abstraite, l’exploration des symboles et des significations possibles par une approche innovante du symbolisme reste pertinente.</p>
 
                         <p data-i18n="about_p2">Les études contemporaines de l’art du vitrail permettent d’analyser l’effet de l’abstraction sur la perception et l’interprétation. L’évolution des styles et des techniques peut influencer la perception esthétique et spirituelle, et offrir de nouvelles formes à intégrer dans l’art et l’architecture contemporains.</p>
 
