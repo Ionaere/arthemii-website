@@ -158,10 +158,10 @@
     '      c=mix(c,c*(0.45+1.1*iri),0.6);',
     // bright spectral glints like the dispersion at the prism's foot, sweeping up the whole height as it turns
     '      float fo=dot(n.xz,vec2(1.3,0.7));',
-    '      float sw=sin(6.2832*(1.15*p.y+1.6*cv+0.16*uAng+fo));',
-    '      float bnd=smoothstep(0.35,0.95,sw)*(0.55+0.45*sin(6.2832*(2.3*p.y-0.8*cv+fo)));',
+    '      float sw=sin(6.2832*(1.8*p.y+2.2*cv+0.16*uAng+fo));',
+    '      float bnd=smoothstep(0.2,0.85,sw)*(0.7+0.3*sin(6.2832*(2.3*p.y-0.8*cv+fo)));',
     '      vec3 spc=clamp(abs(fract(0.9*p.y+1.4*cv+0.08*uAng+fo+vec3(0.,0.6667,0.3333))*6.-3.)-1.,0.,1.);',
-    '      c=mix(c,spc*1.05+vec3(0.03),clamp(bnd,0.,1.)*0.85);',
+    '      c=mix(c,spc*0.95,clamp(bnd,0.,1.)*0.95);',
     // thick glass shows green-dark at its polished edges
     '      float e=smoothstep(0.005,0.035,edge(p,n));',
     '      c=mix(c*vec3(0.42,0.58,0.54)+vec3(0.04),c,e);',
