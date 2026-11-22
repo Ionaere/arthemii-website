@@ -10,7 +10,7 @@ window.I18N_DATA["tr"] = {
   "Sending…": "Gönderiliyor…",
   "Please fill in your name, email and message.": "Lütfen adınızı, e-posta adresinizi ve mesajınızı girin.",
   "Please enter a valid email address.": "Lütfen geçerli bir e-posta adresi girin.",
-  "Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.": "Üzgünüz, mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin veya info@arthemii.com adresine yazın.",
+  "Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.": "Üzgünüz, mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin veya info@ionaere.com adresine yazın.",
   "About": "Hakkımda",
   "Exhibitions": "Sergiler",
   "Projects": "Projeler",

@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: vasiliiberezinart-ops/arthemii-website
+  repo: Ionaere/arthemii-website
   branch: main
   base_url: https://sveltia-cms-auth.vasiliiberezin-art.workers.dev
 

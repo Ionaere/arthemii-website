@@ -10,7 +10,7 @@ window.I18N_DATA["da"] = {
   "Sending…": "Sender…",
   "Please fill in your name, email and message.": "Udfyld dit navn, din e-mail og din besked.",
   "Please enter a valid email address.": "Indtast en gyldig e-mailadresse.",
-  "Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.": "Beklager, beskeden kunne ikke sendes. Prøv igen senere, eller skriv til info@arthemii.com.",
+  "Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.": "Beklager, beskeden kunne ikke sendes. Prøv igen senere, eller skriv til info@ionaere.com.",
   "About": "Om",
   "Exhibitions": "Udstillinger",
   "Projects": "Projekter",

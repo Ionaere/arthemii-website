@@ -10,7 +10,7 @@ window.I18N_DATA["ko"] = {
   "Sending…": "보내는 중…",
   "Please fill in your name, email and message.": "이름, 이메일, 메시지를 입력해 주세요.",
   "Please enter a valid email address.": "올바른 이메일 주소를 입력해 주세요.",
-  "Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.": "죄송합니다. 메시지를 보내지 못했습니다. 나중에 다시 시도하시거나 info@arthemii.com으로 연락해 주세요.",
+  "Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.": "죄송합니다. 메시지를 보내지 못했습니다. 나중에 다시 시도하시거나 info@ionaere.com으로 연락해 주세요.",
   "About": "소개",
   "Exhibitions": "전시",
   "Projects": "프로젝트",

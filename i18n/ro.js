@@ -10,7 +10,7 @@ window.I18N_DATA["ro"] = {
   "Sending…": "Se trimite…",
   "Please fill in your name, email and message.": "Completați numele, adresa de e-mail și mesajul.",
   "Please enter a valid email address.": "Introduceți o adresă de e-mail validă.",
-  "Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.": "Ne pare rău, mesajul nu a putut fi trimis. Încercați din nou mai târziu sau scrieți la info@arthemii.com.",
+  "Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.": "Ne pare rău, mesajul nu a putut fi trimis. Încercați din nou mai târziu sau scrieți la info@ionaere.com.",
   "About": "Despre",
   "Exhibitions": "Expoziții",
   "Projects": "Proiecte",

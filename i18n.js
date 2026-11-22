@@ -80,7 +80,7 @@
     "Sending…": ["Wird gesendet…", "Enviando…", "Envoi en cours…", "Отправка…", "正在发送…", "送信中…"],
     "Please fill in your name, email and message.": ["Bitte geben Sie Ihren Namen, Ihre E-Mail-Adresse und Ihre Nachricht ein.", "Por favor, introduce tu nombre, tu correo electrónico y tu mensaje.", "Veuillez indiquer votre nom, votre e-mail et votre message.", "Пожалуйста, укажите имя, e-mail и сообщение.", "请填写您的姓名、电子邮件和留言。", "お名前、メールアドレス、メッセージをご入力ください。"],
     "Please enter a valid email address.": ["Bitte geben Sie eine gültige E-Mail-Adresse ein.", "Por favor, introduce una dirección de correo electrónico válida.", "Veuillez saisir une adresse e-mail valide.", "Пожалуйста, введите корректный адрес e-mail.", "请输入有效的电子邮件地址。", "有効なメールアドレスを入力してください。"],
-    "Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.": ["Die Nachricht konnte leider nicht gesendet werden. Bitte versuchen Sie es später erneut oder schreiben Sie an info@arthemii.com.", "Lo sentimos, no se pudo enviar el mensaje. Inténtalo de nuevo más tarde o escribe a info@arthemii.com.", "Désolé, le message n’a pas pu être envoyé. Veuillez réessayer plus tard ou écrire à info@arthemii.com.", "К сожалению, сообщение не удалось отправить. Попробуйте ещё раз позже или напишите на info@arthemii.com.", "抱歉，消息未能发送。请稍后再试，或发送邮件至 info@arthemii.com。", "申し訳ありません。メッセージを送信できませんでした。しばらくしてから再度お試しいただくか、info@arthemii.com までご連絡ください。"],
+    "Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.": ["Die Nachricht konnte leider nicht gesendet werden. Bitte versuchen Sie es später erneut oder schreiben Sie an info@ionaere.com.", "Lo sentimos, no se pudo enviar el mensaje. Inténtalo de nuevo más tarde o escribe a info@ionaere.com.", "Désolé, le message n’a pas pu être envoyé. Veuillez réessayer plus tard ou écrire à info@ionaere.com.", "К сожалению, сообщение не удалось отправить. Попробуйте ещё раз позже или напишите на info@ionaere.com.", "抱歉，消息未能发送。请稍后再试，或发送邮件至 info@ionaere.com。", "申し訳ありません。メッセージを送信できませんでした。しばらくしてから再度お試しいただくか、info@ionaere.com までご連絡ください。"],
     "About": ["Über mich", "Acerca de", "À propos", "Обо мне", "关于", "プロフィール"],
     "Exhibitions": ["Ausstellungen", "Exposiciones", "Expositions", "Выставки", "展览", "展覧会"],
     "Projects": ["Projekte", "Proyectos", "Projets", "Проекты", "项目", "プロジェクト"],
@@ -856,7 +856,7 @@
     document.head.appendChild(portal);
   }
   // Visitor statistics: GoatCounter (no cookies, no personal data stored)
-  if (location.hostname === 'arthemii.com' && !document.querySelector('script[data-goatcounter]')) {
+  if (location.hostname === 'ionaere.com' && !document.querySelector('script[data-goatcounter]')) {
     var gc = document.createElement('script');
     gc.async = true;
     gc.setAttribute('data-goatcounter', 'https://ionaere.goatcounter.com/count');

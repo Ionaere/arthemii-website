@@ -10,7 +10,7 @@ window.I18N_DATA["fi"] = {
   "Sending…": "Lähetetään…",
   "Please fill in your name, email and message.": "Täytä nimesi, sähköpostiosoitteesi ja viestisi.",
   "Please enter a valid email address.": "Anna kelvollinen sähköpostiosoite.",
-  "Sorry, the message could not be sent. Please try again later or write to info@arthemii.com.": "Valitettavasti viestiä ei voitu lähettää. Yritä myöhemmin uudelleen tai kirjoita osoitteeseen info@arthemii.com.",
+  "Sorry, the message could not be sent. Please try again later or write to info@ionaere.com.": "Valitettavasti viestiä ei voitu lähettää. Yritä myöhemmin uudelleen tai kirjoita osoitteeseen info@ionaere.com.",
   "About": "Tietoa",
   "Exhibitions": "Näyttelyt",
   "Projects": "Projektit",
