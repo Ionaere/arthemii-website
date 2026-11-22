@@ -80,6 +80,9 @@
             text-transform: uppercase; white-space: nowrap;
             color: #fff;
         }
+        .about-studio.about-studio--outline { mix-blend-mode: normal; z-index: 4; }
+        .about-studio--outline .about-studio__name { color: transparent; -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5); }
+        .about-studio--outline .about-studio__rule { background: transparent; }
         @keyframes studioFlyIn {
             0%   { opacity: 0; transform: translate3d(0, -110vh, 0) scale(1.9); }
             25%  { opacity: 1; }
@@ -319,16 +322,24 @@
     <script>
     /* ARTHEMII IONAERE wordmark: flies up and out while scrolling down, comes back on the way up (text stays static) */
     (function () {
-        var el = document.querySelector('.about-studio__inner');
-        if (!el) return;
+        var wm = document.querySelector('.about-studio');
+        if (!wm) return;
+        // a copy without the inverting blend lies exactly on top and draws only a thin dark outline,
+        // so letters stay visible where the photo is mid-grey (inverted grey stays grey)
+        var ghost = wm.cloneNode(true);
+        ghost.classList.add('about-studio--outline');
+        ghost.setAttribute('aria-hidden', 'true');
+        ghost.removeAttribute('aria-label');
+        wm.parentNode.insertBefore(ghost, wm.nextSibling);
+        var els = [wm.querySelector('.about-studio__inner'), ghost.querySelector('.about-studio__inner')];
         var ticking = false;
         function update() {
             ticking = false;
             var h = window.innerHeight;
             var p = Math.min(Math.max(window.scrollY / Math.max(h * 0.6, 280), 0), 1);
             var e = p * p * (3 - 2 * p);
-            el.style.transform = 'translate3d(0,' + (-e * h * 1.1).toFixed(1) + 'px,0) scale(' + (1 + e * 0.9).toFixed(3) + ')';
-            el.style.opacity = (1 - e * e).toFixed(3);
+            var tr = 'translate3d(0,' + (-e * h * 1.1).toFixed(1) + 'px,0) scale(' + (1 + e * 0.9).toFixed(3) + ')', op = (1 - e * e).toFixed(3);
+            els.forEach(function (el) { el.style.transform = tr; el.style.opacity = op; });
         }
         function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
         window.addEventListener('scroll', onScroll, { passive: true });
