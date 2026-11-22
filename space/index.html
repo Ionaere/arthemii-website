@@ -321,7 +321,7 @@ function stars() {
 // Every facet is a slightly tinted, mirror-like glass pane: through it you see the stars outside,
 // and on it the works and the cosmos are reflected, sharp like in a mirror (a cube camera films the
 // scene around you several times a second).
-let room = null, roomEdges = null, cubeCam = null, ROOM_R = 40, ROOM_H = 40, ROOM_IN = 38;
+let room = null, roomEdges = null, cubeCam = null, cubes = null, cubeSide = 0, ROOM_R = 40, ROOM_H = 40, ROOM_IN = 38;
 function crystalGeometry(R, H, S, bands, cap) {
   // rings of points, each turned half a step against the next, joined into triangles:
   // the walls, then two more rings narrowing into each tip
@@ -357,15 +357,21 @@ function buildRoom() {
   ROOM_R = RADIUS * 1.6 + 14;
   ROOM_H = RADIUS * 1.45 + 10;
   ROOM_IN = ROOM_R * 0.93 * Math.cos(Math.PI / S) - 1.8;   // how far from the axis you can fly
-  const cube = new THREE.WebGLCubeRenderTarget(isTouch ? 512 : 1024, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter });
-  // anisotropic filtering keeps reflections crisp on facets seen at a slant
-  cube.texture.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;
-  cubeCam = new THREE.CubeCamera(0.1, 600, cube);
+  // two reflection pictures used in turn: the walls show one while the other is filmed — with the walls in it,
+  // so the facets reflect each other too, like mirrors facing mirrors, and there is no empty black anywhere
+  const mkCube = () => {
+    const c = new THREE.WebGLCubeRenderTarget(isTouch ? 512 : 1024, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter });
+    c.texture.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;   // crisp on facets seen at a slant
+    return c;
+  };
+  cubes = [mkCube(), mkCube()];
+  const cube = cubes[0];
+  cubeCam = new THREE.CubeCamera(0.1, 600, cubes[1]);
   const geo = crystalGeometry(ROOM_R, ROOM_H, S, bands, ROOM_R * 0.55);
   // a sharp mirror reflection (a plain cube-map lookup, no blur), darkened and slightly tinted like smoked glass
   const mat = new THREE.MeshBasicMaterial({
-    color: 0xc4c8d6, envMap: cube.texture, combine: THREE.MultiplyOperation, reflectivity: 1,
-    transparent: true, opacity: 0.66, depthWrite: false, side: THREE.DoubleSide, fog: false
+    color: 0xd2d6e2, envMap: cube.texture, combine: THREE.MultiplyOperation, reflectivity: 1,
+    transparent: true, opacity: 0.96, depthWrite: false, side: THREE.DoubleSide, fog: false
   });
   room = new THREE.Mesh(geo, mat);
   room.renderOrder = -1;          // after the works, before the glows, labels and stars
@@ -382,13 +388,17 @@ let cubeTick = 0;
 const CUBE_EVERY = isTouch ? 2 : 1;
 function updateReflections() {
   if (!cubeCam || (cubeTick++ % CUBE_EVERY) !== 0) return;
-  room.visible = false;
   // the soft halos behind the works are left out of the reflection, so it stays crisp
   for (const o of items) if (o.glow) o.glow.visible = false;
+  // film into one picture while the walls show the other, then swap
+  const into = cubes[1 - cubeSide];
+  room.material.envMap = cubes[cubeSide].texture;
+  cubeCam.renderTarget = into;
   cubeCam.position.copy(camera.position);
   cubeCam.update(renderer, scene);
+  room.material.envMap = into.texture;
+  cubeSide = 1 - cubeSide;
   for (const o of items) if (o.glow) o.glow.visible = true;
-  room.visible = true;
 }
 
 async function build(data) {
