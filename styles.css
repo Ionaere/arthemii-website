@@ -1944,3 +1944,13 @@
             .gslide.is-side-left { justify-content: flex-end; }   /* text on the left → photo on the right */
             .gslide.is-side .gslide__frame { width: min(56vw, calc((100svh - var(--gs-top) - var(--gs-bottom)) * var(--r))); }
         }
+        /* Gallery: very wide photos (and all photos on phones): the title stands above the
+           photo and the description below it, not on the photo */
+        .gslide:not(.is-side) { --gs-top: calc(72px + 19vh); --gs-bottom: 17vh; }
+        .gslide:not(.is-side) .gslide__title { translate: -50% calc(-100% - 1.1rem); }
+        .gslide:not(.is-side) .gslide__desc { translate: -50% calc(100% + 1rem); }
+        @media (max-width: 768px) {
+            .gslide:not(.is-side) { --gs-top: calc(68px + 17svh); --gs-bottom: 20svh; }
+            .gslide:not(.is-side) .gslide__title { translate: -50% calc(-100% - 0.8rem); }
+            .gslide:not(.is-side) .gslide__desc { translate: -50% calc(100% + 0.8rem); }
+        }
