@@ -63,8 +63,7 @@
             font-size: clamp(1.4rem, 5.4vw, 6rem);
             pointer-events: none;
             mix-blend-mode: difference;
-            opacity: 0;
-            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
+            /* static: no fly-in */
         }
         .about-studio__inner {
             display: flex; align-items: center; justify-content: center;
@@ -178,7 +177,7 @@
             <div class="container">
                 <div class="about-top">
                     <div class="about-studio" aria-label="Arthemii Ionaere"><div class="about-studio__inner"><span class="about-studio__rule" aria-hidden="true"></span><div class="about-studio__name">Arthemii Ionaere</div><span class="about-studio__rule" aria-hidden="true"></span></div></div>
-                    <header class="section__header reveal">
+                    <header class="section__header">
                         <div class="section__label" data-i18n="about_label">Chi sono</div>
                         <h1 class="section__title" data-i18n="about_title">Dare vita a un nuovo linguaggio architettonico nello stile bionico, realizzato con l’industria del vetro.</h1>
                     </header>
@@ -190,7 +189,7 @@
 
 
                 <div class="about-grid">
-                    <div class="about-text reveal">
+                    <div class="about-text">
 <p data-i18n="about_p1">L’approccio astratto e contemporaneo all’uso del vetro e del colore si allontana dal simbolismo cristiano tradizionale della vetrata, che di solito presenta raffigurazioni concrete di santi, scene bibliche o simboli. Eppure, anche in questa forma astratta, l’esplorazione di possibili simboli e significati attraverso un approccio innovativo al simbolismo resta attuale.</p>
 
                         <p data-i18n="about_p2">Gli studi contemporanei sull’arte della vetrata permettono di analizzare l’effetto dell’astrazione sulla percezione e sull’interpretazione. Il mutare di stili e tecniche può influenzare la percezione estetica e spirituale, offrendo nuove forme da integrare nell’arte e nell’architettura contemporanee.</p>
@@ -229,7 +228,7 @@
         </section>
 <div class="section__divider"></div>
 <!-- ========== QUOTE ========== -->
-        <div class="quote reveal">
+        <div class="quote">
             <div class="container">
                 <div class="quote__mark" aria-hidden="true">"</div>
                 <blockquote class="quote__text" data-i18n="quote_text">Grazie alla natura aperta dell’astrazione, ognuno può trovarvi i propri simboli, archetipi o interpretazioni, rendendo ogni visione un’esperienza unica.</blockquote>
@@ -239,7 +238,7 @@
 <!-- ========== PHILOSOPHY ========== -->
         <section class="section" id="philosophy">
             <div class="container">
-                <header class="section__header reveal">
+                <header class="section__header">
                     <div class="section__label" data-i18n="philosophy_label">Filosofia</div>
                     <h2 class="section__title" data-i18n="philosophy_title">L’arte dell’immersione</h2>
                     <p class="section__desc" data-i18n="philosophy_desc">Tre pilastri della pratica artistica che guidano ogni opera e definiscono il rapporto tra opera e spettatore.</p>
@@ -316,6 +315,5 @@
     </script>
     <script src="../../smooth-scroll.js" defer></script>
     <script src="../../i18n.js?v=20261117c"></script>
-    <script src="../../about-scroll.js?v=20261122h" defer></script>
 </body>
 </html>
