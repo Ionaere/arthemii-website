@@ -827,6 +827,14 @@
             line-height: 1.25 !important;
         }
 
+        /* Home: section rows alternate — photo left / text right, then text left / photo right */
+        .section__toggle.has-thumbs.thumbs-left .section__thumbs { right: auto; left: 0; }
+        .section.is-open .section__toggle.thumbs-left .section__thumbs { transform: translateY(-50%) translateX(-12px); }
+        .section__toggle.has-thumbs.thumbs-left > :not(.section__thumbs) { margin-left: auto; text-align: right; }
+        .section__toggle.has-thumbs.thumbs-left .section__label-row { justify-content: flex-end; }
+        .section.is-open .section__toggle.thumbs-left > :not(.section__thumbs) { margin-left: 0; text-align: left; }
+        .section.is-open .section__toggle.thumbs-left .section__label-row { justify-content: flex-start; }
+
         /* On mobile: instant hero content */
         @media (max-width: 768px) {
             .hero__eyebrow,
@@ -3835,6 +3843,11 @@
                     }
                     header.appendChild(strip);
                     header.classList.add('has-thumbs');
+                }
+                // rows with a photo alternate: 1st photo left / text right, 2nd text left / photo right, …
+                if (header.classList.contains('has-thumbs')) {
+                    window.__thumbRow = (window.__thumbRow || 0) + 1;
+                    if (window.__thumbRow % 2 === 1) header.classList.add('thumbs-left');
                 }
                 header.classList.add('section__toggle');
                 header.setAttribute('role', 'button');
