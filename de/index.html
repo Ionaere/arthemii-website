@@ -611,8 +611,8 @@
             pointer-events: none;
             mix-blend-mode: difference;
             opacity: 0;
-            /* hidden at first, then glides in after ~1.5 s */
-            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 1.5s both;
+            /* drops in right away when the page opens */
+            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
         }
         .hero__studio-inner {
             display: flex;
@@ -2376,10 +2376,6 @@
                 </div>
             </div>
             <div class="hero__content">
-                <a class="hero__instagram" href="https://www.instagram.com/ionaerestudio/" target="_blank" rel="noopener" aria-label="Instagram @ionaerestudio">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="heroIgGradient" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset="0.05" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6.5" fill="url(#heroIgGradient)"/><rect x="5" y="5" width="14" height="14" rx="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="16.4" cy="7.6" r="1.05" fill="#fff"/></svg>
-                    <span>@ionaerestudio</span>
-                </a>
                 <div class="hero__eyebrow" data-i18n="hero_eyebrow">Zeitgenössische Glaskunst — seit 2016</div>
                 <p class="hero__subtitle" data-i18n="hero_subtitle">Abstrakte Glasmalerei durch Licht, Farbe und Form</p>
                 <p class="hero__desc" data-i18n="hero_desc">Chaos, das nach Symmetrie strebt. Architektonische Entdeckungen durch eine persönliche psychologische Methode, die sich auf unbewusste Mechanismen der Formentstehung konzentriert. Klassische gotische Ästhetik und abstrakte Kunst verschmelzen im farbigen Glas zu einer neuen, dynamischen Bildsprache.</p>
