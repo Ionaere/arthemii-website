@@ -855,6 +855,11 @@
     portal.defer = true;
     document.head.appendChild(portal);
   }
+  // Subsection titles in the Ionaere Studio style, rolling in and out while scrolling (wordmarks.js)
+  var wm = document.createElement('script');
+  wm.src = BASE + 'wordmarks.js?v=20261122a';
+  wm.defer = true;
+  document.head.appendChild(wm);
   // Visitor statistics: GoatCounter (no cookies, no personal data stored)
   if (location.hostname === 'ionaere.com' && !document.querySelector('script[data-goatcounter]')) {
     var gc = document.createElement('script');
