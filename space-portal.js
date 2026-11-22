@@ -185,23 +185,34 @@
   function pagePicture(own) {
     var c = document.createElement('canvas'), x = c.getContext('2d');
     var vis = new Set(), seen = new WeakSet(), io = null, lastScan = 0;
+    // posters of videos that are not playing yet and CSS background pictures are drawn from these
+    var pics = new Map();
+    function pic(url) {
+      var im = pics.get(url);
+      if (!im) { im = new Image(); im.decoding = 'async'; im.src = url; pics.set(url, im); }
+      return im.complete && im.naturalWidth ? im : null;
+    }
+    function bgUrl(el) {
+      var m = (el.getAttribute('style') || '').match(/background-image:\s*url\((['"]?)(.*?)\1\)/i);
+      return m ? m[2] : '';
+    }
     if ('IntersectionObserver' in window) {
       io = new IntersectionObserver(function (es) {
         es.forEach(function (e) { if (e.isIntersecting) vis.add(e.target); else vis.delete(e.target); });
       });
     }
     function scan() {
-      document.querySelectorAll('img, video').forEach(function (el) {
+      document.querySelectorAll('img, video, [style*="background-image"]').forEach(function (el) {
         if (seen.has(el) || own.contains(el)) return;
         seen.add(el);
         if (io) io.observe(el); else vis.add(el);
       });
     }
-    function sameSite(el) {
-      var u = el.currentSrc || el.src || '';
+    function sameUrl(u) {
       if (!u) return false;
       try { return new URL(u, location.href).origin === location.origin; } catch (e) { return false; }
     }
+    function sameSite(el) { return sameUrl(el.currentSrc || el.src || ''); }
     function bgColor() {
       var b = getComputedStyle(document.body).backgroundColor;
       return (!b || b === 'rgba(0, 0, 0, 0)' || b === 'transparent') ? '#fafafa' : b;
@@ -218,19 +229,30 @@
         x.fillStyle = bgc; x.fillRect(0, 0, W, H);
         vis.forEach(function (el) {
           if (!el.isConnected) { vis.delete(el); return; }
-          var isV = el.tagName === 'VIDEO';
-          var w0 = isV ? el.videoWidth : el.naturalWidth, h0 = isV ? el.videoHeight : el.naturalHeight;
-          if (!w0 || !h0 || (isV && el.readyState < 2) || (!isV && !el.complete) || !sameSite(el)) return;
+          var tag = el.tagName, src = el, w0 = 0, h0 = 0;
+          if (tag === 'VIDEO') {
+            if (el.readyState >= 2 && el.videoWidth && sameSite(el)) { w0 = el.videoWidth; h0 = el.videoHeight; }
+            else if (el.poster && sameUrl(el.poster)) {
+              // a video that has not started yet shows its poster on screen — reflect that
+              src = pic(el.poster); if (src) { w0 = src.naturalWidth; h0 = src.naturalHeight; }
+            }
+          } else if (tag === 'IMG') {
+            if (el.complete && sameSite(el)) { w0 = el.naturalWidth; h0 = el.naturalHeight; }
+          } else {
+            var bu = bgUrl(el);
+            if (bu && sameUrl(bu)) { src = pic(bu); if (src) { w0 = src.naturalWidth; h0 = src.naturalHeight; } }
+          }
+          if (!src || !w0 || !h0) return;
           var r = el.getBoundingClientRect();
           if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > vh || r.right < 0 || r.left > vw) return;
           var cs = getComputedStyle(el);
           if (cs.visibility === 'hidden' || +cs.opacity === 0) return;
           // object-fit: cover (what the site uses) — crop the source to the box's shape
           var sx = 0, sy = 0, sw = w0, sh = h0, br = r.width / r.height, ir = w0 / h0;
-          if (cs.objectFit !== 'fill' && cs.objectFit !== 'contain') {
+          if (tag !== 'IMG' && tag !== 'VIDEO' ? cs.backgroundSize !== 'contain' : (cs.objectFit !== 'fill' && cs.objectFit !== 'contain')) {
             if (ir > br) { sw = h0 * br; sx = (w0 - sw) / 2; } else { sh = w0 / br; sy = (h0 - sh) / 2; }
           }
-          try { x.drawImage(el, sx, sy, sw, sh, r.left * k, r.top * k, r.width * k, r.height * k); } catch (e) {}
+          try { x.drawImage(src, sx, sy, sw, sh, r.left * k, r.top * k, r.width * k, r.height * k); } catch (e) {}
         });
         return c;
       }
