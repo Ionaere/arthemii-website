@@ -611,7 +611,8 @@
             pointer-events: none;
             mix-blend-mode: difference;
             opacity: 0;
-            animation: studioFlyIn 2.2s var(--ease-out-expo) 0.15s forwards;
+            /* hidden at first, then glides in after ~1.5 s */
+            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 1.5s both;
         }
         .hero__studio-inner {
             display: flex;
