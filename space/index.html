@@ -183,7 +183,7 @@ renderer.domElement.tabIndex = 0;
 const BG = 0x000000;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(BG);
-scene.fog = new THREE.FogExp2(0x000000, 0.013);
+scene.fog = null;   // no haze: far works and their reflections keep their full colour
 const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.05, 420);
 const EYE = 1.62;
 camera.rotation.order = 'YXZ';
@@ -368,10 +368,10 @@ function buildRoom() {
   const cube = cubes[0];
   cubeCam = new THREE.CubeCamera(0.1, 600, cubes[1]);
   const geo = crystalGeometry(ROOM_R, ROOM_H, S, bands, ROOM_R * 0.55);
-  // a sharp mirror reflection (a plain cube-map lookup, no blur), darkened and slightly tinted like smoked glass
+  // a perfect mirror: a plain cube-map lookup, no blur, no darkening — reflections as bright as the works
   const mat = new THREE.MeshBasicMaterial({
-    color: 0xd2d6e2, envMap: cube.texture, combine: THREE.MultiplyOperation, reflectivity: 1,
-    transparent: true, opacity: 0.96, depthWrite: false, side: THREE.DoubleSide, fog: false
+    color: 0xffffff, envMap: cube.texture, combine: THREE.MultiplyOperation, reflectivity: 1,
+    depthWrite: false, side: THREE.DoubleSide, fog: false, toneMapped: false
   });
   room = new THREE.Mesh(geo, mat);
   room.renderOrder = -1;          // after the works, before the glows, labels and stars
