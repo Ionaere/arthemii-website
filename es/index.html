@@ -619,7 +619,6 @@
             align-items: center;
             justify-content: center;
             gap: clamp(0.75rem, 2.5vw, 2.5rem);
-            will-change: transform, opacity;
             transform-origin: 50% 60%;
         }
         .hero__studio-rule {
@@ -642,9 +641,9 @@
         }
         @keyframes studioFlyIn {
             /* drops in from above the top of the screen */
-            0%   { opacity: 0; transform: translate3d(0, -110vh, 0) scale(1.9); filter: blur(24px); }
+            0%   { opacity: 0; transform: translate3d(0, -110vh, 0) scale(1.9); }
             25%  { opacity: 1; }
-            100% { opacity: 1; transform: none; filter: none; }
+            100% { opacity: 1; transform: none; }
         }
         @media (prefers-reduced-motion: reduce) {
             .hero__studio { animation: none; opacity: 1; }
@@ -4220,10 +4219,9 @@
             var h = window.innerHeight;
             var p = Math.min(Math.max(window.scrollY / Math.max(h * 0.6, 280), 0), 1);
             var e = p * p * (3 - 2 * p); /* smoothstep */
-            /* flies up and out of the screen, growing and blurring */
+            /* flies up and out of the screen, growing; no blur, crisp edges */
             el.style.transform = 'translate3d(0,' + (-e * h * 1.1).toFixed(1) + 'px,0) scale(' + (1 + e * 0.9).toFixed(3) + ')';
             el.style.opacity = (1 - e * e).toFixed(3);
-            el.style.filter = e > 0.01 ? 'blur(' + (e * 18).toFixed(1) + 'px)' : '';
         }
         function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
         window.addEventListener('scroll', onScroll, { passive: true });
