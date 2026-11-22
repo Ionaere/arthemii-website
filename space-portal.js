@@ -32,7 +32,7 @@
 
   var css =
     // The corner button
-    '.sp-prism{position:fixed;right:16px;bottom:16px;z-index:950;width:60px;height:60px;display:block;cursor:pointer;perspective:420px;' +
+    '.sp-prism{position:fixed;right:16px;bottom:16px;z-index:950;width:72px;height:72px;display:block;cursor:pointer;perspective:420px;' +
     '-webkit-tap-highlight-color:transparent;transition:transform .45s cubic-bezier(.16,1,.3,1)}' +
     '.sp-prism:hover,.sp-prism:focus-visible{transform:scale(1.18);outline:none}' +
     '.sp-prism__stage{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(-18deg);pointer-events:none}' +
@@ -62,14 +62,14 @@
     'radial-gradient(1px 1px at 55% 45%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 12% 82%,#fff 50%,transparent 51%),#000;' +
     'clip-path:circle(0 at var(--x,100%) var(--y,100%));transition:clip-path .75s cubic-bezier(.65,0,.35,1)}' +
     '.sp-peel.is-go{clip-path:circle(150vmax at var(--x,100%) var(--y,100%))}' +
-    '@media (max-width:640px){.sp-prism{right:10px;bottom:10px;width:52px;height:52px}.sp-prism__stage{transform:rotateX(-18deg) scale(.86)}}' +
+    '@media (max-width:640px){.sp-prism{right:10px;bottom:10px;width:62px;height:62px}.sp-prism__stage{transform:rotateX(-18deg) scale(.86)}}' +
     // Ray-traced glass prism (WebGL)
     '.sp-prism--gl .sp-prism__stage{transform:none!important}' +
     '.sp-prism--gl .sp-prism__spin{display:none}' +
-    '.sp-prism__gl{position:absolute;left:-8px;top:-14px;width:76px;height:76px;display:block;pointer-events:none}' +
-    '.sp-prism--gl .sp-prism__shadow{bottom:3px;width:34px;margin-left:-17px;background:radial-gradient(rgba(0,0,0,.22),transparent 70%)}' +
-    '.sp-prism--gl .sp-prism__rays{bottom:4px;width:52px;margin-left:-26px;opacity:.8}' +
-    '@media (max-width:640px){.sp-prism__gl{left:-7px;top:-12px;width:66px;height:66px}}' +
+    '.sp-prism__gl{position:absolute;left:-10px;top:-17px;width:92px;height:92px;display:block;pointer-events:none}' +
+    '.sp-prism--gl .sp-prism__shadow{bottom:3px;width:41px;margin-left:-20px;background:radial-gradient(rgba(0,0,0,.22),transparent 70%)}' +
+    '.sp-prism--gl .sp-prism__rays{bottom:4px;width:62px;margin-left:-31px;opacity:.8}' +
+    '@media (max-width:640px){.sp-prism__gl{left:-9px;top:-15px;width:80px;height:80px}}' +
     '@media print{.sp-prism{display:none}}';
 
 
