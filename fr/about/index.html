@@ -63,8 +63,7 @@
             font-size: clamp(1.4rem, 5.4vw, 6rem);
             pointer-events: none;
             mix-blend-mode: difference;
-            opacity: 0;
-            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
+            /* static: no fly-in */
         }
         .about-studio__inner {
             display: flex; align-items: center; justify-content: center;
@@ -178,7 +177,7 @@
             <div class="container">
                 <div class="about-top">
                     <div class="about-studio" aria-label="Arthemii Ionaere"><div class="about-studio__inner"><span class="about-studio__rule" aria-hidden="true"></span><div class="about-studio__name">Arthemii Ionaere</div><span class="about-studio__rule" aria-hidden="true"></span></div></div>
-                    <header class="section__header reveal">
+                    <header class="section__header">
                         <div class="section__label" data-i18n="about_label">À propos</div>
                         <h1 class="section__title" data-i18n="about_title">Un nouveau langage architectural dans le style bionique, réalisé par le verre.</h1>
                     </header>
@@ -190,7 +189,7 @@
 
 
                 <div class="about-grid">
-                    <div class="about-text reveal">
+                    <div class="about-text">
 <p data-i18n="about_p1">L’approche abstraite et contemporaine du verre et de la couleur s’éloigne du symbolisme chrétien traditionnel du vitrail, qui représente généralement de manière concrète des saints, des scènes bibliques ou des symboles. Pourtant, même sous cette forme abstraite, l’exploration des symboles et des significations possibles par une approche innovante du symbolisme reste pertinente.</p>
 
                         <p data-i18n="about_p2">Les études contemporaines de l’art du vitrail permettent d’analyser l’effet de l’abstraction sur la perception et l’interprétation. L’évolution des styles et des techniques peut influencer la perception esthétique et spirituelle, et offrir de nouvelles formes à intégrer dans l’art et l’architecture contemporains.</p>
@@ -229,7 +228,7 @@
         </section>
 <div class="section__divider"></div>
 <!-- ========== QUOTE ========== -->
-        <div class="quote reveal">
+        <div class="quote">
             <div class="container">
                 <div class="quote__mark" aria-hidden="true">"</div>
                 <blockquote class="quote__text" data-i18n="quote_text">Grâce au caractère ouvert de l’abstraction, chaque spectateur peut y trouver ses propres symboles, archétypes ou interprétations — et chaque regard devient une expérience unique.</blockquote>
@@ -239,7 +238,7 @@
 <!-- ========== PHILOSOPHY ========== -->
         <section class="section" id="philosophy">
             <div class="container">
-                <header class="section__header reveal">
+                <header class="section__header">
                     <div class="section__label" data-i18n="philosophy_label">Philosophie</div>
                     <h2 class="section__title" data-i18n="philosophy_title">L’art de l’immersion</h2>
                     <p class="section__desc" data-i18n="philosophy_desc">Trois piliers de la pratique artistique qui guident chaque œuvre et définissent la relation entre l’œuvre et le spectateur.</p>
@@ -316,6 +315,5 @@
     </script>
     <script src="../../smooth-scroll.js" defer></script>
     <script src="../../i18n.js?v=20261117c"></script>
-    <script src="../../about-scroll.js?v=20261122h" defer></script>
 </body>
 </html>

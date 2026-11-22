@@ -63,8 +63,7 @@
             font-size: clamp(1.4rem, 5.4vw, 6rem);
             pointer-events: none;
             mix-blend-mode: difference;
-            opacity: 0;
-            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
+            /* static: no fly-in */
         }
         .about-studio__inner {
             display: flex; align-items: center; justify-content: center;
@@ -178,7 +177,7 @@
             <div class="container">
                 <div class="about-top">
                     <div class="about-studio" aria-label="Arthemii Ionaere"><div class="about-studio__inner"><span class="about-studio__rule" aria-hidden="true"></span><div class="about-studio__name">Arthemii Ionaere</div><span class="about-studio__rule" aria-hidden="true"></span></div></div>
-                    <header class="section__header reveal">
+                    <header class="section__header">
                         <div class="section__label" data-i18n="about_label">About</div>
                         <h1 class="section__title" data-i18n="about_title">Establishing a new architectural language within the bionic style, realized through the glass industry.</h1>
                     </header>
@@ -190,7 +189,7 @@
 
 
                 <div class="about-grid">
-                    <div class="about-text reveal">
+                    <div class="about-text">
 <p data-i18n="about_p1">The abstract and contemporary approach to the use of glass and color departs from the traditional Christian symbolism of stained glass, which usually features concrete depictions of saints, biblical scenes, or symbols. However, even in this abstract form, the exploration of potential symbolism and meanings through an innovative approach to symbolism remains relevant.</p>
 
                         <p data-i18n="about_p2">Contemporary studies of stained glass art allow us to analyze the impact of abstraction on perception and interpretation. Changing styles and techniques can have an impact on aesthetic and spiritual perception, offering new forms to be integrated into contemporary art and architecture.</p>
@@ -229,7 +228,7 @@
         </section>
 <div class="section__divider"></div>
 <!-- ========== QUOTE ========== -->
-        <div class="quote reveal">
+        <div class="quote">
             <div class="container">
                 <div class="quote__mark" aria-hidden="true">"</div>
                 <blockquote class="quote__text" data-i18n="quote_text">Due to the open-ended nature of abstraction, each viewer can find their own symbols, archetypes or interpretations within it, making each viewing a unique experience.</blockquote>
@@ -239,7 +238,7 @@
 <!-- ========== PHILOSOPHY ========== -->
         <section class="section" id="philosophy">
             <div class="container">
-                <header class="section__header reveal">
+                <header class="section__header">
                     <div class="section__label" data-i18n="philosophy_label">Philosophy</div>
                     <h2 class="section__title" data-i18n="philosophy_title">The art of immersion</h2>
                     <p class="section__desc" data-i18n="philosophy_desc">Three pillars of artistic practice that guide every work and define the relationship between artwork and viewer.</p>
@@ -316,6 +315,5 @@
     </script>
     <script src="../smooth-scroll.js" defer></script>
     <script src="../i18n.js?v=20261117c"></script>
-    <script src="../about-scroll.js?v=20261122h" defer></script>
 </body>
 </html>

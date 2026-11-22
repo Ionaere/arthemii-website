@@ -63,8 +63,7 @@
             font-size: clamp(1.4rem, 5.4vw, 6rem);
             pointer-events: none;
             mix-blend-mode: difference;
-            opacity: 0;
-            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
+            /* static: no fly-in */
         }
         .about-studio__inner {
             display: flex; align-items: center; justify-content: center;
@@ -178,7 +177,7 @@
             <div class="container">
                 <div class="about-top">
                     <div class="about-studio" aria-label="Arthemii Ionaere"><div class="about-studio__inner"><span class="about-studio__rule" aria-hidden="true"></span><div class="about-studio__name">Arthemii Ionaere</div><span class="about-studio__rule" aria-hidden="true"></span></div></div>
-                    <header class="section__header reveal">
+                    <header class="section__header">
                         <div class="section__label" data-i18n="about_label">Über mich</div>
                         <h1 class="section__title" data-i18n="about_title">Eine neue Architektursprache im bionischen Stil, verwirklicht im Medium Glas.</h1>
                     </header>
@@ -190,7 +189,7 @@
 
 
                 <div class="about-grid">
-                    <div class="about-text reveal">
+                    <div class="about-text">
 <p data-i18n="about_p1">Der abstrakte, zeitgenössische Umgang mit Glas und Farbe löst sich von der traditionellen christlichen Symbolik der Glasmalerei, die meist konkrete Darstellungen von Heiligen, biblischen Szenen oder Symbolen zeigt. Doch auch in dieser abstrakten Form bleibt die Suche nach möglicher Symbolik und Bedeutung durch einen innovativen Umgang mit Symbolen relevant.</p>
 
                         <p data-i18n="about_p2">Zeitgenössische Studien zur Glasmalerei ermöglichen es, den Einfluss der Abstraktion auf Wahrnehmung und Interpretation zu untersuchen. Wandelnde Stile und Techniken können die ästhetische und spirituelle Wahrnehmung prägen und neue Formen für zeitgenössische Kunst und Architektur eröffnen.</p>
@@ -229,7 +228,7 @@
         </section>
 <div class="section__divider"></div>
 <!-- ========== QUOTE ========== -->
-        <div class="quote reveal">
+        <div class="quote">
             <div class="container">
                 <div class="quote__mark" aria-hidden="true">"</div>
                 <blockquote class="quote__text" data-i18n="quote_text">Durch die Offenheit der Abstraktion kann jeder Betrachter darin eigene Symbole, Archetypen oder Deutungen finden — und so wird jede Betrachtung zu einer einzigartigen Erfahrung.</blockquote>
@@ -239,7 +238,7 @@
 <!-- ========== PHILOSOPHY ========== -->
         <section class="section" id="philosophy">
             <div class="container">
-                <header class="section__header reveal">
+                <header class="section__header">
                     <div class="section__label" data-i18n="philosophy_label">Philosophie</div>
                     <h2 class="section__title" data-i18n="philosophy_title">Die Kunst des Eintauchens</h2>
                     <p class="section__desc" data-i18n="philosophy_desc">Drei Säulen der künstlerischen Praxis, die jedes Werk leiten und die Beziehung zwischen Kunstwerk und Betrachter bestimmen.</p>
@@ -316,6 +315,5 @@
     </script>
     <script src="../../smooth-scroll.js" defer></script>
     <script src="../../i18n.js?v=20261117c"></script>
-    <script src="../../about-scroll.js?v=20261122h" defer></script>
 </body>
 </html>
