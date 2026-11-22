@@ -68,7 +68,7 @@
       var out = smooth(clamp((0.22 - t) / 0.3)); // rolls away near the top
       var y, sc, op;
       if (out > 0) { y = -out * vh * 0.45; sc = 1 + out * 0.6; op = 1 - out * out; }
-      else { y = (1 - inn) * vh * 0.18; sc = 1 + (1 - inn) * 0.35; op = inn; }
+      else { y = (1 - inn) * 24; sc = 1 + (1 - inn) * 0.15; op = inn; }
       h.style.transform = (y || sc !== 1) ? 'translate3d(0,' + y.toFixed(1) + 'px,0) scale(' + sc.toFixed(3) + ')' : '';
       h.style.opacity = op < 0.999 ? op.toFixed(3) : '';
     }
