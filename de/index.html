@@ -2264,6 +2264,14 @@
             will-change: transform, opacity;
         }
         html.surf-io main > section.section.is-surfaced { opacity: 1; transform: none; }
+        /* An opened section is shown normally: no zoom, no fading while it is read */
+        html main > section.section.is-open,
+        html.surf-io main > section.section.is-open {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none;
+        }
 
         .workspace__more { display: flex; justify-content: center; margin-top: var(--spacing-lg); }
         /* ========== GALLERY CAPTIONS ========== */
