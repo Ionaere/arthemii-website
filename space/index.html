@@ -703,35 +703,66 @@ const PHASES = [
 ];
 // no caption while the tour flies: only the works on screen
 function tourHint() { clearTimeout(hintTimer); hideHint(); }
-function startTour() {
+// The tour glides slowly along one smooth curve (centripetal Catmull-Rom spline through points in front of the works),
+// at an even speed, and the view turns on a soft spring with a speed limit, so there are no sudden turns.
+const TOUR_SPEED = 0.75;          // metres per second — a slow drift
+const TOUR_PASS = 1.5;            // passes a work at 1.5 x the distance where it would fill the screen
+const TURN_MAX = 0.3;             // the view never turns faster than this (radians per second)
+const TURN_W = 0.85;              // softness of the view spring (smaller = softer, slower)
+const basePos = o => new THREE.Vector3(o.group.position.x, o.baseY, o.group.position.z);
+const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a));
+function startTour(carry) {
   if (tour || !items.length) return;
   // the same plan goes on after a break, so the tour does not start over with the same works
   if (!plan || plan.cat !== cat) plan = { cat, i: 0, done: new Set() };
   focus = null; glide = null;
-  // still right in front of the last work shown? back away from it first
-  tour = { leg: null, prev: lastShown && lastShown.group.position.distanceTo(camera.position) < 5 ? lastShown : null };
+  camera.getWorldDirection(fwd);
+  const here = camera.position.clone();
+  const head = (carry && carry.head ? carry.head : fwd).clone();
+  head.y *= 0.5;
+  if (head.lengthSq() < 1e-6) head.set(0, 0, -1);
+  head.normalize();
+  tour = {
+    pts: [here.clone().addScaledVector(head, -3), here],   // a point behind, so the curve leaves straight ahead
+    works: [null, null],
+    queue: [],                                            // works picked ahead whose passing point is not fixed yet
+    seg: null, leg: null, tan: head.clone(),
+    speed: carry ? carry.speed : 0,                       // starts gently from standstill
+    yawV: carry ? carry.yawV : 0, pitchV: carry ? carry.pitchV : 0,
+    look0: { yaw, pitch }
+  };
   vel.set(0, 0, 0);
   tourHint();
 }
 function stopTour() {
   if (!tour) return;
-  endLeg();
-  tour = null;
+  endTour();
   $('hint').textContent = isTouch ? L.hintTouch : L.hint + ' · E / Q — ' + UD;
   showHint();
 }
-function pickNext() {
+function endTour() {
+  if (!tour) return;
+  endLeg();
+  // works picked ahead but not reached yet stay in the plan for next time
+  for (const o of tour.queue) plan.done.delete(o);
+  for (let i = 3; i < tour.works.length; i++) if (tour.works[i]) plan.done.delete(tour.works[i]);
+  tour = null;
+}
+// the nearest waiting work, preferring ones ahead, so the flight never jumps around or doubles back
+function pickNext(from, head) {
   for (let round = 0; round < 2; round++) {
     while (plan.i < PHASES.length) {
       const ph = PHASES[plan.i];
-      // the nearest work that is still waiting, so the flight never jumps around
-      let best = null, bd = Infinity;
+      let best = null, bc = Infinity;
       for (const o of items) {
         if (plan.done.has(o) || o.state === 'failed' || !has(o, plan.cat) || !ph(o)) continue;
-        const d = o.group.position.distanceToSquared(camera.position);
-        if (d < bd) { bd = d; best = o; }
+        const dx = o.group.position.x - from.x, dy = o.baseY - from.y, dz = o.group.position.z - from.z;
+        const d = Math.hypot(dx, dy, dz);
+        let c = d;
+        if (head && d > 1e-3) c *= 1 + 0.9 * (1 - (dx * head.x + dy * head.y + dz * head.z) / d);
+        if (c < bc) { bc = c; best = o; }
       }
-      if (best) return best;
+      if (best) { plan.done.add(best); return best; }
       plan.i++;
     }
     if (!plan.done.size) return null;   // nothing in this theme
@@ -739,59 +770,127 @@ function pickNext() {
   }
   return null;
 }
-// how far from a work the camera stops so that the work fills almost the whole screen
+// how far from a work the camera passes so that the work fills almost the whole screen
 function tourDist(o) {
   const half = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), fill = 0.82;
   return Math.max((o.h + 0.1) / (fill * 2 * half), (o.w + 0.1) / (fill * 2 * half * camera.aspect));
 }
 function endLeg() {
-  if (tour && tour.leg) { tour.leg.o.label.visible = true; tour.prev = lastShown = tour.leg.o; tour.leg = null; }
+  if (tour && tour.leg) { tour.leg.o.label.visible = true; lastShown = tour.leg.o; tour.leg = null; }
 }
-// The tour glides very slowly and never stops: it passes in front of a work and already curves on to the next.
-const TOUR_SPEED = 0.75;          // metres per second — a slow drift
-const TOUR_PASS = 1.5;            // passes a work at 1.5 x the distance where it would fill the screen
-function nextLeg() {
-  const o = pickNext();
-  if (!o) return false;
-  plan.done.add(o);
-  const p = o.group.position;
-  const dir = new THREE.Vector3().subVectors(camera.position, p);
-  if (dir.lengthSq() < 1e-6) dir.set(0, 0, 1);
+// the point the camera glides through in front of a work: on the outer side of the bend between
+// where it comes from and where it goes next, so the curve sweeps around the work instead of turning sharply
+function passPoint(o, prev, next) {
+  const p = basePos(o);
+  const a = prev.clone().sub(p); a.y *= 0.4;
+  if (a.lengthSq() < 1e-6) a.set(0, 0, 1);
+  a.normalize();
+  const dir = a.clone();
+  if (next) {
+    const b = next.clone().sub(p); b.y *= 0.4;
+    if (b.lengthSq() > 1e-6) dir.add(b.normalize());
+    if (dir.lengthSq() < 0.09) dir.crossVectors(a, upV).addScaledVector(a, 0.4);
+  }
   dir.normalize();
-  const to = p.clone().addScaledVector(dir, tourDist(o) * TOUR_PASS);
-  const from = camera.position.clone(), len = Math.max(0.5, from.distanceTo(to));
-  // the curve leaves in the direction the camera is already moving, so legs join without a kink
-  const ctrl = from.clone();
-  if (tour.heading) ctrl.addScaledVector(tour.heading, Math.min(len * 0.45, 8));
-  else if (tour.prev) ctrl.addScaledVector(new THREE.Vector3().subVectors(from, tour.prev.group.position).normalize(), Math.min(4, 1.5 + len * 0.25));
-  else ctrl.lerp(to, 0.4);
-  tour.leg = { o, dir, from, ctrl, t: 0, dur: Math.max(4, len / TOUR_SPEED) };
+  const pt = p.addScaledVector(dir, tourDist(o) * TOUR_PASS);
+  const hr = Math.hypot(pt.x, pt.z), lim = ROOM_IN - 2;
+  if (hr > lim) { pt.x *= lim / hr; pt.z *= lim / hr; }
+  pt.y = Math.max(-ROOM_H + 2.5, Math.min(ROOM_H + ROOM_R * 0.25 - 1, pt.y));
+  return pt;
+}
+// keep at least four points ahead (the spline needs a neighbour on each side)
+function fillPts() {
+  const T = tour;
+  while (T.pts.length < 4) {
+    while (T.queue.length < 2) {
+      const n = T.pts.length, ref = T.queue.length ? basePos(T.queue[T.queue.length - 1]) : T.pts[n - 1];
+      const before = T.queue.length > 1 ? basePos(T.queue[T.queue.length - 2]) : T.queue.length ? T.pts[n - 1] : T.pts[n - 2];
+      const head = ref.clone().sub(before);
+      const o = pickNext(ref, head.lengthSq() > 1e-6 ? head.normalize() : null);
+      if (!o) break;
+      T.queue.push(o);
+    }
+    if (!T.queue.length) break;
+    const o = T.queue.shift();
+    T.pts.push(passPoint(o, T.pts[T.pts.length - 1], T.queue.length ? basePos(T.queue[0]) : null));
+    T.works.push(o);
+  }
+}
+const SEG_N = 48;
+function buildSeg() {
+  const T = tour;
+  fillPts();
+  if (T.pts.length < 3) return false;
+  const p = T.pts;
+  const p3 = p[3] || p[2].clone().multiplyScalar(2).sub(p[1]);
+  const curve = new THREE.CatmullRomCurve3([p[0], p[1], p[2], p3], false, 'centripetal');
+  // arc-length table for the middle piece (p1 → p2), so the speed stays even
+  const lens = [0], q = new THREE.Vector3(), last = curve.getPoint(1 / 3);
+  for (let i = 1; i <= SEG_N; i++) {
+    curve.getPoint(1 / 3 + i / (3 * SEG_N), q);
+    lens.push(lens[i - 1] + q.distanceTo(last));
+    last.copy(q);
+  }
+  T.seg = { curve, lens, len: Math.max(0.01, lens[SEG_N]), s: T.seg ? T.seg.s : 0 };
+  T.leg = { o: T.works[2] };
   return true;
 }
-const tourTo = new THREE.Vector3();
+function segPoint(seg, s, out) {
+  const L = seg.lens;
+  s = Math.max(0, Math.min(seg.len, s));
+  let lo = 0, hi = SEG_N;
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; if (L[m] < s) lo = m; else hi = m; }
+  const f = L[hi] > L[lo] ? (s - L[lo]) / (L[hi] - L[lo]) : 0;
+  return seg.curve.getPoint(1 / 3 + (lo + f) / (3 * SEG_N), out);
+}
+const tourP = new THREE.Vector3(), tourQ = new THREE.Vector3();
+function anglesTo(o) {
+  const p = o.group.position, c = camera.position;
+  const dx = p.x - c.x, dy = p.y - c.y, dz = p.z - c.z;
+  return { yaw: Math.atan2(-dx, -dz), pitch: Math.atan2(dy, Math.hypot(dx, dz)) };
+}
+const smooth = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 function tourTick(dt) {
-  if (!tour.leg && !nextLeg()) { stopTour(); return; }
-  const g = tour.leg, o = g.o, p = o.group.position;
-  // the end point follows the work (its real size is known once the picture has loaded, and it floats a little)
-  tourTo.copy(p).addScaledVector(g.dir, tourDist(o) * TOUR_PASS);
-  // the very first leg starts gently from standstill, then the speed stays even
-  const first = !tour.heading;
-  g.t = Math.min(1, g.t + dt / g.dur);
-  const e = first ? (g.t < 0.3 ? g.t * g.t / 0.6 : g.t - 0.15) / 0.85 : g.t;
-  const a = (1 - e) * (1 - e), b = 2 * (1 - e) * e, c = e * e;
-  camera.position.set(a * g.from.x + b * g.ctrl.x + c * tourTo.x, a * g.from.y + b * g.ctrl.y + c * tourTo.y, a * g.from.z + b * g.ctrl.z + c * tourTo.z);
-  if (g.t > 0.5) upgradeImage(o);
-  if (g.t >= 1) {
-    // keep moving: the next leg starts in the current direction of travel
-    tour.heading = new THREE.Vector3().subVectors(tourTo, g.ctrl).normalize();
+  const T = tour;
+  if (!T.seg && !buildSeg()) { stopTour(); return; }
+  let seg = T.seg;
+  // slow down a little where the curve bends, speed up again on straighter stretches — always softly
+  segPoint(seg, seg.s, tourP); segPoint(seg, seg.s + 0.05, tourQ);
+  const tanNow = tourQ.clone().sub(tourP);
+  segPoint(seg, Math.min(seg.len, seg.s + 2), tourQ);
+  const ahead = tourQ.clone().sub(tourP);
+  let bend = 0;
+  if (tanNow.lengthSq() > 1e-8 && ahead.lengthSq() > 1e-4) bend = tanNow.angleTo(ahead);
+  const want = TOUR_SPEED * (1 - 0.4 * Math.min(1, bend / 0.9));
+  T.speed += (want - T.speed) * (1 - Math.exp(-dt / 1.6));
+  seg.s += T.speed * dt;
+  while (seg.s >= seg.len) {
+    // passed the work: carry on along the next piece of the same curve, without a pause
+    const rest = seg.s - seg.len;
+    const o = T.works[2];
+    if (o) T.look0 = o;
     endLeg();
+    T.pts.shift(); T.works.shift();
+    T.seg = null;
+    if (!buildSeg()) { stopTour(); return; }
+    seg = T.seg; seg.s = rest;
   }
-  // turn very gently towards the work ahead
-  const dx = p.x - camera.position.x, dy = p.y - camera.position.y, dz = p.z - camera.position.z;
-  const wantYaw = Math.atan2(-dx, -dz), wantPitch = Math.atan2(dy, Math.hypot(dx, dz));
-  const k = 1 - Math.pow(0.45, dt);
-  yaw += Math.atan2(Math.sin(wantYaw - yaw), Math.cos(wantYaw - yaw)) * k;
-  pitch += (wantPitch - pitch) * k;
+  segPoint(seg, seg.s, camera.position);
+  if (tanNow.lengthSq() > 1e-8) T.tan.copy(tanNow).normalize();
+  const u = seg.s / seg.len, o = T.works[2];
+  if (u > 0.3) upgradeImage(o);
+  // the view turns from the work just passed to the next one, early in the leg, so it has settled before arriving
+  const A = T.look0 && T.look0.group ? anglesTo(T.look0) : T.look0, B = anglesTo(o);
+  const w = smooth(0.04, 0.6, u);
+  const wantYaw = A.yaw + wrapA(B.yaw - A.yaw) * w, wantPitch = A.pitch + (B.pitch - A.pitch) * w;
+  // a critically damped spring with a speed limit: the turn starts and ends softly and is never fast
+  const errY = wrapA(wantYaw - yaw), errP = wantPitch - pitch;
+  T.yawV += (TURN_W * TURN_W * errY - 2 * TURN_W * T.yawV) * dt;
+  T.pitchV += (TURN_W * TURN_W * errP - 2 * TURN_W * T.pitchV) * dt;
+  T.yawV = Math.max(-TURN_MAX, Math.min(TURN_MAX, T.yawV));
+  T.pitchV = Math.max(-TURN_MAX * 0.6, Math.min(TURN_MAX * 0.6, T.pitchV));
+  yaw = wrapA(yaw + T.yawV * dt);
+  pitch = Math.max(-1.2, Math.min(1.2, pitch + T.pitchV * dt));
   camera.rotation.set(pitch, yaw, 0);
 }
 // nobody touches anything for 3 seconds: the tour starts (again)
@@ -817,9 +916,11 @@ CATS.forEach((c, i) => {
     cat = c;
     nav.querySelectorAll('button').forEach(x => x.classList.toggle('is-on', x === b));
     b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-    if (tour) { endLeg(); tour = null; }
+    // switching theme mid-flight keeps the current speed and direction, so the flight bends over smoothly
+    const carry = tour ? { head: tour.tan.clone(), speed: tour.speed, yawV: tour.yawV, pitchV: tour.pitchV } : null;
+    if (tour) endTour();
     plan = null;
-    startTour();
+    startTour(carry);
     el.focus();
   });
   nav.appendChild(b);
