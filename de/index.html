@@ -611,8 +611,8 @@
             pointer-events: none;
             mix-blend-mode: difference;
             opacity: 0;
-            /* hidden at first, then glides in after ~1.5 s */
-            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 1.5s both;
+            /* hidden at first, then glides in very slowly after ~1.5 s */
+            animation: studioFlyIn 10s cubic-bezier(0.3, 0.05, 0.15, 1) 1.5s both;
         }
         .hero__studio-inner {
             display: flex;
@@ -643,7 +643,7 @@
         @keyframes studioFlyIn {
             /* drops in from above the top of the screen */
             0%   { opacity: 0; transform: translate3d(0, -110vh, 0) scale(1.9); filter: blur(24px); }
-            25%  { opacity: 1; }
+            45%  { opacity: 1; }
             100% { opacity: 1; transform: none; filter: none; }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -652,7 +652,7 @@
         @media (max-width: 768px) {
             .hero__studio { font-size: 6vw; }
             .hero__studio-inner { gap: 0.6rem; }
-            .hero__studio-name { letter-spacing: 0.28em; margin-right: -0.28em; }
+            .hero__studio-name { letter-spacing: 0.28em; margin-right: -0.28em; white-space: nowrap; }
             .hero__studio-rule { max-width: 28px; }
         }
 
