@@ -1664,6 +1664,36 @@
         }
         .footer__instagram svg { width: 24px; height: 24px; flex-shrink: 0; display: block; }
         .footer__instagram:hover { opacity: 0.75; }
+        .footer__email {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: opacity 0.3s ease;
+        }
+        .footer__email:hover { opacity: 0.75; }
+        .footer__contacts {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.75rem;
+            margin-right: 64px; /* keep clear of the floating prism button */
+        }
+        @media (max-width: 768px) {
+            .footer__contacts { margin-right: 0; }
+        }
+
+        .contact-email {
+            display: inline-block;
+            margin-top: var(--spacing-md);
+            font-family: var(--font-serif);
+            font-size: clamp(1.25rem, 2.4vw, 1.625rem);
+            color: var(--text);
+            border-bottom: 1px solid currentColor;
+            transition: opacity 0.3s ease;
+        }
+        .contact-email:hover { opacity: 0.7; }
+
 
         .footer__copy {
             font-size: 0.75rem;
