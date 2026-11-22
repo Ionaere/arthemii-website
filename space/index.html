@@ -324,26 +324,30 @@ function stars() {
 let room = null, roomEdges = null, cubeCam = null, ROOM_R = 40, ROOM_H = 40, ROOM_IN = 38;
 const CUBE_EVERY = isTouch ? 12 : 4;
 function crystalGeometry(R, H, S, bands, cap) {
+  // rings of points, each turned half a step against the next, joined into triangles:
+  // the walls, then two more rings narrowing into each tip
+  const mk = (y, r, off) => { const ring = []; for (let i = 0; i < S; i++) { const a = off + i * Math.PI * 2 / S; ring.push([Math.cos(a) * r, y, Math.sin(a) * r]); } return ring; };
   const rings = [];
+  rings.push(mk(-H - cap * 0.62, R * 0.42, 0.5 * Math.PI / S));
+  rings.push(mk(-H - cap * 0.3, R * 0.78, 0));
   for (let k = 0; k <= bands; k++) {
     const y = -H + 2 * H * k / bands;
-    const r = R * (1 - 0.07 * Math.cos(k * 1.9));
-    const off = (k % 2) * Math.PI / S + k * 0.06;
-    const ring = [];
-    for (let i = 0; i < S; i++) { const a = off + i * Math.PI * 2 / S; ring.push([Math.cos(a) * r, y, Math.sin(a) * r]); }
-    rings.push(ring);
+    const r = R * (1 - 0.06 * Math.cos(k * 1.9));
+    rings.push(mk(y, r, ((k + 1) % 2) * Math.PI / S + k * 0.04));
   }
+  rings.push(mk(H + cap * 0.3, R * 0.78, 0.3 * Math.PI / S));
+  rings.push(mk(H + cap * 0.62, R * 0.42, 0.8 * Math.PI / S));
   const pos = [];
   const tri = (a, b, c) => pos.push(...a, ...b, ...c);
-  for (let k = 0; k < bands; k++) {
+  for (let k = 0; k < rings.length - 1; k++) {
     for (let i = 0; i < S; i++) {
       const A = rings[k][i], B = rings[k][(i + 1) % S], C = rings[k + 1][i], D = rings[k + 1][(i + 1) % S];
       tri(A, C, B); tri(B, C, D);
     }
   }
-  const top = [0, H + cap, 0], bottom = [0, -H - cap, 0];
+  const top = [0, H + cap, 0], bottom = [0, -H - cap, 0], last = rings[rings.length - 1];
   for (let i = 0; i < S; i++) {
-    tri(rings[bands][i], top, rings[bands][(i + 1) % S]);
+    tri(last[i], top, last[(i + 1) % S]);
     tri(rings[0][i], rings[0][(i + 1) % S], bottom);
   }
   const g = new THREE.BufferGeometry();
@@ -352,7 +356,7 @@ function crystalGeometry(R, H, S, bands, cap) {
   return g;
 }
 function buildRoom() {
-  const S = 14, bands = 5;
+  const S = 26, bands = 10;
   ROOM_R = RADIUS * 1.6 + 14;
   ROOM_H = RADIUS * 1.45 + 10;
   ROOM_IN = ROOM_R * 0.93 * Math.cos(Math.PI / S) - 1.8;   // how far from the axis you can fly
