@@ -327,15 +327,13 @@ function crystalGeometry(R, H, S, bands, cap) {
   // the walls, then two more rings narrowing into each tip
   const mk = (y, r, off) => { const ring = []; for (let i = 0; i < S; i++) { const a = off + i * Math.PI * 2 / S; ring.push([Math.cos(a) * r, y, Math.sin(a) * r]); } return ring; };
   const rings = [];
-  rings.push(mk(-H - cap * 0.62, R * 0.42, 0.5 * Math.PI / S));
-  rings.push(mk(-H - cap * 0.3, R * 0.78, 0));
+  rings.push(mk(-H - cap * 0.45, R * 0.6, 0));
   for (let k = 0; k <= bands; k++) {
     const y = -H + 2 * H * k / bands;
     const r = R * (1 - 0.06 * Math.cos(k * 1.9));
     rings.push(mk(y, r, ((k + 1) % 2) * Math.PI / S + k * 0.04));
   }
-  rings.push(mk(H + cap * 0.3, R * 0.78, 0.3 * Math.PI / S));
-  rings.push(mk(H + cap * 0.62, R * 0.42, 0.8 * Math.PI / S));
+  rings.push(mk(H + cap * 0.45, R * 0.6, 0.5 * Math.PI / S));
   const pos = [];
   const tri = (a, b, c) => pos.push(...a, ...b, ...c);
   for (let k = 0; k < rings.length - 1; k++) {
@@ -355,11 +353,11 @@ function crystalGeometry(R, H, S, bands, cap) {
   return g;
 }
 function buildRoom() {
-  const S = 26, bands = 10;
+  const S = 16, bands = 6;
   ROOM_R = RADIUS * 1.6 + 14;
   ROOM_H = RADIUS * 1.45 + 10;
   ROOM_IN = ROOM_R * 0.93 * Math.cos(Math.PI / S) - 1.8;   // how far from the axis you can fly
-  const cube = new THREE.WebGLCubeRenderTarget(isTouch ? 512 : 1024, { generateMipmaps: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter });
+  const cube = new THREE.WebGLCubeRenderTarget(isTouch ? 256 : 512, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter });
   cubeCam = new THREE.CubeCamera(0.1, 600, cube);
   const geo = crystalGeometry(ROOM_R, ROOM_H, S, bands, ROOM_R * 0.55);
   // a sharp mirror reflection (a plain cube-map lookup, no blur), darkened and slightly tinted like smoked glass
@@ -376,19 +374,15 @@ function buildRoom() {
   roomEdges.renderOrder = -1;
   roomEdges.visible = false;
 }
-// The reflections are refreshed one cube face per frame (a full turn every 6 frames), so the work is spread
-// evenly and the picture never stutters
-let cubeFace = 0, cubeReady = false;
+// The whole reflection is refreshed together, every frame (every other frame on phones), from where you are:
+// all six sides always match, so nothing jumps; mipmaps keep the small facets from flickering
+let cubeTick = 0;
+const CUBE_EVERY = isTouch ? 2 : 1;
 function updateReflections() {
-  if (!cubeCam) return;
+  if (!cubeCam || (cubeTick++ % CUBE_EVERY) !== 0) return;
   room.visible = false;
-  if (!cubeReady) { cubeCam.position.copy(camera.position); cubeCam.update(renderer, scene); cubeReady = true; room.visible = true; return; }
-  if (cubeFace === 0) { cubeCam.position.copy(camera.position); cubeCam.updateMatrixWorld(true); }
-  const prev = renderer.getRenderTarget();
-  renderer.setRenderTarget(cubeCam.renderTarget, cubeFace);
-  renderer.render(scene, cubeCam.children[cubeFace]);
-  renderer.setRenderTarget(prev);
-  cubeFace = (cubeFace + 1) % 6;
+  cubeCam.position.copy(camera.position);
+  cubeCam.update(renderer, scene);
   room.visible = true;
 }
 
