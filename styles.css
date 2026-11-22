@@ -1826,24 +1826,30 @@
             .page-top > .section__header { grid-column: 1; grid-row: 2; margin-top: var(--spacing-lg); }
         }
 
-        /* ===== Gallery: one photo per screen. The title drops onto the photo in big
-           wordmark letters that invert it; the description lies on the bottom of the photo ===== */
+        /* ===== Gallery: one photo per screen. The title drops onto the top edge of the photo
+           (half on the white field, half on the photo) in big wordmark letters that invert
+           what is behind them; the description sits across the bottom edge the same way ===== */
         .gslides { margin: 0 calc(50% - 50vw); }
         .gslide {
+            --gs-top: calc(72px + 13vh);      /* room above the photo for the upper half of the title */
+            --gs-bottom: 12vh;                /* room below for the lower half of the description */
             position: relative;
-            isolation: isolate;               /* the title inverts only this slide (photo + white field) */
+            isolation: isolate;               /* letters invert only this slide (photo + white field) */
             height: 100vh; height: 100svh;
-            min-height: 520px;
+            min-height: 560px;
             display: flex; align-items: center; justify-content: center;
-            padding: 84px 4vw 5vh;
+            padding: var(--gs-top) 4vw var(--gs-bottom);
             background: var(--bg);
             overflow: hidden;
         }
-        .gslide__media {
-            position: relative; display: block;
-            width: min(92vw, calc((100svh - 84px - 5vh) * var(--r)));
+        .gslide__frame {
+            position: relative;
+            width: min(84vw, calc((100svh - var(--gs-top) - var(--gs-bottom)) * var(--r)));
             aspect-ratio: var(--r);
             max-height: 100%;
+        }
+        .gslide__media {
+            position: absolute; inset: 0; display: block;
             border-radius: var(--radius-md);
             overflow: hidden;
             background: var(--bg-alt);
@@ -1851,57 +1857,90 @@
         .gslide__media picture, .gslide__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
         .gslide__media img { transform: scale(1.06); transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1); }
         .gslide.is-in .gslide__media img { transform: none; }
-        .gslide__title {
-            position: absolute; z-index: 2; left: 0; right: 0; top: 22%;
-            padding: 0 4vw;
-            display: flex; flex-direction: column; align-items: center; gap: 0.35em;
-            font-family: 'Italiana', var(--font-serif); font-weight: 400;
-            font-size: clamp(1.6rem, 4.6vw, 5.2rem); line-height: 1.08;
-            letter-spacing: 0.3em; text-transform: uppercase; text-align: center;
+        .gslide__title, .gslide__desc {
+            position: absolute; left: 50%; z-index: 2;
             color: #fff;
             mix-blend-mode: difference;
             pointer-events: none;
+            text-align: center;
+        }
+        .gslide__title--sat, .gslide__desc--sat { mix-blend-mode: saturation; z-index: 3; }
+        .gslide__title {
+            top: 0;
+            translate: -50% -50%;             /* centred on the top edge of the photo */
+            width: 92vw;
+            display: flex; flex-direction: column; align-items: center; gap: 0.3em;
+            font-family: 'Italiana', var(--font-serif); font-weight: 400;
+            font-size: clamp(1.5rem, 4.2vw, 4.6rem); line-height: 1.08;
+            letter-spacing: 0.3em; text-transform: uppercase;
             opacity: 0;
         }
-        .gslide__title--sat { mix-blend-mode: saturation; z-index: 3; }
-        .gslide__name { margin-right: -0.3em; max-width: 18ch; }
+        .gslide__name { margin-right: -0.3em; max-width: 84vw; }
         .gslide__year { font-size: 0.32em; letter-spacing: 0.5em; margin-right: -0.5em; }
         .gslide.is-in .gslide__title { animation: gslideTitleIn 1.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
         @keyframes gslideTitleIn {
-            0%   { opacity: 0; transform: translate3d(0, -45vh, 0) scale(1.6); }
+            0%   { opacity: 0; transform: translate3d(0, -40vh, 0) scale(1.6); }
             30%  { opacity: 1; }
             100% { opacity: 1; transform: none; }
         }
         .gslide__desc {
-            position: absolute; left: 0; right: 0; bottom: 0;
-            padding: 4.5rem clamp(1rem, 3vw, 2.25rem) clamp(1rem, 2.5vw, 1.75rem);
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.72));
-            color: #fff;
+            bottom: 0;
+            translate: -50% 50%;              /* centred on the bottom edge of the photo */
+            width: min(720px, 86vw);
             opacity: 0; transform: translateY(18px);
             transition: opacity 0.9s ease 0.6s, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.6s;
         }
         .gslide.is-in .gslide__desc { opacity: 1; transform: none; }
         .gslide__text {
-            max-width: 720px; margin: 0;
+            margin: 0;
             font-size: 0.9375rem; line-height: 1.6;
             display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
         }
-        .gslide__meta { margin: 0.5rem 0 0; font-size: 0.75rem; letter-spacing: 0.06em; opacity: 0.75; }
+        .gslide__meta { margin: 0.45rem 0 0; font-size: 0.75rem; letter-spacing: 0.06em; }
         .gslide__count {
             position: absolute; left: 4vw; bottom: 2vh; z-index: 2;
             font-family: 'Italiana', var(--font-serif); font-size: 0.9rem; letter-spacing: 0.3em;
             color: var(--text-tertiary);
         }
         @media (max-width: 768px) {
-            .gslide { padding: 76px 4vw 6vh; }
-            /* phones: wide photos are shown taller (cropped at the sides) so the title lands on the photo */
-            .gslide__media {
-                width: min(92vw, calc((100svh - 76px - 6vh) * var(--r)));
+            .gslide { --gs-top: calc(68px + 11svh); --gs-bottom: 12svh; padding-left: 4vw; padding-right: 4vw; }
+            /* phones: wide photos are shown taller (cropped at the sides) */
+            .gslide__frame {
+                width: min(92vw, calc((100svh - var(--gs-top) - var(--gs-bottom)) * var(--r)));
                 aspect-ratio: auto;
-                height: clamp(48svh, calc(92vw / var(--r)), calc(100svh - 76px - 6vh));
+                height: clamp(42svh, calc(92vw / var(--r)), calc(100svh - var(--gs-top) - var(--gs-bottom)));
             }
-            .gslide__title { font-size: 8.5vw; letter-spacing: 0.16em; top: 33%; }
+            .gslide__title { font-size: 8vw; letter-spacing: 0.16em; }
             .gslide__name { margin-right: -0.16em; }
-            .gslide__desc { padding-top: 3.5rem; }
             .gslide__text { font-size: 0.8125rem; -webkit-line-clamp: 4; }
+            .gslide__meta { font-size: 0.6875rem; }
+        }
+        /* Gallery: when the photo leaves enough white space at its side (tall photos),
+           the title and description go there instead of onto the photo (gallery-slides.js
+           sets .is-side-left / .is-side-right and --gs-side, the width of that space) */
+        .gslide.is-side .gslide__title,
+        .gslide.is-side .gslide__desc {
+            left: auto; right: auto;
+            width: var(--gs-side, 300px);
+            top: 50%;
+        }
+        .gslide.is-side .gslide__title {
+            translate: 0 calc(-100% - 0.9rem);
+            font-size: clamp(1.3rem, 2.5vw, 3rem);
+            letter-spacing: 0.24em;
+        }
+        .gslide.is-side .gslide__name { max-width: 100%; margin-right: 0; }
+        .gslide.is-side .gslide__desc { translate: 0 0.9rem; }
+        .gslide.is-side-left .gslide__title,
+        .gslide.is-side-left .gslide__desc { right: calc(100% + clamp(1.5rem, 3vw, 3rem)); text-align: right; }
+        .gslide.is-side-left .gslide__title { align-items: flex-end; }
+        .gslide.is-side-right .gslide__title,
+        .gslide.is-side-right .gslide__desc { left: calc(100% + clamp(1.5rem, 3vw, 3rem)); text-align: left; }
+        .gslide.is-side-right .gslide__title { align-items: flex-start; }
+        /* Gallery (desktop): photos alternate left / right like a chessboard; the title and
+           description sit in the white space on the other side */
+        @media (min-width: 900px) {
+            .gslide.is-side { --gs-top: calc(72px + 8vh); --gs-bottom: 8vh; padding-left: 6vw; padding-right: 6vw; justify-content: flex-start; }
+            .gslide.is-side-left { justify-content: flex-end; }   /* text on the left → photo on the right */
+            .gslide.is-side .gslide__frame { width: min(56vw, calc((100svh - var(--gs-top) - var(--gs-bottom)) * var(--r))); }
         }
