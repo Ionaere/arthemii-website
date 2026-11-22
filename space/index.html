@@ -747,6 +747,9 @@ function tourDist(o) {
 function endLeg() {
   if (tour && tour.leg) { tour.leg.o.label.visible = true; tour.prev = lastShown = tour.leg.o; tour.leg = null; }
 }
+// The tour glides very slowly and never stops: it passes in front of a work and already curves on to the next.
+const TOUR_SPEED = 0.75;          // metres per second — a slow drift
+const TOUR_PASS = 1.5;            // passes a work at 1.5 x the distance where it would fill the screen
 function nextLeg() {
   const o = pickNext();
   if (!o) return false;
@@ -755,14 +758,14 @@ function nextLeg() {
   const dir = new THREE.Vector3().subVectors(camera.position, p);
   if (dir.lengthSq() < 1e-6) dir.set(0, 0, 1);
   dir.normalize();
-  const len = Math.max(0, camera.position.distanceTo(p) - tourDist(o));
-  o.label.visible = false;   // no title under the work while it is shown up close
-  // leaving a work seen up close: first back away from it, then curve over to the next one (never brush past it)
-  const from = camera.position.clone(), ctrl = from.clone();
-  if (tour.prev) ctrl.addScaledVector(new THREE.Vector3().subVectors(from, tour.prev.group.position).normalize(), Math.min(4, 1.5 + len * 0.25));
-  else ctrl.lerp(p, 0.4);
-  tour.leg = { o, dir, from, ctrl, t: 0, dur: Math.min(10, Math.max(3.5, len / 1.4)), phase: 'fly',
-               hold: 5, left: 0 };   // 5 seconds at every work before moving on
+  const to = p.clone().addScaledVector(dir, tourDist(o) * TOUR_PASS);
+  const from = camera.position.clone(), len = Math.max(0.5, from.distanceTo(to));
+  // the curve leaves in the direction the camera is already moving, so legs join without a kink
+  const ctrl = from.clone();
+  if (tour.heading) ctrl.addScaledVector(tour.heading, Math.min(len * 0.45, 8));
+  else if (tour.prev) ctrl.addScaledVector(new THREE.Vector3().subVectors(from, tour.prev.group.position).normalize(), Math.min(4, 1.5 + len * 0.25));
+  else ctrl.lerp(to, 0.4);
+  tour.leg = { o, dir, from, ctrl, t: 0, dur: Math.max(4, len / TOUR_SPEED) };
   return true;
 }
 const tourTo = new THREE.Vector3();
@@ -770,28 +773,23 @@ function tourTick(dt) {
   if (!tour.leg && !nextLeg()) { stopTour(); return; }
   const g = tour.leg, o = g.o, p = o.group.position;
   // the end point follows the work (its real size is known once the picture has loaded, and it floats a little)
-  const d = tourDist(o);
-  if (g.phase === 'fly') {
-    g.t = Math.min(1, g.t + dt / g.dur);
-    const e = g.t < 0.5 ? 4 * g.t * g.t * g.t : 1 - Math.pow(-2 * g.t + 2, 3) / 2;
-    tourTo.copy(p).addScaledVector(g.dir, d);
-    // quadratic curve: start -> (back away) -> in front of the next work
-    const a = (1 - e) * (1 - e), b = 2 * (1 - e) * e, c = e * e;
-    camera.position.set(a * g.from.x + b * g.ctrl.x + c * tourTo.x, a * g.from.y + b * g.ctrl.y + c * tourTo.y, a * g.from.z + b * g.ctrl.z + c * tourTo.z);
-    if (g.t > 0.6) upgradeImage(o);
-    if (g.t >= 1) { g.phase = 'hold'; g.left = g.hold; }
-  } else {
-    upgradeImage(o);
-    // a very slow push in while the work is on screen
-    const k = 1 - 0.03 * (1 - g.left / g.hold);
-    camera.position.copy(p).addScaledVector(g.dir, d * k);
-    g.left -= dt;
-    if (g.left <= 0) { endLeg(); return; }
+  tourTo.copy(p).addScaledVector(g.dir, tourDist(o) * TOUR_PASS);
+  // the very first leg starts gently from standstill, then the speed stays even
+  const first = !tour.heading;
+  g.t = Math.min(1, g.t + dt / g.dur);
+  const e = first ? (g.t < 0.3 ? g.t * g.t / 0.6 : g.t - 0.15) / 0.85 : g.t;
+  const a = (1 - e) * (1 - e), b = 2 * (1 - e) * e, c = e * e;
+  camera.position.set(a * g.from.x + b * g.ctrl.x + c * tourTo.x, a * g.from.y + b * g.ctrl.y + c * tourTo.y, a * g.from.z + b * g.ctrl.z + c * tourTo.z);
+  if (g.t > 0.5) upgradeImage(o);
+  if (g.t >= 1) {
+    // keep moving: the next leg starts in the current direction of travel
+    tour.heading = new THREE.Vector3().subVectors(tourTo, g.ctrl).normalize();
+    endLeg();
   }
-  // turn smoothly to face the work
+  // turn very gently towards the work ahead
   const dx = p.x - camera.position.x, dy = p.y - camera.position.y, dz = p.z - camera.position.z;
   const wantYaw = Math.atan2(-dx, -dz), wantPitch = Math.atan2(dy, Math.hypot(dx, dz));
-  const k = 1 - Math.pow(g.phase === 'hold' ? 0.002 : 0.18, dt);
+  const k = 1 - Math.pow(0.45, dt);
   yaw += Math.atan2(Math.sin(wantYaw - yaw), Math.cos(wantYaw - yaw)) * k;
   pitch += (wantPitch - pitch) * k;
   camera.rotation.set(pitch, yaw, 0);
