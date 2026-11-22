@@ -77,7 +77,7 @@
   var VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
   var FS = [
     'precision highp float;',
-    'uniform vec2 uRes;uniform float uAng;',
+    'uniform vec2 uRes;uniform float uAng;uniform sampler2D uBg;uniform vec2 uC;uniform vec2 uV;uniform float uS;uniform float uGlint;',
     'const float RIN=0.25;const float HH=0.75;',
     // the five planes of an equilateral triangular prism (outward normal n, offset d)
     'void pl(int i,out vec3 n,out float d){',
@@ -100,17 +100,17 @@
     '  c*=1.-0.8*smoothstep(0.17,0.09,abs(az-0.3))*smoothstep(0.04,0.3,y)*smoothstep(0.8,0.45,y);',
     '  c+=vec3(1.3)*smoothstep(0.85,0.97,y);',
     '  return c;}',
-    // what a ray leaving the glass at point o (world space) in direction d sees:
-    // the white table the prism stands on, with its soft contact shadow, or the room
+    // what a ray leaving the glass at point o (world space) in direction d sees: the site itself.
+    // The page lies behind the prism like a backdrop; uBg is a small live picture of the photos
+    // and videos currently on screen, so the glass refracts what you scroll past.
     'vec3 env(vec3 o,vec3 d){',
-    '  if(d.y<-0.002){float t=(-HH-0.001-o.y)/d.y;vec3 h=o+d*t;float r2=dot(h.xz,h.xz);',
-    '    vec3 c=vec3(0.95);',
-    '    c*=1.-0.7*exp(-r2/0.09)-0.25*exp(-r2/0.6);',
-    '    float ring=exp(-pow((length(h.xz-vec2(0.35,0.25))-0.45)/0.08,2.));',
-    '    c+=ring*0.35*(0.5+0.5*cos(6.2832*(vec3(0.,0.33,0.67)+atan(h.z-0.25,h.x-0.35)/3.)));',
-    '    float far=smoothstep(2.5,9.,sqrt(r2));',
-    '    return mix(c,sky(d)*0.8,far);}',
-    '  return sky(d);}',
+    '  vec3 bg=vec3(0.98);',
+    '  if(d.z<-0.03){float t=(-2.6-o.z)/d.z;vec3 h=o+d*t;',
+    '    vec2 px=uC+vec2(h.x,-h.y)*uS;vec2 uv=px/uV;',
+    '    vec2 out2=max(-uv,uv-1.);float o2=max(out2.x,out2.y);',
+    '    vec3 c=texture2D(uBg,clamp(uv,0.002,0.998)).rgb;',
+    '    return mix(c,bg,smoothstep(0.,0.15,o2));}',
+    '  return mix(sky(d),bg,0.35);}',
     'float fres(float c){c=clamp(1.-c,0.,1.);return 0.04+0.96*c*c*c*c*c;}',
     'bool enter(vec3 ro,vec3 rd,out float t,out vec3 nE){',
     '  float tE=-1e9,tX=1e9;vec3 n;float d;nE=vec3(0.);',
@@ -155,13 +155,13 @@
     '      float cv=abs(dot(rd,n));',
     '      float ph=1.7*cv+0.55*p.y+0.3*dot(n.xz,vec2(0.7,-0.4))+0.12*uAng+0.25*tr.g;',
     '      vec3 iri=0.5+0.5*cos(6.2832*(ph+vec3(0.,0.33,0.67)));',
-    '      c=mix(c,c*(0.45+1.1*iri),0.6);',
+    '      c=mix(c,c*(0.45+1.1*iri),0.6*uGlint);',
     // bright spectral glints like the dispersion at the prism's foot, sweeping up the whole height as it turns
     '      float fo=dot(n.xz,vec2(1.3,0.7));',
     '      float sw=sin(6.2832*(1.8*p.y+2.2*cv+0.16*uAng+fo));',
     '      float bnd=smoothstep(0.2,0.85,sw)*(0.7+0.3*sin(6.2832*(2.3*p.y-0.8*cv+fo)));',
     '      vec3 spc=clamp(abs(fract(0.9*p.y+1.4*cv+0.08*uAng+fo+vec3(0.,0.6667,0.3333))*6.-3.)-1.,0.,1.);',
-    '      c=mix(c,spc*0.95,clamp(bnd,0.,1.)*0.95);',
+    '      c=mix(c,spc*0.95,clamp(bnd,0.,1.)*0.95*uGlint);',
     // thick glass shows green-dark at its polished edges
     '      float e=smoothstep(0.005,0.035,edge(p,n));',
     '      c=mix(c*vec3(0.42,0.58,0.54)+vec3(0.04),c,e);',
@@ -173,6 +173,67 @@
     '  vec3 k=1.-col;float g=clamp(max(max(k.r,k.g),k.b),0.1,1.);',
     '  float a=cov/4.;gl_FragColor=vec4((col-1.+g)*a,g*a);}'
   ].join('\n');
+
+
+  // Glint strength: 0 = clear glass that refracts the site, 1 = with rainbow bands over the glass
+  var GLINT = 0;
+
+  // Keeps a small (256 px wide) picture of the visible photos and videos of the page.
+  // Only images from this site are drawn, so the picture can be handed to WebGL.
+  function pagePicture(own) {
+    var c = document.createElement('canvas'), x = c.getContext('2d');
+    var vis = new Set(), seen = new WeakSet(), io = null, lastScan = 0;
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) vis.add(e.target); else vis.delete(e.target); });
+      });
+    }
+    function scan() {
+      document.querySelectorAll('img, video').forEach(function (el) {
+        if (seen.has(el) || own.contains(el)) return;
+        seen.add(el);
+        if (io) io.observe(el); else vis.add(el);
+      });
+    }
+    function sameSite(el) {
+      var u = el.currentSrc || el.src || '';
+      if (!u) return false;
+      try { return new URL(u, location.href).origin === location.origin; } catch (e) { return false; }
+    }
+    function bgColor() {
+      var b = getComputedStyle(document.body).backgroundColor;
+      return (!b || b === 'rgba(0, 0, 0, 0)' || b === 'transparent') ? '#fafafa' : b;
+    }
+    var bgc = '#fafafa';
+    return {
+      reset: function () { c = document.createElement('canvas'); x = c.getContext('2d'); },
+      paint: function (vw, vh) {
+        var now = performance.now();
+        if (now - lastScan > 2500) { lastScan = now; scan(); bgc = bgColor(); }
+        var W = 256, H = Math.max(64, Math.round(W * vh / vw)), k = W / vw;
+        if (c.width !== W || c.height !== H) { c.width = W; c.height = H; }
+        x.globalAlpha = 1;
+        x.fillStyle = bgc; x.fillRect(0, 0, W, H);
+        vis.forEach(function (el) {
+          if (!el.isConnected) { vis.delete(el); return; }
+          var isV = el.tagName === 'VIDEO';
+          var w0 = isV ? el.videoWidth : el.naturalWidth, h0 = isV ? el.videoHeight : el.naturalHeight;
+          if (!w0 || !h0 || (isV && el.readyState < 2) || (!isV && !el.complete) || !sameSite(el)) return;
+          var r = el.getBoundingClientRect();
+          if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > vh || r.right < 0 || r.left > vw) return;
+          var cs = getComputedStyle(el);
+          if (cs.visibility === 'hidden' || +cs.opacity === 0) return;
+          // object-fit: cover (what the site uses) — crop the source to the box's shape
+          var sx = 0, sy = 0, sw = w0, sh = h0, br = r.width / r.height, ir = w0 / h0;
+          if (cs.objectFit !== 'fill' && cs.objectFit !== 'contain') {
+            if (ir > br) { sw = h0 * br; sx = (w0 - sw) / 2; } else { sh = w0 / br; sy = (h0 - sh) / 2; }
+          }
+          try { x.drawImage(el, sx, sy, sw, sh, r.left * k, r.top * k, r.width * k, r.height * k); } catch (e) {}
+        });
+        return c;
+      }
+    };
+  }
 
   function glassPrism(a) {
     var cv = document.createElement('canvas');
@@ -194,6 +255,20 @@
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
     var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     var uRes = gl.getUniformLocation(pr, 'uRes'), uAng = gl.getUniformLocation(pr, 'uAng');
+    var uC = gl.getUniformLocation(pr, 'uC'), uV = gl.getUniformLocation(pr, 'uV'), uS = gl.getUniformLocation(pr, 'uS');
+    var uGlint = gl.getUniformLocation(pr, 'uGlint');
+    gl.uniform1f(uGlint, typeof window.__spGlint === 'number' ? window.__spGlint : GLINT);
+
+    // A small live picture of the photos and videos on screen, used as what the glass refracts
+    var tex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([250, 250, 250, 255]));
+    gl.uniform1i(gl.getUniformLocation(pr, 'uBg'), 0);
+    var page = pagePicture(a);
 
     a.querySelector('.sp-prism__stage').appendChild(cv);
     a.classList.add('sp-prism--gl');
@@ -207,7 +282,20 @@
     var BASE = Math.PI * 2 / 7, FAST = Math.PI * 2 / 2.6;
     /* keeps turning even when the phone has Reduce Motion switched on (owner's choice) */
     var still = false;
-    function draw() { size(); gl.uniform1f(uAng, ang); gl.drawArrays(gl.TRIANGLES, 0, 3); }
+    var tick = 0;
+    function draw() {
+      size();
+      var r = cv.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
+      if ((tick++ & 1) === 0 || still) {
+        var pic = page.paint(vw, vh);
+        if (pic) { try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pic); } catch (e) { page.reset(); } }
+      }
+      gl.uniform2f(uC, r.left + r.width / 2, r.top + r.height / 2);
+      gl.uniform2f(uV, vw, vh);
+      gl.uniform1f(uS, r.width / 2.18 * 1.1);
+      gl.uniform1f(uAng, ang);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
     function frame(now) {
       raf = 0;
       var dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
@@ -225,6 +313,7 @@
     a.addEventListener('mouseleave', function () { hover = false; });
     document.addEventListener('visibilitychange', function () { if (!document.hidden) start(); });
     window.addEventListener('resize', draw);
+    if (still) window.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; draw(); }); }, { passive: true });
     cv.addEventListener('webglcontextlost', function (e) { e.preventDefault(); if (raf) cancelAnimationFrame(raf); raf = 0; a.classList.remove('sp-prism--gl'); cv.remove(); });
   }
 
