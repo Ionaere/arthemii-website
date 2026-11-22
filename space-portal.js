@@ -77,7 +77,7 @@
   var VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
   var FS = [
     'precision highp float;',
-    'uniform vec2 uRes;uniform float uAng;uniform sampler2D uBg;uniform vec2 uC;uniform vec2 uV;uniform float uS;uniform float uGlint;',
+    'uniform vec2 uRes;uniform float uAng;uniform sampler2D uBg;uniform vec2 uC;uniform vec2 uV;uniform vec2 uS;uniform float uGlint;',
     'const float RIN=0.25;const float HH=0.75;',
     // the five planes of an equilateral triangular prism (outward normal n, offset d)
     'void pl(int i,out vec3 n,out float d){',
@@ -295,7 +295,7 @@
       // shrunken view of everything on screen (like a crystal), not just the corner behind it
       gl.uniform2f(uC, vw / 2, vh / 2);
       gl.uniform2f(uV, vw, vh);
-      gl.uniform1f(uS, Math.min(vw, vh) * 0.3);
+      gl.uniform2f(uS, vw * 0.42, vh * 0.42);
       gl.uniform1f(uAng, ang);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
