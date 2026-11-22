@@ -150,8 +150,9 @@
     '      vec3 refl=env(rotY(p,uAng),rotY(reflect(rd,n),uAng));',
     '      vec3 tr=vec3(through(p,rd,n,1.475,0,0.10,uAng),through(p,rd,n,1.515,1,0.035,uAng),through(p,rd,n,1.56,2,0.075,uAng));',
     '      vec3 c=refl*F+tr*(1.-F);',
-    '      float e=smoothstep(0.004,0.022,edge(p,n));',
-    '      c=mix(c*0.5+vec3(0.12),c,e);',
+    // thick glass shows green-dark at its polished edges
+    '      float e=smoothstep(0.005,0.035,edge(p,n));',
+    '      c=mix(c*vec3(0.42,0.58,0.54)+vec3(0.04),c,e);',
     '      col+=c;cov+=1.;}}',
     '  if(cov==0.){gl_FragColor=vec4(0.);return;}',
     '  col/=cov;col=clamp((1.-exp(-1.8*col))/(1.-exp(-1.8)),0.,1.);',
