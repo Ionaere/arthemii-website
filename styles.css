@@ -1817,6 +1817,8 @@
         /* a drawing on white paper, shown whole inside the frame */
         .page-top__media--paper { background: #fff; }
         .page-top__media--paper img { object-fit: contain; object-position: 50% 50% !important; padding: 4% 6%; }
+        /* Contact page: the form sits under the e-mail, in the left column beside the photo */
+        .contact.contact--in-top { max-width: none; margin: var(--spacing-xl) 0 0; text-align: left; }
         /* less empty space above the page name */
         .section:has(> .container > .page-top) { padding-top: var(--spacing-md); }
         @media (max-width: 768px) {
