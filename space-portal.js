@@ -105,12 +105,14 @@
     // and videos currently on screen, so the glass refracts what you scroll past.
     'vec3 env(vec3 o,vec3 d){',
     '  vec3 bg=vec3(0.98);',
-    '  if(d.z<-0.03){float t=(-2.6-o.z)/d.z;vec3 h=o+d*t;',
-    '    vec2 px=uC+vec2(h.x,-h.y)*uS;vec2 uv=px/uV;',
+    '  if(d.z<-0.03){',
+    // where the light came from on screen: the exit point spreads a large piece of the screen over each
+    // face, the refracted direction shifts it — so the glass shows the site, broken up by its faces
+    '    vec2 px=uC+vec2(o.x*uS.x+d.x*uS.y,-(o.y*uS.x+d.y*uS.y));vec2 uv=px/uV;',
     '    vec2 out2=max(-uv,uv-1.);float o2=max(out2.x,out2.y);',
     '    vec3 c=texture2D(uBg,clamp(uv,0.002,0.998)).rgb;',
-    '    return mix(vec3(uv,0.),vec3(0.,0.,1.),step(0.001,o2));}',
-    '  return vec3(1.,0.,0.);}',
+    '    return mix(c,bg,smoothstep(0.,0.15,o2));}',
+    '  return mix(sky(d),bg,0.35);}',
     'float fres(float c){c=clamp(1.-c,0.,1.);return 0.04+0.96*c*c*c*c*c;}',
     'bool enter(vec3 ro,vec3 rd,out float t,out vec3 nE){',
     '  float tE=-1e9,tX=1e9;vec3 n;float d;nE=vec3(0.);',
@@ -295,7 +297,8 @@
       // shrunken view of everything on screen (like a crystal), not just the corner behind it
       gl.uniform2f(uC, vw / 2, vh / 2);
       gl.uniform2f(uV, vw, vh);
-      gl.uniform2f(uS, vw * 0.12, vh * 0.12);
+      var m = Math.min(vw, vh);
+      gl.uniform2f(uS, m * 0.6, m * 0.3);
       gl.uniform1f(uAng, ang);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
