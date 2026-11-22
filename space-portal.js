@@ -91,7 +91,7 @@
     'vec3 env(vec3 d){',
     '  float y=d.y;float az=atan(d.x,d.z);',
     '  vec3 c=mix(vec3(0.93,0.935,0.95),vec3(1.),smoothstep(0.,0.7,y));',
-    '  c=mix(vec3(0.66,0.66,0.68),c,smoothstep(-0.12,0.0,y));',
+    '  c=mix(vec3(0.3,0.3,0.32),c,smoothstep(-0.14,0.0,y));',
     '  c*=1.-0.55*exp(-pow((y+0.04)/0.035,2.));',
     '  float up=smoothstep(-0.04,0.1,y);',
     '  c+=vec3(2.2)*smoothstep(0.22,0.12,abs(az-1.15))*up*smoothstep(0.95,0.5,y);',
@@ -145,8 +145,11 @@
     '      c=mix(c*0.5+vec3(0.12),c,e);',
     '      col+=c;cov+=1.;}}',
     '  if(cov==0.){gl_FragColor=vec4(0.);return;}',
-    '  col/=cov;col=(1.-exp(-1.8*col))/(1.-exp(-1.8));',
-    '  float a=cov/4.;gl_FragColor=vec4(clamp(col,0.,1.)*a,a);}'
+    '  col/=cov;col=clamp((1.-exp(-1.8*col))/(1.-exp(-1.8)),0.,1.);',
+    // clear glass: where it only shows light surroundings it lets the page through,
+    // so over the white page it looks the same, over a photo the photo shows through
+    '  vec3 k=1.-col;float g=clamp(max(max(k.r,k.g),k.b),0.1,1.);',
+    '  float a=cov/4.;gl_FragColor=vec4((col-1.+g)*a,g*a);}'
   ].join('\n');
 
   function glassPrism(a) {
