@@ -594,17 +594,15 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* ===== Studio wordmark: large, running onto the hero video ===== */
+        /* ===== Studio wordmark: wide-tracked Italiana with side rules, running onto the hero video ===== */
         .hero { position: relative; }
         .hero__studio {
             grid-column: 1 / -1;
             order: -5;
             position: relative;
             z-index: 3;
-            display: block;
-            text-align: center;
             min-width: 0;
-            font-size: clamp(2rem, 7.9vw, 10rem);
+            font-size: clamp(1.4rem, 5.4vw, 6rem);
             /* the row collapses; the letters are then shifted down so their
                lower half runs onto the top of the video */
             margin-bottom: calc(-1em - var(--spacing-2xl));
@@ -615,15 +613,28 @@
             opacity: 0;
             animation: studioFlyIn 2.2s var(--ease-out-expo) 0.15s forwards;
         }
-        .hero__studio-rule { display: none; }
+        .hero__studio-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(0.75rem, 2.5vw, 2.5rem);
+            will-change: transform, opacity;
+            transform-origin: 50% 60%;
+        }
+        .hero__studio-rule {
+            flex: 1 1 0;
+            max-width: 220px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.55);
+        }
         .hero__studio-name {
             margin: 0;
             font-family: 'Italiana', var(--font-serif);
             font-weight: 400;
             font-size: 1em;
             line-height: 1;
-            letter-spacing: 0.14em;
-            margin-right: -0.14em; /* balance trailing letter-spacing */
+            letter-spacing: 0.38em;
+            margin-right: -0.38em; /* balance trailing letter-spacing */
             text-transform: uppercase;
             white-space: nowrap;
             color: #fff;
@@ -634,9 +645,14 @@
             25%  { opacity: 1; }
             100% { opacity: 1; transform: none; filter: none; }
         }
-        .hero__studio-name { will-change: transform, opacity; transform-origin: 50% 60%; }
         @media (prefers-reduced-motion: reduce) {
             .hero__studio { animation: none; opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            .hero__studio { font-size: 6vw; }
+            .hero__studio-inner { gap: 0.6rem; }
+            .hero__studio-name { letter-spacing: 0.28em; margin-right: -0.28em; }
+            .hero__studio-rule { max-width: 28px; }
         }
 
         /* ===== Hero text column ===== */
@@ -677,16 +693,6 @@
             border-radius: 2px;
             background: linear-gradient(180deg, #e8506a, #f2b33d, #6ac46f, #3fb6e0, #7a6cf0);
         }
-        @media (max-width: 768px) {
-            /* phones: two big lines, the second one running onto the video */
-            .hero__studio {
-                font-size: 15vw;
-                margin-bottom: calc(-2em - var(--spacing-2xl));
-                top: calc(var(--spacing-2xl) - 1.42em);
-            }
-            .hero__studio-name { white-space: normal; line-height: 0.95; letter-spacing: 0.06em; margin-right: -0.06em; }
-        }
-
         /* On mobile: instant hero content */
         @media (max-width: 768px) {
             .hero__eyebrow,
@@ -2335,9 +2341,11 @@
         <!-- ========== HERO ========== -->
         <section class="hero" id="home">
             <div class="hero__studio" aria-label="Ionaere Studio">
-                <span class="hero__studio-rule" aria-hidden="true"></span>
-                <h1 class="hero__studio-name">Ionaere Studio</h1>
-                <span class="hero__studio-rule" aria-hidden="true"></span>
+                <div class="hero__studio-inner">
+                    <span class="hero__studio-rule" aria-hidden="true"></span>
+                    <h1 class="hero__studio-name">Ionaere Studio</h1>
+                    <span class="hero__studio-rule" aria-hidden="true"></span>
+                </div>
             </div>
             <div class="hero__content">
                 <a class="hero__instagram" href="https://www.instagram.com/ionaerestudio/" target="_blank" rel="noopener" aria-label="Instagram @ionaerestudio">
@@ -4181,7 +4189,7 @@
     <script>
     /* Ionaere Studio wordmark: flies away while scrolling down, comes back on the way up */
     (function () {
-        var el = document.querySelector('.hero__studio-name');
+        var el = document.querySelector('.hero__studio-inner');
         if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         var ticking = false;
         function update() {
