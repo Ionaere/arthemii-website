@@ -232,7 +232,6 @@
           }
           try { x.drawImage(el, sx, sy, sw, sh, r.left * k, r.top * k, r.width * k, r.height * k); } catch (e) {}
         });
-        if (window.__spDebug) window.__spPic = c;
         return c;
       }
     };
