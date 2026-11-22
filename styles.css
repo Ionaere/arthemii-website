@@ -1811,6 +1811,14 @@
         }
         .page-top__media img,
         .page-top__media video { display: block; width: 100%; height: 100%; object-fit: cover; }
+        /* a video shown whole, at its own proportions (no cropping) */
+        .page-top__media--whole { height: auto; background: none; }
+        .page-top__media--whole video, .page-top__media--whole img { height: auto; object-fit: contain; }
+        /* a drawing on white paper, shown whole inside the frame */
+        .page-top__media--paper { background: #fff; }
+        .page-top__media--paper img { object-fit: contain; object-position: 50% 50% !important; padding: 4% 6%; }
+        /* less empty space above the page name */
+        .section:has(> .container > .page-top) { padding-top: var(--spacing-md); }
         @media (max-width: 768px) {
             .page-top { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; }
             .page-top__media { grid-column: 1; grid-row: 1; height: auto; aspect-ratio: 4 / 5; }
