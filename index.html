@@ -594,41 +594,89 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* ===== Studio wordmark at the top of the home page ===== */
+        /* ===== Studio wordmark: large, running onto the hero video ===== */
+        .hero { position: relative; }
         .hero__studio {
             grid-column: 1 / -1;
             order: -5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(1rem, 3vw, 2.5rem);
-            margin-bottom: var(--spacing-lg);
+            position: relative;
+            z-index: 3;
+            display: block;
+            text-align: center;
+            min-width: 0;
+            font-size: clamp(2rem, 7.9vw, 10rem);
+            /* the row collapses; the letters are then shifted down so their
+               lower half runs onto the top of the video */
+            margin-bottom: calc(-1em - var(--spacing-2xl));
+            top: calc(var(--spacing-2xl) - 0.52em);
+            align-self: start;
+            pointer-events: none;
+            mix-blend-mode: difference;
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 0.6s var(--ease-out-expo) 0s forwards;
+            animation: fadeIn 1s var(--ease-out-expo) 0s forwards;
         }
-        .hero__studio-rule {
-            flex: 1 1 0;
-            max-width: 220px;
-            height: 1px;
-            background: #cfcfcf;
-        }
+        .hero__studio-rule { display: none; }
         .hero__studio-name {
             margin: 0;
             font-family: 'Italiana', var(--font-serif);
             font-weight: 400;
-            font-size: clamp(1.6rem, 5.2vw, 4.75rem);
+            font-size: 1em;
             line-height: 1;
-            letter-spacing: 0.38em;
-            margin-right: -0.38em; /* balance trailing letter-spacing */
+            letter-spacing: 0.14em;
+            margin-right: -0.14em; /* balance trailing letter-spacing */
             text-transform: uppercase;
             white-space: nowrap;
+            color: #fff;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* ===== Hero text column ===== */
+        .hero__eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+        }
+        .hero__eyebrow::before {
+            content: "";
+            width: 2.5rem;
+            height: 1px;
+            background: currentColor;
+            opacity: 0.6;
+            flex: none;
+        }
+        .hero__subtitle {
+            font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+            line-height: 1.15;
             color: var(--text);
+            margin-bottom: var(--spacing-lg);
+        }
+        .hero__desc {
+            position: relative;
+            font-family: var(--font-serif);
+            font-size: clamp(1.2rem, 1.55vw, 1.45rem);
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text);
+            max-width: 500px;
+            padding-left: 1.5rem;
+        }
+        .hero__desc::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0.35em; bottom: 0.35em;
+            width: 2px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #e8506a, #f2b33d, #6ac46f, #3fb6e0, #7a6cf0);
         }
         @media (max-width: 768px) {
-            .hero__studio { gap: 0.75rem; margin-bottom: var(--spacing-md); opacity: 1; transform: none; animation: none; }
-            .hero__studio-name { font-size: clamp(1.25rem, 6.4vw, 2.4rem); letter-spacing: 0.28em; margin-right: -0.28em; }
-            .hero__studio-rule { max-width: 40px; }
+            /* phones: two big lines, the second one running onto the video */
+            .hero__studio {
+                opacity: 1; animation: none;
+                font-size: 15vw;
+                margin-bottom: calc(-2em - var(--spacing-2xl));
+                top: calc(var(--spacing-2xl) - 1.42em);
+            }
+            .hero__studio-name { white-space: normal; line-height: 0.95; letter-spacing: 0.06em; margin-right: -0.06em; }
         }
 
         /* On mobile: instant hero content */
@@ -652,6 +700,17 @@
             .section {
                 padding: var(--spacing-xl) 0;
             }
+        }
+
+        /* Artist name opening the About text */
+        .about-name {
+            font-family: var(--font-serif);
+            font-weight: 300;
+            font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+            line-height: 1.1;
+            letter-spacing: 0.01em;
+            color: var(--text);
+            margin: 0 0 var(--spacing-md);
         }
 
         /* ========== BUTTONS ========== */
@@ -2300,6 +2359,8 @@
 
                 <div class="about-grid">
                     <div class="about-text reveal">
+                        <div class="about-name">Arthemii Ionaere</div>
+
                         <p data-i18n="about_p1">The abstract and contemporary approach to the use of glass and color departs from the traditional Christian symbolism of stained glass, which usually features concrete depictions of saints, biblical scenes, or symbols. However, even in this abstract form, the exploration of potential symbolism and meanings through an innovative approach to symbolism remains relevant.</p>
 
                         <p data-i18n="about_p2">Contemporary studies of stained glass art allow us to analyze the impact of abstraction on perception and interpretation. Changing styles and techniques can have an impact on aesthetic and spiritual perception, offering new forms to be integrated into contemporary art and architecture.</p>
