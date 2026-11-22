@@ -27,9 +27,11 @@
     'text-transform:uppercase;text-align:center;color:#111;margin:0 0 var(--spacing-md,1.5rem)!important;' +
     'transform-origin:50% 60%;will-change:auto}' +
     '.wm-title>.wm-t{margin-right:-0.3em}' +
+    '.wm-title.wm-has-num{position:relative;padding:0 3.2rem}' +
+    '.wm-title>.wm-num{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;color:#c9c9c9;text-transform:none;position:absolute;left:0;top:50%;transform:translateY(-50%);margin:0!important;letter-spacing:0;font-size:1.6em;line-height:1}' +
     '.wm-title::before,.wm-title::after{content:"";flex:1 1 0;min-width:18px;max-width:64px;height:1px;background:#bdbdbd}' +
     '@media (max-width:768px){.wm-title{font-size:clamp(0.85rem,3.6vw,1rem)!important;letter-spacing:0.22em!important;gap:0.5rem}' +
-    '.wm-title>.wm-t{margin-right:-0.22em}.wm-title::before,.wm-title::after{max-width:24px}}';
+    '.wm-title>.wm-t{margin-right:-0.22em}.wm-title.wm-has-num{padding:0 2.4rem}.wm-title::before,.wm-title::after{max-width:24px}}';
   var st = document.createElement('style');
   st.textContent = css;
   document.head.appendChild(st);
@@ -46,6 +48,13 @@
         s.className = 'wm-t';
         while (h.firstChild) s.appendChild(h.firstChild);
         h.appendChild(s);
+      }
+      // the block number ("01") sits on the same line as the title, at its left
+      var prev = h.previousElementSibling;
+      if (prev && /(^|\s)tech-block__num(\s|$)/.test(prev.className)) {
+        prev.classList.add('wm-num');
+        h.insertBefore(prev, h.firstChild);
+        h.classList.add('wm-has-num');
       }
       items.push(h);
     });
