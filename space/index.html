@@ -322,7 +322,6 @@ function stars() {
 // and on it the works and the cosmos are reflected, sharp like in a mirror (a cube camera films the
 // scene around you several times a second).
 let room = null, roomEdges = null, cubeCam = null, ROOM_R = 40, ROOM_H = 40, ROOM_IN = 38;
-const CUBE_EVERY = isTouch ? 12 : 4;
 function crystalGeometry(R, H, S, bands, cap) {
   // rings of points, each turned half a step against the next, joined into triangles:
   // the walls, then two more rings narrowing into each tip
@@ -377,12 +376,19 @@ function buildRoom() {
   roomEdges.renderOrder = -1;
   roomEdges.visible = false;
 }
-let cubeFrame = 0;
+// The reflections are refreshed one cube face per frame (a full turn every 6 frames), so the work is spread
+// evenly and the picture never stutters
+let cubeFace = 0, cubeReady = false;
 function updateReflections() {
-  if (!cubeCam || (cubeFrame++ % CUBE_EVERY) !== 0) return;
-  room.visible = false; roomEdges.visible = false;
-  cubeCam.position.copy(camera.position);
-  cubeCam.update(renderer, scene);
+  if (!cubeCam) return;
+  room.visible = false;
+  if (!cubeReady) { cubeCam.position.copy(camera.position); cubeCam.update(renderer, scene); cubeReady = true; room.visible = true; return; }
+  if (cubeFace === 0) { cubeCam.position.copy(camera.position); cubeCam.updateMatrixWorld(true); }
+  const prev = renderer.getRenderTarget();
+  renderer.setRenderTarget(cubeCam.renderTarget, cubeFace);
+  renderer.render(scene, cubeCam.children[cubeFace]);
+  renderer.setRenderTarget(prev);
+  cubeFace = (cubeFace + 1) % 6;
   room.visible = true;
 }
 
@@ -531,7 +537,7 @@ function stream(now) {
 
 /* ---------- movement ---------- */
 const keys = {};
-let yaw = 0, pitch = 0, glide = null;
+let yaw = 0, pitch = 0, glide = null, lookYaw = 0, lookPitch = 0;
 const vel = new THREE.Vector3();
 addEventListener('keydown', e => {
   if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
@@ -814,6 +820,18 @@ CATS.forEach((c, i) => {
 });
 window.__spaceTour = () => tour ? 'on ' + plan.cat + ' ' + plan.i + ' ' + plan.done.size : 'off';
 
+
+/* ---------- keep it smooth: lower the sharpness a little when the device cannot keep up ---------- */
+const PR_MAX = Math.min(devicePixelRatio || 1, 2), PR_MIN = Math.min(1, PR_MAX);
+let pr = PR_MAX, slowT = 0, fastT = 0;
+function adaptQuality(dt) {
+  if (dt > 0.021) { slowT += dt; fastT = 0; } else if (dt < 0.0145) { fastT += dt; slowT = Math.max(0, slowT - dt * 0.5); }
+  let next = pr;
+  if (slowT > 0.8 && pr > PR_MIN) { next = Math.max(PR_MIN, pr - 0.25); slowT = 0; }
+  else if (fastT > 4 && pr < PR_MAX) { next = Math.min(PR_MAX, pr + 0.25); fastT = 0; }
+  if (next !== pr) { pr = next; renderer.setPixelRatio(pr); renderer.setSize(innerWidth, innerHeight); }
+}
+
 /* ---------- loop ---------- */
 const clock = new THREE.Clock();
 const fwd = new THREE.Vector3(), right = new THREE.Vector3(), upV = new THREE.Vector3(0, 1, 0), target = new THREE.Vector3();
@@ -846,7 +864,11 @@ function tick() {
     vel.set(0, 0, 0);
     if (focus.t >= 1) focus.done = true;
   } else {
-    camera.rotation.set(pitch, yaw, 0);
+    // looking around eases in softly instead of following the mouse jerkily
+    const ease = 1 - Math.exp(-dt * 14);
+    lookYaw += Math.atan2(Math.sin(yaw - lookYaw), Math.cos(yaw - lookYaw)) * ease;
+    lookPitch += (pitch - lookPitch) * ease;
+    camera.rotation.set(lookPitch, lookYaw, 0);
     // fly where you look: up, down, any direction
     camera.getWorldDirection(fwd);
     right.crossVectors(fwd, upV).normalize();
@@ -857,6 +879,7 @@ function tick() {
     vel.lerp(target, 1 - Math.pow(0.002, dt));
     camera.position.addScaledVector(vel, dt);
   }
+  if (tour || focus) { lookYaw = yaw; lookPitch = pitch; }
   // stay inside the glass prism
   const cp = camera.position, hr = Math.hypot(cp.x, cp.z);
   if (hr > ROOM_IN) { cp.x *= ROOM_IN / hr; cp.z *= ROOM_IN / hr; }
@@ -878,6 +901,7 @@ function tick() {
   hover(now);
   idleCheck(now);
   updateReflections();
+  adaptQuality(dt);
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 }
