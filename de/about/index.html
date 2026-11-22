@@ -62,7 +62,6 @@
             margin: 0 0 var(--spacing-xl);
             font-size: clamp(1.4rem, 5.4vw, 6rem);
             pointer-events: none;
-            mix-blend-mode: difference;
             opacity: 0;
             animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
         }
@@ -71,14 +70,17 @@
             gap: clamp(0.75rem, 2.5vw, 2.5rem);
             transform-origin: 50% 60%;
         }
-        .about-studio__rule { flex: 1 1 0; max-width: 220px; height: 1px; background: rgba(255, 255, 255, 0.55); }
+        .about-studio__rule { flex: 1 1 0; max-width: 220px; height: 1px; background: rgba(17, 17, 17, 0.45); }
         .about-studio__name {
             margin: 0;
             font-family: 'Italiana', var(--font-serif); font-weight: 400;
             font-size: 1em; line-height: 1;
             letter-spacing: 0.38em; margin-right: -0.38em;
             text-transform: uppercase; white-space: nowrap;
-            color: #fff;
+            /* dark letters with a soft light halo: readable on the page and on every part of the photo
+               (the earlier inverting blend turned letters grey over the grey shadow) */
+            color: #111;
+            text-shadow: 0 0 0.12em rgba(255, 255, 255, 0.9), 0 0 0.35em rgba(255, 255, 255, 0.55);
         }
         @keyframes studioFlyIn {
             0%   { opacity: 0; transform: translate3d(0, -110vh, 0) scale(1.9); }
