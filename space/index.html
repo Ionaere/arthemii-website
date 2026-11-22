@@ -301,7 +301,7 @@ function stars() {
         pos[i * 3] = Math.cos(a) * q * r; pos[i * 3 + 1] = u * r; pos[i * 3 + 2] = Math.sin(a) * q * r;
       } else {
         // distant stars all around
-        const u = Math.random() * 2 - 1, a = Math.random() * Math.PI * 2, r = RADIUS + 50 + Math.random() * 180, q = Math.sqrt(1 - u * u);
+        const u = Math.random() * 2 - 1, a = Math.random() * Math.PI * 2, r = RADIUS * 2.6 + 60 + Math.random() * 180, q = Math.sqrt(1 - u * u);
         pos[i * 3] = Math.cos(a) * q * r; pos[i * 3 + 1] = u * r; pos[i * 3 + 2] = Math.sin(a) * q * r;
       }
       const t = Math.random();
@@ -353,23 +353,23 @@ function crystalGeometry(R, H, S, bands, cap) {
 }
 function buildRoom() {
   const S = 14, bands = 5;
-  ROOM_R = RADIUS + 13;
-  ROOM_H = RADIUS + 9;
+  ROOM_R = RADIUS * 1.6 + 14;
+  ROOM_H = RADIUS * 1.45 + 10;
   ROOM_IN = ROOM_R * 0.93 * Math.cos(Math.PI / S) - 1.8;   // how far from the axis you can fly
   const cube = new THREE.WebGLCubeRenderTarget(isTouch ? 256 : 512, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter });
   cubeCam = new THREE.CubeCamera(0.1, 600, cube);
   const geo = crystalGeometry(ROOM_R, ROOM_H, S, bands, ROOM_R * 0.55);
   const mat = new THREE.MeshPhysicalMaterial({
-    color: 0xdfe6ff, metalness: 0.9, roughness: 0.03, envMap: cube.texture, envMapIntensity: 1.25,
+    color: 0x7a8098, metalness: 0.9, roughness: 0.03, envMap: cube.texture, envMapIntensity: 0.85,
     iridescence: 0.75, iridescenceIOR: 1.7, iridescenceThicknessRange: [180, 820],
-    transparent: true, opacity: 0.56, depthWrite: false, side: THREE.DoubleSide, flatShading: true, fog: false
+    transparent: true, opacity: 0.64, depthWrite: false, side: THREE.DoubleSide, flatShading: true, fog: false
   });
   room = new THREE.Mesh(geo, mat);
   room.renderOrder = -1;          // after the works, before the glows, labels and stars
   scene.add(room);
   // the edges of the facets catch the light
   roomEdges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 1),
-    new THREE.LineBasicMaterial({ color: 0xcfd8ff, transparent: true, opacity: 0.28, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+    new THREE.LineBasicMaterial({ color: 0xcfd8ff, transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
   roomEdges.renderOrder = -1;
   scene.add(roomEdges);
 }
