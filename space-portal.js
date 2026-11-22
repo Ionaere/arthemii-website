@@ -153,9 +153,9 @@
     // dichroic shimmer: thin-film colours that shift with the viewing angle and height, so the
     // whole prism plays in rainbow colours as it turns (like the dichroic glass in the works)
     '      float cv=abs(dot(rd,n));',
-    '      float ph=2.6*cv+0.9*p.y+0.35*dot(n.xz,vec2(0.7,-0.4))+0.12*uAng;',
+    '      float ph=1.7*cv+0.55*p.y+0.3*dot(n.xz,vec2(0.7,-0.4))+0.12*uAng+0.25*tr.g;',
     '      vec3 iri=0.5+0.5*cos(6.2832*(ph+vec3(0.,0.33,0.67)));',
-    '      c=mix(c,c*(0.35+1.25*iri),0.85);',
+    '      c=mix(c,c*(0.45+1.1*iri),0.6);',
     // thick glass shows green-dark at its polished edges
     '      float e=smoothstep(0.005,0.035,edge(p,n));',
     '      c=mix(c*vec3(0.42,0.58,0.54)+vec3(0.04),c,e);',
