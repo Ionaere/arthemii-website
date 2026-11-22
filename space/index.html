@@ -381,7 +381,7 @@ function buildRoom() {
     return c;
   };
   const maxCube = renderer.capabilities.maxCubemapSize || 2048;
-  CUBE_SIZE = Math.min(maxCube, isTouch ? 1024 : 2048);   // high resolution: reflections stay sharp, not pixelated
+  CUBE_SIZE = Math.min(maxCube, isTouch ? 1024 : 2048);   // high resolution and no mipmaps: reflections stay sharp, not pixelated or blurred
   cubes = [mkCube(), mkCube()];
   const cube = cubes[0];
   cubeCam = new THREE.CubeCamera(0.1, 600, cubes[1]);
