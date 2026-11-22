@@ -63,7 +63,8 @@
             font-size: clamp(1.4rem, 5.4vw, 6rem);
             pointer-events: none;
             mix-blend-mode: difference;
-            /* static: no fly-in */
+            opacity: 0;
+            animation: studioFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
         }
         .about-studio__inner {
             display: flex; align-items: center; justify-content: center;
@@ -315,5 +316,25 @@
     </script>
     <script src="../smooth-scroll.js" defer></script>
     <script src="../i18n.js?v=20261117c"></script>
+    <script>
+    /* ARTHEMII IONAERE wordmark: flies up and out while scrolling down, comes back on the way up (text stays static) */
+    (function () {
+        var el = document.querySelector('.about-studio__inner');
+        if (!el) return;
+        var ticking = false;
+        function update() {
+            ticking = false;
+            var h = window.innerHeight;
+            var p = Math.min(Math.max(window.scrollY / Math.max(h * 0.6, 280), 0), 1);
+            var e = p * p * (3 - 2 * p);
+            el.style.transform = 'translate3d(0,' + (-e * h * 1.1).toFixed(1) + 'px,0) scale(' + (1 + e * 0.9).toFixed(3) + ')';
+            el.style.opacity = (1 - e * e).toFixed(3);
+        }
+        function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        update();
+    })();
+    </script>
 </body>
 </html>
