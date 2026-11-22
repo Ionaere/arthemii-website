@@ -856,7 +856,7 @@
     document.head.appendChild(portal);
   }
   // Visitor statistics: GoatCounter (no cookies, no personal data stored)
-  if (location.hostname === 'arthemii.com' && !document.querySelector('script[data-goatcounter]')) {
+  if (location.hostname === 'ionaere.com' && !document.querySelector('script[data-goatcounter]')) {
     var gc = document.createElement('script');
     gc.async = true;
     gc.setAttribute('data-goatcounter', 'https://ionaere.goatcounter.com/count');
