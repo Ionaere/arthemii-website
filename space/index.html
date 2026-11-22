@@ -376,7 +376,7 @@ function buildRoom() {
   // two reflection pictures used in turn: the walls show one while the other is filmed — with the walls in it,
   // so the facets reflect each other too, like mirrors facing mirrors, and there is no empty black anywhere
   const mkCube = () => {
-    const c = new THREE.WebGLCubeRenderTarget(CUBE_SIZE, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter });
+    const c = new THREE.WebGLCubeRenderTarget(CUBE_SIZE, { generateMipmaps: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter });
     c.texture.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;   // crisp on facets seen at a slant
     return c;
   };
