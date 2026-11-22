@@ -148,8 +148,14 @@
     '    if(enter(ro,rd,t,n)){',
     '      vec3 p=ro+rd*t;float F=fres(dot(-rd,n));',
     '      vec3 refl=env(rotY(p,uAng),rotY(reflect(rd,n),uAng));',
-    '      vec3 tr=vec3(through(p,rd,n,1.475,0,0.10,uAng),through(p,rd,n,1.515,1,0.035,uAng),through(p,rd,n,1.56,2,0.075,uAng));',
+    '      vec3 tr=vec3(through(p,rd,n,1.44,0,0.06,uAng),through(p,rd,n,1.52,1,0.03,uAng),through(p,rd,n,1.62,2,0.05,uAng));',
     '      vec3 c=refl*F+tr*(1.-F);',
+    // dichroic shimmer: thin-film colours that shift with the viewing angle and height, so the
+    // whole prism plays in rainbow colours as it turns (like the dichroic glass in the works)
+    '      float cv=abs(dot(rd,n));',
+    '      float ph=2.6*cv+0.9*p.y+0.35*dot(n.xz,vec2(0.7,-0.4))+0.12*uAng;',
+    '      vec3 iri=0.5+0.5*cos(6.2832*(ph+vec3(0.,0.33,0.67)));',
+    '      c=mix(c,c*(0.35+1.25*iri),0.85);',
     // thick glass shows green-dark at its polished edges
     '      float e=smoothstep(0.005,0.035,edge(p,n));',
     '      c=mix(c*vec3(0.42,0.58,0.54)+vec3(0.04),c,e);',
