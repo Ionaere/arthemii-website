@@ -1783,9 +1783,6 @@
             .page-wordmark__name { white-space: normal; width: min-content; text-align: center; line-height: 1.05; letter-spacing: 0.18em; margin-right: -0.18em; }
             .page-wordmark__rule { max-width: 24px; }
         }
-        @media (prefers-reduced-motion: reduce) {
-            .page-wordmark { animation: none; opacity: 1; }
-        }
 
         /* ===== Top of a section page: a photo or video on the right, almost half the
            screen wide, starting at the very top; the page name wordmark runs across
@@ -1800,7 +1797,7 @@
         }
         .page-top > .page-wordmark {
             grid-column: 1 / -1; grid-row: 1; align-self: start;
-            margin: calc(var(--page-top-h) * 0.34) 0 var(--spacing-xl);
+            margin: calc(var(--page-top-h) * 0.08) 0 var(--spacing-xl);
         }
         .page-top > .section__header { grid-column: 1; grid-row: 2; align-self: start; margin-bottom: 0; }
         .page-top > .section__header--center { text-align: left; margin-left: 0; margin-right: 0; }
@@ -1817,6 +1814,6 @@
         @media (max-width: 768px) {
             .page-top { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; }
             .page-top__media { grid-column: 1; grid-row: 1; height: auto; aspect-ratio: 4 / 5; }
-            .page-top > .page-wordmark { grid-row: 1; margin-top: calc((100vw - 2 * var(--spacing-md)) * 0.62); }
+            .page-top > .page-wordmark { grid-row: 1; margin-top: calc((100vw - 2 * var(--spacing-md)) * 0.12); }
             .page-top > .section__header { grid-column: 1; grid-row: 2; margin-top: var(--spacing-lg); }
         }
