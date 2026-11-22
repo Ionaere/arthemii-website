@@ -2475,6 +2475,50 @@
             .section .section__label::after { width: 22px; }
             .section .section__label::after { margin-left: -0.28em; }
         }
+        /* ===== Home rows (desktop): big section name lying half over the photo, subtitle on the other side ===== */
+        @media (min-width: 1025px) {
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs {
+                position: relative;
+                min-height: 220px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__thumb { width: 300px; height: 200px; }
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label-row {
+                position: absolute;
+                top: 50%;
+                right: 150px;            /* ends in the middle of the photo */
+                transform: translateY(-50%);
+                z-index: 3;
+                margin: 0;
+                pointer-events: none;
+            }
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs.thumbs-left .section__label-row {
+                right: auto;
+                left: 150px;             /* starts in the middle of the photo */
+                justify-content: flex-start;
+            }
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label {
+                font-size: clamp(2rem, 3.4vw, 3.4rem);
+                color: #111;
+                text-shadow: 0 0 0.12em rgba(255, 255, 255, 0.9), 0 0 0.35em rgba(255, 255, 255, 0.6);
+            }
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label::before,
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label::after { width: clamp(36px, 4vw, 64px); background: #9a9a9a; }
+            /* subtitle on the side away from the photo */
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs > :not(.section__thumbs):not(.section__label-row) {
+                max-width: min(460px, 34%);
+                margin-left: 0;
+                margin-right: auto;
+                text-align: left;
+            }
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs.thumbs-left > :not(.section__thumbs):not(.section__label-row) {
+                margin-left: auto;
+                margin-right: 0;
+                text-align: right;
+            }
+        }
     </style>
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ionaere.com/#artist","name":"Arthemii Ionaere","url":"https://ionaere.com/de/","image":"https://ionaere.com/img/opt/portrait-arthemii-1600.jpg","jobTitle":"Stained glass artist","description":"Berlin-based contemporary stained glass artist creating three-dimensional glass sculptures in the Tiffany technique, kinetic prisms, lamps and light installations.","email":"mailto:info@ionaere.com","address":{"@type":"PostalAddress","addressLocality":"Berlin","addressCountry":"DE"},"knowsAbout":["Stained glass","Tiffany technique","Glass sculpture","Kinetic art","Light installation","Contemporary art"],"sameAs":["https://www.instagram.com/ionaerestudio/","https://www.instagram.com/ionaere/","https://www.instagram.com/lonaere/","https://www.youtube.com/@IonaereArthe"]},{"@type":"WebSite","@id":"https://ionaere.com/#website","url":"https://ionaere.com/de/","name":"Arthemii Ionaere","description":"Contemporary stained glass art by Arthemii Ionaere, Berlin","inLanguage":"en","publisher":{"@id":"https://ionaere.com/#artist"}}{% for ex in site.data.exhibitions.items %}{% assign ds = ex.date_start | strip | split: "." %}{% if ds.size == 3 %},{"@type":"ExhibitionEvent","name":{{ ex.title | jsonify }},"startDate":"{{ ds[2] }}-{{ ds[1] }}-{{ ds[0] }}"{% assign de = ex.date_end | strip | split: "." %}{% if de.size == 3 %},"endDate":"{{ de[2] }}-{{ de[1] }}-{{ de[0] }}"{% endif %},"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode"{% if ex.location and ex.location != "" %},"location":{"@type":"Place","name":{{ ex.location | strip | jsonify }},"address":{{ ex.location | strip | jsonify }}}{% endif %}{% if ex.photos.size > 0 %},"image":"https://ionaere.com{{ ex.photos[0] | relative_url }}"{% endif %},"organizer":{"@id":"https://ionaere.com/#artist"},"performer":{"@id":"https://ionaere.com/#artist"}}{% endif %}{% endfor %}]}
