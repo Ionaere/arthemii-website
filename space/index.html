@@ -383,8 +383,11 @@ const CUBE_EVERY = isTouch ? 2 : 1;
 function updateReflections() {
   if (!cubeCam || (cubeTick++ % CUBE_EVERY) !== 0) return;
   room.visible = false;
+  // the soft halos behind the works are left out of the reflection, so it stays crisp
+  for (const o of items) if (o.glow) o.glow.visible = false;
   cubeCam.position.copy(camera.position);
   cubeCam.update(renderer, scene);
+  for (const o of items) if (o.glow) o.glow.visible = true;
   room.visible = true;
 }
 
