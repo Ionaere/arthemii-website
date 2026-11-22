@@ -613,7 +613,7 @@
             pointer-events: none;
             mix-blend-mode: difference;
             opacity: 0;
-            animation: fadeIn 1s var(--ease-out-expo) 0s forwards;
+            animation: studioFlyIn 1.6s var(--ease-out-expo) 0.1s forwards;
         }
         .hero__studio-rule { display: none; }
         .hero__studio-name {
@@ -628,7 +628,14 @@
             white-space: nowrap;
             color: #fff;
         }
-        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes studioFlyIn {
+            from { opacity: 0; transform: translate3d(0, -0.6em, 0) scale(1.18); filter: blur(14px); }
+            to   { opacity: 1; transform: none; filter: none; }
+        }
+        .hero__studio-name { will-change: transform, opacity; transform-origin: 50% 60%; }
+        @media (prefers-reduced-motion: reduce) {
+            .hero__studio { animation: none; opacity: 1; }
+        }
 
         /* ===== Hero text column ===== */
         .hero__eyebrow {
@@ -671,7 +678,6 @@
         @media (max-width: 768px) {
             /* phones: two big lines, the second one running onto the video */
             .hero__studio {
-                opacity: 1; animation: none;
                 font-size: 15vw;
                 margin-bottom: calc(-2em - var(--spacing-2xl));
                 top: calc(var(--spacing-2xl) - 1.42em);
@@ -4170,5 +4176,26 @@
     <script src="smooth-scroll.js" defer></script>
     <script src="i18n.js?v=20261117c"></script>
     <script src="contact.js"></script>
+    <script>
+    /* Ionaere Studio wordmark: flies away while scrolling down, comes back on the way up */
+    (function () {
+        var el = document.querySelector('.hero__studio-name');
+        if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var ticking = false;
+        function update() {
+            ticking = false;
+            var range = Math.max(window.innerHeight * 0.7, 320);
+            var p = Math.min(Math.max(window.scrollY / range, 0), 1);
+            var e = p * p * (3 - 2 * p); /* smoothstep */
+            el.style.transform = 'translate3d(0,' + (-e * 0.9).toFixed(3) + 'em,0) scale(' + (1 + e * 0.22).toFixed(3) + ')';
+            el.style.opacity = (1 - e).toFixed(3);
+            el.style.filter = e > 0.01 ? 'blur(' + (e * 10).toFixed(1) + 'px)' : '';
+        }
+        function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        update();
+    })();
+    </script>
 </body>
 </html>
