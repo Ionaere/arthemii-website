@@ -1915,3 +1915,32 @@
             .gslide__text { font-size: 0.8125rem; -webkit-line-clamp: 4; }
             .gslide__meta { font-size: 0.6875rem; }
         }
+        /* Gallery: when the photo leaves enough white space at its side (tall photos),
+           the title and description go there instead of onto the photo (gallery-slides.js
+           sets .is-side-left / .is-side-right and --gs-side, the width of that space) */
+        .gslide.is-side .gslide__title,
+        .gslide.is-side .gslide__desc {
+            left: auto; right: auto;
+            width: var(--gs-side, 300px);
+            top: 50%;
+        }
+        .gslide.is-side .gslide__title {
+            translate: 0 calc(-100% - 0.9rem);
+            font-size: clamp(1.3rem, 2.5vw, 3rem);
+            letter-spacing: 0.24em;
+        }
+        .gslide.is-side .gslide__name { max-width: 100%; margin-right: 0; }
+        .gslide.is-side .gslide__desc { translate: 0 0.9rem; }
+        .gslide.is-side-left .gslide__title,
+        .gslide.is-side-left .gslide__desc { right: calc(100% + clamp(1.5rem, 3vw, 3rem)); text-align: right; }
+        .gslide.is-side-left .gslide__title { align-items: flex-end; }
+        .gslide.is-side-right .gslide__title,
+        .gslide.is-side-right .gslide__desc { left: calc(100% + clamp(1.5rem, 3vw, 3rem)); text-align: left; }
+        .gslide.is-side-right .gslide__title { align-items: flex-start; }
+        /* Gallery (desktop): photos alternate left / right like a chessboard; the title and
+           description sit in the white space on the other side */
+        @media (min-width: 900px) {
+            .gslide.is-side { --gs-top: calc(72px + 8vh); --gs-bottom: 8vh; padding-left: 6vw; padding-right: 6vw; justify-content: flex-start; }
+            .gslide.is-side-left { justify-content: flex-end; }   /* text on the left → photo on the right */
+            .gslide.is-side .gslide__frame { width: min(56vw, calc((100svh - var(--gs-top) - var(--gs-bottom)) * var(--r))); }
+        }
