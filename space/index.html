@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="description" content="3D Space by Arthemii Ionaere: walk through a virtual gallery of all his work — stained glass sculpture and installations, Kinetic Prizm, drawings, videos, AI content and exhibitions.">
+<meta name="description" content="3D Space by Arthemii Ionaere: walk through a virtual gallery of all his work — stained glass sculpture and installations, Kinetic Prizm, drawings, videos, architecture and exhibitions.">
 <meta name="theme-color" content="#07070f">
 <title>3D Space — Arthemii Ionaere</title>
-<link rel="canonical" href="https://ionaere.com/space/"> <meta property="og:type" content="website"> <meta property="og:site_name" content="Arthemii Ionaere"> <meta property="og:title" content="3D Space — Arthemii Ionaere"> <meta property="og:description" content="Walk through a virtual 3D gallery of stained glass sculpture, Kinetic Prizm, drawings, videos and AI content by Arthemii Ionaere."> <meta property="og:url" content="https://ionaere.com/space/"> <meta property="og:image" content="https://ionaere.com/img/og-default.jpg"> <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://ionaere.com/space/"> <meta property="og:type" content="website"> <meta property="og:site_name" content="Arthemii Ionaere"> <meta property="og:title" content="3D Space — Arthemii Ionaere"> <meta property="og:description" content="Walk through a virtual 3D gallery of stained glass sculpture, Kinetic Prizm, drawings, videos and architecture by Arthemii Ionaere."> <meta property="og:url" content="https://ionaere.com/space/"> <meta property="og:image" content="https://ionaere.com/img/og-default.jpg"> <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/jpeg" href="../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,7 +76,7 @@
   }
 </style>
 </head>
-<body><div class="sr-only"><h1>3D Space — Arthemii Ionaere</h1><p>Walk through a virtual 3D gallery of all work by Arthemii Ionaere: stained glass sculpture and installations, Kinetic Prizm, drawings, videos, AI content and exhibitions.</p><a href="/gallery/">Gallery</a> <a href="/projects/">Projects</a> <a href="/drawings/">Drawings</a> <a href="/videos/">Videos</a> <a href="/ai-content/">AI Content</a> <a href="/exhibitions/">Exhibitions</a> <a href="/">Arthemii Ionaere — home</a></div>
+<body><div class="sr-only"><h1>3D Space — Arthemii Ionaere</h1><p>Walk through a virtual 3D gallery of all work by Arthemii Ionaere: stained glass sculpture and installations, Kinetic Prizm, drawings, videos, architecture and exhibitions.</p><a href="/gallery/">Gallery</a> <a href="/projects/">Projects</a> <a href="/drawings/">Drawings</a> <a href="/videos/">Videos</a> <a href="/architecture/">Architecture</a> <a href="/exhibitions/">Exhibitions</a> <a href="/">Arthemii Ionaere — home</a></div>
 <button class="ui back" type="button" id="back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span id="backTxt">ionaere.com</span></button>
 <nav class="ui sections" id="sections" aria-label="Sections"></nav>
 <div class="ui hint is-hidden" id="hint"></div>
@@ -102,36 +102,36 @@ function pickLang() {
 }
 const LANG = pickLang();
 const T = {
-  en: { intro: 'A walk through the work: stained glass, sculptures, videos, drawings and AI studies — every window leads to its page on the site.', enter: 'Enter', loading: 'Loading…',
+  en: { intro: 'A walk through the work: stained glass, sculptures, videos, drawings and architecture studies — every window leads to its page on the site.', enter: 'Enter', loading: 'Loading…',
         keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows — walk · <kbd>Shift</kbd> — faster · drag — look around · click a work — open it',
         hint: 'W A S D / arrows — walk · drag — look · click a work — open it', hintTouch: 'Joystick — walk · drag — look · tap a work — open it',
         back: 'ionaere.com', open: 'Open', start: 'Back to the entrance', err: 'Your browser cannot show the 3D space (WebGL is off).', site: 'Back to the site',
-        s: { gallery: 'Gallery', videos: 'Videos', projects: 'Projects', drawings: 'Drawings', ai: 'AI Art', exhibitions: 'Exhibitions' }, welcome: 'Walk through the work' },
-  de: { intro: 'Ein Rundgang durch das Werk: Glasmalerei, Skulpturen, Videos, Zeichnungen und KI-Studien — jedes Fenster führt zu seiner Seite.', enter: 'Eintreten', loading: 'Wird geladen…',
+        s: { gallery: 'Gallery', videos: 'Videos', projects: 'Projects', drawings: 'Drawings', ai: 'Architecture', exhibitions: 'Exhibitions' }, welcome: 'Walk through the work' },
+  de: { intro: 'Ein Rundgang durch das Werk: Glasmalerei, Skulpturen, Videos, Zeichnungen und Architekturstudien — jedes Fenster führt zu seiner Seite.', enter: 'Eintreten', loading: 'Wird geladen…',
         keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> oder Pfeiltasten — gehen · <kbd>Shift</kbd> — schneller · ziehen — umsehen · Werk anklicken — öffnen',
         hint: 'W A S D / Pfeiltasten — gehen · ziehen — umsehen · Werk anklicken — öffnen', hintTouch: 'Joystick — gehen · ziehen — umsehen · Werk antippen — öffnen',
         back: 'ionaere.com', open: 'Öffnen', start: 'Zurück zum Eingang', err: 'Dein Browser kann den 3D-Raum nicht anzeigen (WebGL ist aus).', site: 'Zurück zur Website',
-        s: { gallery: 'Galerie', videos: 'Videos', projects: 'Projekte', drawings: 'Zeichnungen', ai: 'KI-Kunst', exhibitions: 'Ausstellungen' }, welcome: 'Ein Gang durch das Werk' },
-  es: { intro: 'Un paseo por la obra: vitrales, esculturas, vídeos, dibujos y estudios con IA — cada ventana lleva a su página.', enter: 'Entrar', loading: 'Cargando…',
+        s: { gallery: 'Galerie', videos: 'Videos', projects: 'Projekte', drawings: 'Zeichnungen', ai: 'Architektur', exhibitions: 'Ausstellungen' }, welcome: 'Ein Gang durch das Werk' },
+  es: { intro: 'Un paseo por la obra: vitrales, esculturas, vídeos, dibujos y estudios de arquitectura — cada ventana lleva a su página.', enter: 'Entrar', loading: 'Cargando…',
         keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> o flechas — caminar · <kbd>Shift</kbd> — más rápido · arrastrar — mirar · clic en una obra — abrirla',
         hint: 'W A S D / flechas — caminar · arrastrar — mirar · clic en una obra — abrirla', hintTouch: 'Joystick — caminar · arrastrar — mirar · toca una obra — abrirla',
         back: 'ionaere.com', open: 'Abrir', start: 'Volver a la entrada', err: 'Tu navegador no puede mostrar el espacio 3D (WebGL desactivado).', site: 'Volver al sitio',
-        s: { gallery: 'Galería', videos: 'Vídeos', projects: 'Proyectos', drawings: 'Dibujos', ai: 'Arte IA', exhibitions: 'Exposiciones' }, welcome: 'Un paseo por la obra' },
-  fr: { intro: "Une promenade dans l'œuvre : vitraux, sculptures, vidéos, dessins et études IA — chaque fenêtre mène à sa page.", enter: 'Entrer', loading: 'Chargement…',
+        s: { gallery: 'Galería', videos: 'Vídeos', projects: 'Proyectos', drawings: 'Dibujos', ai: 'Arquitectura', exhibitions: 'Exposiciones' }, welcome: 'Un paseo por la obra' },
+  fr: { intro: "Une promenade dans l'œuvre : vitraux, sculptures, vidéos, dessins et études d’architecture — chaque fenêtre mène à sa page.", enter: 'Entrer', loading: 'Chargement…',
         keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> ou flèches — marcher · <kbd>Shift</kbd> — plus vite · glisser — regarder · clic sur une œuvre — l’ouvrir',
         hint: 'W A S D / flèches — marcher · glisser — regarder · clic sur une œuvre — l’ouvrir', hintTouch: 'Joystick — marcher · glisser — regarder · toucher une œuvre — l’ouvrir',
         back: 'ionaere.com', open: 'Ouvrir', start: "Retour à l'entrée", err: "Votre navigateur ne peut pas afficher l'espace 3D (WebGL désactivé).", site: 'Retour au site',
-        s: { gallery: 'Galerie', videos: 'Vidéos', projects: 'Projets', drawings: 'Dessins', ai: 'Art IA', exhibitions: 'Expositions' }, welcome: "Une promenade dans l'œuvre" },
-  it: { intro: "Una passeggiata nell'opera: vetrate, sculture, video, disegni e studi IA — ogni finestra porta alla sua pagina.", enter: 'Entra', loading: 'Caricamento…',
+        s: { gallery: 'Galerie', videos: 'Vidéos', projects: 'Projets', drawings: 'Dessins', ai: 'Architecture', exhibitions: 'Expositions' }, welcome: "Une promenade dans l'œuvre" },
+  it: { intro: "Una passeggiata nell'opera: vetrate, sculture, video, disegni e studi di architettura — ogni finestra porta alla sua pagina.", enter: 'Entra', loading: 'Caricamento…',
         keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> o frecce — cammina · <kbd>Shift</kbd> — più veloce · trascina — guarda · clic su un’opera — aprila',
         hint: 'W A S D / frecce — cammina · trascina — guarda · clic su un’opera — aprila', hintTouch: 'Joystick — cammina · trascina — guarda · tocca un’opera — aprila',
         back: 'ionaere.com', open: 'Apri', start: "Torna all'ingresso", err: 'Il tuo browser non può mostrare lo spazio 3D (WebGL disattivato).', site: 'Torna al sito',
-        s: { gallery: 'Galleria', videos: 'Video', projects: 'Progetti', drawings: 'Disegni', ai: 'Arte IA', exhibitions: 'Mostre' }, welcome: "Una passeggiata nell'opera" },
-  ru: { intro: 'Прогулка по работам: витражи, скульптуры, видео, рисунки и AI-этюды — каждое окно ведёт на свою страницу сайта.', enter: 'Войти', loading: 'Загрузка…',
+        s: { gallery: 'Galleria', videos: 'Video', projects: 'Progetti', drawings: 'Disegni', ai: 'Arquitectura', exhibitions: 'Mostre' }, welcome: "Una passeggiata nell'opera" },
+  ru: { intro: 'Прогулка по работам: витражи, скульптуры, видео, рисунки и архитектурные этюды — каждое окно ведёт на свою страницу сайта.', enter: 'Войти', loading: 'Загрузка…',
         keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> или стрелки — идти · <kbd>Shift</kbd> — быстрее · тянуть мышью — осмотреться · клик по работе — открыть',
         hint: 'W A S D / стрелки — идти · тянуть — осмотреться · клик по работе — открыть', hintTouch: 'Джойстик — идти · свайп — осмотреться · тап по работе — открыть',
         back: 'ionaere.com', open: 'Открыть', start: 'Назад ко входу', err: 'Браузер не может показать 3D-пространство (WebGL выключен).', site: 'Вернуться на сайт',
-        s: { gallery: 'Галерея', videos: 'Видео', projects: 'Проекты', drawings: 'Рисунки', ai: 'AI-арт', exhibitions: 'Выставки' }, welcome: 'Прогулка по работам' }
+        s: { gallery: 'Галерея', videos: 'Видео', projects: 'Проекты', drawings: 'Рисунки', ai: 'Архитектура', exhibitions: 'Выставки' }, welcome: 'Прогулка по работам' }
 };
 const L = T[LANG] || T.en;
 document.documentElement.lang = T[LANG] ? LANG : 'en';
@@ -678,12 +678,12 @@ const TOUR_HINT = {
 const TOUR_TXT = (TOUR_HINT[T[LANG] ? LANG : 'en'] || TOUR_HINT.en)[isTouch ? 1 : 0];
 const CATS = ['all', 'kaleidoscope', 'prisms', 'sculpture', 'stained', 'video', 'ai-arch', 'ai', 'drawings', 'photos', 'exhibitions'];
 const CAT_NAMES = {
-  en: ['All', 'Kaleidoscope', 'Prisms', 'Sculptures', 'Stained glass', 'Videos', 'AI architecture', 'AI', 'Drawings', 'Photos', 'Exhibitions'],
-  de: ['Alles', 'Kaleidoskop', 'Prismen', 'Skulpturen', 'Glasmalerei', 'Videos', 'KI-Architektur', 'KI', 'Zeichnungen', 'Fotos', 'Ausstellungen'],
-  es: ['Todo', 'Caleidoscopio', 'Prismas', 'Esculturas', 'Vitrales', 'Vídeos', 'Arquitectura IA', 'IA', 'Dibujos', 'Fotos', 'Exposiciones'],
-  fr: ['Tout', 'Kaléidoscope', 'Prismes', 'Sculptures', 'Vitraux', 'Vidéos', 'Architecture IA', 'IA', 'Dessins', 'Photos', 'Expositions'],
-  it: ['Tutto', 'Caleidoscopio', 'Prismi', 'Sculture', 'Vetrate', 'Video', 'Architettura IA', 'IA', 'Disegni', 'Foto', 'Mostre'],
-  ru: ['Всё', 'Калейдоскоп', 'Призмы', 'Скульптуры', 'Витражи', 'Видео', 'AI-архитектура', 'AI', 'Рисунки', 'Фото', 'Выставки']
+  en: ['All', 'Kaleidoscope', 'Prisms', 'Sculptures', 'Stained glass', 'Videos', 'Architecture', 'Renders', 'Drawings', 'Photos', 'Exhibitions'],
+  de: ['Alles', 'Kaleidoskop', 'Prismen', 'Skulpturen', 'Glasmalerei', 'Videos', 'Architektur', 'Renderings', 'Zeichnungen', 'Fotos', 'Ausstellungen'],
+  es: ['Todo', 'Caleidoscopio', 'Prismas', 'Esculturas', 'Vitrales', 'Vídeos', 'Arquitectura', 'Renders', 'Dibujos', 'Fotos', 'Exposiciones'],
+  fr: ['Tout', 'Kaléidoscope', 'Prismes', 'Sculptures', 'Vitraux', 'Vidéos', 'Architecture', 'Rendus', 'Dessins', 'Photos', 'Expositions'],
+  it: ['Tutto', 'Caleidoscopio', 'Prismi', 'Sculture', 'Vetrate', 'Video', 'Architettura', 'Render', 'Disegni', 'Foto', 'Mostre'],
+  ru: ['Всё', 'Калейдоскоп', 'Призмы', 'Скульптуры', 'Витражи', 'Видео', 'Архитектура', 'Рендеры', 'Рисунки', 'Фото', 'Выставки']
 };
 const CAT_L = CAT_NAMES[T[LANG] ? LANG : 'en'] || CAT_NAMES.en;
 const IDLE_START = 3000, IDLE_FOCUS = 8000;   // after flying up to a work there is time to tap it again and open it
