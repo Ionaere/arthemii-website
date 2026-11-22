@@ -93,9 +93,6 @@
             .about-studio__name { white-space: normal; width: min-content; text-align: center; line-height: 1.05; letter-spacing: 0.18em; margin-right: -0.18em; }
             .about-studio__rule { max-width: 24px; }
         }
-        @media (prefers-reduced-motion: reduce) {
-            .about-studio { animation: none; opacity: 1; }
-        }
         /* Top of the About page: portrait on the right from the very top, header text on
            the left, the name wordmark running across both and over the photo */
         #about { position: relative; padding-top: var(--spacing-md); }
@@ -108,7 +105,7 @@
         .about-top > .about-studio {
             grid-column: 1 / -1; grid-row: 1; align-self: start;
             padding: 0;
-            margin: clamp(4rem, 17.5vw, 15rem) 0 var(--spacing-xl);
+            margin: clamp(1.5rem, 4.5vw, 4.5rem) 0 var(--spacing-xl);
         }
         .about-top > .section__header { grid-column: 1; grid-row: 2; align-self: start; margin-bottom: 0; }
         .about-portrait { grid-column: 2; grid-row: 1 / span 2; align-self: start; margin: 0; }
@@ -116,7 +113,7 @@
         @media (max-width: 768px) {
             .about-top { grid-template-columns: minmax(0, 1fr); }
             .about-portrait { grid-column: 1; grid-row: 1; }
-            .about-top > .about-studio { grid-row: 1; margin-top: 56vw; }
+            .about-top > .about-studio { grid-row: 1; margin-top: 12vw; }
             .about-top > .section__header { grid-column: 1; grid-row: 2; margin-top: var(--spacing-lg); }
         }
         /* Artist name opening the About text */
@@ -321,6 +318,6 @@
     </script>
     <script src="../../smooth-scroll.js" defer></script>
     <script src="../../i18n.js?v=20261117c"></script>
-    <script src="../../about-scroll.js?v=20261122" defer></script>
+    <script src="../../about-scroll.js?v=20261122h" defer></script>
 </body>
 </html>

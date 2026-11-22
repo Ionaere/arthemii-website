@@ -11,13 +11,12 @@
  *
  * Works together with i18n.js: word spans are marked data-no-i18n, and when
  * the language changes the original text is put back for i18n.js to translate,
- * then split again. Nothing happens for visitors who ask for reduced motion.
+ * then split again.
  */
 (function () {
   'use strict';
 
   if (!window.requestAnimationFrame || !document.querySelector) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   var main = document.querySelector('main');
   if (!main) return;

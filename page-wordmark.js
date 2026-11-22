@@ -27,7 +27,6 @@
   var ticking = false;
   function update() {
     ticking = false;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var h = window.innerHeight;
     var p = Math.min(Math.max((window.scrollY || window.pageYOffset) / Math.max(h * 0.6, 280), 0), 1);
     var e = p * p * (3 - 2 * p); /* smoothstep */
