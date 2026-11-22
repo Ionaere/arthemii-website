@@ -199,7 +199,8 @@
     }
     var ang = 0.6, speed = 0, last = 0, raf = 0, hover = false;
     var BASE = Math.PI * 2 / 7, FAST = Math.PI * 2 / 2.6;
-    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* keeps turning even when the phone has Reduce Motion switched on (owner's choice) */
+    var still = false;
     function draw() { size(); gl.uniform1f(uAng, ang); gl.drawArrays(gl.TRIANGLES, 0, 3); }
     function frame(now) {
       raf = 0;
