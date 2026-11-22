@@ -367,7 +367,7 @@ function crystalGeometry(R, H, S, bands, cap) {
   g.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
   return g;
 }
-const FACET_BEND = 0.42;
+const FACET_BEND = -0.3;   // negative: gently concave facets (enlarge), so the mirror-in-mirror repeats stay big and clear
 function buildRoom() {
   const S = 24, bands = 8;
   ROOM_R = RADIUS * 1.6 + 14;
