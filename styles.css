@@ -1825,3 +1825,83 @@
             .page-top > .page-wordmark { grid-row: 1; margin-top: calc((100vw - 2 * var(--spacing-md)) * 0.12); }
             .page-top > .section__header { grid-column: 1; grid-row: 2; margin-top: var(--spacing-lg); }
         }
+
+        /* ===== Gallery: one photo per screen. The title drops onto the photo in big
+           wordmark letters that invert it; the description lies on the bottom of the photo ===== */
+        .gslides { margin: 0 calc(50% - 50vw); }
+        .gslide {
+            position: relative;
+            isolation: isolate;               /* the title inverts only this slide (photo + white field) */
+            height: 100vh; height: 100svh;
+            min-height: 520px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 84px 4vw 5vh;
+            background: var(--bg);
+            overflow: hidden;
+        }
+        .gslide__media {
+            position: relative; display: block;
+            width: min(92vw, calc((100svh - 84px - 5vh) * var(--r)));
+            aspect-ratio: var(--r);
+            max-height: 100%;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: var(--bg-alt);
+        }
+        .gslide__media picture, .gslide__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .gslide__media img { transform: scale(1.06); transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .gslide.is-in .gslide__media img { transform: none; }
+        .gslide__title {
+            position: absolute; z-index: 2; left: 0; right: 0; top: 22%;
+            padding: 0 4vw;
+            display: flex; flex-direction: column; align-items: center; gap: 0.35em;
+            font-family: 'Italiana', var(--font-serif); font-weight: 400;
+            font-size: clamp(1.6rem, 4.6vw, 5.2rem); line-height: 1.08;
+            letter-spacing: 0.3em; text-transform: uppercase; text-align: center;
+            color: #fff;
+            mix-blend-mode: difference;
+            pointer-events: none;
+            opacity: 0;
+        }
+        .gslide__title--sat { mix-blend-mode: saturation; z-index: 3; }
+        .gslide__name { margin-right: -0.3em; max-width: 18ch; }
+        .gslide__year { font-size: 0.32em; letter-spacing: 0.5em; margin-right: -0.5em; }
+        .gslide.is-in .gslide__title { animation: gslideTitleIn 1.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        @keyframes gslideTitleIn {
+            0%   { opacity: 0; transform: translate3d(0, -45vh, 0) scale(1.6); }
+            30%  { opacity: 1; }
+            100% { opacity: 1; transform: none; }
+        }
+        .gslide__desc {
+            position: absolute; left: 0; right: 0; bottom: 0;
+            padding: 4.5rem clamp(1rem, 3vw, 2.25rem) clamp(1rem, 2.5vw, 1.75rem);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.72));
+            color: #fff;
+            opacity: 0; transform: translateY(18px);
+            transition: opacity 0.9s ease 0.6s, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.6s;
+        }
+        .gslide.is-in .gslide__desc { opacity: 1; transform: none; }
+        .gslide__text {
+            max-width: 720px; margin: 0;
+            font-size: 0.9375rem; line-height: 1.6;
+            display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
+        }
+        .gslide__meta { margin: 0.5rem 0 0; font-size: 0.75rem; letter-spacing: 0.06em; opacity: 0.75; }
+        .gslide__count {
+            position: absolute; left: 4vw; bottom: 2vh; z-index: 2;
+            font-family: 'Italiana', var(--font-serif); font-size: 0.9rem; letter-spacing: 0.3em;
+            color: var(--text-tertiary);
+        }
+        @media (max-width: 768px) {
+            .gslide { padding: 76px 4vw 6vh; }
+            /* phones: wide photos are shown taller (cropped at the sides) so the title lands on the photo */
+            .gslide__media {
+                width: min(92vw, calc((100svh - 76px - 6vh) * var(--r)));
+                aspect-ratio: auto;
+                height: clamp(48svh, calc(92vw / var(--r)), calc(100svh - 76px - 6vh));
+            }
+            .gslide__title { font-size: 8.5vw; letter-spacing: 0.16em; top: 33%; }
+            .gslide__name { margin-right: -0.16em; }
+            .gslide__desc { padding-top: 3.5rem; }
+            .gslide__text { font-size: 0.8125rem; -webkit-line-clamp: 4; }
+        }
