@@ -349,9 +349,25 @@ function crystalGeometry(R, H, S, bands, cap) {
   }
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  g.computeVertexNormals();
+  // curved facets: across every facet the mirror normal turns a little from its middle towards its corners,
+  // so each facet bends its reflection like a slightly domed mirror, while staying perfectly sharp
+  const nor = new Float32Array(pos.length);
+  const v = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()], c = new THREE.Vector3(), fn = new THREE.Vector3(), e1 = new THREE.Vector3(), e2 = new THREE.Vector3(), n = new THREE.Vector3();
+  for (let t = 0; t < pos.length; t += 9) {
+    for (let k = 0; k < 3; k++) v[k].fromArray(pos, t + k * 3);
+    c.copy(v[0]).add(v[1]).add(v[2]).multiplyScalar(1 / 3);
+    fn.crossVectors(e1.subVectors(v[1], v[0]), e2.subVectors(v[2], v[0])).normalize();
+    if (fn.dot(c) < 0) fn.negate();                       // always pointing out of the prism
+    const size = Math.max(v[0].distanceTo(c), v[1].distanceTo(c), v[2].distanceTo(c)) || 1;
+    for (let k = 0; k < 3; k++) {
+      n.subVectors(v[k], c).multiplyScalar(-FACET_BEND / size).add(fn).normalize();
+      n.toArray(nor, t + k * 3);
+    }
+  }
+  g.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
   return g;
 }
+const FACET_BEND = 0.42;
 function buildRoom() {
   const S = 24, bands = 8;
   ROOM_R = RADIUS * 1.6 + 14;
