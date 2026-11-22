@@ -295,7 +295,7 @@
       // shrunken view of everything on screen (like a crystal), not just the corner behind it
       gl.uniform2f(uC, vw / 2, vh / 2);
       gl.uniform2f(uV, vw, vh);
-      gl.uniform2f(uS, vw * 0.8, vh * 0.8);
+      gl.uniform2f(uS, vw * 0.12, vh * 0.12);
       gl.uniform1f(uAng, ang);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
