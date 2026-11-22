@@ -357,7 +357,9 @@ function buildRoom() {
   ROOM_R = RADIUS * 1.6 + 14;
   ROOM_H = RADIUS * 1.45 + 10;
   ROOM_IN = ROOM_R * 0.93 * Math.cos(Math.PI / S) - 1.8;   // how far from the axis you can fly
-  const cube = new THREE.WebGLCubeRenderTarget(isTouch ? 256 : 512, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter });
+  const cube = new THREE.WebGLCubeRenderTarget(isTouch ? 512 : 1024, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter });
+  // anisotropic filtering keeps reflections crisp on facets seen at a slant
+  cube.texture.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;
   cubeCam = new THREE.CubeCamera(0.1, 600, cube);
   const geo = crystalGeometry(ROOM_R, ROOM_H, S, bands, ROOM_R * 0.55);
   // a sharp mirror reflection (a plain cube-map lookup, no blur), darkened and slightly tinted like smoked glass
@@ -410,8 +412,7 @@ async function build(data) {
   // The name floats in the middle
   title = new THREE.Mesh(new THREE.PlaneGeometry(9, 1.7), new THREE.MeshBasicMaterial({ map: textTex('Arthemii Ionaere', { size: 150, w: 1600, h: 300, weight: 300, color: '#ffffff', sub: L.welcome, subColor: '#b9a8ff' }), transparent: true, depthWrite: false }));
   scene.add(title);
-  stars();
-  buildRoom();
+  buildRoom();   // no star dots: only the works and their reflections
   // Start just outside the cloud of works, looking into it
   camera.position.set(0, 0, Math.min(RADIUS + 7, ROOM_IN - 1));
 }
