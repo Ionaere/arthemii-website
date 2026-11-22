@@ -1744,3 +1744,45 @@
         /* "Works" is no longer in the top navigation (header and mobile menu); the footer keeps it */
         .header__link[href$="works/"],
         .mobile-nav__link[href$="works/"] { display: none; }
+
+        /* ===== Page name as a big wordmark, like IONAERE STUDIO on the home page:
+           wide-tracked Italiana capitals with side rules; drops in from above when the
+           page opens and flies away while scrolling down (page-wordmark.js) ===== */
+        .page-wordmark {
+            position: relative; z-index: 3;
+            margin: 0 0 var(--spacing-xl);
+            font-size: clamp(1.4rem, 5.4vw, 6rem);
+            pointer-events: none;
+            mix-blend-mode: difference;
+            opacity: 0;
+            animation: pageWordmarkFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
+        }
+        .page-wordmark__inner {
+            display: flex; align-items: center; justify-content: center;
+            gap: clamp(0.75rem, 2.5vw, 2.5rem);
+            transform-origin: 50% 60%;
+        }
+        .page-wordmark__rule { flex: 1 1 0; max-width: 220px; height: 1px; background: rgba(255, 255, 255, 0.55); }
+        .page-wordmark__name {
+            margin: 0;
+            font-family: 'Italiana', var(--font-serif); font-weight: 400;
+            font-size: 1em; line-height: 1;
+            letter-spacing: 0.38em; margin-right: -0.38em;
+            text-transform: uppercase; white-space: nowrap;
+            color: #fff;
+        }
+        @keyframes pageWordmarkFlyIn {
+            0%   { opacity: 0; transform: translate3d(0, -110vh, 0) scale(1.9); }
+            25%  { opacity: 1; }
+            100% { opacity: 1; transform: none; }
+        }
+        @media (max-width: 768px) {
+            /* phones: one word per line, like IONAERE / STUDIO on the home page */
+            .page-wordmark { font-size: 11vw; }
+            .page-wordmark__inner { gap: 0.6rem; }
+            .page-wordmark__name { white-space: normal; width: min-content; text-align: center; line-height: 1.05; letter-spacing: 0.18em; margin-right: -0.18em; }
+            .page-wordmark__rule { max-width: 24px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .page-wordmark { animation: none; opacity: 1; }
+        }
