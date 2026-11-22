@@ -68,6 +68,16 @@
         @media (max-width: 768px) {
             .about-watermark { top: 1.5rem; }
         }
+        /* Artist name opening the About text */
+        .about-name {
+            font-family: var(--font-serif);
+            font-weight: 300;
+            font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+            line-height: 1.1;
+            letter-spacing: 0.01em;
+            color: var(--text);
+            margin: 0 0 var(--spacing-md);
+        }
         @media (max-width: 768px) {
             .about-inline--right, .about-inline--left { float: none; width: 100%; margin: var(--spacing-md) 0 var(--spacing-lg); }
         }
@@ -133,6 +143,8 @@
                             <picture><source type="image/webp" srcset="../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-800.webp 800w, ../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-1600.webp 1600w, ../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-2400.webp 2400w" sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 800px"><img src="../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-1600.jpg" alt="Arthemii Ionaere portrait, 2025" loading="lazy" decoding="async"></picture>
                             <figcaption class="about-image__caption" data-i18n="about_image_caption">Portrait de l’artiste — 2025</figcaption>
                         </figure>
+
+                        <div class="about-name">Arthemii Ionaere</div>
 
                         <p data-i18n="about_p1">L’approche abstraite et contemporaine du verre et de la couleur s’éloigne du symbolisme chrétien traditionnel du vitrail, qui représente généralement de manière concrète des saints, des scènes bibliques ou des symboles. Pourtant, même sous cette forme abstraite, l’exploration des symboles et des significations possibles par une approche innovante du symbolisme reste pertinente.</p>
 
