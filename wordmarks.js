@@ -30,7 +30,7 @@
     '.wm-title>.wm-num{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;color:#c9c9c9;text-transform:none;position:absolute;left:0;top:50%;transform:translateY(-50%);margin:0!important;letter-spacing:0;font-size:1.6em;line-height:1}' +
     '.wm-title::before,.wm-title::after{content:"";flex:1 1 0;min-width:18px;max-width:64px;height:1px;background:#bdbdbd}' +
     '@media (max-width:768px){.wm-title{font-size:clamp(0.85rem,3.6vw,1rem)!important;letter-spacing:0.22em!important;gap:0.5rem}' +
-    '.wm-title>.wm-t{margin-right:-0.22em}.wm-title.wm-has-num{padding:0 2.4rem}.wm-title::before,.wm-title::after{max-width:24px}}';
+    '.wm-title{white-space:normal;justify-content:flex-start;text-align:left;min-width:0;line-height:1.35!important}.wm-title>.wm-t{margin-right:0;min-width:0;overflow-wrap:anywhere}.wm-title.wm-has-num{padding:0 0 0 2.6rem}.wm-title::before,.wm-title::after{display:none}.tech-block__head>.wm-title,.exhibition-block__head-text{flex:1 1 auto;min-width:0}.tech-block__head,.exhibition-block__head{min-width:0;max-width:100%}.wm-title::before,.wm-title::after{max-width:24px}}';
   var st = document.createElement('style');
   st.textContent = css;
   document.head.appendChild(st);
