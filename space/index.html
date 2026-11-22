@@ -321,7 +321,7 @@ function stars() {
 // Every facet is a slightly tinted, mirror-like glass pane: through it you see the stars outside,
 // and on it the works and the cosmos are reflected, sharp like in a mirror (a cube camera films the
 // scene around you several times a second).
-let room = null, roomEdges = null, cubeCam = null, cubes = null, cubeSide = 0, ROOM_R = 40, ROOM_H = 40, ROOM_IN = 38;
+let room = null, roomEdges = null, cubeCam = null, cubes = null, cubeSide = 0, CUBE_SIZE = 1024, ROOM_R = 40, ROOM_H = 40, ROOM_IN = 38;
 function crystalGeometry(R, H, S, bands, cap) {
   // rings of points, each turned half a step against the next, joined into triangles:
   // the walls, then two more rings narrowing into each tip
@@ -367,7 +367,7 @@ function crystalGeometry(R, H, S, bands, cap) {
   g.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
   return g;
 }
-const FACET_BEND = -0.3;   // negative: gently concave facets (enlarge), so the mirror-in-mirror repeats stay big and clear
+const FACET_BEND = -0.12;  // negative: slightly concave facets; kept small so reflections are barely enlarged and stay sharp
 function buildRoom() {
   const S = 24, bands = 8;
   ROOM_R = RADIUS * 1.6 + 14;
@@ -376,10 +376,12 @@ function buildRoom() {
   // two reflection pictures used in turn: the walls show one while the other is filmed — with the walls in it,
   // so the facets reflect each other too, like mirrors facing mirrors, and there is no empty black anywhere
   const mkCube = () => {
-    const c = new THREE.WebGLCubeRenderTarget(isTouch ? 512 : 1024, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter });
+    const c = new THREE.WebGLCubeRenderTarget(CUBE_SIZE, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter });
     c.texture.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;   // crisp on facets seen at a slant
     return c;
   };
+  const maxCube = renderer.capabilities.maxCubemapSize || 2048;
+  CUBE_SIZE = Math.min(maxCube, isTouch ? 1024 : 2048);   // high resolution: reflections stay sharp, not pixelated
   cubes = [mkCube(), mkCube()];
   const cube = cubes[0];
   cubeCam = new THREE.CubeCamera(0.1, 600, cubes[1]);
