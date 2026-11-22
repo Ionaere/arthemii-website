@@ -316,6 +316,72 @@ function stars() {
   cloud(2500, 0.6, 0.8, false);
   cloud(3000, 0.07, 0.75, true);
 }
+
+/* ---------- the room: a huge many-faceted glass prism floating in space ---------- */
+// Every facet is a slightly tinted, mirror-like glass pane: through it you see the stars outside,
+// and on it the works and the cosmos are reflected (a cube camera films the scene around you a few
+// times a second), with a thin rainbow sheen like dichroic glass.
+let room = null, roomEdges = null, cubeCam = null, ROOM_R = 40, ROOM_H = 40, ROOM_IN = 38;
+const CUBE_EVERY = isTouch ? 12 : 4;
+function crystalGeometry(R, H, S, bands, cap) {
+  const rings = [];
+  for (let k = 0; k <= bands; k++) {
+    const y = -H + 2 * H * k / bands;
+    const r = R * (1 - 0.07 * Math.cos(k * 1.9));
+    const off = (k % 2) * Math.PI / S + k * 0.06;
+    const ring = [];
+    for (let i = 0; i < S; i++) { const a = off + i * Math.PI * 2 / S; ring.push([Math.cos(a) * r, y, Math.sin(a) * r]); }
+    rings.push(ring);
+  }
+  const pos = [];
+  const tri = (a, b, c) => pos.push(...a, ...b, ...c);
+  for (let k = 0; k < bands; k++) {
+    for (let i = 0; i < S; i++) {
+      const A = rings[k][i], B = rings[k][(i + 1) % S], C = rings[k + 1][i], D = rings[k + 1][(i + 1) % S];
+      tri(A, C, B); tri(B, C, D);
+    }
+  }
+  const top = [0, H + cap, 0], bottom = [0, -H - cap, 0];
+  for (let i = 0; i < S; i++) {
+    tri(rings[bands][i], top, rings[bands][(i + 1) % S]);
+    tri(rings[0][i], rings[0][(i + 1) % S], bottom);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.computeVertexNormals();
+  return g;
+}
+function buildRoom() {
+  const S = 14, bands = 5;
+  ROOM_R = RADIUS + 13;
+  ROOM_H = RADIUS + 9;
+  ROOM_IN = ROOM_R * 0.93 * Math.cos(Math.PI / S) - 1.8;   // how far from the axis you can fly
+  const cube = new THREE.WebGLCubeRenderTarget(isTouch ? 256 : 512, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter });
+  cubeCam = new THREE.CubeCamera(0.1, 600, cube);
+  const geo = crystalGeometry(ROOM_R, ROOM_H, S, bands, ROOM_R * 0.55);
+  const mat = new THREE.MeshPhysicalMaterial({
+    color: 0xdfe6ff, metalness: 0.9, roughness: 0.03, envMap: cube.texture, envMapIntensity: 1.25,
+    iridescence: 0.75, iridescenceIOR: 1.7, iridescenceThicknessRange: [180, 820],
+    transparent: true, opacity: 0.56, depthWrite: false, side: THREE.DoubleSide, flatShading: true, fog: false
+  });
+  room = new THREE.Mesh(geo, mat);
+  room.renderOrder = -1;          // after the works, before the glows, labels and stars
+  scene.add(room);
+  // the edges of the facets catch the light
+  roomEdges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 1),
+    new THREE.LineBasicMaterial({ color: 0xcfd8ff, transparent: true, opacity: 0.28, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+  roomEdges.renderOrder = -1;
+  scene.add(roomEdges);
+}
+let cubeFrame = 0;
+function updateReflections() {
+  if (!cubeCam || (cubeFrame++ % CUBE_EVERY) !== 0) return;
+  room.visible = false; roomEdges.visible = false;
+  cubeCam.position.copy(camera.position);
+  cubeCam.update(renderer, scene);
+  room.visible = true; roomEdges.visible = true;
+}
+
 async function build(data) {
   await Promise.race([document.fonts.load("300 64px 'Cormorant Garamond'"), new Promise(r => setTimeout(r, 2500))]).catch(() => {});
   // Every work from every part of the site, shuffled and scattered through space: a different flight on every visit
@@ -341,8 +407,9 @@ async function build(data) {
   title = new THREE.Mesh(new THREE.PlaneGeometry(9, 1.7), new THREE.MeshBasicMaterial({ map: textTex('Arthemii Ionaere', { size: 150, w: 1600, h: 300, weight: 300, color: '#ffffff', sub: L.welcome, subColor: '#b9a8ff' }), transparent: true, depthWrite: false }));
   scene.add(title);
   stars();
+  buildRoom();
   // Start just outside the cloud of works, looking into it
-  camera.position.set(0, 0, RADIUS + 7);
+  camera.position.set(0, 0, Math.min(RADIUS + 7, ROOM_IN - 1));
 }
 
 /* ---------- lazy textures and videos ---------- */
@@ -786,9 +853,10 @@ function tick() {
     vel.lerp(target, 1 - Math.pow(0.002, dt));
     camera.position.addScaledVector(vel, dt);
   }
-  // stay inside the sky around the works
-  const maxR = RADIUS + 28, r = camera.position.length();
-  if (r > maxR) camera.position.multiplyScalar(maxR / r);
+  // stay inside the glass prism
+  const cp = camera.position, hr = Math.hypot(cp.x, cp.z);
+  if (hr > ROOM_IN) { cp.x *= ROOM_IN / hr; cp.z *= ROOM_IN / hr; }
+  cp.y = Math.max(-ROOM_H + 1.8, Math.min(ROOM_H + ROOM_R * 0.25, cp.y));
 
   // works drift a little and always turn their face to you
   const t = now * 0.001;
@@ -805,6 +873,7 @@ function tick() {
   stream(now);
   hover(now);
   idleCheck(now);
+  updateReflections();
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 }
