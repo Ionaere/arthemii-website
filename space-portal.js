@@ -178,7 +178,7 @@
   // Glint strength: 0 = clear glass that refracts the site, 1 = with rainbow bands over the glass
   var GLINT = 0;
 
-  // Keeps a small (256 px wide) picture of the visible photos and videos of the page.
+  // Keeps a small (384 px wide) picture of the visible photos and videos of the page.
   // Only images from this site are drawn, so the picture can be handed to WebGL.
   function pagePicture(own) {
     var c = document.createElement('canvas'), x = c.getContext('2d');
@@ -210,7 +210,7 @@
       paint: function (vw, vh) {
         var now = performance.now();
         if (now - lastScan > 2500) { lastScan = now; scan(); bgc = bgColor(); }
-        var W = 256, H = Math.max(64, Math.round(W * vh / vw)), k = W / vw;
+        var W = 384, H = Math.max(64, Math.round(W * vh / vw)), k = W / vw;
         if (c.width !== W || c.height !== H) { c.width = W; c.height = H; }
         x.globalAlpha = 1;
         x.fillStyle = bgc; x.fillRect(0, 0, W, H);
@@ -290,9 +290,11 @@
         var pic = page.paint(vw, vh);
         if (pic) { try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pic); } catch (e) { page.reset(); } }
       }
-      gl.uniform2f(uC, r.left + r.width / 2, r.top + r.height / 2);
+      // the whole screen sits behind the glass, centred on it: the prism shows a refracted,
+      // shrunken view of everything on screen (like a crystal), not just the corner behind it
+      gl.uniform2f(uC, vw / 2, vh / 2);
       gl.uniform2f(uV, vw, vh);
-      gl.uniform1f(uS, r.width / 2.18 * 1.1);
+      gl.uniform1f(uS, Math.min(vw, vh) * 0.3);
       gl.uniform1f(uAng, ang);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
