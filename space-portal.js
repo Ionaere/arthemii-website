@@ -196,10 +196,19 @@
       var m = (el.getAttribute('style') || '').match(/background-image:\s*url\((['"]?)(.*?)\1\)/i);
       return m ? m[2] : '';
     }
+    var txt = new Set();
     if ('IntersectionObserver' in window) {
+      // a margin, so things just below the prism (about to scroll under it) are ready too
       io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) vis.add(e.target); else vis.delete(e.target); });
-      });
+        es.forEach(function (e) {
+          var set = e.target.__spTxt ? txt : vis;
+          if (e.isIntersecting) set.add(e.target); else set.delete(e.target);
+        });
+      }, { rootMargin: '300px' });
+    }
+    function hasText(el) {
+      for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) return true;
+      return false;
     }
     function scan() {
       document.querySelectorAll('img, video, [style*="background-image"]').forEach(function (el) {
@@ -207,7 +216,14 @@
         seen.add(el);
         if (io) io.observe(el); else vis.add(el);
       });
+      document.querySelectorAll('h1, h2, h3, h4, p, li, blockquote, figcaption, a, button, label, span, div').forEach(function (el) {
+        if (seen.has(el) || own.contains(el) || !hasText(el)) return;
+        seen.add(el); el.__spTxt = true;
+        if (io) io.observe(el); else txt.add(el);
+      });
+      blocks = Array.prototype.slice.call(document.querySelectorAll('main > section, footer'));
     }
+    var blocks = [];
     function sameUrl(u) {
       if (!u) return false;
       try { return new URL(u, location.href).origin === location.origin; } catch (e) { return false; }
@@ -217,16 +233,27 @@
       var b = getComputedStyle(document.body).backgroundColor;
       return (!b || b === 'rgba(0, 0, 0, 0)' || b === 'transparent') ? '#fafafa' : b;
     }
+    function filled(c) { return c && c !== 'transparent' && !/rgba\([^)]*,\s*0\)$/.test(c); }
     var bgc = '#fafafa';
+    var rng = document.createRange();
     return {
       reset: function () { c = document.createElement('canvas'); x = c.getContext('2d'); },
-      paint: function (vw, vh) {
+      // paints the square piece of the page around the prism (L, T: its top-left corner on screen,
+      // S: its size in CSS pixels) — photos, videos, posters, section colours and the lines of text
+      paint: function (L, T, S) {
         var now = performance.now();
         if (now - lastScan > 2500) { lastScan = now; scan(); bgc = bgColor(); }
-        var W = 384, H = Math.max(64, Math.round(W * vh / vw)), k = W / vw;
-        if (c.width !== W || c.height !== H) { c.width = W; c.height = H; }
+        var W = 256, k = W / S;
+        if (c.width !== W || c.height !== W) { c.width = W; c.height = W; }
+        function hit(r) { return !(r.right < L || r.left > L + S || r.bottom < T || r.top > T + S); }
+        function box(r) { return [(r.left - L) * k, (r.top - T) * k, r.width * k, r.height * k]; }
         x.globalAlpha = 1;
-        x.fillStyle = bgc; x.fillRect(0, 0, W, H);
+        x.fillStyle = bgc; x.fillRect(0, 0, W, W);
+        blocks.forEach(function (el) {
+          var r = el.getBoundingClientRect(); if (!hit(r)) return;
+          var b = getComputedStyle(el).backgroundColor; if (!filled(b)) return;
+          var q = box(r); x.fillStyle = b; x.fillRect(q[0], q[1], q[2], q[3]);
+        });
         vis.forEach(function (el) {
           if (!el.isConnected) { vis.delete(el); return; }
           var tag = el.tagName, src = el, w0 = 0, h0 = 0;
@@ -244,7 +271,7 @@
           }
           if (!src || !w0 || !h0) return;
           var r = el.getBoundingClientRect();
-          if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > vh || r.right < 0 || r.left > vw) return;
+          if (r.width < 4 || r.height < 4 || !hit(r)) return;
           var cs = getComputedStyle(el);
           if (cs.visibility === 'hidden' || +cs.opacity === 0) return;
           // object-fit: cover (what the site uses) — crop the source to the box's shape
@@ -252,7 +279,26 @@
           if (tag !== 'IMG' && tag !== 'VIDEO' ? cs.backgroundSize !== 'contain' : (cs.objectFit !== 'fill' && cs.objectFit !== 'contain')) {
             if (ir > br) { sw = h0 * br; sx = (w0 - sw) / 2; } else { sh = w0 / br; sy = (h0 - sh) / 2; }
           }
-          try { x.drawImage(src, sx, sy, sw, sh, r.left * k, r.top * k, r.width * k, r.height * k); } catch (e) {}
+          var q = box(r);
+          try { x.drawImage(src, sx, sy, sw, sh, q[0], q[1], q[2], q[3]); } catch (e) {}
+        });
+        // text: each line as a soft bar in the text's colour (at this size that is what letters look like)
+        txt.forEach(function (el) {
+          if (!el.isConnected) { txt.delete(el); return; }
+          var r = el.getBoundingClientRect(); if (!r.width || !hit(r)) return;
+          var cs = getComputedStyle(el);
+          if (cs.visibility === 'hidden' || +cs.opacity === 0) return;
+          x.fillStyle = el.closest('.hero__studio') ? '#111' : cs.color;
+          for (var n = el.firstChild; n; n = n.nextSibling) {
+            if (n.nodeType !== 3 || !n.nodeValue.trim()) continue;
+            rng.selectNodeContents(n);
+            var rs = rng.getClientRects();
+            for (var i = 0; i < rs.length; i++) {
+              var lr = rs[i]; if (!hit(lr)) continue;
+              var q = box(lr), h = Math.max(1, q[3] * 0.5);
+              x.fillRect(q[0], q[1] + (q[3] - h) / 2, q[2], h);
+            }
+          }
         });
         return c;
       }
@@ -310,16 +356,17 @@
     function draw() {
       size();
       var r = cv.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
+      // the glass shows what is right behind it: a square piece of the page around the prism,
+      // refracted by its faces — so it changes with whatever scrolls underneath
+      var pw = r.width || 76, S = Math.max(220, pw * 3.4);
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
       if ((tick++ & 1) === 0 || still) {
-        var pic = page.paint(vw, vh);
+        var pic = page.paint(cx - S / 2, cy - S / 2, S);
         if (pic) { try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pic); } catch (e) { page.reset(); } }
       }
-      // the whole screen sits behind the glass, centred on it: the prism shows a refracted,
-      // shrunken view of everything on screen (like a crystal), not just the corner behind it
-      gl.uniform2f(uC, vw / 2, vh / 2);
-      gl.uniform2f(uV, vw, vh);
-      var m = Math.min(vw, vh);
-      gl.uniform2f(uS, m * 0.6, m * 0.3);
+      gl.uniform2f(uC, S / 2, S / 2);
+      gl.uniform2f(uV, S, S);
+      gl.uniform2f(uS, pw * 1.1, pw * 1.3);
       gl.uniform1f(uAng, ang);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
