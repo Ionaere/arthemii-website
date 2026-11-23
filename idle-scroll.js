@@ -1,6 +1,6 @@
 /*
- * Gallery and Videos pages: right away (and again 1 s after any activity) the page travels by
- * itself from photo to photo / video to video, resting on each; at the end it goes back up. A touch, a key, the wheel or a click
+ * Gallery, Videos and Drawings pages: right away (and again 1 s after any activity) the page travels by
+ * itself from photo to photo / video to video / line of drawings to the next, resting on each; at the end it goes back up. A touch, a key, the wheel or a click
  * stops it at once (just moving the mouse does not); it starts again after 1 quiet second. It rests while a photo or video is open full
  * screen, and while the tab is in the background.
  */
@@ -62,7 +62,18 @@
      (video to video) — quickly
      between them, slowing down as it arrives, resting 5 s on each photo centred on the
      screen, then easing away slowly to the next. At the last photo it goes back up. */
-  var slides = document.querySelectorAll('.gslide, .video-slides > .video-card');
+  // Drawings page: every visual line of drawings is a stop (one drawing per line stands for it)
+  function collect() {
+    var list = document.querySelectorAll('.gslide, .video-slides > .video-card');
+    if (list.length) return list;
+    var out = [], lastTop = null;
+    document.querySelectorAll('.drawings__rows .drawing').forEach(function (d) {
+      var t = Math.round(d.getBoundingClientRect().top + window.scrollY);
+      if (lastTop === null || Math.abs(t - lastTop) > 20) { out.push(d); lastTop = t; }
+    });
+    return out;
+  }
+  var slides = collect();
   var SLIDE_MODE = slides.length > 1;
   var HOLD = 5000;
   var move = null, holdUntil = 0, idx = -1;
@@ -100,6 +111,7 @@
   function slideStart() {
     timer = 0;
     if (raf || blocked()) return;
+    slides = collect();                       // the layout may have changed (resize, images)
     idx = nearestIndex();
     // first glide onto the photo nearest the middle, then rest on it
     var to = slideTarget(idx), from = window.scrollY;
