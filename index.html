@@ -2587,6 +2587,37 @@
             .section > .container > .section__toggle.has-thumbs > :not(.section__thumbs) { max-width: calc(100% - 96px); }
             .section > .container > .section__toggle .section__title, .section > .container > .section__toggle.has-thumbs .section__title { font-size: 0.9rem !important; }
         }
+
+        /* ===== Home rows: finer still ===== */
+        .section__toggle .yt-channel { font-size: 0.72rem !important; gap: 0.45rem !important; padding: 0.3rem 0.75rem 0.3rem 0.3rem !important; margin-top: 0.5rem !important; box-shadow: none !important; }
+        .section__toggle .yt-channel svg, .section__toggle .yt-channel.ig-channel svg { width: 18px !important; height: 18px !important; }
+        main > section.section.is-collapsible { padding-top: var(--spacing-sm); padding-bottom: var(--spacing-sm); }
+        .section > .container > .section__toggle .section__title, .section > .container > .section__toggle.has-thumbs .section__title { font-size: clamp(0.82rem, 0.95vw, 0.98rem) !important; letter-spacing: 0.12em !important; }
+        .section__thumb { box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07); border-radius: 6px; }
+        @media (min-width: 1025px) {
+            .section > .container > .section__toggle.has-thumbs { min-height: 84px; }
+            .section > .container > .section__toggle.has-thumbs .section__thumb { width: 126px; height: 84px; }
+            .section > .container > .section__toggle.has-thumbs .section__label-row { right: calc(126px + clamp(0.9rem, 1.5vw, 1.5rem)); }
+            .section > .container > .section__toggle.has-thumbs.thumbs-left .section__label-row { right: auto; left: calc(126px + clamp(0.9rem, 1.5vw, 1.5rem)); }
+            .section > .container > .section__toggle.has-thumbs .section__label { font-size: clamp(0.95rem, 1.25vw, 1.25rem); gap: 0.6rem; }
+            .section > .container > .section__toggle.has-thumbs .section__label::before,
+            .section > .container > .section__toggle.has-thumbs .section__label::after { width: clamp(16px, 1.8vw, 28px); }
+            .section__chevron { width: 1.5rem; height: 1.5rem; }
+            .section__chevron svg { width: 15px; height: 15px; }
+        }
+        @media (max-width: 1024px) {
+            .section .section__label,
+            .section > .container > .section__toggle.has-thumbs .section__label { font-size: 0.72rem; letter-spacing: 0.22em; gap: 0.5rem; }
+            .section .section__label::before, .section .section__label::after { width: 12px; }
+            .section .section__label::after { margin-left: -0.22em; }
+            .section__chevron svg { width: 16px; height: 16px; }
+        }
+        @media (max-width: 640px) {
+            .section__thumb { width: 68px; height: 50px; border-radius: 5px; }
+            .section > .container > .section__toggle.has-thumbs > :not(.section__thumbs) { max-width: calc(100% - 80px); }
+            .section > .container > .section__toggle .section__title, .section > .container > .section__toggle.has-thumbs .section__title { font-size: 0.8rem !important; }
+            .section__label-row { margin-bottom: 0.4rem !important; }
+        }
     </style>
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ionaere.com/#artist","name":"Arthemii Ionaere","url":"https://ionaere.com/","image":"https://ionaere.com/img/opt/portrait-arthemii-1600.jpg","jobTitle":"Stained glass artist","description":"Berlin-based contemporary stained glass artist creating three-dimensional glass sculptures in the Tiffany technique, kinetic prisms, lamps and light installations.","email":"mailto:info@ionaere.com","address":{"@type":"PostalAddress","addressLocality":"Berlin","addressCountry":"DE"},"knowsAbout":["Stained glass","Tiffany technique","Glass sculpture","Kinetic art","Light installation","Contemporary art"],"sameAs":["https://www.instagram.com/ionaerestudio/","https://www.instagram.com/ionaere/","https://www.instagram.com/lonaere/","https://www.youtube.com/@IonaereArthe"]},{"@type":"WebSite","@id":"https://ionaere.com/#website","url":"https://ionaere.com/","name":"Arthemii Ionaere","description":"Contemporary stained glass art by Arthemii Ionaere, Berlin","inLanguage":"en","publisher":{"@id":"https://ionaere.com/#artist"}}{% for ex in site.data.exhibitions.items %}{% assign ds = ex.date_start | strip | split: "." %}{% if ds.size == 3 %},{"@type":"ExhibitionEvent","name":{{ ex.title | jsonify }},"startDate":"{{ ds[2] }}-{{ ds[1] }}-{{ ds[0] }}"{% assign de = ex.date_end | strip | split: "." %}{% if de.size == 3 %},"endDate":"{{ de[2] }}-{{ de[1] }}-{{ de[0] }}"{% endif %},"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode"{% if ex.location and ex.location != "" %},"location":{"@type":"Place","name":{{ ex.location | strip | jsonify }},"address":{{ ex.location | strip | jsonify }}}{% endif %}{% if ex.photos.size > 0 %},"image":"https://ionaere.com{{ ex.photos[0] | relative_url }}"{% endif %},"organizer":{"@id":"https://ionaere.com/#artist"},"performer":{"@id":"https://ionaere.com/#artist"}}{% endif %}{% endfor %}]}
