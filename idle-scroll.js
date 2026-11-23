@@ -1,6 +1,6 @@
 /*
- * Gallery and Videos pages: after 3 seconds without any activity the page starts to
- * scroll down slowly by itself, like a slideshow; at the bottom it glides back up, and so on. Any movement of the mouse, a touch,
+ * Gallery and Videos pages: right away (and again 1 s after any activity) the page starts to
+ * scroll down slowly by itself (Videos), or travel from photo to photo resting on each (Gallery); at the end it goes back up. Any movement of the mouse, a touch,
  * a key, the wheel or a click stops it at once; it starts again after 3 more quiet
  * seconds. It rests while a photo or video is open full
  * screen, and while the tab is in the background.
@@ -10,7 +10,8 @@
   if (window.__idleScroll || !window.requestAnimationFrame) return;
   window.__idleScroll = true;
 
-  var IDLE_MS = 3000;
+  var IDLE_MS = 1000;        // quiet time after the visitor's own activity before it moves again
+  var FIRST_MS = 300;        // on page open it starts almost at once
   var SPEED = 64;            // pixels per second at full speed
   var RAMP = 1.5;            // seconds to ease from still to full speed
 
@@ -51,6 +52,58 @@
     if (atBottom()) dir = -1; else if (pos <= 0) dir = 1;
     raf = requestAnimationFrame(step);
   }
+
+  /* Gallery page: instead of a steady glide it travels from photo to photo — quickly
+     between them, slowing down as it arrives, resting 5 s on each photo centred on the
+     screen, then easing away slowly to the next. At the last photo it goes back up. */
+  var slides = document.querySelectorAll('.gslide');
+  var SLIDE_MODE = slides.length > 1;
+  var HOLD = 5000;
+  var move = null, holdUntil = 0, idx = -1;
+  function slideTarget(i) {
+    var r = slides[i].getBoundingClientRect();
+    return Math.min(maxY(), Math.max(0, window.scrollY + r.top + r.height / 2 - window.innerHeight / 2));
+  }
+  function nearestIndex() {
+    var best = 0, bd = 1e9, c = window.innerHeight / 2;
+    for (var i = 0; i < slides.length; i++) {
+      var r = slides[i].getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - c);
+      if (d < bd) { bd = d; best = i; }
+    }
+    return best;
+  }
+  // slow start, fast middle, slow arrival
+  function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function slideStep(now) {
+    raf = 0;
+    if (blocked()) { stop(); return; }
+    if (move) {
+      var t = Math.min(1, (now - move.t0) / move.dur);
+      pos = move.from + (move.to - move.from) * ease(t);
+      window.scrollTo({ top: pos, behavior: 'instant' });
+      if (t >= 1) { move = null; holdUntil = now + HOLD; }
+    } else if (now >= holdUntil) {
+      var n = idx + dir;
+      if (n >= slides.length || n < 0) { dir = -dir; n = idx + dir; }
+      idx = Math.max(0, Math.min(slides.length - 1, n));
+      var to = slideTarget(idx), from = window.scrollY, dist = Math.abs(to - from);
+      move = { from: from, to: to, t0: now, dur: 1800 + Math.min(2600, dist * 1.1) };
+    }
+    raf = requestAnimationFrame(slideStep);
+  }
+  function slideStart() {
+    timer = 0;
+    if (raf || blocked()) return;
+    idx = nearestIndex();
+    // first glide onto the photo nearest the middle, then rest on it
+    var to = slideTarget(idx), from = window.scrollY;
+    pos = from;
+    move = Math.abs(to - from) > 4 ? { from: from, to: to, t0: performance.now(), dur: 1800 + Math.min(2600, Math.abs(to - from) * 1.1) } : null;
+    holdUntil = performance.now() + (move ? 0 : HOLD);
+    if (idx >= slides.length - 1) dir = -1; else if (idx <= 0) dir = 1;
+    raf = requestAnimationFrame(slideStep);
+  }
+
   function stop() {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
@@ -58,7 +111,7 @@
   function activity() {
     stop();
     if (timer) clearTimeout(timer);
-    timer = setTimeout(start, IDLE_MS);
+    timer = setTimeout(SLIDE_MODE ? slideStart : start, IDLE_MS);
   }
 
   // browsers send a "mouse move" when the page scrolls under a still mouse: only real moves count
@@ -79,5 +132,6 @@
   }, { passive: true });
   document.addEventListener('visibilitychange', activity);
 
-  activity();
+  // start right away when the page opens
+  timer = setTimeout(SLIDE_MODE ? slideStart : start, FIRST_MS);
 })();
