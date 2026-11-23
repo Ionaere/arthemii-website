@@ -2684,12 +2684,14 @@
         @keyframes row-soft-open  { 0% { opacity: 0; } 15% { opacity: 0; } 100% { opacity: 1; } }
         @keyframes row-soft-close { 0% { opacity: 0; } 10% { opacity: 0; } 100% { opacity: 1; } }
         .section.is-open > .container > .section__toggle > *:not(.section__thumbs),
-        .tech-block.is-open > .tech-block__head > *,
-        .exhibition-block.is-open > .exhibition-block__head > * { animation: row-soft-open 1.1s cubic-bezier(.4, 0, .2, 1) both; }
+        .tech-block.is-open > .tech-block__head > *:not(.tech-block__mini),
+        .exhibition-block.is-open > .exhibition-block__head > *:not(.exhibition-block__mini) { animation: row-soft-open 1.1s cubic-bezier(.4, 0, .2, 1) both; }
         .section.is-collapsible.was-opened:not(.is-open) > .container > .section__toggle > *,
         .tech-block.was-opened:not(.is-open) > .tech-block__head > *,
         .exhibition-block.was-opened:not(.is-open) > .exhibition-block__head > * { animation: row-soft-close 0.9s cubic-bezier(.4, 0, .2, 1) both; }
         .section__thumbs { transition: opacity 0.7s ease !important; }
+        /* the small preview photo of a project / exhibition is gone while it is open */
+        .tech-block.is-open .tech-block__mini, .exhibition-block.is-open .exhibition-block__mini { opacity: 0 !important; visibility: hidden; animation: none !important; transition: opacity 0.4s ease, visibility 0s linear 0.4s; }
         @media (prefers-reduced-motion: reduce) {
             .section__body-inner, .tech-block__body-inner, .exhibition-block__body-inner { transition: none !important; opacity: 1; transform: none; }
             .section__toggle > *, .tech-block__head > *, .exhibition-block__head > * { animation: none !important; }
@@ -2970,7 +2972,7 @@
         <div class="section__divider"></div>
 
         <!-- ========== EXHIBITIONS ========== -->
-        <section class="section" id="exhibitions" data-thumbs="/img/uploads/hf_20260423_122957_2f4c752c-0695-4d9a-b034-b930d1da5091.jpg|../video-posters/light-architecture.jpg|../video-posters/luminous-grid.jpg|../img/new-lart-01.jpg|../img/new-noisy-01.jpg|../img/2024-12-Screenshot-2024-12-24-at-01.14.57.jpg|../video-posters/prismatic-dance.jpg|../img/2024-05-Screenshot-2024-05-25-at-16.52.48-1.jpg">
+        <section class="section" id="exhibitions" data-thumbs="../img/opt/2024-12-IMG_9373-Enhanced-NR-scaled-1600.jpg|../video-posters/light-architecture.jpg|../video-posters/luminous-grid.jpg|../img/new-lart-01.jpg|../img/new-noisy-01.jpg|../img/2024-12-Screenshot-2024-12-24-at-01.14.57.jpg|../video-posters/prismatic-dance.jpg|../img/2024-05-Screenshot-2024-05-25-at-16.52.48-1.jpg">
             <div class="container">
                 <header class="section__header reveal">
                     <div class="section__label">Ausstellungen</div>
@@ -4616,7 +4618,7 @@
     <script src="../contact.js"></script>
     <script src="../home-grow.js?v=3" defer></script>
     <script src="../tech-editorial.js?v=7" defer></script>
-    <script src="../editorial-more.js?v=3" defer></script>
+    <script src="../editorial-more.js?v=4" defer></script>
     <script>
     /* Ionaere Studio wordmark: flies away while scrolling down, comes back on the way up */
     (function () {

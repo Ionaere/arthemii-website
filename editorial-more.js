@@ -12,7 +12,7 @@
   var ROW_H = 330;
   var GAP = 8;
   var SECTION_HERO = {
-    exhibitions: 'img/opt/2024-12-IMG_9528-Enhanced-NR-scaled-1600.jpg',
+    exhibitions: 'img/opt/2024-12-IMG_9484-Enhanced-NR-scaled-1600.jpg',
     architecture: 'img/renders/DQz7gIWjB1K.webp'
   };
   var BASE = (document.querySelector('script[src*="editorial-more.js"]') || {}).getAttribute
