@@ -2483,7 +2483,7 @@
             .section .section__label::after { width: 22px; }
             .section .section__label::after { margin-left: -0.28em; }
         }
-        /* ===== Home rows (desktop): big section name lying half over the photo, subtitle on the other side ===== */
+        /* ===== Home rows (desktop): big section name right beside the photo, subtitle on the other side ===== */
         @media (min-width: 1025px) {
             .section:not(.is-open) > .container > .section__toggle.has-thumbs {
                 position: relative;
@@ -2496,7 +2496,7 @@
             .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label-row {
                 position: absolute;
                 top: 50%;
-                right: 150px;            /* ends in the middle of the photo */
+                right: calc(300px + clamp(1.5rem, 2.5vw, 2.5rem));   /* ends beside the photo, not on it */
                 transform: translateY(-50%);
                 z-index: 3;
                 margin: 0;
@@ -2504,7 +2504,7 @@
             }
             .section:not(.is-open) > .container > .section__toggle.has-thumbs.thumbs-left .section__label-row {
                 right: auto;
-                left: 150px;             /* starts in the middle of the photo */
+                left: calc(300px + clamp(1.5rem, 2.5vw, 2.5rem));    /* starts beside the photo, not on it */
                 justify-content: flex-start;
             }
             /* photo on the right: the open/close arrow goes before the name, on the white field, not on the photo */
@@ -2529,25 +2529,6 @@
                 text-align: right;
             }
         }
-        /* ===== Home rows (desktop): where the big section name lies over the photo, its letters
-           invert the photo (like IONAERE STUDIO) instead of a white glow. The name is drawn twice:
-           dark on the white field, and a white copy with mix-blend-mode: difference only over the
-           photo; a third copy (saturation) takes the colour tint out of the inversion. ===== */
-        .section__label-row--inv { display: none; }
-        @media (min-width: 1025px) {
-            .section:not(.is-open) > .container > .section__toggle.has-thumbs > .section__label-row:not(.section__label-row--inv) { clip-path: var(--lr-clip, none); }
-            .section:not(.is-open) > .container > .section__toggle.has-thumbs > .section__label-row--inv {
-                display: flex;
-                clip-path: var(--lr-inv-clip, inset(50%));
-                mix-blend-mode: difference;
-                z-index: 4;
-            }
-            .section:not(.is-open) > .container > .section__toggle.has-thumbs > .section__label-row--sat { mix-blend-mode: saturation; z-index: 5; }
-            .section:not(.is-open) > .container > .section__toggle.has-thumbs > .section__label-row--inv .section__label { color: #fff; }
-            .section:not(.is-open) > .container > .section__toggle.has-thumbs > .section__label-row--inv .section__label::before,
-            .section:not(.is-open) > .container > .section__toggle.has-thumbs > .section__label-row--inv .section__label::after { background: rgba(255, 255, 255, 0.55); }
-            .section:not(.is-open) > .container > .section__toggle.has-thumbs > .section__label-row--inv .section__chevron { color: #fff; }
-        }
         /* ===== Home rows: finer, more delicate (smaller rows, names and subtitles) ===== */
         main > section.section.is-collapsible:not(.is-open) { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-lg); }
         .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__title,
@@ -2558,8 +2539,8 @@
         @media (min-width: 1025px) {
             .section:not(.is-open) > .container > .section__toggle.has-thumbs { min-height: 140px; }
             .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__thumb { width: 210px; height: 140px; }
-            .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label-row { right: 105px; }
-            .section:not(.is-open) > .container > .section__toggle.has-thumbs.thumbs-left .section__label-row { right: auto; left: 105px; }
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label-row { right: calc(210px + clamp(1.25rem, 2vw, 2rem)); } /* beside the photo, not on it */
+            .section:not(.is-open) > .container > .section__toggle.has-thumbs.thumbs-left .section__label-row { right: auto; left: calc(210px + clamp(1.25rem, 2vw, 2rem)); }
             .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label { font-size: clamp(1.3rem, 2.1vw, 2rem); gap: 0.8rem; }
             .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label::before,
             .section:not(.is-open) > .container > .section__toggle.has-thumbs .section__label::after { width: clamp(24px, 2.6vw, 44px); }
@@ -4509,54 +4490,6 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', onScroll);
         update();
-    })();
-    </script>
-    <script>
-    /* Home rows: the section name inverts the photo where it lies over it (see .section__label-row--inv) */
-    (function () {
-        var rows = [];
-        function setup() {
-            document.querySelectorAll('.section__toggle.has-thumbs').forEach(function (h) {
-                var row = h.querySelector(':scope > .section__label-row');
-                if (!row || h.querySelector(':scope > .section__label-row--inv')) return;
-                ['section__label-row--inv', 'section__label-row--inv section__label-row--sat'].forEach(function (cls) {
-                    var c = row.cloneNode(true);
-                    c.className = 'section__label-row ' + cls;
-                    c.setAttribute('aria-hidden', 'true');
-                    h.insertBefore(c, row.nextSibling);
-                });
-                rows.push({ h: h, row: row, copies: h.querySelectorAll(':scope > .section__label-row--inv') });
-            });
-            update();
-        }
-        function update() {
-            rows.forEach(function (r) {
-                var th = r.h.querySelector('.section__thumbs .section__thumb') || r.h.querySelector('.section__thumbs');
-                var strip = r.h.querySelector('.section__thumbs');
-                if (!th || !strip || !r.row.offsetWidth) { r.row.style.removeProperty('--lr-clip'); return; }
-                // positions inside the row header, before transforms (both are shifted up by half their height)
-                var rowL = r.row.offsetLeft, rowT = r.row.offsetTop - r.row.offsetHeight / 2;
-                var stL = strip.offsetLeft, stT = strip.offsetTop - strip.offsetHeight / 2;
-                var x1 = stL + th.offsetLeft - rowL, y1 = stT + th.offsetTop - rowT;
-                var x2 = x1 + th.offsetWidth, y2 = y1 + th.offsetHeight;
-                var w = r.row.offsetWidth, hh = r.row.offsetHeight;
-                var inv = 'inset(' + y1.toFixed(1) + 'px ' + (w - x2).toFixed(1) + 'px ' + (hh - y2).toFixed(1) + 'px ' + x1.toFixed(1) + 'px round 12px)';
-                var out = 'polygon(evenodd, -50px -50px, ' + (w + 50) + 'px -50px, ' + (w + 50) + 'px ' + (hh + 50) + 'px, -50px ' + (hh + 50) + 'px, -50px -50px, ' +
-                    x1.toFixed(1) + 'px ' + y1.toFixed(1) + 'px, ' + x1.toFixed(1) + 'px ' + y2.toFixed(1) + 'px, ' + x2.toFixed(1) + 'px ' + y2.toFixed(1) + 'px, ' + x2.toFixed(1) + 'px ' + y1.toFixed(1) + 'px, ' + x1.toFixed(1) + 'px ' + y1.toFixed(1) + 'px)';
-                r.row.style.setProperty('--lr-clip', out);
-                r.copies.forEach(function (c) { c.style.setProperty('--lr-inv-clip', inv); });
-            });
-        }
-        var t;
-        function later() { clearTimeout(t); t = setTimeout(update, 60); }
-        window.addEventListener('resize', later);
-        window.addEventListener('load', function () { setup(); setTimeout(setup, 800); });
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
-        if (window.ResizeObserver) {
-            var ro = new ResizeObserver(later);
-            setTimeout(function () { rows.forEach(function (r) { ro.observe(r.h); ro.observe(r.row); }); }, 900);
-        }
-        if (document.readyState !== 'loading') setup(); else document.addEventListener('DOMContentLoaded', setup);
     })();
     </script>
 </body>
