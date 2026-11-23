@@ -1,6 +1,21 @@
 /* Arthemii Ionaere — Polski translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["pl"] = {
+  "Rotating glass sculptures — 2024": "Obracające się szklane rzeźby — 2024",
+  "Solo exhibition — 2024": "Wystawa indywidualna — 2024",
+  "Photos and video from the exhibition — 2024": "Zdjęcia i wideo z wystawy — 2024",
+  "Videos, process and effects →": "Wideo, proces i efekty →",
+  "← Back to Projects": "← Powrót do projektów",
+  "Process": "Proces",
+  "Effects": "Efekty",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel and bent in the kiln into curved forms that work like lenses and prisms. A directed light source is aimed at the turning glass; the rotation and the optics do the rest. The newest works (2026) run on a stepper motor with speed control and add a Fresnel lens for an extra optical effect.": "Każdy obiekt powstaje we własnej technice Arthemiego, witrażu mieszanym: szkło łączone jest z mosiądzem i stalą, a w piecu wyginane w zaokrąglone formy działające jak soczewki i pryzmaty. Skierowane źródło światła pada na obracające się szkło; resztę robią ruch i optyka. Najnowsze prace (2026) napędza silnik krokowy z regulacją prędkości, a soczewka Fresnela dodaje im dodatkowy efekt optyczny.",
+  "Caustics: bright lines of focused light that ripple across the wall like sunlight on water.": "Kaustyki: jasne linie skupionego światła falują na ścianie jak słońce na wodzie.",
+  "Moving shadows: coloured shadows grow, overlap and dissolve as the forms turn.": "Ruchome cienie: kolorowe cienie rosną, nakładają się i rozpływają, gdy formy się obracają.",
+  "Refraction: curved glass splits white light into spectral colours.": "Załamanie: wygięte szkło rozszczepia białe światło na barwy widma.",
+  "Reflection: polished surfaces throw moving flares of light across the room.": "Odbicie: polerowane powierzchnie rzucają po pomieszczeniu ruchome refleksy światła.",
+  "There is no projector and no screen: the effects come from physics, so they are never exactly the same twice.": "Nie ma tu projektora ani ekranu: efekty biorą się z fizyki, dlatego nigdy nie są dokładnie takie same.",
+  "All videos on YouTube →": "Wszystkie filmy na YouTube →",
+  "Videos, process and effects": "Wideo, proces i efekty",
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Pięć różnych podejść do pracy z kolorowym szkłem — od tradycyjnej techniki Tiffany po eksperymentalne instalacje z pryzmatami cienia.",
   "Kinetic Prizm": "Pryzmat kinetyczny",
   "Stepper motor and Fresnel lens — 2026": "Silnik krokowy i soczewka Fresnela — 2026",

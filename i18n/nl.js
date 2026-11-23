@@ -1,6 +1,21 @@
 /* Arthemii Ionaere — Nederlands translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["nl"] = {
+  "Rotating glass sculptures — 2024": "Draaiende glassculpturen — 2024",
+  "Solo exhibition — 2024": "Solotentoonstelling — 2024",
+  "Photos and video from the exhibition — 2024": "Foto’s en video van de tentoonstelling — 2024",
+  "Videos, process and effects →": "Video’s, werkwijze en effecten →",
+  "← Back to Projects": "← Terug naar projecten",
+  "Process": "Werkwijze",
+  "Effects": "Effecten",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel and bent in the kiln into curved forms that work like lenses and prisms. A directed light source is aimed at the turning glass; the rotation and the optics do the rest. The newest works (2026) run on a stepper motor with speed control and add a Fresnel lens for an extra optical effect.": "Elk object is gemaakt in Arthemii’s eigen techniek, mixed stained glass: glas gecombineerd met messing en staal en in de oven gebogen tot gewelfde vormen die werken als lenzen en prisma’s. Een gerichte lichtbron schijnt op het draaiende glas; de rotatie en de optica doen de rest. De nieuwste werken (2026) draaien op een stappenmotor met snelheidsregeling en krijgen met een fresnellens een extra optisch effect.",
+  "Caustics: bright lines of focused light that ripple across the wall like sunlight on water.": "Caustics: heldere lijnen van gebundeld licht die als zonlicht op water over de muur rimpelen.",
+  "Moving shadows: coloured shadows grow, overlap and dissolve as the forms turn.": "Bewegende schaduwen: gekleurde schaduwen groeien, overlappen en lossen op terwijl de vormen draaien.",
+  "Refraction: curved glass splits white light into spectral colours.": "Breking: gebogen glas splitst wit licht in spectrale kleuren.",
+  "Reflection: polished surfaces throw moving flares of light across the room.": "Reflectie: gepolijste oppervlakken werpen bewegende lichtflitsen door de ruimte.",
+  "There is no projector and no screen: the effects come from physics, so they are never exactly the same twice.": "Er is geen projector en geen scherm: de effecten komen voort uit de natuurkunde en zijn dus nooit twee keer precies hetzelfde.",
+  "All videos on YouTube →": "Alle video’s op YouTube →",
+  "Videos, process and effects": "Video’s, werkwijze en effecten",
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Vijf verschillende manieren van werken met gekleurd glas — van de traditionele Tiffany-techniek tot experimentele installaties met schaduwprisma’s.",
   "Kinetic Prizm": "Kinetisch prisma",
   "Stepper motor and Fresnel lens — 2026": "Stappenmotor en fresnellens — 2026",

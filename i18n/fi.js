@@ -1,6 +1,21 @@
 /* Arthemii Ionaere — Suomi translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["fi"] = {
+  "Rotating glass sculptures — 2024": "Pyörivät lasiveistokset — 2024",
+  "Solo exhibition — 2024": "Yksityisnäyttely — 2024",
+  "Photos and video from the exhibition — 2024": "Kuvia ja videota näyttelystä — 2024",
+  "Videos, process and effects →": "Videot, työprosessi ja efektit →",
+  "← Back to Projects": "← Takaisin projekteihin",
+  "Process": "Työprosessi",
+  "Effects": "Efektit",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel and bent in the kiln into curved forms that work like lenses and prisms. A directed light source is aimed at the turning glass; the rotation and the optics do the rest. The newest works (2026) run on a stepper motor with speed control and add a Fresnel lens for an extra optical effect.": "Jokainen teos on tehty Arthemiin omalla tekniikalla, sekalasimaalauksella: lasi yhdistetään messinkiin ja teräkseen ja taivutetaan uunissa kaareviksi muodoiksi, jotka toimivat kuin linssit ja prismat. Suunnattu valonlähde osoittaa pyörivään lasiin; pyöriminen ja optiikka hoitavat loput. Uusimmat teokset (2026) toimivat nopeussäädettävällä askelmoottorilla, ja Fresnel-linssi tuo niihin lisäefektin.",
+  "Caustics: bright lines of focused light that ripple across the wall like sunlight on water.": "Kaustiikka: kirkkaat kohdistetun valon viivat väreilevät seinällä kuin auringonvalo vedessä.",
+  "Moving shadows: coloured shadows grow, overlap and dissolve as the forms turn.": "Liikkuvat varjot: värilliset varjot kasvavat, menevät päällekkäin ja liukenevat muotojen pyöriessä.",
+  "Refraction: curved glass splits white light into spectral colours.": "Taittuminen: kaareva lasi hajottaa valkoisen valon spektrin väreiksi.",
+  "Reflection: polished surfaces throw moving flares of light across the room.": "Heijastus: kiillotetut pinnat heittävät liikkuvia valonvälähdyksiä ympäri huonetta.",
+  "There is no projector and no screen: the effects come from physics, so they are never exactly the same twice.": "Ei projektoria eikä näyttöä: efektit syntyvät fysiikasta, joten ne eivät ole koskaan täsmälleen samanlaisia.",
+  "All videos on YouTube →": "Kaikki videot YouTubessa →",
+  "Videos, process and effects": "Videot, työprosessi ja efektit",
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Viisi erilaista tapaa työskennellä värilasin kanssa — perinteisestä Tiffany-tekniikasta kokeellisiin varjoprisma-installaatioihin.",
   "Kinetic Prizm": "Kineettinen prisma",
   "Stepper motor and Fresnel lens — 2026": "Askelmoottori ja Fresnel-linssi — 2026",

@@ -1,6 +1,21 @@
 /* Arthemii Ionaere — Română translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["ro"] = {
+  "Rotating glass sculptures — 2024": "Sculpturi de sticlă rotative — 2024",
+  "Solo exhibition — 2024": "Expoziție personală — 2024",
+  "Photos and video from the exhibition — 2024": "Fotografii și video de la expoziție — 2024",
+  "Videos, process and effects →": "Videoclipuri, proces și efecte →",
+  "← Back to Projects": "← Înapoi la proiecte",
+  "Process": "Proces",
+  "Effects": "Efecte",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel and bent in the kiln into curved forms that work like lenses and prisms. A directed light source is aimed at the turning glass; the rotation and the optics do the rest. The newest works (2026) run on a stepper motor with speed control and add a Fresnel lens for an extra optical effect.": "Fiecare obiect este realizat în tehnica proprie a lui Arthemii, vitraliul mixt: sticlă îmbinată cu alamă și oțel și curbată în cuptor în forme care funcționează ca niște lentile și prisme. O sursă de lumină direcționată este îndreptată spre sticla care se rotește; rotația și optica fac restul. Cele mai noi lucrări (2026) funcționează cu un motor pas cu pas cu reglaj de viteză și adaugă o lentilă Fresnel pentru un efect optic suplimentar.",
+  "Caustics: bright lines of focused light that ripple across the wall like sunlight on water.": "Caustice: linii strălucitoare de lumină concentrată care se unduiesc pe perete ca soarele pe apă.",
+  "Moving shadows: coloured shadows grow, overlap and dissolve as the forms turn.": "Umbre în mișcare: umbre colorate cresc, se suprapun și se dizolvă pe măsură ce formele se rotesc.",
+  "Refraction: curved glass splits white light into spectral colours.": "Refracție: sticla curbată descompune lumina albă în culorile spectrului.",
+  "Reflection: polished surfaces throw moving flares of light across the room.": "Reflexie: suprafețele lustruite aruncă reflexe de lumină în mișcare prin toată încăperea.",
+  "There is no projector and no screen: the effects come from physics, so they are never exactly the same twice.": "Nu există proiector și nici ecran: efectele vin din fizică, așa că nu sunt niciodată exact la fel.",
+  "All videos on YouTube →": "Toate videoclipurile pe YouTube →",
+  "Videos, process and effects": "Videoclipuri, proces și efecte",
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Cinci abordări distincte ale lucrului cu sticla colorată — de la tehnica Tiffany tradițională la instalații experimentale cu prisme de umbră.",
   "Kinetic Prizm": "Prismă cinetică",
   "Stepper motor and Fresnel lens — 2026": "Motor pas cu pas și lentilă Fresnel — 2026",
