@@ -30,19 +30,36 @@
     return d;
   }
 
+  // Trackpads (and Magic Mouse) already scroll smoothly with their own momentum: smoothing them
+  // again makes the page lag and stick, so they are left to the browser. A trackpad sends many
+  // small, fine-grained steps; a mouse wheel sends whole notches.
+  var padUntil = 0;
+  function isTrackpad(e) {
+    var now = performance.now();
+    var pad = e.deltaMode === 0 && (
+      (e.wheelDeltaY && e.wheelDeltaY === -3 * e.deltaY) ||
+      Math.abs(e.deltaY) < 10 || e.deltaY % 1 !== 0 || e.deltaX !== 0);
+    if (pad) padUntil = now + 1200;          // its momentum keeps coming for a while
+    return pad || now < padUntil;
+  }
+
   // Leave the wheel to the browser where smoothing would get in the way
   function useNative(e) {
+    if (isTrackpad(e)) return true;
     if (e.ctrlKey || e.metaKey || e.defaultPrevented) return true;   // zoom, other handlers
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return true;        // sideways
     if (root.style.overflow === 'hidden' || document.body.style.overflow === 'hidden') return true; // lightbox open
     if (document.querySelector('.mobile-nav.is-open')) return true;
+    if (e.target && e.target.closest && e.target.closest('[data-native-scroll]')) return true;
     for (var el = e.target; el && el.nodeType === 1 && el !== document.body && el !== root; el = el.parentElement) {
-      if (el.hasAttribute('data-native-scroll')) return true;
+      // only tall boxes or boxes with hidden content can matter: skip the rest without asking for styles
+      var tall = el.offsetHeight > window.innerHeight * 0.5, more = el.scrollHeight > el.clientHeight + 1;
+      if (!tall && !more) continue;
       var cs = window.getComputedStyle(el);
       // Full-screen overlays (lightboxes, menus)
-      if (cs.position === 'fixed' && el.offsetHeight > window.innerHeight * 0.5) return true;
+      if (tall && cs.position === 'fixed') return true;
       // Boxes that scroll on their own and still have room to move
-      if (/(auto|scroll)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 1) {
+      if (more && /(auto|scroll)/.test(cs.overflowY)) {
         if ((e.deltaY < 0 && el.scrollTop > 0) ||
             (e.deltaY > 0 && el.scrollTop + el.clientHeight < el.scrollHeight - 1)) return true;
       }
