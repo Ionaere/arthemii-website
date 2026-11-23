@@ -508,5 +508,20 @@ window.I18N_DATA["pl"] = {
   "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Wszystko zaczęło się od rysunku: Arthemii zaczynał od rysowania. W istocie te rysunki są grafiką i naturalnie łączą się z techniką witrażu — można na ich podstawie tworzyć witraże. Okazało się jednak, że dzięki wyraźnym konturom i precyzyjnym formom można je wizualizować także w innych dziedzinach.",
   "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Te rysunki stały się później źródłem jego architektury: każdy z nich to precyzyjny schemat, który sztuczna inteligencja odczytuje i przekształca w architekturę, biżuterię i inne formy.",
   "Collected here are Arthemii’s projects, ranging from stained glass to sculpture on a metal frame. He is constantly looking for new paths and new projects. A new project will be ready soon: metal frames that can be assembled into one whole, taken apart and installed in any way. It will be presented shortly.": "Zebrano tu projekty Arthemiiego – od witrażu po rzeźbę na metalowej ramie. Nieustannie szuka nowych dróg i nowych projektów. Wkrótce będzie gotowy nowy projekt: metalowe ramy, które można złożyć w całość, rozłożyć i zainstalować w dowolny sposób. Zostanie zaprezentowany już niedługo.",
-  "Sculptures, exhibitions, the studio, installations, theatre and more": "Rzeźby, wystawy, pracownia, instalacje, teatr i nie tylko"
+  "Sculptures, exhibitions, the studio, installations, theatre and more": "Rzeźby, wystawy, pracownia, instalacje, teatr i nie tylko",
+  "Rotating glass sculptures — 2024": "Obracające się rzeźby ze szkła — 2024",
+  "Solo exhibition — Bashmet Centre, 2024": "Wystawa indywidualna — Centrum Baszmeta, 2024",
+  "← Back to Projects": "← Wróć do projektów",
+  "Kinetic glass works — 2024–2026": "Kinetyczne prace ze szkła — 2024–2026",
+  "Kinetic Prizm is a series of moving glass works that light passes through. As they turn, their shadows and caustics fill the room with analog visual effects: no projector, no screen — only glass, light and motion.": "Kinetic Prizm to seria ruchomych prac ze szkła, przez które przechodzi światło. Gdy się obracają, ich cienie i kaustyka wypełniają przestrzeń analogowymi efektami wizualnymi: bez projektora, bez ekranu — tylko szkło, światło i ruch.",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel, with the glass bent in the kiln into curved forms. A custom drive lets the rotation speed be adjusted, from a slow drift to fast, pulsing patterns. The newest works (2026) run on a stepper motor and add a Fresnel lens for an extra optical effect.": "Każdy obiekt powstaje we własnej technice Arthemiiego, mixed stained glass: szkło połączone z mosiądzem i stalą, przy czym szkło jest wyginane w piecu w krzywoliniowe formy. Specjalnie opracowany napęd pozwala regulować prędkość obrotu — od powolnego dryfu po szybkie, pulsujące wzory. Najnowsze prace (2026) działają na silniku krokowym, a soczewka Fresnela dodaje dodatkowy efekt optyczny.",
+  "Process": "Proces",
+  "Effects": "Efekty",
+  "Clips": "Klipy",
+  "Caustics — bright lines of focused light that ripple across the wall like sunlight on water.": "Kaustyka — jasne linie skupionego światła, które falują na ścianie jak słońce na wodzie.",
+  "Moving shadows — coloured shadows that grow, overlap and dissolve as the forms turn.": "Ruchome cienie — kolorowe cienie, które rosną, nakładają się i rozpływają, gdy formy się obracają.",
+  "Refraction — curved glass bends the light and splits it into spectral colours.": "Załamanie — wygięte szkło załamuje światło i rozszczepia je na barwy widma.",
+  "The effects come from physics, not from a screen, so they are never exactly the same twice.": "Efekty biorą się z fizyki, a nie z ekranu, więc nigdy nie są dwa razy dokładnie takie same.",
+  "Project page →": "Strona projektu →",
+  "Kinetic Prizm — Arthemii Ionaere": "Pryzmat kinetyczny — Arthemii Ionaere"
 };
