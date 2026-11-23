@@ -86,7 +86,7 @@
     .back { padding: 10px; }
     .modes button { padding: 7px 9px 7px 8px; font-size: 11px; gap: 5px; }
   }
-  @media (max-width: 360px) {
+  @media (max-width: 640px) {
     .modes button span { display: none; }
     .modes button.is-on span { display: inline; }
   }
@@ -429,17 +429,22 @@ function updateReflections() {
 /* ---------- three views, switched at the top left ----------
    prism   — inside the huge mirror-faceted glass prism (the works and their reflections)
    cosmos  — the open black cosmos with stars and a faint haze, as the space first was
-   kaleido — a three-mirror kaleidoscope: the view is folded into a triangle and mirrored in its three sides */
-const MODES = ['prism', 'cosmos', 'kaleido'];
+   kaleido — a three-mirror kaleidoscope: the view is folded into a triangle and mirrored in its three sides
+   fractal — the kaleidoscope as a fractal: in the middle of every triangle sits a smaller kaleidoscope, in its middle
+             a smaller one again, endlessly, and the view slowly dives into it */
+const MODES = ['prism', 'cosmos', 'kaleido', 'fractal'];
+const kalLike = m => m === 'kaleido' || m === 'fractal';
 const MODE_NAMES = {
-  en: ['Prism', 'Cosmos', 'Kaleidoscope'], de: ['Prisma', 'Kosmos', 'Kaleidoskop'], es: ['Prisma', 'Cosmos', 'Caleidoscopio'],
-  fr: ['Prisme', 'Cosmos', 'Kaléidoscope'], it: ['Prisma', 'Cosmo', 'Caleidoscopio'], ru: ['Призма', 'Космос', 'Калейдоскоп']
+  en: ['Prism', 'Cosmos', 'Kaleidoscope', 'Fractal'], de: ['Prisma', 'Kosmos', 'Kaleidoskop', 'Fraktal'], es: ['Prisma', 'Cosmos', 'Caleidoscopio', 'Fractal'],
+  fr: ['Prisme', 'Cosmos', 'Kaléidoscope', 'Fractale'], it: ['Prisma', 'Cosmo', 'Caleidoscopio', 'Frattale'], ru: ['Призма', 'Космос', 'Калейдоскоп', 'Фрактал'],
+  ar: ['منشور', 'الكون', 'مشكال', 'فراكتال']
 };
 const MODE_L = MODE_NAMES[T[LANG] ? LANG : 'en'] || MODE_NAMES.en;
 const MODE_ICONS = [
   '<path d="M12 2.5l7 6.2-7 12.8-7-12.8z"/><path d="M5 8.7h14M12 2.5v19"/>',
   '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.2 2.2M15.5 15.5l2.2 2.2M6.3 17.7l2.2-2.2M15.5 8.5l2.2-2.2"/><circle cx="12" cy="12" r="1.6"/>',
-  '<path d="M12 3.5l8.5 15h-17z"/><path d="M12 3.5v15M3.5 18.5l12.8-7.4M20.5 18.5L7.7 11.1"/>'
+  '<path d="M12 3.5l8.5 15h-17z"/><path d="M12 3.5v15M3.5 18.5l12.8-7.4M20.5 18.5L7.7 11.1"/>',
+  '<path d="M12 3.5l8.5 15h-17z"/><path d="M7.75 11l4.25 7.5 4.25-7.5z"/><path d="M9.9 7.25l2.1 3.75 2.1-3.75z"/>'
 ];
 let mode = (() => {
   const q = params.get('view');
@@ -451,7 +456,7 @@ const cosmosFog = new THREE.FogExp2(0x000000, 0.013);
 // In the kaleidoscope the works gather closer together (so the triangle is always full of them, not of black space)
 // and the picture inside the mirrors is filmed with a wider lens, so many works fall into it at once
 const KAL_PACK = 0.5;
-const packOf = m => m === 'kaleido' ? KAL_PACK : 1;
+const packOf = m => kalLike(m) ? KAL_PACK : 1;
 let packed = 1;
 function layoutFor(m) {
   const k = packOf(m);
@@ -465,7 +470,7 @@ function layoutFor(m) {
   packed = k;
 }
 function applyMode() {
-  const kaleido = mode === 'kaleido';
+  const kaleido = kalLike(mode);
   layoutFor(mode);
   if (room) room.visible = mode === 'prism';
   if (mode !== 'prism') stars();
@@ -507,21 +512,28 @@ MODES.forEach((m, i) => {
 const KAL_IN = isTouch ? 0.25 : 0.2;   // inradius of the triangle, as a share of the shorter side of the screen (a bit larger on phones)
 const KAL_TURN = 0.018;      // radians per second
 const KAL_FOV = 100;         // the wider lens that films the picture inside the mirrors
+const KAL_DIVE = 16;         // fractal: seconds for the view to dive one level deeper (everything grows twice as large)
 const kalCam = new THREE.PerspectiveCamera(KAL_FOV, 1, 0.05, 420);
-let kal = null, kalRot = 0;
+let kal = null, kalRot = 0, kalZoom = 0;
 const kalSize = new THREE.Vector2();
 function ensureKal() {
   renderer.getDrawingBufferSize(kalSize);
   if (!kal) {
     const rt = new THREE.WebGLRenderTarget(kalSize.x, kalSize.y, { type: THREE.HalfFloatType, samples: isTouch ? 2 : 4 });
     const mat = new THREE.ShaderMaterial({
-      uniforms: { tDiffuse: { value: rt.texture }, res: { value: new THREE.Vector2() }, r: { value: 100 }, rot: { value: 0 } },
+      uniforms: { tDiffuse: { value: rt.texture }, res: { value: new THREE.Vector2() }, r: { value: 100 }, rot: { value: 0 },
+        frac: { value: 0 }, zoom: { value: 0 }, px: { value: 1 } },
       vertexShader: 'void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }',
       fragmentShader: `
         uniform sampler2D tDiffuse; uniform vec2 res; uniform float r; uniform float rot;
+        uniform float frac; uniform float zoom; uniform float px;
         vec2 turn(vec2 v, float a) { float c = cos(a), s = sin(a); return vec2(c * v.x - s * v.y, s * v.x + c * v.y); }
         void main() {
           vec2 p = turn(gl_FragCoord.xy - 0.5 * res, -rot);
+          float unit = 1.0;   // one screen pixel, measured in the current level
+          // fractal: dive in — after one full dive the picture is twice as large and half a turn round, which is
+          // exactly the next level, so the dive never ends
+          if (frac > 0.5) { float z = exp2(zoom); p = turn(p, -3.14159265 * zoom) / z; unit = 1.0 / z; }
           const vec2 N0 = vec2(0.0, -1.0), N1 = vec2(0.8660254, 0.5), N2 = vec2(-0.8660254, 0.5);
           float n = 0.0;
           for (int i = 0; i < 48; i++) {
@@ -531,8 +543,22 @@ function ensureKal() {
             if (m == d0) p -= 2.0 * d0 * N0; else if (m == d1) p -= 2.0 * d1 * N1; else p -= 2.0 * d2 * N2;
             n += 1.0;
           }
+          float edge = 1e6, depth = 0.0;
+          if (frac > 0.5) {
+            // the middle quarter of the triangle (the upside-down one between the side midpoints) holds the whole
+            // kaleidoscope again, twice smaller and turned half round — and so on inside it
+            for (int d = 0; d < 10; d++) {
+              float e = max(dot(p, -N0), max(dot(p, -N1), dot(p, -N2))) - 0.5 * r;
+              edge = min(edge, abs(e) / unit);
+              if (e > 0.0) break;
+              p = -2.0 * p; unit *= 2.0; depth += 1.0;
+            }
+          }
           vec2 uv = (turn(p, rot) + 0.5 * res) / res;
-          gl_FragColor = vec4(texture2D(tDiffuse, uv).rgb * pow(0.99, n), 1.0);
+          vec3 c = texture2D(tDiffuse, uv).rgb * pow(0.99, n);
+          // thin brass lines between the levels, like the came between pieces of stained glass
+          c = mix(c, vec3(0.86, 0.72, 0.46), (1.0 - smoothstep(0.35 * px, 1.25 * px, edge)) * 0.7);
+          gl_FragColor = vec4(c, 1.0);
           #include <colorspace_fragment>
         }`,
       depthTest: false, depthWrite: false
@@ -548,6 +574,9 @@ function ensureKal() {
   u.res.value.copy(kalSize);
   u.r.value = KAL_IN * Math.min(kalSize.x, kalSize.y);
   u.rot.value = kalRot;
+  u.frac.value = mode === 'fractal' ? 1 : 0;
+  u.zoom.value = kalZoom;
+  u.px.value = kalSize.x / innerWidth;
 }
 // the same mirroring for a point on the screen (CSS pixels), so the reflected works can be clicked too
 function kalFold(x, y) {
@@ -555,6 +584,11 @@ function kalFold(x, y) {
   const c = Math.cos(-kalRot), s = Math.sin(-kalRot);
   let px = x - w / 2, py = h / 2 - y;
   let qx = c * px - s * py, qy = s * px + c * py;
+  if (mode === 'fractal') {
+    const z = Math.pow(2, kalZoom), a = -Math.PI * kalZoom, ca = Math.cos(a), sa = Math.sin(a);
+    const tx = (ca * qx - sa * qy) / z, ty = (sa * qx + ca * qy) / z;
+    qx = tx; qy = ty;
+  }
   const N = [[0, -1], [0.8660254, 0.5], [-0.8660254, 0.5]];
   for (let i = 0; i < 48; i++) {
     let m = 0, k = -1;
@@ -562,12 +596,19 @@ function kalFold(x, y) {
     if (k < 0) break;
     qx -= 2 * m * N[k][0]; qy -= 2 * m * N[k][1];
   }
+  if (mode === 'fractal') {
+    for (let d = 0; d < 10; d++) {
+      const e = Math.max(qy, -0.8660254 * qx - 0.5 * qy, 0.8660254 * qx - 0.5 * qy) - 0.5 * r;
+      if (e > 0) break;
+      qx *= -2; qy *= -2;
+    }
+  }
   const c2 = Math.cos(kalRot), s2 = Math.sin(kalRot);
   px = c2 * qx - s2 * qy; py = s2 * qx + c2 * qy;
   return [w / 2 + px, h / 2 - py];
 }
 function present() {
-  if (mode === 'kaleido') {
+  if (kalLike(mode)) {
     ensureKal();
     kalCam.position.copy(camera.position);
     kalCam.quaternion.copy(camera.quaternion);
@@ -791,9 +832,9 @@ const ray = new THREE.Raycaster();
 const mouse = { x: 0, y: 0, in: false };
 const ndc = new THREE.Vector2();
 function pick(x, y) {
-  if (mode === 'kaleido') [x, y] = kalFold(x, y);
+  if (kalLike(mode)) [x, y] = kalFold(x, y);
   ndc.set((x / innerWidth) * 2 - 1, -(y / innerHeight) * 2 + 1);
-  ray.setFromCamera(ndc, mode === 'kaleido' ? kalCam : camera);
+  ray.setFromCamera(ndc, kalLike(mode) ? kalCam : camera);
   ray.far = 16;
   const meshes = [];
   for (const o of items) { if (o.dist !== undefined && o.dist < 40) { meshes.push(o.pic); meshes.push(o.back); } }
@@ -974,7 +1015,7 @@ function passPoint(o, prev, next) {
     if (dir.lengthSq() < 0.09) dir.crossVectors(a, upV).addScaledVector(a, 0.4);
   }
   dir.normalize();
-  const pt = p.addScaledVector(dir, tourDist(o) * (mode === 'kaleido' ? 2.2 : TOUR_PASS));
+  const pt = p.addScaledVector(dir, tourDist(o) * (kalLike(mode) ? 2.2 : TOUR_PASS));
   const hr = Math.hypot(pt.x, pt.z), lim = ROOM_IN - 2;
   if (hr > lim) { pt.x *= lim / hr; pt.z *= lim / hr; }
   pt.y = Math.max(-ROOM_H + 2.5, Math.min(ROOM_H + ROOM_R * 0.25 - 1, pt.y));
@@ -1043,7 +1084,7 @@ function tourTick(dt) {
   const ahead = tourQ.clone().sub(tourP);
   let bend = 0;
   if (tanNow.lengthSq() > 1e-8 && ahead.lengthSq() > 1e-4) bend = tanNow.angleTo(ahead);
-  const want = (mode === 'kaleido' ? 0.28 : TOUR_SPEED) * (1 - 0.4 * Math.min(1, bend / 0.9));
+  const want = (kalLike(mode) ? 0.28 : TOUR_SPEED) * (1 - 0.4 * Math.min(1, bend / 0.9));
   T.speed += (want - T.speed) * (1 - Math.exp(-dt / 1.6));
   seg.s += T.speed * dt;
   while (seg.s >= seg.len) {
@@ -1069,7 +1110,7 @@ function tourTick(dt) {
   const errY = wrapA(wantYaw - yaw), errP = wantPitch - pitch;
   T.yawV += (TURN_W * TURN_W * errY - 2 * TURN_W * T.yawV) * dt;
   T.pitchV += (TURN_W * TURN_W * errP - 2 * TURN_W * T.pitchV) * dt;
-  const tm = mode === 'kaleido' ? TURN_MAX * 0.45 : TURN_MAX;   // in the mirrors every turn is multiplied: turn slower
+  const tm = kalLike(mode) ? TURN_MAX * 0.45 : TURN_MAX;   // in the mirrors every turn is multiplied: turn slower
   T.yawV = Math.max(-tm, Math.min(tm, T.yawV));
   T.pitchV = Math.max(-tm * 0.6, Math.min(tm * 0.6, T.pitchV));
   yaw = wrapA(yaw + T.yawV * dt);
@@ -1165,7 +1206,7 @@ function tick() {
     right.crossVectors(fwd, upV).normalize();
     target.set(0, 0, 0).addScaledVector(fwd, f).addScaledVector(right, s).addScaledVector(upV, u);
     if (target.lengthSq() > 1) target.normalize();
-    target.multiplyScalar(4.6 * run * (mode === 'kaleido' ? 0.5 : 1));   // the works are packed closer in the kaleidoscope
+    target.multiplyScalar(4.6 * run * (kalLike(mode) ? 0.5 : 1));   // the works are packed closer in the kaleidoscope
     if (wheelPush) { target.addScaledVector(fwd, wheelPush * 6); wheelPush *= 0.82; if (Math.abs(wheelPush) < 0.02) wheelPush = 0; }
     vel.lerp(target, 1 - Math.pow(0.002, dt));
     camera.position.addScaledVector(vel, dt);
@@ -1181,11 +1222,12 @@ function tick() {
     if (out) { cp.x += (cp.x * k - cp.x) * soft; cp.z += (cp.z * k - cp.z) * soft; cp.y += (y - cp.y) * soft; }
     else { cp.x *= k; cp.z *= k; cp.y = y; }
   } else {
-    const maxR = mode === 'kaleido' ? RADIUS * KAL_PACK + 6 : RADIUS + 28, r = cp.length();
+    const maxR = kalLike(mode) ? RADIUS * KAL_PACK + 6 : RADIUS + 28, r = cp.length();
     if (r > maxR + 0.5) cp.multiplyScalar(1 + (maxR / r - 1) * soft);
     else if (r > maxR) cp.multiplyScalar(maxR / r);
   }
-  if (mode === 'kaleido') kalRot += dt * KAL_TURN;
+  if (kalLike(mode)) kalRot += dt * KAL_TURN;
+  if (mode === 'fractal') kalZoom = (kalZoom + dt / KAL_DIVE) % 1;
 
   // works drift a little and always turn their face to you
   const t = now * 0.001;
