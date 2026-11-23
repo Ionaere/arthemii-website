@@ -857,7 +857,7 @@
   }
   // Subsection titles in the Ionaere Studio style, rolling in and out while scrolling (wordmarks.js)
   var wm = document.createElement('script');
-  wm.src = BASE + 'wordmarks.js?v=20261123a';
+  wm.src = BASE + 'wordmarks.js?v=20261123b';
   wm.defer = true;
   document.head.appendChild(wm);
   // Visitor statistics: GoatCounter (no cookies, no personal data stored)
