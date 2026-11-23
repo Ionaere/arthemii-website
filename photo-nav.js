@@ -78,3 +78,68 @@
   if (img.complete && img.naturalWidth) ready();
   else img.addEventListener('load', ready);
 })();
+
+/*
+ * Gallery photo pages: the title drops in beside the photo — tall and square photos,
+ * text alternating left / right from page to page — or below it for wide photos;
+ * the description and details follow it.
+ */
+(function () {
+  'use strict';
+  var view = document.querySelector('.photo-view');
+  if (!view || view.parentElement.querySelector('.gp')) return;
+  var box = view.parentElement;
+  var h1 = box.querySelector(':scope > h1');
+  if (!h1) return;
+  var img = view.querySelector('img');
+
+  var gp = document.createElement('div');
+  gp.className = 'gp';
+  box.insertBefore(gp, view);
+  gp.appendChild(view);
+  var text = document.createElement('div');
+  text.className = 'gp-text';
+  gp.appendChild(text);
+  // the title and the paragraphs after it (description, details) move next to the photo
+  var nodes = [h1];
+  for (var n = h1.nextElementSibling; n && n.tagName === 'P'; n = n.nextElementSibling) nodes.push(n);
+  nodes.forEach(function (el, i) {
+    el.removeAttribute('style');
+    el.className = i === 0 ? 'gp-title' : (nodes.length > 2 && i === nodes.length - 1 ? 'gp-meta' : 'gp-desc');
+    text.appendChild(el);
+  });
+
+  // "Name · 2023": the year goes on its own small line under the name
+  var m = h1.textContent.match(/^\s*(.+?)\s+·\s+(\d{4}.*?)\s*$/);
+  if (m && h1.children.length === 0) {
+    h1.textContent = m[1];
+    var y = document.createElement('span');
+    y.className = 'gp-year';
+    y.textContent = m[2];
+    h1.appendChild(y);
+  }
+
+  var count = document.querySelector('.photo-nav__count');
+  var num = count ? parseInt(count.textContent, 10) || 1 : 1;
+
+  function place() {
+    var r = img && img.naturalWidth ? img.naturalWidth / img.naturalHeight : 1.5;
+    gp.style.setProperty('--r', r.toFixed(3));
+    gp.classList.remove('gp--side', 'gp--below', 'gp--text-left');
+    if (r < 1.3) {
+      gp.classList.add('gp--side');
+      if (num % 2 === 0) gp.classList.add('gp--text-left');
+      box.style.maxWidth = '1320px';
+    } else {
+      gp.classList.add('gp--below');
+      box.style.maxWidth = '1000px';
+    }
+    requestAnimationFrame(function () { gp.classList.add('is-in'); });
+  }
+  if (img && !img.complete) {
+    img.addEventListener('load', place);
+    img.addEventListener('error', place);
+  } else {
+    place();
+  }
+})();
