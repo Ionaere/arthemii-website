@@ -83,7 +83,54 @@
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
 
+
+  /* Gallery photo pages: the work's name becomes a wordmark like IONAERE STUDIO —
+     wide-spaced Italiana capitals with rules, dropping in from above when the page opens
+     and flying away on scroll (coming back on the way up) */
+  function workTitle() {
+    var view = document.querySelector('.photo-view');
+    if (!view) return;
+    var h = view.parentNode.querySelector('h1');
+    if (!h || h.__wmw) return;
+    h.__wmw = true;
+    h.removeAttribute('style');
+    h.classList.add('wm-work');
+    var inner = document.createElement('span');
+    inner.className = 'wm-work__inner';
+    var t = document.createElement('span');
+    t.className = 'wm-work__t';
+    while (h.firstChild) t.appendChild(h.firstChild);
+    inner.appendChild(t);
+    h.appendChild(inner);
+    var st2 = document.createElement('style');
+    st2.textContent =
+      '.wm-work{margin:var(--spacing-md,1.5rem) 0 var(--spacing-md,1.5rem);font-size:clamp(1.3rem,3.4vw,2.9rem);' +
+      'animation:wmWorkIn 2.6s cubic-bezier(0.22,1,0.36,1) 0s both}' +
+      '.wm-work__inner{display:flex;align-items:center;justify-content:center;gap:clamp(0.7rem,2.2vw,2rem);transform-origin:50% 60%}' +
+      '.wm-work__inner::before,.wm-work__inner::after{content:"";flex:1 1 0;min-width:16px;max-width:160px;height:1px;background:#bdbdbd}' +
+      '.wm-work__t{font-family:"Italiana","Cormorant Garamond",Georgia,serif;font-weight:400;font-size:1em;line-height:1.2;' +
+      'letter-spacing:0.3em;margin-right:-0.3em;text-transform:uppercase;text-align:center;color:#111}' +
+      '@keyframes wmWorkIn{0%{opacity:0;transform:translate3d(0,-60vh,0) scale(1.6)}25%{opacity:1}100%{opacity:1;transform:none}}' +
+      '@media (max-width:768px){.wm-work{font-size:clamp(1.05rem,5.6vw,1.6rem)}.wm-work__t{letter-spacing:0.2em;margin-right:-0.2em}' +
+      '.wm-work__inner::before,.wm-work__inner::after{max-width:28px}}';
+    document.head.appendChild(st2);
+    var ticking = false;
+    function upd() {
+      ticking = false;
+      var vh = window.innerHeight;
+      var r = h.getBoundingClientRect();
+      var tt = (r.top + r.height / 2) / vh;              // 1 = bottom of the screen, 0 = top
+      var p = Math.min(Math.max((0.3 - tt) / 0.35, 0), 1);
+      var e = p * p * (3 - 2 * p);
+      inner.style.transform = e ? 'translate3d(0,' + (-e * vh * 0.5).toFixed(1) + 'px,0) scale(' + (1 + e * 0.7).toFixed(3) + ')' : '';
+      inner.style.opacity = e ? (1 - e * e).toFixed(3) : '';
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
+    upd();
+  }
+
   function init() {
+    workTitle();
     // static titles: no scroll animation (owner's choice)
     setup();
     // titles added later (exhibitions are built by the page)
