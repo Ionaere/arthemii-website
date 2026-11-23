@@ -1,8 +1,7 @@
 /*
  * Gallery and Videos pages: right away (and again 1 s after any activity) the page travels by
- * itself from photo to photo / video to video, resting on each; at the end it goes back up. Any movement of the mouse, a touch,
- * a key, the wheel or a click stops it at once; it starts again after 3 more quiet
- * seconds. It rests while a photo or video is open full
+ * itself from photo to photo / video to video, resting on each; at the end it goes back up. A touch, a key, the wheel or a click
+ * stops it at once (just moving the mouse does not); it starts again after 1 quiet second. It rests while a photo or video is open full
  * screen, and while the tab is in the background.
  */
 (function () {
@@ -121,13 +120,7 @@
     timer = setTimeout(SLIDE_MODE ? slideStart : start, IDLE_MS);
   }
 
-  // browsers send a "mouse move" when the page scrolls under a still mouse: only real moves count
-  var mx = -1, my = -1;
-  window.addEventListener('mousemove', function (e) {
-    if (e.clientX === mx && e.clientY === my) return;
-    mx = e.clientX; my = e.clientY;
-    activity();
-  }, { passive: true, capture: true });
+  // moving the mouse around does not stop it — only scrolling, a click, a touch or a key does
   ['mousedown', 'wheel', 'touchstart', 'touchmove', 'keydown', 'click', 'pointerdown'].forEach(function (ev) {
     window.addEventListener(ev, activity, { passive: true, capture: true });
   });
