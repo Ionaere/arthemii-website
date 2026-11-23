@@ -500,5 +500,7 @@ window.I18N_DATA["fi"] = {
   "Photos": "Kuvat",
   "E-mail": "Sähköposti",
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Bašmet-keskus (2023)",
-  "Bashmet Centre": "Bašmet-keskus"
+  "Bashmet Centre": "Bašmet-keskus",
+  "Small Architecture": "Pienarkkitehtuuri",
+  "Bionic Gothic in small architecture": "Bioninen gotiikka pienarkkitehtuurissa"
 };
