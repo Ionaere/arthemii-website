@@ -196,16 +196,27 @@
       var m = (el.getAttribute('style') || '').match(/background-image:\s*url\((['"]?)(.*?)\1\)/i);
       return m ? m[2] : '';
     }
-    var txt = new Set();
-    if ('IntersectionObserver' in window) {
-      // a margin, so things just below the prism (about to scroll under it) are ready too
+    var txt = new Set(), all = [];
+    // Only things near the prism (the lower right corner of the screen) are tracked — plus a
+    // margin below, so what is about to scroll under it is ready. Keeping the set small makes
+    // re-reading the page cheap enough to do all the time, even while scrolling.
+    function makeIO() {
+      if (!('IntersectionObserver' in window)) return null;
+      if (io) io.disconnect();
+      vis.clear(); txt.clear();
+      var top = Math.max(0, window.innerHeight - 760), left = Math.max(0, window.innerWidth - 760);
       io = new IntersectionObserver(function (es) {
         es.forEach(function (e) {
           var set = e.target.__spTxt ? txt : vis;
           if (e.isIntersecting) set.add(e.target); else set.delete(e.target);
         });
-      }, { rootMargin: '300px' });
+      }, { rootMargin: '-' + top + 'px 0px 400px -' + left + 'px' });
+      all.forEach(function (el) { if (el.isConnected) io.observe(el); });
+      return io;
     }
+    makeIO();
+    var rz = 0;
+    window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(makeIO, 200); });
     function hasText(el) {
       for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) return true;
       return false;
@@ -213,12 +224,12 @@
     function scan() {
       document.querySelectorAll('img, video, [style*="background-image"]').forEach(function (el) {
         if (seen.has(el) || own.contains(el)) return;
-        seen.add(el);
+        seen.add(el); all.push(el);
         if (io) io.observe(el); else vis.add(el);
       });
       document.querySelectorAll('h1, h2, h3, h4, p, li, blockquote, figcaption, a, button, label, span, div').forEach(function (el) {
         if (seen.has(el) || own.contains(el) || !hasText(el)) return;
-        seen.add(el); el.__spTxt = true;
+        seen.add(el); el.__spTxt = true; all.push(el);
         if (io) io.observe(el); else txt.add(el);
       });
       blocks = Array.prototype.slice.call(document.querySelectorAll('main > section, footer'));
@@ -242,10 +253,11 @@
       // S: its size in CSS pixels) — photos, videos, posters, section colours and the lines of text
       paint: function (L, T, S) {
         var now = performance.now();
-        if (now - lastScan > 4000) {
+        if (!lastScan) { lastScan = now; scan(); bgc = bgColor(); }      // first time: right away
+        else if (now - lastScan > 4000) {
           lastScan = now;
           var job = function () { scan(); bgc = bgColor(); };
-          if (window.requestIdleCallback) requestIdleCallback(job, { timeout: 2000 }); else job();
+          if (window.requestIdleCallback) requestIdleCallback(job, { timeout: 1500 }); else job();
         }
         var W = 256, k = W / S;
         if (c.width !== W || c.height !== W) { c.width = W; c.height = W; }
@@ -362,7 +374,8 @@
       var r = cv.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
       // the glass shows what is right behind it: a square piece of the page around the prism,
       // refracted by its faces — so it changes with whatever scrolls underneath
-      var pw = r.width || 76, S = Math.max(220, pw * 3.4);
+      // a wide piece of the page, so the glass always has real things from the site to refract
+      var pw = r.width || 76, S = Math.max(340, pw * 4.6);
       var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
       if (repaint || repaint === undefined || still) {
         paintedAt = performance.now();
@@ -375,19 +388,17 @@
       gl.uniform1f(uAng, ang);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
-    // The prism turns smoothly every frame. Re-reading the page behind it (what the glass
-    // refracts) touches many elements, so that only happens while the page is still and at
-    // most a few times a second — never while you scroll.
-    var scrolledAt = 0, paintedAt = 0;
-    window.addEventListener('scroll', function () { scrolledAt = performance.now(); }, { passive: true });
-    window.addEventListener('wheel', function () { scrolledAt = performance.now(); }, { passive: true });
+    // The prism turns smoothly every frame. What the glass refracts is re-read from the page
+    // ~12 times a second (every frame for the first moments, so it is filled straight away),
+    // also while scrolling, so the reflection keeps up with what passes behind it.
+    var paintedAt = 0, bornAt = performance.now();
     function frame(now) {
       raf = 0;
       var dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
       var target = hover ? FAST : BASE;
       speed += (target - speed) * Math.min(1, dt * 3);
       ang = (ang + speed * dt) % (Math.PI * 2);
-      draw(now - scrolledAt > 250 && now - paintedAt > 180);
+      draw(now - bornAt < 2500 || now - paintedAt > 80);
       if (!document.hidden) raf = requestAnimationFrame(frame);
     }
     function start() { if (!raf && !still) { last = 0; raf = requestAnimationFrame(frame); } }
