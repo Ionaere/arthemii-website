@@ -2075,3 +2075,4 @@
         /* no 01 / 27 counters on the Gallery and Videos slides */
         .gslide__count { display: none; }
         .ai-arch--first .ai-source { margin-top: var(--spacing-lg); }
+        @media (max-width: 768px) { .page-top__media.page-top__media--whole { aspect-ratio: auto; } }   /* whole videos keep their own shape on phones too */
