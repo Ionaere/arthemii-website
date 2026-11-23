@@ -95,7 +95,7 @@
     var head = block.querySelector(sel);
     if (!head) return;
     var set = function () { block.style.setProperty(prop, head.offsetHeight + 'px'); };
-    set(); setTimeout(set, 450); setTimeout(set, 900);
+    set(); requestAnimationFrame(set); setTimeout(set, 120);
   }
 
   /* ---------- exhibitions ---------- */
@@ -123,6 +123,7 @@
   }
 
   function exPack(b) {
+    b.packedW = b.header.clientWidth;
     var rest = b.photos.slice(1);
     if (!b.gallery) return;
     b.gallery.innerHTML = '';
@@ -228,7 +229,7 @@
         var t = m.target;
         if (!t.classList || !t.classList.contains('is-open') || !desk()) return;
         exb.forEach(function (b) {
-          if (b.block === t) setTimeout(function () { exPack(b); headHeight(b.block, '.exhibition-block__head', '--tb-head-h'); }, 30);
+          if (b.block === t) { var w = b.header.clientWidth; if (w && w !== b.packedW) { b.packedW = w; exPack(b); } headHeight(b.block, '.exhibition-block__head', '--tb-head-h'); }
         });
         secs.forEach(function (s) { if (s.sec === t) secUpdate(s); });
       });

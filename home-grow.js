@@ -7,7 +7,7 @@
   'use strict';
 
   var css =
-    '.section__label,.tech-block__head>.wm-title,.exhibition-block__head .wm-title{transition:font-size .75s cubic-bezier(.2,.75,.2,1),letter-spacing .75s ease}' +
+    '.section__label,.tech-block__head>.wm-title,.exhibition-block__head .wm-title{transition:none!important}' +
     /* opened section: the name gets its own full-width line, the preview photo steps aside */
     '.section.is-open>.container>.section__toggle .section__label-row{position:relative!important;left:auto!important;right:auto!important;top:auto!important;transform:none!important;' +
       'width:100%;justify-content:center!important;margin:0 0 var(--spacing-md)!important}' +
@@ -107,7 +107,7 @@
     var open = block.classList.contains('is-open');
     if (state.get(block) === open) return;
     state.set(block, open);
-    if (open) requestAnimationFrame(function () { grow(block); });
+    if (open) grow(block);
     else shrink(block);
   }
 

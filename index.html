@@ -2667,28 +2667,29 @@
         html main > section.section.is-open, html.surf-io main > section.section.is-open { animation: none !important; opacity: 1 !important; transform: none !important; }
         /* ===== Smooth opening / closing of sections and of the groups inside them ===== */
         .section__body, .tech-block__body, .exhibition-block__body {
-            transition: grid-template-rows 0.9s cubic-bezier(.45, 0, .2, 1) !important;
+            transition: grid-template-rows 1.1s cubic-bezier(.65, 0, .35, 1) !important;
         }
         .section__body-inner, .tech-block__body-inner, .exhibition-block__body-inner {
-            opacity: 0; transform: translate3d(0, -14px, 0);
-            transition: opacity 0.35s ease, transform 0.5s ease;
+            opacity: 0; transform: translate3d(0, -10px, 0);
+            transition: opacity 0.45s ease, transform 0.6s ease;
+            will-change: opacity, transform;
         }
         .section.is-open > .container > .section__body > .section__body-inner,
         .tech-block.is-open .tech-block__body-inner,
         .exhibition-block.is-open .exhibition-block__body-inner {
             opacity: 1; transform: none;
-            transition: opacity 0.7s ease 0.15s, transform 0.9s cubic-bezier(.2, .7, .2, 1) 0.1s;
+            transition: opacity 1s cubic-bezier(.4, 0, .2, 1) 0.25s, transform 1.2s cubic-bezier(.22, .61, .36, 1) 0.15s;
         }
-        /* the header row re-arranges itself softly instead of jumping */
-        @keyframes row-soft-open  { from { opacity: 0; transform: translate3d(0, 8px, 0); } to { opacity: 1; transform: none; } }
-        @keyframes row-soft-close { from { opacity: 0; transform: translate3d(0, -6px, 0); } to { opacity: 1; transform: none; } }
+        /* the header row re-arranges itself while invisible and then slowly fades back in */
+        @keyframes row-soft-open  { 0% { opacity: 0; } 15% { opacity: 0; } 100% { opacity: 1; } }
+        @keyframes row-soft-close { 0% { opacity: 0; } 10% { opacity: 0; } 100% { opacity: 1; } }
         .section.is-open > .container > .section__toggle > *:not(.section__thumbs),
         .tech-block.is-open > .tech-block__head > *,
-        .exhibition-block.is-open > .exhibition-block__head > * { animation: row-soft-open 0.75s cubic-bezier(.2, .7, .2, 1) both; }
+        .exhibition-block.is-open > .exhibition-block__head > * { animation: row-soft-open 1.1s cubic-bezier(.4, 0, .2, 1) both; }
         .section.is-collapsible.was-opened:not(.is-open) > .container > .section__toggle > *,
         .tech-block.was-opened:not(.is-open) > .tech-block__head > *,
-        .exhibition-block.was-opened:not(.is-open) > .exhibition-block__head > * { animation: row-soft-close 0.6s cubic-bezier(.2, .7, .2, 1) both; }
-        .section__thumbs { transition: opacity 0.5s ease !important; }
+        .exhibition-block.was-opened:not(.is-open) > .exhibition-block__head > * { animation: row-soft-close 0.9s cubic-bezier(.4, 0, .2, 1) both; }
+        .section__thumbs { transition: opacity 0.7s ease !important; }
         @media (prefers-reduced-motion: reduce) {
             .section__body-inner, .tech-block__body-inner, .exhibition-block__body-inner { transition: none !important; opacity: 1; transform: none; }
             .section__toggle > *, .tech-block__head > *, .exhibition-block__head > * { animation: none !important; }
@@ -4613,9 +4614,9 @@
     <script src="smooth-scroll.js" defer></script>
     <script src="i18n.js?v=20261123q"></script>
     <script src="contact.js"></script>
-    <script src="home-grow.js?v=2" defer></script>
-    <script src="tech-editorial.js?v=6" defer></script>
-    <script src="editorial-more.js?v=2" defer></script>
+    <script src="home-grow.js?v=3" defer></script>
+    <script src="tech-editorial.js?v=7" defer></script>
+    <script src="editorial-more.js?v=3" defer></script>
     <script>
     /* Ionaere Studio wordmark: flies away while scrolling down, comes back on the way up */
     (function () {
