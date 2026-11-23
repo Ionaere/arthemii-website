@@ -2068,3 +2068,4 @@
         }
         /* no 01 / 27 counters on the Gallery and Videos slides */
         .gslide__count { display: none; }
+        .ai-arch--first .ai-source { margin-top: var(--spacing-lg); }
