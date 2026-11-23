@@ -3,6 +3,9 @@ window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["nl"] = {
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Vijf verschillende manieren van werken met gekleurd glas — van de traditionele Tiffany-techniek tot experimentele installaties met schaduwprisma’s.",
   "Kinetic Prizm": "Kinetisch prisma",
+  "Stepper motor and Fresnel lens — 2026": "Stappenmotor en fresnellens — 2026",
+  "Shadows and caustics — 2024": "Schaduwen en caustics — 2024",
+  "Analog mapping — 2023–2024": "Analoge mapping — 2023–2024",
   "Moving works that light passes through: as they turn, their shadows create striking analog visual effects. A custom drive was developed for this project, allowing the rotation speed to be adjusted.": "Bewegende werken waar licht doorheen valt: terwijl ze draaien, vormen hun schaduwen boeiende analoge visuele effecten. Voor dit project werd een eigen aandrijving ontwikkeld waarmee de draaisnelheid kan worden geregeld.",
   "36 stained glass panels — 7.2 × 1.8 m": "36 glas-in-loodpanelen — 7,2 × 1,8 m",
   "Recent exhibitions & events": "Recente tentoonstellingen en evenementen",

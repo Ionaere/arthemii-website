@@ -3,6 +3,9 @@ window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["ro"] = {
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Cinci abordări distincte ale lucrului cu sticla colorată — de la tehnica Tiffany tradițională la instalații experimentale cu prisme de umbră.",
   "Kinetic Prizm": "Prismă cinetică",
+  "Stepper motor and Fresnel lens — 2026": "Motor pas cu pas și lentilă Fresnel — 2026",
+  "Shadows and caustics — 2024": "Umbre și caustice — 2024",
+  "Analog mapping — 2023–2024": "Mapping analogic — 2023–2024",
   "Moving works that light passes through: as they turn, their shadows create striking analog visual effects. A custom drive was developed for this project, allowing the rotation speed to be adjusted.": "Lucrări în mișcare prin care trece lumina: în timp ce se rotesc, umbrele lor creează efecte vizuale analogice surprinzătoare. Pentru acest proiect a fost dezvoltat un mecanism propriu de acționare, care permite reglarea vitezei de rotație.",
   "36 stained glass panels — 7.2 × 1.8 m": "36 de panouri de vitraliu — 7,2 × 1,8 m",
   "Recent exhibitions & events": "Ultimele expoziții și evenimente",
