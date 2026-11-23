@@ -22,6 +22,7 @@
   var shade = 'linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,0))';
   var css =
     '@media (max-width:' + (MIN_W - 1) + 'px){.sec-hero{display:none!important}}' +
+    '.sec-hero__after:empty{display:none}' +
     /* section hero */
     '.sec-hero{margin:0 0 var(--spacing-xl)}' +
     '.sec-hero__img{position:relative;height:min(72vh,48vw);border-radius:10px;overflow:hidden;background:var(--bg-alt)}' +
@@ -34,7 +35,11 @@
       '.section.sh-on.is-open>.container>.section__toggle .section__title{color:rgba(255,255,255,.92)!important;text-shadow:0 1px 12px rgba(0,0,0,.35)}' +
       '.section.sh-on.is-open>.container>.section__toggle .section__chevron{color:#fff!important}' +
       '.section.sh-on.is-open>.container>.section__toggle .section__chevron svg{stroke:#fff}' +
-      '.section.sh-on.is-open>.container>.section__toggle .yt-channel{width:max-content!important;margin-left:auto!important;display:flex!important}' +
+      '.section.sh-on.is-open>.container>.section__toggle>:not(.section__label-row):not(.section__thumbs){display:none!important}' +
+      '.sec-hero__after{display:flex;align-items:center;justify-content:space-between;gap:var(--spacing-md);flex-wrap:wrap;margin-top:var(--spacing-md)}' +
+      '.sec-hero__after .section__title{margin:0!important;font-size:clamp(.82rem,.95vw,.98rem)!important;letter-spacing:.12em!important;font-weight:300!important;color:var(--text-secondary)!important}' +
+      '.sec-hero__after .yt-channel{font-size:.72rem!important;gap:.45rem!important;padding:.3rem .75rem .3rem .3rem!important;margin:0!important;box-shadow:none!important}' +
+      '.sec-hero__after .yt-channel svg{width:18px!important;height:18px!important}' +
     '}' +
     /* exhibitions */
     '.exhibition-block__header.tb-editorial{display:block!important}' +
@@ -51,11 +56,12 @@
     '.tb-gallery .tb-row{display:flex;gap:' + GAP + 'px}' +
     '.tb-gallery .tb-row>.exhibition-block__photo{display:block!important;flex:var(--r) 1 0;min-width:0;aspect-ratio:var(--r);border-radius:8px;overflow:hidden;background:var(--bg-alt)}' +
     '.tb-gallery .tb-row>.exhibition-block__photo img{width:100%;height:100%;object-fit:cover}' +
-    '.exhibition-block.tb-on.is-open .exhibition-block__head{position:relative;z-index:3;margin-bottom:calc(-1 * var(--tb-head-h, 90px) - 18px);transform:translateY(18px);padding-left:var(--spacing-md);padding-right:var(--spacing-md);box-sizing:border-box;width:100%}' +
+    '.exhibition-block.tb-on.is-open .exhibition-block__head{position:relative;z-index:3;margin-top:var(--spacing-xl);margin-bottom:calc(-1 * var(--tb-head-h, 90px) - 18px);transform:translateY(18px);padding-left:var(--spacing-md);padding-right:var(--spacing-md);box-sizing:border-box;width:100%}' +
     '.exhibition-block.tb-on.is-open .exhibition-block__head .wm-title{color:#fff!important;text-shadow:0 1px 18px rgba(0,0,0,.35)}' +
     '.exhibition-block.tb-on.is-open .exhibition-block__head .wm-title::before,.exhibition-block.tb-on.is-open .exhibition-block__head .wm-title::after{background:rgba(255,255,255,.8)!important}' +
-    '.exhibition-block.tb-on.is-open .exhibition-block__meta,.exhibition-block.tb-on.is-open .exhibition-block__meta *{color:#fff!important;border-color:rgba(255,255,255,.7)!important}' +
-    '.exhibition-block.tb-on.is-open .exhibition-block__meta{justify-content:center;text-align:center}' +
+    '.exhibition-block.tb-on.is-open .exhibition-block__head .exhibition-block__meta{display:none!important}' +
+    '.tb-meta{display:none}.exhibition-block.tb-on.is-open .tb-meta{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.75rem;margin:0 0 var(--spacing-md)}' +
+    '.tb-meta .exhibition-block__date{margin:0!important}.tb-meta .exhibition-block__type{margin:0!important}' +
     '.exhibition-block.tb-on.is-open .exhibition-block__chev{color:#fff!important}' +
     '.exhibition-block.is-open .exhibition-block__body .tb-editorial{padding-top:0!important}';
   var st = document.createElement('style');
@@ -158,7 +164,16 @@
       b.gallery = document.createElement('div');
       b.gallery.className = 'tb-gallery';
       b.header.appendChild(b.gallery);
-      if (b.text) b.text.classList.add('tb-text');
+      if (b.text) {
+        b.text.classList.add('tb-text');
+        var meta = b.block.querySelector('.exhibition-block__head .exhibition-block__meta');
+        if (meta && !b.metaCopy) {
+          b.metaCopy = meta.cloneNode(true);
+          b.metaCopy.className = 'tb-meta';
+          b.metaCopy.setAttribute('aria-hidden', 'true');
+          b.text.insertBefore(b.metaCopy, b.text.firstChild);
+        }
+      }
       if (b.photoCol) b.photoCol.classList.add('tb-hidden');
       b.header.classList.add('tb-editorial');
       b.block.classList.add('tb-on');
@@ -175,6 +190,7 @@
     b.hero.classList.remove('exb-hero--pair');
     b.hero.remove(); b.gallery.remove(); b.hero = b.gallery = null;
     if (b.text) b.text.classList.remove('tb-text');
+    if (b.metaCopy) { b.metaCopy.remove(); b.metaCopy = null; }
     if (b.photoCol) b.photoCol.classList.remove('tb-hidden');
     b.header.classList.remove('tb-editorial');
     b.block.classList.remove('tb-on');
@@ -198,6 +214,16 @@
     img.setAttribute('data-src', BASE + SECTION_HERO[id]);
     box.appendChild(img);
     hero.appendChild(box);
+    /* subtitle and link go under the photo, only the name lies on it */
+    var after = document.createElement('div');
+    after.className = 'sec-hero__after';
+    var toggle = sec.querySelector(':scope > .container > .section__toggle');
+    if (toggle) {
+      toggle.querySelectorAll(':scope > .section__title, :scope > .yt-channel').forEach(function (el) {
+        var c = el.cloneNode(true); c.removeAttribute('id'); after.appendChild(c);
+      });
+    }
+    hero.appendChild(after);
     inner.insertBefore(hero, inner.firstChild);
     return { sec: sec, hero: hero, img: img };
   }
