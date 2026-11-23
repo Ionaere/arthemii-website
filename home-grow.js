@@ -100,6 +100,23 @@
     setTimeout(function () { if (!t.style.fontSize) t.classList.remove('hg-grown', 'hg-wrap'); }, 800);
   }
 
+  /* while a block unfolds, its title stays where it was clicked (no jump up or down the page) */
+  function keepInPlace(block) {
+    var head = block.querySelector('.section__toggle, .tech-block__head, .exhibition-block__head');
+    if (!head) return;
+    var top0 = head.getBoundingClientRect().top, t0 = performance.now();
+    if (top0 < -50 || top0 > window.innerHeight) return;
+    var stop = false, user = function () { stop = true; };
+    window.addEventListener('wheel', user, { passive: true, once: true });
+    window.addEventListener('touchmove', user, { passive: true, once: true });
+    (function tick() {
+      if (stop || performance.now() - t0 > 1400) return;
+      var d = head.getBoundingClientRect().top - top0;
+      if (Math.abs(d) > 2) window.scrollBy({ top: d, behavior: 'instant' });
+      requestAnimationFrame(tick);
+    })();
+  }
+
   var SEL = '.section.is-collapsible, .tech-block.is-collapsible, .exhibition-block.is-collapsible';
   var state = new WeakMap();
 
@@ -107,7 +124,7 @@
     var open = block.classList.contains('is-open');
     if (state.get(block) === open) return;
     state.set(block, open);
-    if (open) grow(block);
+    if (open) { grow(block); keepInPlace(block); }
     else shrink(block);
   }
 

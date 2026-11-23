@@ -1842,6 +1842,18 @@
             .page-top > .section__header { grid-column: 1; grid-row: 2; margin-top: var(--spacing-lg); }
         }
 
+
+        /* Projects and Workshop pages: the page name on its own line at the top,
+           the photo/video and the text below it (the name no longer lies over the photo) */
+        .page-top.page-top--stack > .page-wordmark { grid-row: 1; margin: var(--spacing-md) 0 var(--spacing-xl); }
+        .page-top.page-top--stack > .page-top__media { grid-row: 2; }
+        .page-top.page-top--stack > .section__header { grid-row: 2; }
+        @media (max-width: 768px) {
+            .page-top.page-top--stack { grid-template-rows: auto auto auto; }
+            .page-top.page-top--stack > .page-wordmark { margin-top: var(--spacing-md); }
+            .page-top.page-top--stack > .page-top__media { grid-row: 2; }
+            .page-top.page-top--stack > .section__header { grid-row: 3; }
+        }
         /* ===== Gallery: one photo per screen. The title drops onto the top edge of the photo
            (half on the white field, half on the photo) in big wordmark letters that invert
            what is behind them; the description sits across the bottom edge the same way ===== */

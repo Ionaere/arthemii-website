@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Italiana&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
     <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
-    <link rel="stylesheet" href="../../styles.css?v=20261123nav">
+    <link rel="stylesheet" href="../../styles.css?v=20261123st">
     <style>
         .header { transform: none !important; animation: none !important; }
         .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
@@ -72,7 +72,7 @@
         /* Architecture first, its title as a big wordmark (like IONAERE STUDIO on the home page)
            that drops in from above, runs onto the first photos and flies away on scroll */
         .ai-arch.ai-arch--first { margin-top: 0; margin-bottom: var(--spacing-2xl); }
-        .ai-arch--first .ai-arch__header { max-width: none; margin: 0 0 -0.5em; position: relative; z-index: 3;
+        .ai-arch--first .ai-arch__header { max-width: none; margin: 0 0 var(--spacing-lg); position: relative; z-index: 3;
             font-size: clamp(1.3rem, 5vw, 5.5rem); pointer-events: none; mix-blend-mode: difference;
             opacity: 0; animation: aiArchFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both; }
         .ai-arch--first .ai-arch__title {
