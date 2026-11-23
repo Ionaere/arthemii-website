@@ -2624,6 +2624,31 @@
             .header__nav { display: none; }
             .header__menu-btn { display: block; }
         }
+        /* ===== About (home): "Arthemii Ionaere" drops in like IONAERE STUDIO when the section is
+           opened, its lower half running onto the top of the portrait. Three layers: dark letters on
+           the white field; white letters with mix-blend-mode: difference only over the photo (so they
+           invert it, like the hero wordmark); a saturation layer that takes the colour tint out.
+           The clip of each layer is set by the script below from where the photo is. ===== */
+        .about-studio { position: relative; z-index: 3; margin: var(--spacing-lg) 0 calc(-0.62em); font-size: clamp(1.4rem, 5.4vw, 6rem); pointer-events: none; }
+        .as-layer { clip-path: var(--as-clip, none); }
+        .as-layer--inv { position: absolute; inset: 0; mix-blend-mode: difference; clip-path: var(--as-inv, inset(50%)); }
+        .as-layer--sat { mix-blend-mode: saturation; }
+        .as-move { display: flex; align-items: center; justify-content: center; gap: clamp(0.75rem, 2.5vw, 2.5rem); transform-origin: 50% 60%; opacity: 0; }
+        .about-studio.is-in .as-move { animation: studioFlyIn 2.2s cubic-bezier(0.22, 1, 0.36, 1) 0s both; }
+        .as-rule { flex: 1 1 0; max-width: 220px; height: 1px; background: #cfcfcf; }
+        .as-layer--inv .as-rule { background: rgba(255, 255, 255, 0.55); }
+        .as-name { font-family: 'Italiana', var(--font-serif); font-weight: 400; font-size: 1em; line-height: 1; letter-spacing: 0.38em; margin-right: -0.38em; text-transform: uppercase; white-space: nowrap; color: #111; }
+        .as-layer--inv .as-name { color: #fff; }
+        #about .about-text { padding-top: calc(clamp(1.4rem, 5.4vw, 6rem) * 0.8); }
+        @media (max-width: 768px) {
+            .about-studio { font-size: 11vw; margin-bottom: -0.55em; }
+            .as-move { gap: 0.6rem; }
+            .as-name { white-space: normal; width: min-content; text-align: center; line-height: 1.05; letter-spacing: 0.18em; margin-right: -0.18em; }
+            .as-rule { max-width: 24px; }
+            .about-studio { margin-bottom: -1.05em; }
+            #about .about-grid > .reveal:last-child { order: -1; }   /* phones: the portrait comes first, under the name */
+            #about .about-text { padding-top: 0; }
+        }
     </style>
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ionaere.com/#artist","name":"Arthemii Ionaere","url":"https://ionaere.com/de/","image":"https://ionaere.com/img/opt/portrait-arthemii-1600.jpg","jobTitle":"Stained glass artist","description":"Berlin-based contemporary stained glass artist creating three-dimensional glass sculptures in the Tiffany technique, kinetic prisms, lamps and light installations.","email":"mailto:info@ionaere.com","address":{"@type":"PostalAddress","addressLocality":"Berlin","addressCountry":"DE"},"knowsAbout":["Stained glass","Tiffany technique","Glass sculpture","Kinetic art","Light installation","Contemporary art"],"sameAs":["https://www.instagram.com/ionaerestudio/","https://www.instagram.com/ionaere/","https://www.instagram.com/lonaere/","https://www.youtube.com/@IonaereArthe"]},{"@type":"WebSite","@id":"https://ionaere.com/#website","url":"https://ionaere.com/de/","name":"Arthemii Ionaere","description":"Contemporary stained glass art by Arthemii Ionaere, Berlin","inLanguage":"en","publisher":{"@id":"https://ionaere.com/#artist"}}{% for ex in site.data.exhibitions.items %}{% assign ds = ex.date_start | strip | split: "." %}{% if ds.size == 3 %},{"@type":"ExhibitionEvent","name":{{ ex.title | jsonify }},"startDate":"{{ ds[2] }}-{{ ds[1] }}-{{ ds[0] }}"{% assign de = ex.date_end | strip | split: "." %}{% if de.size == 3 %},"endDate":"{{ de[2] }}-{{ de[1] }}-{{ de[0] }}"{% endif %},"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode"{% if ex.location and ex.location != "" %},"location":{"@type":"Place","name":{{ ex.location | strip | jsonify }},"address":{{ ex.location | strip | jsonify }}}{% endif %}{% if ex.photos.size > 0 %},"image":"https://ionaere.com{{ ex.photos[0] | relative_url }}"{% endif %},"organizer":{"@id":"https://ionaere.com/#artist"},"performer":{"@id":"https://ionaere.com/#artist"}}{% endif %}{% endfor %}]}
@@ -2720,9 +2745,9 @@
                     <h2 class="section__title" data-i18n="about_title">Glasmalerei neu gedacht durch zeitgenössische Abstraktion</h2>
                 </header>
 
+                <div class="about-studio" role="heading" aria-level="3" aria-label="Arthemii Ionaere"><div class="as-layer as-layer--base"><div class="as-move"><span class="as-rule"></span><span class="as-name">Arthemii Ionaere</span><span class="as-rule"></span></div></div><div class="as-layer as-layer--inv" aria-hidden="true"><div class="as-move"><span class="as-rule"></span><span class="as-name">Arthemii Ionaere</span><span class="as-rule"></span></div></div><div class="as-layer as-layer--inv as-layer--sat" aria-hidden="true"><div class="as-move"><span class="as-rule"></span><span class="as-name">Arthemii Ionaere</span><span class="as-rule"></span></div></div></div>
                 <div class="about-grid">
                     <div class="about-text reveal">
-                        <div class="about-name">Arthemii Ionaere</div>
 
                         <p data-i18n="about_p1">Der abstrakte, zeitgenössische Umgang mit Glas und Farbe löst sich von der traditionellen christlichen Symbolik der Glasmalerei, die meist konkrete Darstellungen von Heiligen, biblischen Szenen oder Symbolen zeigt. Doch auch in dieser abstrakten Form bleibt die Suche nach möglicher Symbolik und Bedeutung durch einen innovativen Umgang mit Symbolen relevant.</p>
 
@@ -4563,6 +4588,40 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', onScroll);
         update();
+    })();
+    </script>
+    <script>
+    /* About (home): the name drops in when the section is opened; its letters invert the portrait where they lie on it */
+    (function () {
+        var sec = document.getElementById('about');
+        var box = sec && sec.querySelector('.about-studio');
+        if (!box) return;
+        var base = box.querySelector('.as-layer--base'), invs = box.querySelectorAll('.as-layer--inv');
+        function clip() {
+            var img = sec.querySelector('.about-image img');
+            if (!img || !box.offsetWidth) return;
+            var b = box.getBoundingClientRect(), p = img.getBoundingClientRect();
+            // in the box's own (untransformed) units: both rectangles share the section's scale
+            var k = box.offsetWidth / b.width || 1;
+            var x1 = (p.left - b.left) * k, y1 = (p.top - b.top) * k, x2 = (p.right - b.left) * k, y2 = (p.bottom - b.top) * k;
+            var w = box.offsetWidth, h = box.offsetHeight;
+            if (x2 <= 0 || y2 <= 0 || x1 >= w || y1 >= h) { base.style.removeProperty('--as-clip'); invs.forEach(function (l) { l.style.setProperty('--as-inv', 'inset(50%)'); }); return; }
+            var f = function (v) { return v.toFixed(1) + 'px'; };
+            base.style.setProperty('--as-clip', 'polygon(evenodd, -9999px -9999px, 9999px -9999px, 9999px 9999px, -9999px 9999px, -9999px -9999px, ' +
+                f(x1) + ' ' + f(y1) + ', ' + f(x1) + ' ' + f(y2) + ', ' + f(x2) + ' ' + f(y2) + ', ' + f(x2) + ' ' + f(y1) + ', ' + f(x1) + ' ' + f(y1) + ')');
+            var inv = 'inset(' + f(y1) + ' ' + f(w - x2) + ' ' + f(h - y2) + ' ' + f(x1) + ' round 12px)';
+            invs.forEach(function (l) { l.style.setProperty('--as-inv', inv); });
+        }
+        function sync() {
+            var open = sec.classList.contains('is-open');
+            if (open && !box.classList.contains('is-in')) { clip(); box.classList.add('is-in'); setTimeout(clip, 400); setTimeout(clip, 1500); }
+            else if (!open && box.classList.contains('is-in')) box.classList.remove('is-in');
+        }
+        new MutationObserver(sync).observe(sec, { attributes: true, attributeFilter: ['class'] });
+        var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(clip, 120); });
+        if (window.ResizeObserver) new ResizeObserver(function () { clip(); }).observe(sec);
+        var img = sec.querySelector('.about-image img'); if (img) img.addEventListener('load', clip);
+        sync();
     })();
     </script>
 </body>
