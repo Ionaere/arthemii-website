@@ -2076,3 +2076,18 @@
         .gslide__count { display: none; }
         .ai-arch--first .ai-source { margin-top: var(--spacing-lg); }
         @media (max-width: 768px) { .page-top__media.page-top__media--whole { aspect-ratio: auto; } }   /* whole videos keep their own shape on phones too */
+
+        /* ===== Gallery / Videos titles in Safari: smooth fly-in =====
+           The titles never lie on the photos any more (beside, above or below them), so they no
+           longer need the inverting blend modes and their colour-removing copies — those made
+           Safari re-composite the photo behind every letter on every frame of the animation,
+           which looked jerky. Plain dark text, and the animated parts get their own layer. */
+        .gslide__title, .gslide__desc { mix-blend-mode: normal; color: var(--text); }
+        .gslide__desc .gslide__text { color: var(--text-secondary); }
+        .gslide__desc .gslide__meta { color: var(--text-tertiary); }
+        .gslide__title--sat, .gslide__desc--sat { display: none; }
+        .gslide__title, .gslide__desc,
+        .video-slides .video-card__title, .video-slides .video-card__desc {
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden; backface-visibility: hidden;
+        }
