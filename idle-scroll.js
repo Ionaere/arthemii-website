@@ -11,7 +11,7 @@
   window.__idleScroll = true;
 
   var IDLE_MS = 3000;
-  var SPEED = 32;            // pixels per second at full speed
+  var SPEED = 64;            // pixels per second at full speed
   var RAMP = 1.5;            // seconds to ease from still to full speed
 
   var timer = 0, raf = 0, last = 0, started = 0, pos = 0;
