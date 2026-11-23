@@ -23,7 +23,7 @@
     '.tb-editorial .tech-block__row>*{border-radius:8px!important}' +
     /* the opened title sits on the top of the large photo, in white over a soft shade */
     '.tech-block.is-open .tech-block__body .tb-editorial{padding-top:0!important}' +
-    '.tech-block.tb-on.is-open .tech-block__head{position:relative;z-index:3;margin-bottom:calc(-1 * var(--tb-head-h, 80px) - 18px);padding-left:var(--spacing-md);padding-right:var(--spacing-md);box-sizing:border-box;width:100%;transform:translateY(18px)}' +
+    '.tech-block.tb-on.is-open .tech-block__head{position:relative;z-index:3;margin-top:var(--spacing-xl);margin-bottom:calc(-1 * var(--tb-head-h, 80px) - 18px);padding-left:var(--spacing-md);padding-right:var(--spacing-md);box-sizing:border-box;width:100%;transform:translateY(18px)}' +
     '.tech-block.tb-on.is-open .tech-block__head .wm-title{color:#fff!important;text-shadow:0 1px 18px rgba(0,0,0,.35)}' +
     '.tech-block.tb-on.is-open .tech-block__head .wm-title::before,.tech-block.tb-on.is-open .tech-block__head .wm-title::after{background:rgba(255,255,255,.8)!important}' +
     '.tech-block.tb-on.is-open .tech-block__head .wm-num{color:rgba(255,255,255,.8)!important}' +
