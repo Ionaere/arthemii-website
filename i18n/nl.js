@@ -200,7 +200,6 @@ window.I18N_DATA["nl"] = {
   "20 drawings": "20 tekeningen",
   "Every work in this section is generated from my own drawings. It always starts with a drawing on paper — in essence a precise schematic. Artificial intelligence reads its lines easily, which makes it possible to grow anything from it: architecture, jewellery or whatever the idea calls for.": "Elk werk in dit onderdeel is gegenereerd uit mijn eigen tekeningen. Het begint altijd met een tekening op papier — in wezen een nauwkeurig schema. Kunstmatige intelligentie leest de lijnen gemakkelijk, waardoor er van alles uit kan groeien: architectuur, sieraden of wat het idee ook vraagt.",
   "See the drawings": "Bekijk de tekeningen",
-  "These drawings later became the source of my architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Deze tekeningen werden later de bron van mijn architectuur: elk is een nauwkeurig schema dat kunstmatige intelligentie leest en omzet in architectuur, sieraden en andere vormen.",
   "38 drawings": "38 tekeningen",
   "ASTERION | Theater Butoh show": "ASTERION | Butoh-theatervoorstelling",
   "Open event page →": "Evenementpagina openen →",
@@ -502,5 +501,7 @@ window.I18N_DATA["nl"] = {
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Basjmet Centrum (2023)",
   "Bashmet Centre": "Basjmet Centrum",
   "Small Architecture": "Kleine architectuur",
-  "Bionic Gothic in small architecture": "Bionische gotiek in kleine architectuur"
+  "Bionic Gothic in small architecture": "Bionische gotiek in kleine architectuur",
+  "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Met tekenen is alles begonnen: Arthemii begon eerst te tekenen. In wezen zijn deze tekeningen grafiek, en ze sluiten vanzelf aan bij de glas-in-loodtechniek — er kunnen rechtstreeks glas-in-loodramen van worden gemaakt. Maar, zo bleek, dankzij hun heldere contouren en precieze vormen kunnen ze ook in andere domeinen worden gevisualiseerd.",
+  "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Deze tekeningen werden later de bron van zijn architectuur: elk ervan is een precies schema dat kunstmatige intelligentie leest en omzet in architectuur, sieraden en andere vormen."
 };

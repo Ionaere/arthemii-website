@@ -200,7 +200,6 @@ window.I18N_DATA["pl"] = {
   "20 drawings": "20 rysunków",
   "Every work in this section is generated from my own drawings. It always starts with a drawing on paper — in essence a precise schematic. Artificial intelligence reads its lines easily, which makes it possible to grow anything from it: architecture, jewellery or whatever the idea calls for.": "Każda praca w tej sekcji jest wygenerowana z moich własnych rysunków. Zawsze zaczyna się od rysunku na papierze — w istocie precyzyjnego schematu. Sztuczna inteligencja łatwo odczytuje jego linie, dzięki czemu można z niego wyhodować wszystko: architekturę, biżuterię czy cokolwiek wymaga pomysł.",
   "See the drawings": "Zobacz rysunki",
-  "These drawings later became the source of my architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Te rysunki stały się później źródłem mojej architektury: każdy z nich to precyzyjny schemat, który sztuczna inteligencja odczytuje i przemienia w architekturę, biżuterię i inne formy.",
   "38 drawings": "38 rysunków",
   "ASTERION | Theater Butoh show": "ASTERION | Spektakl teatru butō",
   "Open event page →": "Otwórz stronę wydarzenia →",
@@ -502,5 +501,7 @@ window.I18N_DATA["pl"] = {
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Centrum Baszmeta (2023)",
   "Bashmet Centre": "Centrum Baszmeta",
   "Small Architecture": "Mała architektura",
-  "Bionic Gothic in small architecture": "Bioniczny gotyk w małej architekturze"
+  "Bionic Gothic in small architecture": "Bioniczny gotyk w małej architekturze",
+  "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Wszystko zaczęło się od rysunku: Arthemii zaczynał od rysowania. W istocie te rysunki są grafiką i naturalnie łączą się z techniką witrażu — można na ich podstawie tworzyć witraże. Okazało się jednak, że dzięki wyraźnym konturom i precyzyjnym formom można je wizualizować także w innych dziedzinach.",
+  "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Te rysunki stały się później źródłem jego architektury: każdy z nich to precyzyjny schemat, który sztuczna inteligencja odczytuje i przekształca w architekturę, biżuterię i inne formy."
 };

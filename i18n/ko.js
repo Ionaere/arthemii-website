@@ -200,7 +200,6 @@ window.I18N_DATA["ko"] = {
   "20 drawings": "드로잉 20점",
   "Every work in this section is generated from my own drawings. It always starts with a drawing on paper — in essence a precise schematic. Artificial intelligence reads its lines easily, which makes it possible to grow anything from it: architecture, jewellery or whatever the idea calls for.": "이 섹션의 모든 작품은 제 드로잉에서 생성되었습니다. 언제나 종이 위의 드로잉에서 시작하는데, 이는 본질적으로 정밀한 도식입니다. 인공지능은 그 선을 쉽게 읽어 내기에, 건축이든 주얼리든 아이디어가 원하는 무엇이든 그로부터 키워 낼 수 있습니다.",
   "See the drawings": "드로잉 보기",
-  "These drawings later became the source of my architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "이 드로잉들은 이후 제 건축 작품의 원천이 되었습니다. 각 드로잉은 인공지능이 읽어 내어 건축, 주얼리, 그리고 다른 형태로 바꾸는 정밀한 도식입니다.",
   "38 drawings": "드로잉 38점",
   "ASTERION | Theater Butoh show": "ASTERION | 부토 연극 공연",
   "Open event page →": "이벤트 페이지 열기 →",
@@ -502,5 +501,7 @@ window.I18N_DATA["ko"] = {
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, 바시메트 센터 (2023)",
   "Bashmet Centre": "바시메트 센터",
   "Small Architecture": "스몰 아키텍처",
-  "Bionic Gothic in small architecture": "스몰 아키텍처 속 바이오닉 고딕"
+  "Bionic Gothic in small architecture": "스몰 아키텍처 속 바이오닉 고딕",
+  "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "모든 것은 드로잉에서 시작되었습니다. Arthemii는 처음에 그림을 그리는 것으로 출발했습니다. 이 드로잉들은 본질적으로 그래픽이며 스테인드글라스 기법과 자연스럽게 어울립니다 — 이를 바탕으로 바로 스테인드글라스를 만들 수 있습니다. 그런데 뚜렷한 윤곽과 명확한 형태 덕분에 다른 분야에서도 시각화할 수 있다는 것이 밝혀졌습니다.",
+  "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "이 드로잉들은 훗날 그의 건축의 원천이 되었습니다. 하나하나가 정밀한 도식이며, 인공지능이 이를 읽어 건축, 주얼리 및 다른 형태로 바꿉니다."
 };

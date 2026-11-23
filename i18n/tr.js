@@ -200,7 +200,6 @@ window.I18N_DATA["tr"] = {
   "20 drawings": "20 çizim",
   "Every work in this section is generated from my own drawings. It always starts with a drawing on paper — in essence a precise schematic. Artificial intelligence reads its lines easily, which makes it possible to grow anything from it: architecture, jewellery or whatever the idea calls for.": "Bu bölümdeki her eser kendi çizimlerimden üretilmiştir. Her şey her zaman kâğıt üzerinde bir çizimle başlar — özünde kesin bir şema. Yapay zekâ çizgilerini kolayca okur; bu da ondan her şeyi büyütmeyi mümkün kılar: mimari, mücevher ya da fikir neyi gerektiriyorsa.",
   "See the drawings": "Çizimleri gör",
-  "These drawings later became the source of my architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Bu çizimler daha sonra mimari çalışmalarımın kaynağı oldu: her biri, yapay zekânın okuyup mimariye, mücevhere ve başka formlara dönüştürdüğü kesin bir şemadır.",
   "38 drawings": "38 çizim",
   "ASTERION | Theater Butoh show": "ASTERION | Butoh tiyatro gösterisi",
   "Open event page →": "Etkinlik sayfasını aç →",
@@ -502,5 +501,7 @@ window.I18N_DATA["tr"] = {
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Başmet Merkezi (2023)",
   "Bashmet Centre": "Başmet Merkezi",
   "Small Architecture": "Küçük mimari",
-  "Bionic Gothic in small architecture": "Küçük mimaride biyonik gotik"
+  "Bionic Gothic in small architecture": "Küçük mimaride biyonik gotik",
+  "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Her şey çizimle başladı: Arthemii önce çizim yapmaya başladı. Bu çizimler özünde grafiktir ve vitray tekniğiyle doğal bir uyum içindedir — doğrudan bunlardan vitray yapılabilir. Ancak anlaşıldı ki net konturları ve belirgin formları sayesinde başka alanlarda da görselleştirilebilirler.",
+  "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Bu çizimler daha sonra onun mimarisinin kaynağı oldu: her biri, yapay zekânın okuyup mimariye, mücevhere ve başka formlara dönüştürdüğü kesin bir şemadır."
 };

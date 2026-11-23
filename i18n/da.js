@@ -200,7 +200,6 @@ window.I18N_DATA["da"] = {
   "20 drawings": "20 tegninger",
   "Every work in this section is generated from my own drawings. It always starts with a drawing on paper — in essence a precise schematic. Artificial intelligence reads its lines easily, which makes it possible to grow anything from it: architecture, jewellery or whatever the idea calls for.": "Hvert værk i denne sektion er skabt ud fra mine egne tegninger. Det begynder altid med en tegning på papir — i bund og grund et præcist skema. Kunstig intelligens læser stregerne let, og det gør det muligt at lade hvad som helst vokse ud af den: arkitektur, smykker eller hvad idéen kalder på.",
   "See the drawings": "Se tegningerne",
-  "These drawings later became the source of my architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Disse tegninger blev siden kilden til min arkitektur: hver af dem er et præcist skema, som kunstig intelligens læser og forvandler til arkitektur, smykker og andre former.",
   "38 drawings": "38 tegninger",
   "ASTERION | Theater Butoh show": "ASTERION | Butoh-teaterforestilling",
   "Open event page →": "Åbn begivenhedens side →",
@@ -502,5 +501,7 @@ window.I18N_DATA["da"] = {
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Basjmet-centret (2023)",
   "Bashmet Centre": "Basjmet-centret",
   "Small Architecture": "Småarkitektur",
-  "Bionic Gothic in small architecture": "Bionisk gotik i småarkitektur"
+  "Bionic Gothic in small architecture": "Bionisk gotik i småarkitektur",
+  "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Det hele begyndte med tegningen: Arthemii begyndte med at tegne. I bund og grund er disse tegninger grafik, og de passer naturligt sammen med glasmosaikteknikken — der kan laves glasmosaikker direkte ud fra dem. Men det viste sig, at de takket være deres klare konturer og præcise former også kan visualiseres inden for andre områder.",
+  "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Disse tegninger blev senere kilden til hans arkitektur: hver af dem er et præcist skema, som kunstig intelligens læser og omdanner til arkitektur, smykker og andre former."
 };
