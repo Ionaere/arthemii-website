@@ -97,6 +97,7 @@
   }
 
   function pack(b) {
+    b.packedW = b.photos.clientWidth;
     sizeHero(b);
     var rest = b.media.filter(function (m) { return m !== b.heroItem; });
     b.photos.innerHTML = '';
@@ -150,7 +151,7 @@
     var head = b.block.querySelector('.tech-block__head');
     if (!head) return;
     var set = function () { b.block.style.setProperty('--tb-head-h', head.offsetHeight + 'px'); };
-    set(); setTimeout(set, 450); setTimeout(set, 900);
+    set(); requestAnimationFrame(set); setTimeout(set, 120);
   }
 
   function update() {
@@ -175,7 +176,7 @@
     var mo = new MutationObserver(function (list) {
       list.forEach(function (m) {
         if (m.target.classList && m.target.classList.contains('is-open') && window.innerWidth >= MIN_W) {
-          blocks.forEach(function (b) { if (m.target.contains(b.inner)) setTimeout(function () { pack(b); headH(b); }, 30); });
+          blocks.forEach(function (b) { if (m.target.contains(b.inner)) { var w = b.photos.clientWidth; if (w && w !== b.packedW) { b.packedW = w; pack(b); } headH(b); } });
         }
       });
     });
