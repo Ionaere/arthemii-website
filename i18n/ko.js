@@ -1,6 +1,21 @@
 /* Arthemii Ionaere — 한국어 translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["ko"] = {
+  "Rotating glass sculptures — 2024": "회전하는 유리 조각 — 2024",
+  "Solo exhibition — 2024": "개인전 — 2024",
+  "Photos and video from the exhibition — 2024": "전시 사진과 영상 — 2024",
+  "Videos, process and effects →": "영상, 제작 과정과 효과 →",
+  "← Back to Projects": "← 프로젝트로 돌아가기",
+  "Process": "제작 과정",
+  "Effects": "효과",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel and bent in the kiln into curved forms that work like lenses and prisms. A directed light source is aimed at the turning glass; the rotation and the optics do the rest. The newest works (2026) run on a stepper motor with speed control and add a Fresnel lens for an extra optical effect.": "모든 작품은 Arthemii 고유의 기법인 ‘믹스드 스테인드글라스’로 제작됩니다. 유리를 황동, 강철과 결합하고 가마에서 구부려 렌즈와 프리즘처럼 작용하는 곡면 형태로 만듭니다. 회전하는 유리에 방향성 있는 빛을 비추면 나머지는 회전과 광학이 만들어 냅니다. 최신작(2026)은 속도 조절이 가능한 스테핑 모터로 움직이며, 프레넬 렌즈가 추가적인 광학 효과를 더합니다.",
+  "Caustics: bright lines of focused light that ripple across the wall like sunlight on water.": "커스틱: 모인 빛의 밝은 선들이 물 위의 햇살처럼 벽 위에서 일렁입니다.",
+  "Moving shadows: coloured shadows grow, overlap and dissolve as the forms turn.": "움직이는 그림자: 형태가 회전하면서 색 그림자가 커지고, 겹치고, 사라집니다.",
+  "Refraction: curved glass splits white light into spectral colours.": "굴절: 곡면 유리가 백색광을 스펙트럼 색으로 나눕니다.",
+  "Reflection: polished surfaces throw moving flares of light across the room.": "반사: 매끈하게 연마된 면이 움직이는 빛의 반짝임을 공간 전체에 흩뿌립니다.",
+  "There is no projector and no screen: the effects come from physics, so they are never exactly the same twice.": "프로젝터도, 스크린도 없습니다. 효과는 물리 현상에서 나오기에 결코 똑같이 반복되지 않습니다.",
+  "All videos on YouTube →": "YouTube에서 모든 영상 보기 →",
+  "Videos, process and effects": "영상, 제작 과정과 효과",
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "색유리를 다루는 다섯 가지 방식 — 전통적인 티파니 기법부터 실험적인 그림자 프리즘 설치까지.",
   "Kinetic Prizm": "키네틱 프리즘",
   "Stepper motor and Fresnel lens — 2026": "스테핑 모터와 프레넬 렌즈 — 2026",

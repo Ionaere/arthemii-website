@@ -1,6 +1,21 @@
 /* Arthemii Ionaere — Türkçe translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["tr"] = {
+  "Rotating glass sculptures — 2024": "Dönen cam heykeller — 2024",
+  "Solo exhibition — 2024": "Kişisel sergi — 2024",
+  "Photos and video from the exhibition — 2024": "Sergiden fotoğraflar ve video — 2024",
+  "Videos, process and effects →": "Videolar, süreç ve efektler →",
+  "← Back to Projects": "← Projelere dön",
+  "Process": "Süreç",
+  "Effects": "Efektler",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel and bent in the kiln into curved forms that work like lenses and prisms. A directed light source is aimed at the turning glass; the rotation and the optics do the rest. The newest works (2026) run on a stepper motor with speed control and add a Fresnel lens for an extra optical effect.": "Her obje, Arthemii’nin kendi tekniği olan karma vitrayla yapılır: cam pirinç ve çelikle birleştirilir ve fırında mercek ve prizma gibi çalışan kavisli formlara bükülür. Dönen cama yönlendirilmiş bir ışık kaynağı tutulur; gerisini dönüş ve optik halleder. En yeni eserler (2026) hız ayarlı bir step motorla çalışır ve bir Fresnel merceği ek bir optik etki katar.",
+  "Caustics: bright lines of focused light that ripple across the wall like sunlight on water.": "Kostikler: odaklanmış ışığın parlak çizgileri, suyun üzerindeki güneş gibi duvarda dalgalanır.",
+  "Moving shadows: coloured shadows grow, overlap and dissolve as the forms turn.": "Hareketli gölgeler: formlar döndükçe renkli gölgeler büyür, üst üste biner ve kaybolur.",
+  "Refraction: curved glass splits white light into spectral colours.": "Kırılma: kavisli cam beyaz ışığı tayf renklerine ayırır.",
+  "Reflection: polished surfaces throw moving flares of light across the room.": "Yansıma: cilalı yüzeyler odanın her yanına hareketli ışık parıltıları saçar.",
+  "There is no projector and no screen: the effects come from physics, so they are never exactly the same twice.": "Projektör de ekran da yok: efektler fizikten doğar, bu yüzden hiçbir zaman tıpatıp aynı olmaz.",
+  "All videos on YouTube →": "Tüm videolar YouTube’da →",
+  "Videos, process and effects": "Videolar, süreç ve efektler",
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Renkli camla çalışmaya beş farklı yaklaşım — geleneksel Tiffany tekniğinden deneysel gölge prizması enstalasyonlarına.",
   "Kinetic Prizm": "Kinetik Prizma",
   "Stepper motor and Fresnel lens — 2026": "Step motor ve Fresnel merceği — 2026",

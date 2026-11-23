@@ -1,6 +1,21 @@
 /* Arthemii Ionaere — Italiano translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["it"] = {
+  "Rotating glass sculptures — 2024": "Sculture di vetro rotanti — 2024",
+  "Solo exhibition — 2024": "Mostra personale — 2024",
+  "Photos and video from the exhibition — 2024": "Foto e video dalla mostra — 2024",
+  "Videos, process and effects →": "Video, processo ed effetti →",
+  "← Back to Projects": "← Torna ai progetti",
+  "Process": "Processo",
+  "Effects": "Effetti",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel and bent in the kiln into curved forms that work like lenses and prisms. A directed light source is aimed at the turning glass; the rotation and the optics do the rest. The newest works (2026) run on a stepper motor with speed control and add a Fresnel lens for an extra optical effect.": "Ogni oggetto è realizzato con la tecnica personale di Arthemii, la vetrata mista: vetro unito a ottone e acciaio e curvato in forno in forme che funzionano come lenti e prismi. Una fonte di luce direzionata punta sul vetro in rotazione; il movimento e l’ottica fanno il resto. Le opere più recenti (2026) sono azionate da un motore passo-passo a velocità regolabile e aggiungono una lente di Fresnel per un ulteriore effetto ottico.",
+  "Caustics: bright lines of focused light that ripple across the wall like sunlight on water.": "Caustiche: linee luminose di luce concentrata che si increspano sulla parete come il sole sull’acqua.",
+  "Moving shadows: coloured shadows grow, overlap and dissolve as the forms turn.": "Ombre in movimento: ombre colorate crescono, si sovrappongono e si dissolvono mentre le forme ruotano.",
+  "Refraction: curved glass splits white light into spectral colours.": "Rifrazione: il vetro curvo scompone la luce bianca nei colori dello spettro.",
+  "Reflection: polished surfaces throw moving flares of light across the room.": "Riflessione: le superfici levigate proiettano bagliori di luce in movimento in tutta la stanza.",
+  "There is no projector and no screen: the effects come from physics, so they are never exactly the same twice.": "Nessun proiettore e nessuno schermo: gli effetti nascono dalla fisica, per questo non sono mai esattamente uguali.",
+  "All videos on YouTube →": "Tutti i video su YouTube →",
+  "Videos, process and effects": "Video, processo ed effetti",
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Cinque approcci distinti alla lavorazione del vetro colorato — dalla tradizionale tecnica Tiffany alle installazioni sperimentali con prismi d’ombra.",
   "Kinetic Prizm": "Prisma cinetico",
   "Stepper motor and Fresnel lens — 2026": "Motore passo-passo e lente di Fresnel — 2026",

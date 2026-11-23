@@ -1,6 +1,21 @@
 /* Arthemii Ionaere — Dansk translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["da"] = {
+  "Rotating glass sculptures — 2024": "Roterende glasskulpturer — 2024",
+  "Solo exhibition — 2024": "Separatudstilling — 2024",
+  "Photos and video from the exhibition — 2024": "Fotos og video fra udstillingen — 2024",
+  "Videos, process and effects →": "Videoer, proces og effekter →",
+  "← Back to Projects": "← Tilbage til projekterne",
+  "Process": "Proces",
+  "Effects": "Effekter",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel and bent in the kiln into curved forms that work like lenses and prisms. A directed light source is aimed at the turning glass; the rotation and the optics do the rest. The newest works (2026) run on a stepper motor with speed control and add a Fresnel lens for an extra optical effect.": "Hvert objekt er lavet i Arthemiis egen teknik, mixed stained glass: glas kombineret med messing og stål og bøjet i ovnen til buede former, der virker som linser og prismer. En rettet lyskilde peger mod det roterende glas; rotationen og optikken klarer resten. De nyeste værker (2026) drives af en stepmotor med hastighedsregulering og får en ekstra optisk effekt fra en fresnellinse.",
+  "Caustics: bright lines of focused light that ripple across the wall like sunlight on water.": "Kaustik: klare linjer af fokuseret lys, der bølger hen over væggen som sollys på vand.",
+  "Moving shadows: coloured shadows grow, overlap and dissolve as the forms turn.": "Bevægelige skygger: farvede skygger vokser, overlapper og opløses, mens formerne drejer.",
+  "Refraction: curved glass splits white light into spectral colours.": "Brydning: buet glas spalter hvidt lys i spektralfarver.",
+  "Reflection: polished surfaces throw moving flares of light across the room.": "Refleksion: polerede overflader kaster bevægelige lysglimt rundt i rummet.",
+  "There is no projector and no screen: the effects come from physics, so they are never exactly the same twice.": "Der er ingen projektor og ingen skærm: effekterne kommer fra fysikken og er derfor aldrig helt ens to gange.",
+  "All videos on YouTube →": "Alle videoer på YouTube →",
+  "Videos, process and effects": "Videoer, proces og effekter",
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Fem forskellige måder at arbejde med farvet glas på — fra den traditionelle Tiffany-teknik til eksperimenterende installationer med skyggeprismer.",
   "Kinetic Prizm": "Kinetisk prisme",
   "Stepper motor and Fresnel lens — 2026": "Stepmotor og Fresnel-linse — 2026",

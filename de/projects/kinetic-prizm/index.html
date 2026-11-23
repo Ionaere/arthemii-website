@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kinetic Prizm des Berliner Glaskünstlers Arthemii Ionaere: rotierende Glasskulpturen, deren Schatten, Kaustiken und Brechungen analoge Lichteffekte erzeugen. Entstehung, Effekte und Videos.">
+    <meta name="theme-color" content="#fafafa">
+    <title>Kinetic Prizm — Rotierende Glasskulpturen &amp; analoge Lichteffekte | Arthemii Ionaere</title>
+    <link rel="canonical" href="https://ionaere.com/de/projects/kinetic-prizm/">
+    <link rel="alternate" hreflang="en" href="https://ionaere.com/projects/kinetic-prizm/">
+    <link rel="alternate" hreflang="de" href="https://ionaere.com/de/projects/kinetic-prizm/">
+    <link rel="alternate" hreflang="es" href="https://ionaere.com/es/projects/kinetic-prizm/">
+    <link rel="alternate" hreflang="fr" href="https://ionaere.com/fr/projects/kinetic-prizm/">
+    <link rel="alternate" hreflang="it" href="https://ionaere.com/it/projects/kinetic-prizm/">
+    <link rel="alternate" hreflang="x-default" href="https://ionaere.com/projects/kinetic-prizm/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:site_name" content="Arthemii Ionaere">
+    <meta property="og:title" content="Kinetic Prizm — Rotierende Glasskulpturen &amp; analoge Lichteffekte | Arthemii Ionaere">
+    <meta property="og:description" content="Kinetic Prizm des Berliner Glaskünstlers Arthemii Ionaere: rotierende Glasskulpturen, deren Schatten, Kaustiken und Brechungen analoge Lichteffekte erzeugen. Entstehung, Effekte und Videos.">
+    <meta property="og:url" content="https://ionaere.com/de/projects/">
+    <meta property="og:image" content="https://i.ytimg.com/vi/vA0Xhv-4fAw/maxresdefault.jpg">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="720">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Italiana&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+    <link rel="stylesheet" href="../../../styles.css?v=20261123st">
+    <style>
+        .header { transform: none !important; animation: none !important; }
+        .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+            opacity: 1 !important; transform: none !important; transition: none !important;
+        }
+        .hero__eyebrow, .hero__title, .hero__subtitle, .hero__desc, .hero__actions, .hero__image {
+            opacity: 1 !important; transform: none !important; animation: none !important;
+        }
+        /* ===== Projects page: all photos visible inside the screen, uncropped =====
+           Photos sit in rows of equal height that fill the width exactly (each keeps its proportions, --r);
+           the row grouping is computed by the script at the bottom and redone on resize. */
+        .tech-block__inner { grid-template-columns: 1fr; gap: var(--spacing-md); }
+        .tech-block__inner > div:first-child { max-width: 720px; }
+        .tech-gallery { display: flex; flex-wrap: wrap; gap: var(--gap); --gap: 8px; min-width: 0; }
+        /* Fallback before the script runs: proportional flex rows */
+        .tech-gallery .tech-block__photo {
+            flex: var(--r) 1 calc(var(--r) * 220px);
+            aspect-ratio: var(--r);
+            min-width: 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+        .tech-gallery .tech-video {
+            flex: var(--r) 1 calc(var(--r) * 220px);
+            aspect-ratio: var(--r);
+            min-width: 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: #111;
+        }
+        .tech-gallery .tech-video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .tech-gallery.is-laid-out .tech-block__photo, .tech-gallery.is-laid-out .tech-video { flex: none; }
+        .tech-gallery .tech-block__photo picture,
+        .tech-gallery .tech-block__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        @media (max-width: 768px) { .tech-gallery { --gap: 6px; } }
+        /* Subtitle in the Ionaere Studio style: wide-spaced capitals with rules on both sides */
+        .page-top .section__header .section__title {
+            display: inline-flex; align-items: center; gap: 0.9rem; flex-wrap: nowrap;
+            font-family: 'Italiana', var(--font-serif) !important; font-weight: 400 !important;
+            text-transform: uppercase; letter-spacing: 0.3em !important; line-height: 1.2 !important;
+            font-size: clamp(0.95rem, 1.45vw, 1.35rem) !important; color: var(--text);
+        }
+        .page-top .section__header .section__title::before,
+        .page-top .section__header .section__title::after { content: ""; flex: none; width: clamp(20px, 2.4vw, 40px); height: 1px; background: #bdbdbd; }
+        .page-top .section__header .section__title::after { margin-left: -0.3em; }
+        @media (max-width: 640px) {
+            .page-top .section__header .section__title { font-size: 0.85rem !important; letter-spacing: 0.2em !important; gap: 0.5rem; }
+            .page-top .section__header .section__title::before, .page-top .section__header .section__title::after { width: 14px; }
+            .page-top .section__header .section__title::after { margin-left: -0.2em; }
+        }
+        .tech-block__more { display: inline-block; margin-top: var(--spacing-sm); font-size: 0.875rem; letter-spacing: 0.04em; color: var(--text); border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+        .tech-block__more:hover { opacity: 0.6; }
+        /* ===== Kinetic Prizm page ===== */
+        .kp-back { display: inline-block; font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: var(--spacing-md); }
+        .kp-back:hover { color: var(--text); }
+        .kp-videos { grid-template-columns: repeat(2, 1fr); margin: var(--spacing-lg) 0; }
+        .kp-videos .video-card__embed { aspect-ratio: 16/9; }
+        .kp-videos .video-card__title { margin: 0.6rem 0 0; font-family: var(--font-serif); font-size: 1.0625rem; font-weight: 400; }
+        .kp-videos .video-card__desc { margin: 0.15rem 0 0; font-size: 0.8125rem; color: var(--text-tertiary); }
+        @media (max-width: 768px) { .kp-videos { grid-template-columns: 1fr; gap: var(--spacing-md); } }
+        .kp-text { max-width: 720px; margin: 0 0 var(--spacing-lg); }
+        .kp-h { font-family: var(--font-serif); font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 400; margin: var(--spacing-lg) 0 var(--spacing-sm); }
+        .kp-text p, .kp-list { color: var(--text-secondary); line-height: 1.7; }
+        .kp-list { padding-left: 1.1rem; margin: 0 0 var(--spacing-sm); }
+        .kp-list li { margin-bottom: 0.4rem; }
+        .kp-yt { margin-top: var(--spacing-md); font-size: 0.875rem; }
+        .kp-yt a { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+        .kp-yt a:hover { opacity: 0.6; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="../../" class="header__logo">Ionaere Studio</a>
+        <nav class="header__nav">
+            <a href="../../about/" class="header__link">Über mich</a>
+            <a href="../../works/" class="header__link">Werke</a>
+            <a href="../../projects/" class="header__link">Projekte</a>
+            <a href="../../exhibitions/" class="header__link">Ausstellungen</a>
+            <a href="../../drawings/" class="header__link">Zeichnungen</a>
+            <a href="../../architecture/" class="header__link">Architektur</a>
+            <a href="../../working-moments/" class="header__link">Werkstatt</a>
+            <a href="../../videos/" class="header__link">Videos</a>
+            <a href="../../gallery/" class="header__link">Galerie</a>
+            <a href="../../contact/" class="header__link">Kontakt</a>
+            <div class="header__lang" role="group" aria-label="Language">
+                <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+                <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+                <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+                <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+                <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+            </div>
+        </nav>
+        <button class="header__menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span></button>
+    </header>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close"></button>
+        <a href="../../about/" class="mobile-nav__link">Über mich</a>
+        <a href="../../works/" class="mobile-nav__link">Werke</a>
+        <a href="../../projects/" class="mobile-nav__link">Projekte</a>
+        <a href="../../exhibitions/" class="mobile-nav__link">Ausstellungen</a>
+        <a href="../../drawings/" class="mobile-nav__link">Zeichnungen</a>
+        <a href="../../architecture/" class="mobile-nav__link">Architektur</a>
+        <a href="../../working-moments/" class="mobile-nav__link">Werkstatt</a>
+        <a href="../../videos/" class="mobile-nav__link">Videos</a>
+        <a href="../../gallery/" class="mobile-nav__link">Galerie</a>
+        <a href="../../contact/" class="mobile-nav__link">Kontakt</a>
+        <div class="header__lang" role="group" aria-label="Language">
+            <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+            <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+            <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+            <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+            <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+        </div>
+    </div>
+    <main style="padding-top:calc(72px + 2rem)">
+        <section class="section" id="kinetic-prizm">
+            <div class="container">
+                <a href="../" class="kp-back">← Zurück zu den Projekten</a>
+                <div class="page-top page-top--stack">
+                    <div class="page-wordmark"><div class="page-wordmark__inner"><span class="page-wordmark__rule" aria-hidden="true"></span><div class="page-wordmark__name">Kinetisches Prisma</div><span class="page-wordmark__rule" aria-hidden="true"></span></div></div>
+                    <header class="section__header reveal">
+                        <h1 class="section__title">Videos, Entstehung und Effekte</h1>
+                        <p class="section__desc">Bewegte Arbeiten, durch die das Licht fällt: Während sie sich drehen, erzeugen ihre Schatten faszinierende analoge visuelle Effekte. Für dieses Projekt wurde ein eigener Antrieb entwickelt, mit dem sich die Drehgeschwindigkeit regeln lässt.</p>
+                    </header>
+                </div>
+
+                <div class="video-grid kp-videos">
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="Wv5tTScLs2U" data-autoplay style="background-image:url(https://i.ytimg.com/vi/Wv5tTScLs2U/hqdefault.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Kinetisches Prisma</h3>
+                            <p class="video-card__desc">Schatten und Kaustiken — 2024</p>
+                        </div>
+                    </article>
+                    <article class="video-card">
+                        <div class="video-card__embed">
+                            <div class="yt-placeholder" data-yt="vA0Xhv-4fAw" data-autoplay style="background-image:url(https://i.ytimg.com/vi/vA0Xhv-4fAw/hqdefault.jpg)"></div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3 class="video-card__title">Kinetisches Prisma</h3>
+                            <p class="video-card__desc">Rotierende Glasskulpturen — 2024</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="kp-text">
+                    <h2 class="kp-h">Entstehung</h2>
+                    <p>Jedes Objekt entsteht in Arthemiis eigener Technik, dem Mixed Stained Glass: Glas wird mit Messing und Stahl verbunden und im Ofen zu gewölbten Formen gebogen, die wie Linsen und Prismen wirken. Eine gerichtete Lichtquelle zielt auf das sich drehende Glas – Rotation und Optik erledigen den Rest. Die neuesten Arbeiten (2026) laufen mit einem Schrittmotor mit Geschwindigkeitsregelung und erhalten durch eine Fresnel-Linse einen zusätzlichen optischen Effekt.</p>
+                    <h2 class="kp-h">Effekte</h2>
+                    <ul class="kp-list">
+                        <li>Kaustiken: helle Linien gebündelten Lichts, die wie Sonnenlicht auf Wasser über die Wand wandern.</li>
+                        <li>Bewegte Schatten: Farbige Schatten wachsen, überlagern sich und lösen sich auf, während sich die Formen drehen.</li>
+                        <li>Brechung: Gewölbtes Glas zerlegt weißes Licht in Spektralfarben.</li>
+                        <li>Reflexion: Polierte Flächen werfen bewegte Lichtreflexe durch den Raum.</li>
+                    </ul>
+                    <p>Kein Projektor, kein Bildschirm: Die Effekte entstehen aus der Physik und sind deshalb nie zweimal genau gleich.</p>
+                </div>
+
+                <div class="tech-gallery">
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-08.jpg" data-src="../../../video-files/kinetic/kinetic-08.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-04.jpg" data-src="../../../video-files/kinetic/kinetic-04.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-05.jpg" data-src="../../../video-files/kinetic/kinetic-05.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-10.jpg" data-src="../../../video-files/kinetic/kinetic-10.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-02.jpg" data-src="../../../video-files/kinetic/kinetic-02.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-06.jpg" data-src="../../../video-files/kinetic/kinetic-06.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-03.jpg" data-src="../../../video-files/kinetic/kinetic-03.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-11.jpg" data-src="../../../video-files/kinetic/kinetic-11.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-13.jpg" data-src="../../../video-files/kinetic/kinetic-13.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-12.jpg" data-src="../../../video-files/kinetic/kinetic-12.mp4"></video></div>
+                    <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" poster="../../../video-files/kinetic/kinetic-01.jpg" data-src="../../../video-files/kinetic/kinetic-01.mp4"></video></div>
+                </div>
+
+                <p class="kp-yt"><a href="https://www.youtube.com/playlist?list=PLWEomwLHxuSU" target="_blank" rel="noopener">Alle Videos auf YouTube →</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__brand">Arthemii Ionaere</div>
+                <nav class="footer__nav">
+                    <a href="../../about/" class="footer__link">Über mich</a>
+                    <a href="../../works/" class="footer__link">Werke</a>
+                    <a href="../../exhibitions/" class="footer__link">Ausstellungen</a>
+                    <a href="../../gallery/" class="footer__link">Galerie</a>
+                    <a href="../../contact/" class="footer__link">Kontakt</a>
+                </nav>
+                <div class="footer__contacts">
+                    <a class="footer__instagram" href="https://www.instagram.com/ionaerestudio/" target="_blank" rel="noopener" aria-label="Instagram @ionaerestudio">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="footerIgGradient" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset="0.05" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6.5" fill="url(#footerIgGradient)"/><rect x="5" y="5" width="14" height="14" rx="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="16.4" cy="7.6" r="1.05" fill="#fff"/></svg>
+                        <span>@ionaerestudio</span>
+                    </a>
+                    <a class="footer__email" href="mailto:info@ionaere.com">info@ionaere.com</a>
+                </div>
+                <div class="footer__copy">&copy; 2026 Arthemii Ionaere</div>
+            </div>
+        </div>
+    </footer>
+    <script>
+    var mb=document.getElementById("menuBtn"),mn=document.getElementById("mobileNav"),mc=document.getElementById("mobileNavClose");
+    if(mb&&mn)mb.onclick=function(){mn.classList.add("is-open")};
+    if(mc&&mn)mc.onclick=function(){mn.classList.remove("is-open")};
+    if(mn){var ls=mn.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].onclick=function(){mn.classList.remove("is-open")}};
+    var yts=document.querySelectorAll(".yt-placeholder");
+    for(var i=0;i<yts.length;i++){(function(el){
+        el.onclick=function(){
+            var id=this.getAttribute("data-yt");
+            var f=document.createElement("iframe");
+            f.src="https://www.youtube.com/embed/"+id+"?autoplay=1&mute=0&controls=1&rel=0";
+            f.allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+            f.allowFullscreen=true;
+            f.style.cssText="width:100%;height:100%;border:none";
+            this.parentNode.replaceChild(f,this);
+        };
+    })(yts[i])};
+    var vcs=document.querySelectorAll(".video-card");
+    for(var i=0;i<vcs.length;i++){(function(c){
+        var v=c.querySelector("video");if(!v)return;
+        c.onmouseenter=function(){v.play().catch(function(){})};
+        c.onmouseleave=function(){v.pause();v.currentTime=0};
+    })(vcs[i])};
+    </script>
+    <script>
+    /* Projects page: justified rows — every photo visible, uncropped, nothing wider than the screen */
+    (function () {
+        var galleries = document.querySelectorAll('.tech-gallery');
+        function target(w) { return w < 500 ? 150 : w < 900 ? 210 : 300; }   // preferred row height (px)
+        function layout(g) {
+            var W = g.clientWidth; if (!W) return;
+            var gap = parseFloat(getComputedStyle(g).columnGap) || 8;
+            var items = Array.prototype.slice.call(g.querySelectorAll('.tech-block__photo, .tech-video'));
+            var H = target(W);
+            var maxH = Math.min(H * 1.6, window.innerHeight * 0.8);
+            var row = [], sum = 0, lastH = 0;
+            function place(r, h) {
+                lastH = h;
+                r.forEach(function (it) {
+                    it.style.width = Math.floor(it._r * h * 100) / 100 + 'px';
+                    it.style.height = Math.floor(h * 100) / 100 + 'px';
+                });
+            }
+            items.forEach(function (it) {
+                it._r = parseFloat(getComputedStyle(it).getPropertyValue('--r')) || 1.5;
+                row.push(it); sum += it._r;
+                var h = (W - gap * (row.length - 1)) / sum;
+                if (h <= H) { place(row, Math.min(h, maxH)); row = []; sum = 0; }
+            });
+            if (row.length) {
+                // last row: same height as the rows above (fills the width only if that makes it smaller)
+                var h = (W - gap * (row.length - 1)) / sum;
+                place(row, Math.min(h, lastH || H, maxH));
+            }
+            g.classList.add('is-laid-out');
+        }
+        function all() { for (var i = 0; i < galleries.length; i++) layout(galleries[i]); }
+        all();
+        var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(all, 100); });
+    })();
+    </script>
+    <script src="../../../lightbox.js"></script>
+    <script src="../../../tech-video.js"></script>
+    <script src="../../../video-lightbox.js"></script>
+    <script src="../../../yt-autoplay.js?v=20261123a"></script>
+    <script src="../../../smooth-scroll.js" defer></script>
+    <script src="../../../i18n.js?v=20261123yt"></script>
+    <script src="../../../page-wordmark.js?v=20261122h" defer></script>
+</body>
+</html>
