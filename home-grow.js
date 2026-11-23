@@ -14,6 +14,11 @@
     '.section.is-open>.container>.section__toggle .section__thumbs{opacity:0;pointer-events:none;transition:opacity .35s ease}' +
     '.section.is-open>.container>.section__toggle.has-thumbs>:not(.section__thumbs){max-width:none!important;margin-left:0!important;margin-right:0!important}' +
     '.section.is-open>.container>.section__toggle{min-height:0!important}' +
+    /* opened section: the open/close arrow sits centred above the name, clearly visible */
+    '.section.is-open>.container>.section__toggle .section__label-row{flex-direction:column!important;align-items:center!important;gap:.6rem!important}' +
+    '.section.is-open>.container>.section__toggle .section__chevron{order:-1!important;margin:0!important;width:2.6rem!important;height:2.6rem!important;border:1px solid currentColor;border-radius:50%;display:flex!important;align-items:center;justify-content:center;opacity:.75}' +
+    '.section.is-open>.container>.section__toggle .section__chevron svg{width:20px!important;height:20px!important}' +
+    '.section.is-open>.container>.section__toggle:hover .section__chevron{opacity:1}' +
     /* Instagram / YouTube buttons keep their own width */
     '.section__toggle .yt-channel{width:max-content!important;max-width:100%!important;flex:none!important}' +
     '.section.is-open>.container>.section__toggle.thumbs-left .yt-channel{margin-left:auto!important}' +
@@ -64,7 +69,7 @@
       label = box && box.querySelector('.section__label');
       if (!label) return;
       var chev = box.querySelector('.section__chevron');
-      avail = toggle.clientWidth - (chev ? chev.offsetWidth * 2 + 24 : 0);
+      avail = toggle.clientWidth - 24;
       box.style.width = 'max-content';
       fitTo(label, box, avail, MAX_SECTION);
       box.style.width = '';
