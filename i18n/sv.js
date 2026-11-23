@@ -200,7 +200,6 @@ window.I18N_DATA["sv"] = {
   "20 drawings": "20 teckningar",
   "Every work in this section is generated from my own drawings. It always starts with a drawing on paper — in essence a precise schematic. Artificial intelligence reads its lines easily, which makes it possible to grow anything from it: architecture, jewellery or whatever the idea calls for.": "Varje verk i den här delen är skapat utifrån mina egna teckningar. Allt börjar alltid med en teckning på papper — i grunden ett exakt schema. Artificiell intelligens läser linjerna lätt, vilket gör att vad som helst kan växa fram ur den: arkitektur, smycken eller vad idén kräver.",
   "See the drawings": "Se teckningarna",
-  "These drawings later became the source of my architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "De här teckningarna blev senare källan till min arkitektur: var och en är ett exakt schema som artificiell intelligens läser och förvandlar till arkitektur, smycken och andra former.",
   "38 drawings": "38 teckningar",
   "ASTERION | Theater Butoh show": "ASTERION | Butohteaterföreställning",
   "Open event page →": "Öppna evenemangssidan →",
@@ -502,5 +501,7 @@ window.I18N_DATA["sv"] = {
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Basjmet-centret (2023)",
   "Bashmet Centre": "Basjmet-centret",
   "Small Architecture": "Småskalig arkitektur",
-  "Bionic Gothic in small architecture": "Bionisk gotik i småskalig arkitektur"
+  "Bionic Gothic in small architecture": "Bionisk gotik i småskalig arkitektur",
+  "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Allt började med teckningen: Arthemii började med att teckna. I grunden är dessa teckningar grafik, och de passar naturligt ihop med blyglastekniken — glasmålningar kan göras direkt utifrån dem. Men det visade sig att de tack vare sina tydliga konturer och exakta former också kan visualiseras inom andra områden.",
+  "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Dessa teckningar blev senare källan till hans arkitektur: var och en är ett exakt schema som artificiell intelligens läser och förvandlar till arkitektur, smycken och andra former."
 };

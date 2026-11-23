@@ -217,7 +217,6 @@ window.I18N_DATA["it"] = {
   "20 drawings": "20 disegni",
   "Every work in this section is generated from my own drawings. It always starts with a drawing on paper — in essence a precise schematic. Artificial intelligence reads its lines easily, which makes it possible to grow anything from it: architecture, jewellery or whatever the idea calls for.": "Ogni opera di questa sezione è generata a partire dai miei disegni. Tutto comincia sempre con un disegno su carta — in sostanza uno schema preciso. L’intelligenza artificiale ne legge facilmente le linee, e questo permette di farne nascere qualsiasi cosa: architettura, gioielli o ciò che l’idea richiede.",
   "See the drawings": "Guarda i disegni",
-  "These drawings later became the source of my architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Questi disegni sono poi diventati la fonte della mia architettura: ognuno è uno schema preciso che l’intelligenza artificiale legge e trasforma in architettura, gioielli e altre forme.",
   "38 drawings": "38 disegni",
   "ASTERION | Theater Butoh show": "ASTERION | Spettacolo di teatro butō",
   "Open event page →": "Apri la pagina dell’evento →",
@@ -502,5 +501,7 @@ window.I18N_DATA["it"] = {
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Centro Bashmet (2023)",
   "Bashmet Centre": "Centro Bashmet",
   "Small Architecture": "Piccola architettura",
-  "Bionic Gothic in small architecture": "Gotico bionico nella piccola architettura"
+  "Bionic Gothic in small architecture": "Gotico bionico nella piccola architettura",
+  "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Tutto è cominciato dal disegno: Arthemii ha iniziato disegnando. In sostanza questi disegni sono grafica e si sposano naturalmente con la tecnica della vetrata: da essi si possono creare direttamente delle vetrate. Ma, come si è scoperto, grazie ai contorni netti e alle forme precise possono essere visualizzati anche in altri ambiti.",
+  "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Questi disegni sono poi diventati la fonte della sua architettura: ognuno è uno schema preciso che l’intelligenza artificiale legge e trasforma in architettura, gioielli e altre forme."
 };

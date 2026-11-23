@@ -200,7 +200,6 @@ window.I18N_DATA["fi"] = {
   "20 drawings": "20 piirustusta",
   "Every work in this section is generated from my own drawings. It always starts with a drawing on paper — in essence a precise schematic. Artificial intelligence reads its lines easily, which makes it possible to grow anything from it: architecture, jewellery or whatever the idea calls for.": "Jokainen tämän osion teos on luotu omista piirustuksistani. Kaikki alkaa aina piirustuksesta paperilla — pohjimmiltaan tarkasta kaaviosta. Tekoäly lukee sen viivat helposti, joten siitä voi kasvattaa mitä tahansa: arkkitehtuuria, koruja tai mitä idea vaatii.",
   "See the drawings": "Katso piirustukset",
-  "These drawings later became the source of my architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Näistä piirustuksista tuli myöhemmin arkkitehtuurini lähde: jokainen on tarkka kaavio, jonka tekoäly lukee ja muuttaa arkkitehtuuriksi, koruiksi ja muiksi muodoiksi.",
   "38 drawings": "38 piirustusta",
   "ASTERION | Theater Butoh show": "ASTERION | Butoh-teatteriesitys",
   "Open event page →": "Avaa tapahtumasivu →",
@@ -502,5 +501,7 @@ window.I18N_DATA["fi"] = {
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Bašmet-keskus (2023)",
   "Bashmet Centre": "Bašmet-keskus",
   "Small Architecture": "Pienarkkitehtuuri",
-  "Bionic Gothic in small architecture": "Bioninen gotiikka pienarkkitehtuurissa"
+  "Bionic Gothic in small architecture": "Bioninen gotiikka pienarkkitehtuurissa",
+  "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Kaikki alkoi piirtämisestä: Arthemii aloitti piirtämällä. Pohjimmiltaan nämä piirustukset ovat grafiikkaa, ja ne sopivat luontevasti lasimaalaustekniikkaan — niiden pohjalta voi tehdä suoraan lasimaalauksia. Mutta kuten kävi ilmi, selkeiden ääriviivojensa ja täsmällisten muotojensa ansiosta niitä voi visualisoida myös muilla aloilla.",
+  "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Näistä piirustuksista tuli myöhemmin hänen arkkitehtuurinsa lähde: jokainen niistä on tarkka kaavio, jonka tekoäly lukee ja muuttaa arkkitehtuuriksi, koruiksi ja muiksi muodoiksi."
 };

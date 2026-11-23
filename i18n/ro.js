@@ -200,7 +200,6 @@ window.I18N_DATA["ro"] = {
   "20 drawings": "20 de desene",
   "Every work in this section is generated from my own drawings. It always starts with a drawing on paper — in essence a precise schematic. Artificial intelligence reads its lines easily, which makes it possible to grow anything from it: architecture, jewellery or whatever the idea calls for.": "Fiecare lucrare din această secțiune este generată din propriile mele desene. Totul începe mereu cu un desen pe hârtie — în esență, o schemă precisă. Inteligența artificială îi citește ușor liniile, ceea ce face posibil să crească din el orice: arhitectură, bijuterii sau orice cere ideea.",
   "See the drawings": "Vezi desenele",
-  "These drawings later became the source of my architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Aceste desene au devenit apoi sursa arhitecturii mele: fiecare este o schemă precisă pe care inteligența artificială o citește și o transformă în arhitectură, bijuterii și alte forme.",
   "38 drawings": "38 de desene",
   "ASTERION | Theater Butoh show": "ASTERION | Spectacol de teatru butoh",
   "Open event page →": "Deschide pagina evenimentului →",
@@ -502,5 +501,7 @@ window.I18N_DATA["ro"] = {
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Centrul Bașmet (2023)",
   "Bashmet Centre": "Centrul Bașmet",
   "Small Architecture": "Arhitectură mică",
-  "Bionic Gothic in small architecture": "Gotic bionic în arhitectura mică"
+  "Bionic Gothic in small architecture": "Gotic bionic în arhitectura mică",
+  "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Totul a început cu desenul: Arthemii a pornit mai întâi de la desen. În esență, aceste desene sunt grafică și se potrivesc firesc cu tehnica vitraliului — pe baza lor se pot realiza direct vitralii. Dar, după cum s-a dovedit, datorită contururilor clare și formelor precise, ele pot fi vizualizate și în alte domenii.",
+  "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Aceste desene au devenit mai târziu sursa arhitecturii sale: fiecare este o schemă precisă pe care inteligența artificială o citește și o transformă în arhitectură, bijuterii și alte forme."
 };
