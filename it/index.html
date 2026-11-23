@@ -2700,6 +2700,10 @@
         .about-studio { margin-bottom: var(--spacing-lg) !important; }
         #about .about-text { padding-top: 0 !important; }
         html { overflow-anchor: none; }
+        /* About: the name stands still */
+        #about .about-studio .as-move { animation: none !important; transform: none !important; opacity: 1 !important; }
+        #about .about-studio { opacity: 1 !important; transform: none !important; }
+        .exhibition-block__subtitle { font-family: 'Italiana', var(--font-serif); text-transform: uppercase; letter-spacing: 0.22em; font-size: clamp(0.95rem, 1.4vw, 1.3rem); color: var(--text); margin: 0 0 var(--spacing-sm); }
     </style>
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ionaere.com/#artist","name":"Arthemii Ionaere","url":"https://ionaere.com/it/","image":"https://ionaere.com/img/opt/portrait-arthemii-1600.jpg","jobTitle":"Stained glass artist","description":"Berlin-based contemporary stained glass artist creating three-dimensional glass sculptures in the Tiffany technique, kinetic prisms, lamps and light installations.","email":"mailto:info@ionaere.com","address":{"@type":"PostalAddress","addressLocality":"Berlin","addressCountry":"DE"},"knowsAbout":["Stained glass","Tiffany technique","Glass sculpture","Kinetic art","Light installation","Contemporary art"],"sameAs":["https://www.instagram.com/ionaerestudio/","https://www.instagram.com/ionaere/","https://www.instagram.com/lonaere/","https://www.youtube.com/@IonaereArthe"]},{"@type":"WebSite","@id":"https://ionaere.com/#website","url":"https://ionaere.com/it/","name":"Arthemii Ionaere","description":"Contemporary stained glass art by Arthemii Ionaere, Berlin","inLanguage":"en","publisher":{"@id":"https://ionaere.com/#artist"}}{% for ex in site.data.exhibitions.items %}{% assign ds = ex.date_start | strip | split: "." %}{% if ds.size == 3 %},{"@type":"ExhibitionEvent","name":{{ ex.title | jsonify }},"startDate":"{{ ds[2] }}-{{ ds[1] }}-{{ ds[0] }}"{% assign de = ex.date_end | strip | split: "." %}{% if de.size == 3 %},"endDate":"{{ de[2] }}-{{ de[1] }}-{{ de[0] }}"{% endif %},"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode"{% if ex.location and ex.location != "" %},"location":{"@type":"Place","name":{{ ex.location | strip | jsonify }},"address":{{ ex.location | strip | jsonify }}}{% endif %}{% if ex.photos.size > 0 %},"image":"https://ionaere.com{{ ex.photos[0] | relative_url }}"{% endif %},"organizer":{"@id":"https://ionaere.com/#artist"},"performer":{"@id":"https://ionaere.com/#artist"}}{% endif %}{% endfor %}]}
@@ -2990,6 +2994,7 @@
                             <div class="exhibition-block__date">{{ ex.date_start }}{% if ex.date_end != "" %} — {{ ex.date_end }}{% endif %}</div>
                             <span class="exhibition-block__type">{{ ex.type }}</span>
                             <h3 class="exhibition-block__title">{{ ex.title }}</h3>
+                            {% if ex.subtitle %}<p class="exhibition-block__subtitle">{{ ex.subtitle }}</p>{% endif %}
                             {% if ex.location %}<div class="exhibition-block__location">{{ ex.location }}</div>{% endif %}
                             <p class="exhibition-block__desc">{{ ex.description }}</p>
                             <button type="button" class="exhibition-block__toggle" aria-expanded="false">
@@ -3184,10 +3189,6 @@
                     </article>
                 </div>
                 <div class="ai-arch">
-                    <header class="ai-arch__header reveal">
-                        <h3 class="ai-arch__title" data-i18n="ai_arch_title">Architettura</h3>
-                        <p class="ai-arch__desc" data-i18n="ai_arch_desc">Studi in movimento di edifici e sculture bioniche in paesaggi e città reali, generati con l’AI.</p>
-                    </header>
                     <div class="video-grid ai-arch__videos">
                         <article class="video-card">
                             <div class="video-card__embed">
