@@ -71,7 +71,7 @@
     cost[0][0] = 0;
     for (var j2 = 1; j2 <= k; j2++) for (var e = 1; e <= n; e++) for (var s = j2 - 1; s < e; s++) {
       if (cost[j2 - 1][s] === INF) continue;
-      var d = Math.log((pre[e] - pre[s]) / mean), c = cost[j2 - 1][s] + d * d;
+      var d = Math.log((pre[e] - pre[s]) / mean), c = cost[j2 - 1][s] + d * d + (e - s === 1 && n > 2 ? 1.5 : 0);
       if (c < cost[j2][e]) { cost[j2][e] = c; cut[j2][e] = s; }
     }
     var groups = [], e2 = n;

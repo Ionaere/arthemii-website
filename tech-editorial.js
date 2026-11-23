@@ -70,7 +70,7 @@
           if (cost[j2 - 1][st2] === INF) continue;
           var sum = pre[e] - pre[st2];
           /* height of a row is width / sum: penalise rows much taller or flatter than the mean */
-          var d = Math.log(sum / mean), c = cost[j2 - 1][st2] + d * d;
+          var d = Math.log(sum / mean), c = cost[j2 - 1][st2] + d * d + (e - st2 === 1 && n > 2 ? 1.5 : 0);
           if (c < cost[j2][e]) { cost[j2][e] = c; cut[j2][e] = st2; }
         }
       }
