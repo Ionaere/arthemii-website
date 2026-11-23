@@ -242,7 +242,11 @@
       // S: its size in CSS pixels) — photos, videos, posters, section colours and the lines of text
       paint: function (L, T, S) {
         var now = performance.now();
-        if (now - lastScan > 2500) { lastScan = now; scan(); bgc = bgColor(); }
+        if (now - lastScan > 4000) {
+          lastScan = now;
+          var job = function () { scan(); bgc = bgColor(); };
+          if (window.requestIdleCallback) requestIdleCallback(job, { timeout: 2000 }); else job();
+        }
         var W = 256, k = W / S;
         if (c.width !== W || c.height !== W) { c.width = W; c.height = W; }
         function hit(r) { return !(r.right < L || r.left > L + S || r.bottom < T || r.top > T + S); }
@@ -353,14 +357,15 @@
     /* keeps turning even when the phone has Reduce Motion switched on (owner's choice) */
     var still = false;
     var tick = 0;
-    function draw() {
+    function draw(repaint) {
       size();
       var r = cv.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
       // the glass shows what is right behind it: a square piece of the page around the prism,
       // refracted by its faces — so it changes with whatever scrolls underneath
       var pw = r.width || 76, S = Math.max(220, pw * 3.4);
       var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      if ((tick++ % 3) === 0 || still) {
+      if (repaint || repaint === undefined || still) {
+        paintedAt = performance.now();
         var pic = page.paint(cx - S / 2, cy - S / 2, S);
         if (pic) { try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pic); } catch (e) { page.reset(); } }
       }
@@ -370,20 +375,19 @@
       gl.uniform1f(uAng, ang);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
-    // The prism is drawn about 30 times a second, and about 12 while the page is scrolling,
-    // so it never takes frames away from the scrolling itself (it turns slowly, so this looks the same)
-    var scrolledAt = 0;
+    // The prism turns smoothly every frame. Re-reading the page behind it (what the glass
+    // refracts) touches many elements, so that only happens while the page is still and at
+    // most a few times a second — never while you scroll.
+    var scrolledAt = 0, paintedAt = 0;
     window.addEventListener('scroll', function () { scrolledAt = performance.now(); }, { passive: true });
     window.addEventListener('wheel', function () { scrolledAt = performance.now(); }, { passive: true });
     function frame(now) {
       raf = 0;
-      var gap = now - scrolledAt < 220 ? 80 : 32;
-      if (last && now - last < gap) { if (!document.hidden) raf = requestAnimationFrame(frame); return; }
       var dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
       var target = hover ? FAST : BASE;
       speed += (target - speed) * Math.min(1, dt * 3);
       ang = (ang + speed * dt) % (Math.PI * 2);
-      draw();
+      draw(now - scrolledAt > 250 && now - paintedAt > 180);
       if (!document.hidden) raf = requestAnimationFrame(frame);
     }
     function start() { if (!raf && !still) { last = 0; raf = requestAnimationFrame(frame); } }
