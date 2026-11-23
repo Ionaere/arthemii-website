@@ -2091,3 +2091,9 @@
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden; backface-visibility: hidden;
         }
+        /* Exhibitions and Workshop are in the top menu too: switch to the menu button a little earlier,
+           so the links never run into the logo */
+        @media (max-width: 1119px) {
+            .header__nav { display: none; }
+            .header__menu-btn { display: block; }
+        }
