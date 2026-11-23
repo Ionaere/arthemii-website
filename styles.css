@@ -2099,3 +2099,11 @@
         }
         /* Workshop page: the studio video sits among the photos */
         .moment video { display: block; width: 100%; height: 100%; object-fit: cover; }
+        /* Videos page: only the page name, the YouTube link, then the videos (no description or
+           photo at the top); the page title stays in the page for search engines and screen readers */
+        .page-top.page-top--plain { display: block; margin-bottom: var(--spacing-lg); }
+        .page-top--plain > .page-wordmark { margin: var(--spacing-md) 0 var(--spacing-lg); }
+        .page-top--plain > .section__header { max-width: none; margin: 0; text-align: center; }
+        .vh-title { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+        /* …and the first video follows right under the YouTube link */
+        .page-top--plain ~ .video-slides > .video-card:first-child { height: auto; min-height: 0; padding-top: var(--spacing-md); }
