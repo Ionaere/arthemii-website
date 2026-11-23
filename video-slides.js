@@ -1,16 +1,12 @@
 /*
  * Videos page: one video per screen. When a video comes into view its title drops in
  * and the description slides up; it resets when the video leaves the screen, so it
- * plays again every time. Also numbers the videos (01 / 21).
+ * plays again every time.
  */
 (function () {
   'use strict';
   var cards = Array.prototype.slice.call(document.querySelectorAll('.video-slides > .video-card'));
   if (!cards.length) return;
-  var n = cards.length;
-  cards.forEach(function (c, i) {
-    c.setAttribute('data-count', (i < 9 ? '0' : '') + (i + 1) + ' / ' + (n < 10 ? '0' : '') + n);
-  });
   if (!('IntersectionObserver' in window)) { cards.forEach(function (c) { c.classList.add('is-in'); }); return; }
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {

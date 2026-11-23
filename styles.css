@@ -2005,12 +2005,6 @@
         }
         .video-slides > .video-card.is-in .video-card__title { animation: gslideTitleIn 1.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .video-slides > .video-card.is-in .video-card__desc { opacity: 1; transform: none; }
-        .video-slides > .video-card::after {
-            content: attr(data-count);
-            position: absolute; left: 4vw; bottom: 2vh;
-            font-family: 'Italiana', var(--font-serif); font-size: 0.9rem; letter-spacing: 0.3em;
-            color: var(--text-tertiary);
-        }
         @media (max-width: 899px) {
             .video-slides > .video-card,
             .video-slides > .video-card:nth-child(even) {
@@ -2072,3 +2066,5 @@
             .gp--side.gp--text-left .wm-work__inner { justify-content: flex-end; }
             .gp--side.gp--text-left .wm-work__t { text-align: right; }
         }
+        /* no 01 / 27 counters on the Gallery and Videos slides */
+        .gslide__count { display: none; }
