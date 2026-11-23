@@ -2618,24 +2618,6 @@
             .section > .container > .section__toggle .section__title, .section > .container > .section__toggle.has-thumbs .section__title { font-size: 0.8rem !important; }
             .section__label-row { margin-bottom: 0.4rem !important; }
         }
-        /* Projects subtitle in the Ionaere Studio style: wide-spaced capitals with rules on both sides */
-        #projects > .container > .section__toggle .section__title {
-            display: inline-flex !important; align-items: center; gap: 0.7rem;
-            font-family: 'Italiana', var(--font-serif) !important; font-weight: 400 !important;
-            text-transform: uppercase; letter-spacing: 0.3em !important; line-height: 1 !important;
-            font-size: clamp(0.8rem, 1vw, 1rem) !important; color: var(--text-secondary); white-space: nowrap;
-        }
-        #projects > .container > .section__toggle .section__title::before,
-        #projects > .container > .section__toggle .section__title::after {
-            content: ""; flex: none; width: clamp(16px, 1.8vw, 28px); height: 1px; background: #bdbdbd;
-        }
-        #projects > .container > .section__toggle .section__title::after { margin-left: -0.3em; }
-        @media (max-width: 640px) {
-            #projects > .container > .section__toggle .section__title { font-size: 0.7rem !important; letter-spacing: 0.2em !important; gap: 0.45rem; }
-            #projects > .container > .section__toggle .section__title::before,
-            #projects > .container > .section__toggle .section__title::after { width: 12px; }
-            #projects > .container > .section__toggle .section__title::after { margin-left: -0.2em; }
-        }
     </style>
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ionaere.com/#artist","name":"Arthemii Ionaere","url":"https://ionaere.com/fr/","image":"https://ionaere.com/img/opt/portrait-arthemii-1600.jpg","jobTitle":"Stained glass artist","description":"Berlin-based contemporary stained glass artist creating three-dimensional glass sculptures in the Tiffany technique, kinetic prisms, lamps and light installations.","email":"mailto:info@ionaere.com","address":{"@type":"PostalAddress","addressLocality":"Berlin","addressCountry":"DE"},"knowsAbout":["Stained glass","Tiffany technique","Glass sculpture","Kinetic art","Light installation","Contemporary art"],"sameAs":["https://www.instagram.com/ionaerestudio/","https://www.instagram.com/ionaere/","https://www.instagram.com/lonaere/","https://www.youtube.com/@IonaereArthe"]},{"@type":"WebSite","@id":"https://ionaere.com/#website","url":"https://ionaere.com/fr/","name":"Arthemii Ionaere","description":"Contemporary stained glass art by Arthemii Ionaere, Berlin","inLanguage":"en","publisher":{"@id":"https://ionaere.com/#artist"}}{% for ex in site.data.exhibitions.items %}{% assign ds = ex.date_start | strip | split: "." %}{% if ds.size == 3 %},{"@type":"ExhibitionEvent","name":{{ ex.title | jsonify }},"startDate":"{{ ds[2] }}-{{ ds[1] }}-{{ ds[0] }}"{% assign de = ex.date_end | strip | split: "." %}{% if de.size == 3 %},"endDate":"{{ de[2] }}-{{ de[1] }}-{{ de[0] }}"{% endif %},"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode"{% if ex.location and ex.location != "" %},"location":{"@type":"Place","name":{{ ex.location | strip | jsonify }},"address":{{ ex.location | strip | jsonify }}}{% endif %}{% if ex.photos.size > 0 %},"image":"https://ionaere.com{{ ex.photos[0] | relative_url }}"{% endif %},"organizer":{"@id":"https://ionaere.com/#artist"},"performer":{"@id":"https://ionaere.com/#artist"}}{% endif %}{% endfor %}]}
