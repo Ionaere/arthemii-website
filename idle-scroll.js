@@ -99,7 +99,7 @@
       pos = move.from + (move.to - move.from) * ease(t);
       window.scrollTo({ top: pos, behavior: 'instant' });
       if (t >= 1) { move = null; holdUntil = now + HOLD; }
-    } else if (now >= holdUntil) {
+    } else if (now >= holdUntil && !videoBusy()) {
       var n = idx + dir;
       if (n >= slides.length || n < 0) { dir = -dir; n = idx + dir; }
       idx = Math.max(0, Math.min(slides.length - 1, n));
@@ -111,6 +111,7 @@
   function slideStart() {
     timer = 0;
     if (raf || blocked()) return;
+    if (videoBusy()) { resumeLater(); return; }
     slides = collect();                       // the layout may have changed (resize, images)
     idx = nearestIndex();
     // first glide onto the photo nearest the middle, then rest on it
@@ -126,10 +127,60 @@
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
   }
+
+  /* Videos page: resting the cursor on a video stops the travelling until that video has played
+     to its end (the YouTube player tells us how long is left); then it carries on. */
+  var hoverCard = null, videoUntil = 0, ytInfo = typeof WeakMap === 'function' ? new WeakMap() : null;
+  function frameOf(card) { return card && card.querySelector('iframe'); }
+  function remainingMs(card) {
+    var f = frameOf(card), o = f && ytInfo && ytInfo.get(f);
+    if (!o || !o.duration) return 0;
+    var t = (o.t || 0) + (performance.now() - (o.at || performance.now())) / 1000;
+    return Math.max(0, (o.duration - (t % o.duration)) * 1000);
+  }
+  var FALLBACK_MS = 15000;   // when the player has not told us the length yet
+  function holdForVideo(card, fromInfo) {
+    var left = remainingMs(card), now = performance.now();
+    if (left) videoUntil = now + left;
+    else if (!fromInfo) videoUntil = Math.max(videoUntil, now + FALLBACK_MS);
+    stop();
+    resumeLater();
+  }
+  function resumeLater() {
+    if (timer) clearTimeout(timer);
+    var wait = Math.max(IDLE_MS, videoUntil - performance.now());
+    timer = setTimeout(SLIDE_MODE ? slideStart : start, wait);
+  }
+  function videoBusy() { return performance.now() < videoUntil; }
+  window.addEventListener('message', function (e) {
+    if (!ytInfo || !/youtube/.test(e.origin || '')) return;
+    var d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (_) { return; }
+    if (!d || !d.info) return;
+    document.querySelectorAll('iframe').forEach(function (f) {
+      if (f.contentWindow !== e.source) return;
+      var o = ytInfo.get(f) || {};
+      if (d.info.duration) o.duration = d.info.duration;
+      if (typeof d.info.currentTime === 'number') { o.t = d.info.currentTime; o.at = performance.now(); }
+      ytInfo.set(f, o);
+      if (hoverCard && frameOf(hoverCard) === f && !o.used) { o.used = true; holdForVideo(hoverCard, true); }
+    });
+  });
+  document.querySelectorAll('.video-slides > .video-card').forEach(function (card) {
+    card.addEventListener('mouseenter', function () {
+      if (hoverCard === card) return;
+      hoverCard = card;
+      var f = frameOf(card), o = f && ytInfo && ytInfo.get(f);
+      if (o) o.used = false;
+      if (f) try { f.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), '*'); } catch (_) {}
+      holdForVideo(card);
+    });
+    card.addEventListener('mouseleave', function () { if (hoverCard === card) hoverCard = null; });
+  });
   function activity() {
     stop();
     if (timer) clearTimeout(timer);
-    timer = setTimeout(SLIDE_MODE ? slideStart : start, IDLE_MS);
+    timer = 0;
+    timer = setTimeout(SLIDE_MODE ? slideStart : start, Math.max(IDLE_MS, videoUntil - performance.now()));
   }
 
   // moving the mouse around does not stop it — only scrolling, a click, a touch or a key does
