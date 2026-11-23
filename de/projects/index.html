@@ -64,6 +64,21 @@
         .tech-gallery .tech-block__photo picture,
         .tech-gallery .tech-block__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
         @media (max-width: 768px) { .tech-gallery { --gap: 6px; } }
+        /* Subtitle in the Ionaere Studio style: wide-spaced capitals with rules on both sides */
+        .page-top .section__header .section__title {
+            display: inline-flex; align-items: center; gap: 0.9rem; flex-wrap: nowrap;
+            font-family: 'Italiana', var(--font-serif) !important; font-weight: 400 !important;
+            text-transform: uppercase; letter-spacing: 0.3em !important; line-height: 1.2 !important;
+            font-size: clamp(0.95rem, 1.45vw, 1.35rem) !important; color: var(--text);
+        }
+        .page-top .section__header .section__title::before,
+        .page-top .section__header .section__title::after { content: ""; flex: none; width: clamp(20px, 2.4vw, 40px); height: 1px; background: #bdbdbd; }
+        .page-top .section__header .section__title::after { margin-left: -0.3em; }
+        @media (max-width: 640px) {
+            .page-top .section__header .section__title { font-size: 0.85rem !important; letter-spacing: 0.2em !important; gap: 0.5rem; }
+            .page-top .section__header .section__title::before, .page-top .section__header .section__title::after { width: 14px; }
+            .page-top .section__header .section__title::after { margin-left: -0.2em; }
+        }
     </style>
 </head>
 <body>
