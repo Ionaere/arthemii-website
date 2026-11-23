@@ -19,6 +19,8 @@
     '.tech-block.is-open .wm-title.hg-grown,.exhibition-block.is-open .wm-title.hg-grown{white-space:nowrap!important;justify-content:center!important}' +
     '.tech-block.is-open .tech-block__mini,.exhibition-block.is-open .exhibition-block__mini{position:absolute;right:0}' +
     '.tech-block__head,.exhibition-block__head{position:relative}' +
+    '.tech-block.is-open .wm-title.hg-wrap,.exhibition-block.is-open .wm-title.hg-wrap{white-space:normal!important;justify-content:center!important;text-align:center!important;line-height:1.3!important}' +
+    '.wm-title.hg-wrap>.wm-t{margin-right:0!important}' +
     '.wm-title.hg-grown.wm-has-num{padding:0 0 0 2em!important}.wm-title.hg-grown>.wm-num{font-size:1.15em!important}';
   var st = document.createElement('style');
   st.textContent = css;
@@ -30,7 +32,7 @@
   function px(v) { return parseFloat(v) || 0; }
 
   /* scale el's font size so that box's content just fits avail px */
-  function fitTo(el, box, avail, maxVw) {
+  function fitTo(el, box, avail, maxVw, minGain) {
     el.style.removeProperty('font-size');
     el.style.transition = 'none';
     var f0 = px(getComputedStyle(el).fontSize);
@@ -45,7 +47,7 @@
     el.style.setProperty('font-size', f0 + 'px', 'important');
     void el.offsetWidth;                    /* start the transition from the old size */
     el.style.transition = '';
-    if (f <= f0 * 1.05) { el.style.removeProperty('font-size'); return false; }
+    if (f <= f0 * (minGain || 1.05)) { el.style.removeProperty('font-size'); return false; }
     el.style.setProperty('font-size', f.toFixed(2) + 'px', 'important');
     return true;
   }
@@ -70,13 +72,22 @@
     if (!el) return;
     var chev2 = head.querySelector('.tech-block__chev, .exhibition-block__chev');
     avail = head.clientWidth - (chev2 ? chev2.offsetWidth + 16 : 0) - 8;
+    el.classList.remove('hg-wrap');
     el.classList.add('hg-grown');
     var oldFlex = el.style.flex, oldW = el.style.width;
     el.style.flex = 'none'; el.style.width = 'max-content';
     /* measure without the flexible side rules stretching */
-    var grown = fitTo(el, el, avail, MAX_GROUP);
+    var grown = fitTo(el, el, avail, MAX_GROUP, window.innerWidth < 769 ? 1.3 : 1.05);
     el.style.flex = oldFlex; el.style.width = oldW;
-    if (!grown) el.classList.remove('hg-grown');
+    if (!grown) {
+      /* too long for one bigger line (phones): still grow and centre it, over two lines */
+      el.classList.remove('hg-grown');
+      el.classList.add('hg-wrap');
+      var f0 = px(getComputedStyle(el).fontSize);
+      el.style.setProperty('font-size', f0 + 'px', 'important');
+      void el.offsetWidth;
+      el.style.setProperty('font-size', Math.min(f0 * 1.35, window.innerWidth * MAX_GROUP * 1.6).toFixed(2) + 'px', 'important');
+    }
   }
 
   function shrink(block) {
@@ -86,7 +97,7 @@
     if (!el) return;
     el.style.removeProperty('font-size');
     var t = el;
-    setTimeout(function () { if (!t.style.fontSize) t.classList.remove('hg-grown'); }, 800);
+    setTimeout(function () { if (!t.style.fontSize) t.classList.remove('hg-grown', 'hg-wrap'); }, 800);
   }
 
   var SEL = '.section.is-collapsible, .tech-block.is-collapsible, .exhibition-block.is-collapsible';
