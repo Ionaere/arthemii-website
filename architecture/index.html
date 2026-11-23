@@ -394,12 +394,29 @@
             this.parentNode.replaceChild(f,this);
         };
     })(yts[i])};
-    var vcs=document.querySelectorAll(".video-card");
-    for(var i=0;i<vcs.length;i++){(function(c){
-        var v=c.querySelector("video");if(!v)return;
-        c.onmouseenter=function(){v.play().catch(function(){})};
-        c.onmouseleave=function(){v.pause();v.currentTime=0};
+    // Videos play by themselves (muted, looped): they start about a screen before they scroll
+    // into view and pause when they are far away again, so only the nearby ones load and play.
+    var vcs=document.querySelectorAll(".video-card video");
+    var avs=[];
+    for(var i=0;i<vcs.length;i++){(function(v){
+        v.muted=true;v.loop=true;v.playsInline=true;
+        v.setAttribute("muted","");v.setAttribute("loop","");v.setAttribute("playsinline","");
+        avs.push(v);
     })(vcs[i])};
+    function playAV(v){var p=v.play();if(p&&p.catch)p.catch(function(){});}
+    if("IntersectionObserver" in window){
+        var aio=new IntersectionObserver(function(es){
+            es.forEach(function(e){if(e.isIntersecting&&!document.hidden)playAV(e.target);else e.target.pause();});
+        },{threshold:0,rootMargin:"120% 0px 120% 0px"});
+        avs.forEach(function(v){aio.observe(v);});
+        document.addEventListener("visibilitychange",function(){
+            avs.forEach(function(v){
+                if(document.hidden){v.pause();return;}
+                var r=v.getBoundingClientRect();
+                if(r.bottom>-1.2*innerHeight&&r.top<2.2*innerHeight)playAV(v);
+            });
+        });
+    }else{avs.forEach(playAV);}
     </script>
     <script src="../lightbox.js"></script>
     <script src="../video-lightbox.js"></script>
