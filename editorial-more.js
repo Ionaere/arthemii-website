@@ -60,11 +60,11 @@
     '.exhibition-block.tb-on.is-open .exhibition-block__head .wm-title{color:#fff!important;text-shadow:0 1px 18px rgba(0,0,0,.35)}' +
     '.exhibition-block.tb-on.is-open .exhibition-block__head .wm-title::before,.exhibition-block.tb-on.is-open .exhibition-block__head .wm-title::after{background:rgba(255,255,255,.8)!important}' +
     '.exhibition-block.tb-on.is-open .exhibition-block__head .exhibition-block__meta{display:none!important}' +
-    '.tb-meta{display:none}.exhibition-block.tb-on.is-open .tb-meta{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.75rem;margin:var(--spacing-lg) 0 0}' +
+    '.tb-meta{display:none}.exhibition-block.tb-on.is-open .tb-meta{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.75rem;margin:0 0 var(--spacing-sm)}' +
     '.tb-meta .exhibition-block__date{margin:0!important}.tb-meta .exhibition-block__type{margin:0!important}' +
     '.exhibition-block.tb-on.is-open .exhibition-block__chev{color:#fff!important}' +
     '.exhibition-block.is-open .exhibition-block__body .tb-editorial{padding-top:0!important}' +
-    '@media (max-width:768px){.exhibition-block.tb-on.is-open .exhibition-block__head{padding-left:var(--spacing-sm);padding-right:var(--spacing-sm)}.tb-editorial>.tb-text{text-align:left;margin-bottom:var(--spacing-lg)}.tb-editorial>.tb-text .exhibition-block__stats{justify-content:flex-start}.exb-hero{margin-bottom:var(--spacing-lg)}.tb-gallery,.tb-gallery .tb-row{gap:6px}.exb-hero--pair{gap:6px}}';
+    '@media (max-width:768px){.exhibition-block.tb-on.is-open .exhibition-block__head{padding-left:var(--spacing-sm);padding-right:var(--spacing-sm)}.tb-editorial>.tb-text{text-align:left;margin-bottom:var(--spacing-lg)}.tb-editorial>.tb-text .exhibition-block__stats{justify-content:flex-start}.exhibition-block.tb-on.is-open .tb-meta{justify-content:flex-start}.exb-hero{margin-bottom:var(--spacing-lg)}.tb-gallery,.tb-gallery .tb-row{gap:6px}.exb-hero--pair{gap:6px}}';
   var st = document.createElement('style');
   st.textContent = css;
   document.head.appendChild(st);
@@ -168,14 +168,15 @@
       b.gallery.className = 'tb-gallery';
       b.header.appendChild(b.gallery);
       if (b.text) b.text.classList.add('tb-text');
-      /* date and kind of show sit above the photo (and the title on it) */
+      /* date and kind of show sit right under the photo, just above the text */
       var head = b.block.querySelector('.exhibition-block__head');
       var meta = head && head.querySelector('.exhibition-block__meta');
       if (meta && !b.metaCopy) {
         b.metaCopy = meta.cloneNode(true);
         b.metaCopy.className = 'tb-meta';
         b.metaCopy.setAttribute('aria-hidden', 'true');
-        b.block.insertBefore(b.metaCopy, head);
+        if (b.text) b.text.insertBefore(b.metaCopy, b.text.firstChild);
+        else b.header.insertBefore(b.metaCopy, b.hero.nextSibling);
       }
       if (b.photoCol) b.photoCol.classList.add('tb-hidden');
       b.header.classList.add('tb-editorial');
