@@ -1827,6 +1827,12 @@
             margin-left: auto;
             text-align: right;
         }
+        /* Drawings page: two drawings per row */
+        .page-top ~ .drawings__rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-lg); align-items: center; }
+        .page-top ~ .drawings__rows > .drawings__row { display: contents; }
+        .page-top ~ .drawings__rows .drawings__row > .drawing,
+        .page-top ~ .drawings__rows .drawings__row > a { flex: none; width: 100%; aspect-ratio: var(--r); }
+        @media (max-width: 640px) { .page-top ~ .drawings__rows { gap: var(--spacing-sm); } }
         /* less empty space above the page name */
         .section:has(> .container > .page-top) { padding-top: var(--spacing-md); }
         @media (max-width: 768px) {
