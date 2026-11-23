@@ -227,6 +227,16 @@
       });
     }
     hero.appendChild(after);
+    /* the large photo and the line under it also fold the section back up */
+    if (toggle) {
+      hero.style.cursor = 'pointer';
+      hero.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return;
+        toggle.click();
+        var top = sec.getBoundingClientRect().top + window.scrollY - 80;
+        if (sec.getBoundingClientRect().top < 0) window.scrollTo({ top: top, behavior: 'smooth' });
+      });
+    }
     inner.insertBefore(hero, inner.firstChild);
     return { sec: sec, hero: hero, img: img };
   }
