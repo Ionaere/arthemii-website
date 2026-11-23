@@ -29,6 +29,12 @@
     '.tech-block.tb-on.is-open .tech-block__head .wm-num{color:rgba(255,255,255,.8)!important}' +
     '.tech-block.tb-on.is-open .tech-block__chev{color:#fff!important}' +
     '.tb-hero>*{position:relative;width:100%!important;aspect-ratio:auto!important}' +
+    '.tech-block.tb-on.tb-above.is-open .tech-block__head{margin-bottom:var(--spacing-md)!important;transform:none!important;padding-left:0;padding-right:0}' +
+    '.tech-block.tb-on.tb-above.is-open .tech-block__head .wm-title{color:var(--text)!important;text-shadow:none!important}' +
+    '.tech-block.tb-on.tb-above.is-open .tech-block__head .wm-title::before,.tech-block.tb-on.tb-above.is-open .tech-block__head .wm-title::after{background:#bdbdbd!important}' +
+    '.tech-block.tb-on.tb-above.is-open .tech-block__head .wm-num{color:#c9c9c9!important}' +
+    '.tech-block.tb-on.tb-above.is-open .tech-block__chev{color:var(--text-secondary)!important}' +
+    '.tech-block.tb-above .tb-hero>*::after{display:none}' +
     '@media (max-width:768px){.tech-block.tb-on.is-open .tech-block__head{padding-left:var(--spacing-sm);padding-right:var(--spacing-sm);margin-top:var(--spacing-md)}.tb-editorial>.tb-text{text-align:left;margin-bottom:var(--spacing-lg)}.tb-editorial>.tb-text .tech-block__desc{font-size:1rem}.tb-hero{margin-bottom:var(--spacing-lg)}.tb-editorial>.tech-block__photos,.tb-editorial .tech-block__row{gap:6px!important}.tb-editorial .tech-block__row{flex-wrap:nowrap!important}.tb-editorial .tech-block__row>*{aspect-ratio:var(--r)!important;height:auto!important;width:auto!important;min-width:0!important;flex:var(--r) 1 0!important}}' +
     '.tb-hero>*::after{content:"";position:absolute;left:0;right:0;top:0;height:min(45%,260px);background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,0));pointer-events:none;z-index:1}';
   var st = document.createElement('style');
@@ -120,6 +126,7 @@
     if (!b.on) {
       var best = b.media[0];
       b.media.forEach(function (m) { if (ratio(m) > ratio(best) + 0.05) best = m; });
+      b.media.forEach(function (m) { if (m.hasAttribute('data-hero')) best = m; });
       b.heroItem = best;
       b.hero = document.createElement('div');
       b.hero.className = 'tb-hero';
@@ -163,7 +170,8 @@
   }
 
   function init() {
-    document.querySelectorAll('#projects .tech-block').forEach(function (block) {
+    document.querySelectorAll('#projects .tech-block').forEach(function (block, i) {
+      if (i >= 3) block.classList.add('tb-above');   /* Glass Parts Sculpting, Tiffany: title above the photo */
       var b = prepare(block);
       if (b) blocks.push(b);
     });

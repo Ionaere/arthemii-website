@@ -2696,6 +2696,10 @@
             .section__body-inner, .tech-block__body-inner, .exhibition-block__body-inner { transition: none !important; opacity: 1; transform: none; }
             .section__toggle > *, .tech-block__head > *, .exhibition-block__head > * { animation: none !important; }
         }
+        /* About: the name sits above the photo and the text, not over them */
+        .about-studio { margin-bottom: var(--spacing-lg) !important; }
+        #about .about-text { padding-top: 0 !important; }
+        html { overflow-anchor: none; }
     </style>
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ionaere.com/#artist","name":"Arthemii Ionaere","url":"https://ionaere.com/fr/","image":"https://ionaere.com/img/opt/portrait-arthemii-1600.jpg","jobTitle":"Stained glass artist","description":"Berlin-based contemporary stained glass artist creating three-dimensional glass sculptures in the Tiffany technique, kinetic prisms, lamps and light installations.","email":"mailto:info@ionaere.com","address":{"@type":"PostalAddress","addressLocality":"Berlin","addressCountry":"DE"},"knowsAbout":["Stained glass","Tiffany technique","Glass sculpture","Kinetic art","Light installation","Contemporary art"],"sameAs":["https://www.instagram.com/ionaerestudio/","https://www.instagram.com/ionaere/","https://www.instagram.com/lonaere/","https://www.youtube.com/@IonaereArthe"]},{"@type":"WebSite","@id":"https://ionaere.com/#website","url":"https://ionaere.com/fr/","name":"Arthemii Ionaere","description":"Contemporary stained glass art by Arthemii Ionaere, Berlin","inLanguage":"en","publisher":{"@id":"https://ionaere.com/#artist"}}{% for ex in site.data.exhibitions.items %}{% assign ds = ex.date_start | strip | split: "." %}{% if ds.size == 3 %},{"@type":"ExhibitionEvent","name":{{ ex.title | jsonify }},"startDate":"{{ ds[2] }}-{{ ds[1] }}-{{ ds[0] }}"{% assign de = ex.date_end | strip | split: "." %}{% if de.size == 3 %},"endDate":"{{ de[2] }}-{{ de[1] }}-{{ de[0] }}"{% endif %},"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode"{% if ex.location and ex.location != "" %},"location":{"@type":"Place","name":{{ ex.location | strip | jsonify }},"address":{{ ex.location | strip | jsonify }}}{% endif %}{% if ex.photos.size > 0 %},"image":"https://ionaere.com{{ ex.photos[0] | relative_url }}"{% endif %},"organizer":{"@id":"https://ionaere.com/#artist"},"performer":{"@id":"https://ionaere.com/#artist"}}{% endif %}{% endfor %}]}
@@ -2895,7 +2899,7 @@
                         </div>
                         <div class="tech-block__photos tech-block__photos--videos">
                             <div class="tech-block__row">
-                                <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" data-poster="../video-files/kinetic/kinetic-08.jpg" data-src="../video-files/kinetic/kinetic-08.mp4"></video></div>
+                                <div class="tech-video" data-hero style="--r:1.782"><video muted loop playsinline preload="none" data-poster="../video-files/kinetic/kinetic-hero.jpg" data-src="../video-files/kinetic/kinetic-hero.mp4"></video></div><div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" data-poster="../video-files/kinetic/kinetic-08.jpg" data-src="../video-files/kinetic/kinetic-08.mp4"></video></div>
                             </div>
                             <div class="tech-block__row">
                                 <div class="tech-video" style="--r:1.779"><video muted loop playsinline preload="none" data-poster="../video-files/kinetic/kinetic-04.jpg" data-src="../video-files/kinetic/kinetic-04.mp4"></video></div>
@@ -4616,8 +4620,8 @@
     <script src="../smooth-scroll.js" defer></script>
     <script src="../i18n.js?v=20261123q"></script>
     <script src="../contact.js"></script>
-    <script src="../home-grow.js?v=3" defer></script>
-    <script src="../tech-editorial.js?v=9" defer></script>
+    <script src="../home-grow.js?v=4" defer></script>
+    <script src="../tech-editorial.js?v=10" defer></script>
     <script src="../editorial-more.js?v=7" defer></script>
     <script>
     /* Ionaere Studio wordmark: flies away while scrolling down, comes back on the way up */
