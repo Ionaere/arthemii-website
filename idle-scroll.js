@@ -10,7 +10,7 @@
   window.__idleScroll = true;
 
   var IDLE_MS = 1000;        // quiet time after the visitor's own activity before it moves again
-  var FIRST_MS = 300;        // on page open it starts almost at once
+  var FIRST_MS = 1000;       // on page open it starts after about a second
   var SPEED = 64;            // pixels per second at full speed
   var RAMP = 1.5;            // seconds to ease from still to full speed
 
