@@ -508,5 +508,20 @@ window.I18N_DATA["tr"] = {
   "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Her şey çizimle başladı: Arthemii önce çizim yapmaya başladı. Bu çizimler özünde grafiktir ve vitray tekniğiyle doğal bir uyum içindedir — doğrudan bunlardan vitray yapılabilir. Ancak anlaşıldı ki net konturları ve belirgin formları sayesinde başka alanlarda da görselleştirilebilirler.",
   "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Bu çizimler daha sonra onun mimarisinin kaynağı oldu: her biri, yapay zekânın okuyup mimariye, mücevhere ve başka formlara dönüştürdüğü kesin bir şemadır.",
   "Collected here are Arthemii’s projects, ranging from stained glass to sculpture on a metal frame. He is constantly looking for new paths and new projects. A new project will be ready soon: metal frames that can be assembled into one whole, taken apart and installed in any way. It will be presented shortly.": "Burada Arthemii'nin vitraydan metal çerçeve üzerindeki heykele uzanan projeleri bir araya getirilmiştir. Sürekli yeni yollar ve yeni projeler arıyor. Yakında yeni bir proje hazır olacak: tek bir bütün halinde birleştirilebilen, sökülebilen ve istenildiği gibi kurulabilen metal çerçeveler. Kısa süre içinde tanıtılacak.",
-  "Sculptures, exhibitions, the studio, installations, theatre and more": "Heykeller, sergiler, atölye, enstalasyonlar, tiyatro ve daha fazlası"
+  "Sculptures, exhibitions, the studio, installations, theatre and more": "Heykeller, sergiler, atölye, enstalasyonlar, tiyatro ve daha fazlası",
+  "Rotating glass sculptures — 2024": "Dönen cam heykeller — 2024",
+  "Solo exhibition — Bashmet Centre, 2024": "Kişisel sergi — Başmet Merkezi, 2024",
+  "← Back to Projects": "← Projelere dön",
+  "Kinetic glass works — 2024–2026": "Kinetik cam eserler — 2024–2026",
+  "Kinetic Prizm is a series of moving glass works that light passes through. As they turn, their shadows and caustics fill the room with analog visual effects: no projector, no screen — only glass, light and motion.": "Kinetic Prizm, ışığın içinden geçtiği hareketli cam eserlerden oluşan bir seridir. Döndükçe gölgeleri ve kostikleri mekânı analog görsel efektlerle doldurur: projektör yok, ekran yok — yalnızca cam, ışık ve hareket.",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel, with the glass bent in the kiln into curved forms. A custom drive lets the rotation speed be adjusted, from a slow drift to fast, pulsing patterns. The newest works (2026) run on a stepper motor and add a Fresnel lens for an extra optical effect.": "Her obje, Arthemii’nin kendi tekniği olan mixed stained glass ile yapılır: cam pirinç ve çelikle birleştirilir, cam fırında kavisli formlara bükülür. Özel olarak geliştirilen bir tahrik sistemi dönüş hızının ayarlanmasını sağlar; yavaş bir süzülmeden hızlı, nabız gibi atan desenlere kadar. En yeni eserler (2026) adım motoruyla çalışır ve ek bir optik efekt için Fresnel merceği kullanır.",
+  "Process": "Süreç",
+  "Effects": "Efektler",
+  "Clips": "Klipler",
+  "Caustics — bright lines of focused light that ripple across the wall like sunlight on water.": "Kostikler — odaklanmış ışığın parlak çizgileri, suyun üzerindeki güneş ışığı gibi duvarda dalgalanır.",
+  "Moving shadows — coloured shadows that grow, overlap and dissolve as the forms turn.": "Hareketli gölgeler — formlar döndükçe büyüyen, üst üste binen ve dağılan renkli gölgeler.",
+  "Refraction — curved glass bends the light and splits it into spectral colours.": "Kırılma — kavisli cam ışığı büker ve tayf renklerine ayırır.",
+  "The effects come from physics, not from a screen, so they are never exactly the same twice.": "Efektler bir ekrandan değil fizikten doğar; bu yüzden asla iki kez birebir aynı olmazlar.",
+  "Project page →": "Proje sayfası →",
+  "Kinetic Prizm — Arthemii Ionaere": "Kinetik Prizma — Arthemii Ionaere"
 };

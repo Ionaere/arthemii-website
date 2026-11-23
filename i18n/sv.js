@@ -508,5 +508,20 @@ window.I18N_DATA["sv"] = {
   "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "Allt började med teckningen: Arthemii började med att teckna. I grunden är dessa teckningar grafik, och de passar naturligt ihop med blyglastekniken — glasmålningar kan göras direkt utifrån dem. Men det visade sig att de tack vare sina tydliga konturer och exakta former också kan visualiseras inom andra områden.",
   "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Dessa teckningar blev senare källan till hans arkitektur: var och en är ett exakt schema som artificiell intelligens läser och förvandlar till arkitektur, smycken och andra former.",
   "Collected here are Arthemii’s projects, ranging from stained glass to sculpture on a metal frame. He is constantly looking for new paths and new projects. A new project will be ready soon: metal frames that can be assembled into one whole, taken apart and installed in any way. It will be presented shortly.": "Här samlas Arthemiis projekt, från glasmålning till skulptur på en metallram. Han söker ständigt nya vägar och nya projekt. Snart är ett nytt projekt klart: metallramar som kan fogas samman till en helhet, plockas isär och installeras på valfritt sätt. Det presenteras inom kort.",
-  "Sculptures, exhibitions, the studio, installations, theatre and more": "Skulpturer, utställningar, ateljé, installationer, teater och mer"
+  "Sculptures, exhibitions, the studio, installations, theatre and more": "Skulpturer, utställningar, ateljé, installationer, teater och mer",
+  "Rotating glass sculptures — 2024": "Roterande glasskulpturer — 2024",
+  "Solo exhibition — Bashmet Centre, 2024": "Separatutställning — Basjmet-centret, 2024",
+  "← Back to Projects": "← Tillbaka till projekt",
+  "Kinetic glass works — 2024–2026": "Kinetiska glasverk — 2024–2026",
+  "Kinetic Prizm is a series of moving glass works that light passes through. As they turn, their shadows and caustics fill the room with analog visual effects: no projector, no screen — only glass, light and motion.": "Kinetic Prizm är en serie rörliga glasverk som ljuset passerar genom. När de roterar fyller deras skuggor och kaustik rummet med analoga visuella effekter: ingen projektor, ingen skärm — bara glas, ljus och rörelse.",
+  "Each object is made in Arthemii’s own technique, mixed stained glass: glass combined with brass and steel, with the glass bent in the kiln into curved forms. A custom drive lets the rotation speed be adjusted, from a slow drift to fast, pulsing patterns. The newest works (2026) run on a stepper motor and add a Fresnel lens for an extra optical effect.": "Varje objekt är gjort i Arthemiis egen teknik, mixed stained glass: glas kombinerat med mässing och stål, där glaset böjs i ugnen till välvda former. En egenutvecklad drivning gör rotationshastigheten justerbar, från långsam drift till snabba, pulserande mönster. De senaste verken (2026) drivs av en stegmotor och har en fresnellins för en extra optisk effekt.",
+  "Process": "Process",
+  "Effects": "Effekter",
+  "Clips": "Klipp",
+  "Caustics — bright lines of focused light that ripple across the wall like sunlight on water.": "Kaustik — ljusa linjer av fokuserat ljus som krusar sig över väggen som solljus på vatten.",
+  "Moving shadows — coloured shadows that grow, overlap and dissolve as the forms turn.": "Rörliga skuggor — färgade skuggor som växer, överlappar och löses upp när formerna roterar.",
+  "Refraction — curved glass bends the light and splits it into spectral colours.": "Brytning — välvt glas bryter ljuset och delar upp det i spektralfärger.",
+  "The effects come from physics, not from a screen, so they are never exactly the same twice.": "Effekterna kommer från fysik, inte från en skärm, så de blir aldrig exakt likadana två gånger.",
+  "Project page →": "Projektsida →",
+  "Kinetic Prizm — Arthemii Ionaere": "Kinetiskt prisma — Arthemii Ionaere"
 };
