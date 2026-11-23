@@ -36,6 +36,9 @@
         .hero__eyebrow, .hero__title, .hero__subtitle, .hero__desc, .hero__actions, .hero__image {
             opacity: 1 !important; transform: none !important; animation: none !important;
         }
+        /* Gallery: only the page name on top, the photos follow right after it */
+        .page-top.page-top--solo { display: block; margin-bottom: var(--spacing-md); }
+        .page-top.page-top--solo > .page-wordmark { margin-bottom: 0; }
     </style>
 </head>
 <body>
@@ -86,12 +89,8 @@
 <!-- ========== GALLERY ========== -->
         <section class="section" id="gallery">
             <div class="container">
-                <div class="page-top">
+                <div class="page-top page-top--solo">
                     <div class="page-wordmark"><div class="page-wordmark__inner"><span class="page-wordmark__rule" aria-hidden="true"></span><div class="page-wordmark__name" data-i18n="gallery_label">Galleria</div><span class="page-wordmark__rule" aria-hidden="true"></span></div></div>
-                    <header class="section__header reveal">
-                        <h1 class="section__title" data-i18n="gallery_title">Collezione estesa</h1>
-                    </header>
-                    <figure class="page-top__media"><picture><source type="image/webp" srcset="../../img/opt/2024-12-Arthemii-Ionaere-prizmas-800.webp 800w, ../../img/opt/2024-12-Arthemii-Ionaere-prizmas-1600.webp 1600w, ../../img/opt/2024-12-Arthemii-Ionaere-prizmas-2400.webp 2400w" sizes="(max-width: 768px) 92vw, 48vw"><img src="../../img/opt/2024-12-Arthemii-Ionaere-prizmas-1600.jpg" alt="Falling Shadows prisms by Arthemii Ionaere" fetchpriority="high" decoding="async"></picture></figure>
                 </div>
                 <div class="gslides">
                     <article class="gslide" style="--r:0.438">
