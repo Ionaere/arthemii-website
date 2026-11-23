@@ -19,6 +19,11 @@
     '.section.is-open>.container>.section__toggle .section__chevron{order:-1!important;margin:0!important;width:2.6rem!important;height:2.6rem!important;border:1px solid currentColor;border-radius:50%;display:flex!important;align-items:center;justify-content:center;opacity:.75}' +
     '.section.is-open>.container>.section__toggle .section__chevron svg{width:20px!important;height:20px!important}' +
     '.section.is-open>.container>.section__toggle:hover .section__chevron{opacity:1}' +
+    /* opened project / exhibition: its arrow also sits centred above the title */
+    '.tech-block.is-open>.tech-block__head,.exhibition-block.is-open>.exhibition-block__head{flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:.5rem!important}' +
+    '.tech-block.is-open>.tech-block__head>.wm-title,.exhibition-block.is-open>.exhibition-block__head>.exhibition-block__head-text{width:100%;flex:none!important}' +
+    '.tech-block.is-open .tech-block__chev,.exhibition-block.is-open .exhibition-block__chev{order:-1!important;margin:0!important;align-self:center!important;width:2.4rem!important;height:2.4rem!important;border:1px solid currentColor;border-radius:50%;display:flex!important;align-items:center;justify-content:center;opacity:.8;transform:rotate(180deg)}' +
+    '.tech-block.is-open .tech-block__chev svg,.exhibition-block.is-open .exhibition-block__chev svg{width:18px!important;height:18px!important}' +
     /* Instagram / YouTube buttons keep their own width */
     '.section__toggle .yt-channel{width:max-content!important;max-width:100%!important;flex:none!important}' +
     '.section.is-open>.container>.section__toggle.thumbs-left .yt-channel{margin-left:auto!important}' +
@@ -78,8 +83,7 @@
     var head = block.querySelector('.tech-block__head, .exhibition-block__head');
     el = head && head.querySelector('.wm-title');
     if (!el) return;
-    var chev2 = head.querySelector('.tech-block__chev, .exhibition-block__chev');
-    avail = head.clientWidth - (chev2 ? chev2.offsetWidth + 16 : 0) - 8;
+    avail = head.clientWidth - 8;
     el.classList.remove('hg-wrap');
     el.classList.add('hg-grown');
     var oldFlex = el.style.flex, oldW = el.style.width;
