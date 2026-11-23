@@ -14,6 +14,9 @@
     '.section.is-open>.container>.section__toggle .section__thumbs{opacity:0;pointer-events:none;transition:opacity .35s ease}' +
     '.section.is-open>.container>.section__toggle.has-thumbs>:not(.section__thumbs){max-width:none!important;margin-left:0!important;margin-right:0!important}' +
     '.section.is-open>.container>.section__toggle{min-height:0!important}' +
+    /* Instagram / YouTube buttons keep their own width */
+    '.section__toggle .yt-channel{width:max-content!important;max-width:100%!important;flex:none!important}' +
+    '.section.is-open>.container>.section__toggle.thumbs-left .yt-channel{margin-left:auto!important}' +
     /* opened group: the title takes the whole line, the small photo floats out of the way */
     '.tech-block.is-open .tech-block__head>.wm-title,.exhibition-block.is-open .exhibition-block__head-text{flex:1 1 auto;min-width:0}' +
     '.tech-block.is-open .wm-title.hg-grown,.exhibition-block.is-open .wm-title.hg-grown{white-space:nowrap!important;justify-content:center!important}' +
