@@ -76,6 +76,26 @@
         .ex-photos > div { border-radius: var(--radius-md); overflow: hidden; background: var(--bg-alt); }
         .ex-photos img { width: 100%; display: block; }
         .exhibition-block__stats { margin-bottom: var(--spacing-lg); }
+        /* Exhibition name on top in the Ionaere Studio style; the photo slides under its lower half */
+        .event__title.event__title--wm {
+            position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: clamp(0.8rem, 2.4vw, 2.4rem);
+            font-family: 'Italiana', var(--font-serif); font-weight: 400; text-transform: uppercase; text-align: center;
+            font-size: clamp(1.4rem, 3.1vw, 3rem); line-height: 1.15; letter-spacing: 0.22em;
+            color: #fff; mix-blend-mode: difference;
+            margin: var(--spacing-md) 0 -0.62em; padding: 0 0.2em;
+        }
+        .event__title.event__title--wm > span { margin-right: -0.22em; }
+        .event__title.event__title--wm::before, .event__title.event__title--wm::after {
+            content: ""; flex: 1 1 0; min-width: 18px; max-width: 160px; height: 1px; background: #fff;
+        }
+        .event__hero { position: relative; z-index: 1; }
+        main:has(.event__title--wm) { isolation: isolate; background: var(--bg); }
+        @media (min-width: 641px) { .event__title.event__title--wm { width: min(94vw, 1320px); left: 50%; translate: -50% 0; } }
+        @media (max-width: 640px) {
+            .event__title.event__title--wm { font-size: clamp(1.05rem, 5.6vw, 1.7rem); letter-spacing: 0.16em; gap: 0.5rem; margin-bottom: -0.58em; }
+            .event__title.event__title--wm > span { margin-right: -0.16em; }
+            .event__title.event__title--wm::before, .event__title.event__title--wm::after { max-width: 24px; }
+        }
     </style>
     <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "ExhibitionEvent", "name": "Club der Visionäre — Berlino", "description": "Un’installazione di sculture in vetro vivace e futuristica, pensata per riflettere l’energia dinamica e lo spirito eclettico del locale. Ogni pezzo di vetro colorato è realizzato con cura per catturare e giocare con la luce naturale e artificiale. Di giorno, quando la luce del sole la attraversa, l’installazione proietta un mosaico di colori vivaci e danzanti sulle travi di legno. Di notte i pezzi brillano sotto le luci del club, creando un fiume di colore che rispecchia la celebre posizione sull’acqua.", "url": "https://ionaere.com/it/exhibitions/club-der-visionaere/", "image": "https://ionaere.com/img/opt/cdv1-1600.jpg", "location": {"@type": "Place", "name": "Club der Visionäre, Berlino, Germania"}, "organizer": {"@type": "Person", "@id": "https://ionaere.com/#artist", "name": "Arthemii Ionaere", "url": "https://ionaere.com/"}}
@@ -129,10 +149,10 @@
         <section class="section">
             <div class="container event">
                 <a href="../../#exhibitions" class="event__back">← Torna alle mostre</a>
+                <h1 class="event__title event__title--wm"><span>Club der Visionäre Berlino</span></h1>
                 <div class="event__hero"><picture><source type="image/webp" srcset="../../../img/opt/cdv1-800.webp 800w, ../../../img/opt/cdv1-1600.webp 1600w, ../../../img/opt/cdv1-2400.webp 2400w" sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 800px"><img src="../../../img/opt/cdv1-1600.jpg" alt="Club der Visionaere installation — Club der Visionäre — Berlin, Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                 <div class="exhibition-block__date">2024</div>
                 <span class="exhibition-block__type">Installazione</span>
-                <h1 class="event__title">Club der Visionäre — Berlino</h1>
                 <div class="event__location">Club der Visionäre, Berlino, Germania</div>
                 <p class="ex-desc">Un’installazione di sculture in vetro vivace e futuristica, pensata per riflettere l’energia dinamica e lo spirito eclettico del locale. Ogni pezzo di vetro colorato è realizzato con cura per catturare e giocare con la luce naturale e artificiale. Di giorno, quando la luce del sole la attraversa, l’installazione proietta un mosaico di colori vivaci e danzanti sulle travi di legno. Di notte i pezzi brillano sotto le luci del club, creando un fiume di colore che rispecchia la celebre posizione sull’acqua.</p>
                 <h2 class="ex-section-h">Foto</h2>

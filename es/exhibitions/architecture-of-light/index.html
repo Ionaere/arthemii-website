@@ -76,6 +76,26 @@
         .ex-photos > div { border-radius: var(--radius-md); overflow: hidden; background: var(--bg-alt); }
         .ex-photos img { width: 100%; display: block; }
         .exhibition-block__stats { margin-bottom: var(--spacing-lg); }
+        /* Exhibition name on top in the Ionaere Studio style; the photo slides under its lower half */
+        .event__title.event__title--wm {
+            position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: clamp(0.8rem, 2.4vw, 2.4rem);
+            font-family: 'Italiana', var(--font-serif); font-weight: 400; text-transform: uppercase; text-align: center;
+            font-size: clamp(1.4rem, 3.1vw, 3rem); line-height: 1.15; letter-spacing: 0.22em;
+            color: #fff; mix-blend-mode: difference;
+            margin: var(--spacing-md) 0 -0.62em; padding: 0 0.2em;
+        }
+        .event__title.event__title--wm > span { margin-right: -0.22em; }
+        .event__title.event__title--wm::before, .event__title.event__title--wm::after {
+            content: ""; flex: 1 1 0; min-width: 18px; max-width: 160px; height: 1px; background: #fff;
+        }
+        .event__hero { position: relative; z-index: 1; }
+        main:has(.event__title--wm) { isolation: isolate; background: var(--bg); }
+        @media (min-width: 641px) { .event__title.event__title--wm { width: min(94vw, 1320px); left: 50%; translate: -50% 0; } }
+        @media (max-width: 640px) {
+            .event__title.event__title--wm { font-size: clamp(1.05rem, 5.6vw, 1.7rem); letter-spacing: 0.16em; gap: 0.5rem; margin-bottom: -0.58em; }
+            .event__title.event__title--wm > span { margin-right: -0.16em; }
+            .event__title.event__title--wm::before, .event__title.event__title--wm::after { max-width: 24px; }
+        }
     </style>
     <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "ExhibitionEvent", "name": "Architecture of Light: Form and Reflections of Reality", "description": "La exposición «Architecture of Light: Form and Reflections of Reality» es una muestra en la que formas arquitectónicas de vidrio de color sirven para visualizar las propiedades físicas de la luz: refracción, reflexión y dicroísmo. La exposición muestra cómo los cambios en la estructura y la forma de los objetos de vidrio pueden influir en los efectos ópticos que surgen de la interacción de la luz con el material. Cada obra presenta una combinación única de formas libres arquitectónicas que exploran los principios de la física óptica. El uso de formas asimétricas y vidrio de color permite efectos visuales complejos, que reflejan y dispersan los rayos de luz en patrones y formas inesperados. La exposición se plantea como una exploración interior propia y como una demostración de cómo los objetos artísticos pueden interactuar con el espacio. Es una oportunidad para observar los fenómenos ópticos a través del prisma de la percepción artística, combinando estética y ciencia en la búsqueda de nuevas manifestaciones visuales y arquitectónicas. Una exposición que explora la interacción entre la luz y el vidrio de color, que juntos crean una arquitectura visual y óptica. Presenta seis esculturas cinéticas del verano de 2024 que utilizan la refracción, la reflexión y la difracción de la luz. 35 obras en 7 salas reúnen esculturas estáticas y cinéticas, además de instalaciones de vidriera.", "url": "https://ionaere.com/es/exhibitions/architecture-of-light/", "image": "https://ionaere.com/img/opt/2024-12-IMG_9373-Enhanced-NR-scaled-1600.jpg", "location": {"@type": "Place", "name": "Bashmet Centre"}, "organizer": {"@type": "Person", "@id": "https://ionaere.com/#artist", "name": "Arthemii Ionaere", "url": "https://ionaere.com/"}}
@@ -129,10 +149,10 @@
         <section class="section">
             <div class="container event">
                 <a href="../../#exhibitions" class="event__back">← Volver a las exposiciones</a>
+                <h1 class="event__title event__title--wm"><span>Architecture of Light: Form and Reflections of Reality</span></h1>
                 <div class="event__hero"><img decoding="async" src="../../../img/opt/2024-12-IMG_9373-Enhanced-NR-scaled-1600.jpg" alt="Architecture of Light — Architecture of Light: Form and Reflections of Reality, Arthemii Ionaere"></div>
                 <div class="exhibition-block__date">01.11.2024 — 03.11.2024</div>
                 <span class="exhibition-block__type">Exposición individual</span>
-                <h1 class="event__title">Architecture of Light: Form and Reflections of Reality</h1>
                 <div class="event__location">Bashmet Centre</div>
                 <p class="ex-desc">La exposición «Architecture of Light: Form and Reflections of Reality» es una muestra en la que formas arquitectónicas de vidrio de color sirven para visualizar las propiedades físicas de la luz: refracción, reflexión y dicroísmo. La exposición muestra cómo los cambios en la estructura y la forma de los objetos de vidrio pueden influir en los efectos ópticos que surgen de la interacción de la luz con el material. Cada obra presenta una combinación única de formas libres arquitectónicas que exploran los principios de la física óptica. El uso de formas asimétricas y vidrio de color permite efectos visuales complejos, que reflejan y dispersan los rayos de luz en patrones y formas inesperados. La exposición se plantea como una exploración interior propia y como una demostración de cómo los objetos artísticos pueden interactuar con el espacio. Es una oportunidad para observar los fenómenos ópticos a través del prisma de la percepción artística, combinando estética y ciencia en la búsqueda de nuevas manifestaciones visuales y arquitectónicas. Una exposición que explora la interacción entre la luz y el vidrio de color, que juntos crean una arquitectura visual y óptica. Presenta seis esculturas cinéticas del verano de 2024 que utilizan la refracción, la reflexión y la difracción de la luz. 35 obras en 7 salas reúnen esculturas estáticas y cinéticas, además de instalaciones de vidriera.</p>
                 <div class="exhibition-block__stats">
