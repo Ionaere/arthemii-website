@@ -8,9 +8,10 @@
  * German, Spanish, French, Russian, Chinese (simplified) and Japanese live in the
  * dictionary below:
  *     "English text": ["Deutscher Text", "Texto en español", "Texte en français", "Текст по-русски", "中文文本", "日本語のテキスト"],
- * Italian, Dutch, Portuguese, Korean, Finnish, Swedish, Romanian, Polish, Danish and Turkish
- * live in i18n/<code>.js (one file per language, loaded only when that language is
- * chosen). Austrian German (de-AT) uses the German texts.
+ * Italian, Dutch, Portuguese, Korean, Finnish, Swedish, Romanian, Polish, Danish, Turkish
+ * and Arabic live in i18n/<code>.js (one file per language, loaded only when that
+ * language is chosen). Arabic is written right to left: while it is on, the page gets
+ * dir="rtl" and the Arabic fonts and layout fixes below (ARABIC_CSS). Austrian German (de-AT) uses the German texts.
  *
  * On the first visit the language is picked automatically from the visitor's
  * browser / system language; anything not covered falls back to English. Once a
@@ -38,6 +39,7 @@
     ['pl', 'PL', 'Polski'],
     ['ro', 'RO', 'Română'],
     ['tr', 'TR', 'Türkçe'],
+    ['ar', 'AR', 'العربية'],
     ['ru', 'RU', 'Русский'],
     ['zh', '中文', '中文（简体）'],
     ['ja', '日本語', '日本語'],
@@ -46,11 +48,13 @@
   var LANGS = MENU.map(function (m) { return m[0]; });
   var IDX = { de: 0, 'de-at': 0, 'de-ch': 0, es: 1, fr: 2, ru: 3, zh: 4, ja: 5 };
   // Languages kept in their own file (i18n/<code>.js), loaded on demand
-  var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1 };
-  var EXT_VERSION = '20261123yt';
+  var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1, ar: 1 };
+  var EXT_VERSION = '20261123ar';
   var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT', 'de-ch': 'de-CH' };
   // Regional variants: the short code shown in the menu
   var CODE_LABEL = { 'de-at': 'AT', 'de-ch': 'CH' };
+  // Languages written right to left
+  var RTL = { ar: 1 };
   // German, Spanish, French and Italian also have their own pre-translated pages (/de/, /es/, /fr/, /it/),
   // which search engines can index. Every other language is translated in place on the English pages.
   var STATIC = ['de', 'es', 'fr', 'it'];
@@ -659,6 +663,7 @@
       value = raw.match(/^\s*/)[0] + out + raw.match(/\s*$/)[0];
     }
     if (raw !== value) { written.set(node, value); node.nodeValue = value; }
+    if (RTL[current] && node.parentNode && node.parentNode.nodeType === 1 && /[\u0600-\u06FF]/.test(value)) node.parentNode.setAttribute('data-rtl-text', '');
   }
 
   function walk(root) {
@@ -850,10 +855,47 @@
     applyLang(lang);
   }
 
+  // Arabic: fonts with Arabic letters (Noto Naskh Arabic for the serif headings,
+  // Noto Sans Arabic for the body text) and the few places that need turning round
+  // when the page runs right to left. Added only when Arabic is chosen.
+  var ARABIC_CSS =
+    'html[dir="rtl"]{--font-sans:"Noto Sans Arabic","Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;' +
+    '--font-serif:"Noto Naskh Arabic","Cormorant Garamond",Georgia,"Times New Roman",serif}' +
+    // Arabic letters are joined, so spacing them apart breaks the words; a little more line height
+    // (only on Arabic text: the Latin wordmarks keep their wide spacing)
+    'html[dir="rtl"] [data-rtl-text]{letter-spacing:0!important}' +
+    'html[dir="rtl"] p,html[dir="rtl"] li,html[dir="rtl"] dd{line-height:1.9}' +
+    // Arabic has no italics: slanted Arabic letters look broken
+    'html[dir="rtl"] [data-rtl-text]{font-style:normal!important}' +
+    // Latin bits like "@ionaerestudio" or "© 2026" keep their own order
+    'html[dir="rtl"] a:not([data-rtl-text]),html[dir="rtl"] a:not([data-rtl-text]) span:not([data-rtl-text]),html[dir="rtl"] .footer__copy{unicode-bidi:plaintext}' +
+    // Section numbers ("02") sit on the right, at the start of the line
+    'html[dir="rtl"] .wm-title>.wm-num{left:auto;right:0}' +
+    '@media (max-width:768px){html[dir="rtl"] .wm-title{justify-content:flex-start;text-align:right}html[dir="rtl"] .wm-title.wm-has-num{padding:0 2.6rem 0 0}}' +
+    // Phone numbers, e-mails, sizes and dates stay left to right inside Arabic text
+    'html[dir="rtl"] input[type="email"],html[dir="rtl"] a[href^="mailto:"],html[dir="rtl"] a[href^="tel:"]{direction:ltr;unicode-bidi:embed}' +
+    // The language menu keeps its own order
+    'html[dir="rtl"] .lang-dd__menu .header__lang-btn{direction:ltr}';
+  var arabicReady = false;
+  function arabicAssets() {
+    if (arabicReady) return;
+    arabicReady = true;
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@300..700&display=swap';
+    document.head.appendChild(l);
+    var st = document.createElement('style');
+    st.id = 'i18n-rtl';
+    st.textContent = ARABIC_CSS;
+    document.head.appendChild(st);
+  }
+
   function applyLang(lang) {
     current = lang;
     var html = document.documentElement;
     html.lang = HTML_LANG[lang] || lang;
+    if (RTL[lang]) { arabicAssets(); html.dir = 'rtl'; }
+    else if (html.getAttribute('dir') === 'rtl') html.removeAttribute('dir');
     if (lang === 'en') {
       html.removeAttribute('translate');
       html.classList.remove('notranslate');
@@ -956,7 +998,7 @@
   // The stained-glass prism in the corner that opens the 3D space (space-portal.js), on every page except the space itself
   if (!/^\/space(\/|$)/.test(location.pathname)) {
     var portal = document.createElement('script');
-    portal.src = BASE + 'space-portal.js?v=20261123f';
+    portal.src = BASE + 'space-portal.js?v=20261123ar';
     portal.defer = true;
     document.head.appendChild(portal);
   }

@@ -19,7 +19,7 @@
   var HINT = {
     en: 'Enter the 3D space', de: 'In den 3D-Raum', es: 'Entrar al espacio 3D', fr: "Entrer dans l'espace 3D",
     it: 'Entra nello spazio 3D', ru: 'Войти в 3D-пространство', pt: 'Entrar no espaço 3D', nl: 'Naar de 3D-ruimte',
-    pl: 'Wejdź do przestrzeni 3D', tr: '3D alana gir', zh: '进入 3D 空间', ja: '3D 空間へ', ko: '3D 공간으로'
+    pl: 'Wejdź do przestrzeni 3D', tr: '3D alana gir', ar: 'الدخول إلى الفضاء ثلاثي الأبعاد', zh: '进入 3D 空间', ja: '3D 空間へ', ko: '3D 공간으로'
   };
   function lang() {
     var l = pageLang || (window.I18N && window.I18N.lang) || 'en';
@@ -446,7 +446,7 @@
     try {
       if (!sessionStorage.getItem('spHint')) {
         sessionStorage.setItem('spHint', '1');
-        setTimeout(function () { a.classList.add('is-hint'); }, 1800);
+        setTimeout(function () { refresh(); a.classList.add('is-hint'); }, 1800);
         setTimeout(function () { a.classList.remove('is-hint'); }, 6800);
       }
     } catch (e) {}

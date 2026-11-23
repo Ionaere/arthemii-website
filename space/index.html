@@ -147,7 +147,12 @@ const T = {
         keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> или стрелки — идти · <kbd>Shift</kbd> — быстрее · тянуть мышью — осмотреться · клик по работе — открыть',
         hint: 'W A S D / стрелки — идти · тянуть — осмотреться · клик по работе — открыть', hintTouch: 'Джойстик — идти · свайп — осмотреться · тап по работе — открыть',
         back: 'ionaere.com', open: 'Открыть', start: 'Назад ко входу', err: 'Браузер не может показать 3D-пространство (WebGL выключен).', site: 'Вернуться на сайт',
-        s: { gallery: 'Галерея', videos: 'Видео', projects: 'Проекты', drawings: 'Рисунки', ai: 'Архитектура', exhibitions: 'Выставки' }, welcome: 'Прогулка по работам' }
+        s: { gallery: 'Галерея', videos: 'Видео', projects: 'Проекты', drawings: 'Рисунки', ai: 'Архитектура', exhibitions: 'Выставки' }, welcome: 'Прогулка по работам' },
+  ar: { intro: 'جولة بين الأعمال: زجاج معشّق ومنحوتات وفيديوهات ورسوم ودراسات معمارية، وكل نافذة تقود إلى صفحتها في الموقع.', enter: 'ادخل', loading: 'جارٍ التحميل…',
+        keys: '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> أو الأسهم — المشي · <kbd>Shift</kbd> — أسرع · السحب — التلفّت · النقر على عمل — فتحه',
+        hint: 'W A S D / الأسهم — المشي · السحب — التلفّت · النقر على عمل — فتحه', hintTouch: 'عصا التحكم — المشي · السحب — التلفّت · لمس عمل — فتحه',
+        back: 'ionaere.com', open: 'فتح', start: 'العودة إلى المدخل', err: 'لا يستطيع متصفحك عرض الفضاء ثلاثي الأبعاد (WebGL معطّل).', site: 'العودة إلى الموقع',
+        s: { gallery: 'المعرض المصوّر', videos: 'فيديوهات', projects: 'المشاريع', drawings: 'الرسوم', ai: 'العمارة', exhibitions: 'المعارض' }, welcome: 'جولة بين الأعمال' }
 };
 const L = T[LANG] || T.en;
 document.documentElement.lang = T[LANG] ? LANG : 'en';
@@ -160,9 +165,9 @@ function pageUrl(u) {
 function asset(p) { return /^(https?:|\/)/.test(p) ? p : '/' + p; }
 
 const $ = id => document.getElementById(id);
-const UPDOWN = { en: 'up / down', de: 'hoch / runter', es: 'subir / bajar', fr: 'monter / descendre', it: 'su / giù', ru: 'вверх / вниз' };
+const UPDOWN = { en: 'up / down', de: 'hoch / runter', es: 'subir / bajar', fr: 'monter / descendre', it: 'su / giù', ru: 'вверх / вниз', ar: 'صعود / نزول' };
 const UD = UPDOWN[T[LANG] ? LANG : 'en'];
-const ZOOM = ({ en: 'Fly closer', de: 'Näher heran', es: 'Acercarse', fr: 'Se rapprocher', it: 'Avvicinarsi', ru: 'Приблизиться' })[T[LANG] ? LANG : 'en'];
+const ZOOM = ({ en: 'Fly closer', de: 'Näher heran', es: 'Acercarse', fr: 'Se rapprocher', it: 'Avvicinarsi', ru: 'Приблизиться', ar: 'اقترب أكثر' })[T[LANG] ? LANG : 'en'];
 $('backTxt').textContent = L.back;
 const isTouch = matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
 if (isTouch) document.body.classList.add('touch');
