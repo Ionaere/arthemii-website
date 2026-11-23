@@ -141,8 +141,8 @@
     '  vec3 col=vec3(0.);float cov=0.;',
     '  float tilt=0.3;vec3 cam=vec3(0.,sin(tilt),cos(tilt))*3.3;',
     '  vec3 fw=normalize(-cam),rt=normalize(cross(fw,vec3(0.,1.,0.))),up=cross(rt,fw);',
-    '  for(int sx=0;sx<2;sx++)for(int sy=0;sy<2;sy++){',
-    '    vec2 uv=(gl_FragCoord.xy+vec2(float(sx),float(sy))*0.5-0.25)/uRes*2.-1.;',
+    '  for(int sx=0;sx<1;sx++)for(int sy=0;sy<1;sy++){',
+    '    vec2 uv=(gl_FragCoord.xy+vec2(float(sx),float(sy))*0.5)/uRes*2.-1.;',
     '    uv.y+=0.04;',
     '    vec3 rd=normalize(fw+(uv.x*rt+uv.y*up)*0.33);',
     '    vec3 ro=rotY(cam,-uAng);rd=rotY(rd,-uAng);',
@@ -173,7 +173,7 @@
     // clear glass: where it only shows light surroundings it lets the page through,
     // so over the white page it looks the same, over a photo the photo shows through
     '  vec3 k=1.-col;float g=clamp(max(max(k.r,k.g),k.b),0.1,1.);',
-    '  float a=cov/4.;gl_FragColor=vec4((col-1.+g)*a,g*a);}'
+    '  float a=cov;gl_FragColor=vec4((col-1.+g)*a,g*a);}'
   ].join('\n');
 
 
@@ -344,7 +344,7 @@
     a.classList.add('sp-prism--gl');
 
     function size() {
-      var w = cv.clientWidth || 76, r = Math.min(window.devicePixelRatio || 1, 2);
+      var w = cv.clientWidth || 76, r = Math.min(window.devicePixelRatio || 1, 1.5);
       var px = Math.round(w * r);
       if (cv.width !== px) { cv.width = cv.height = px; gl.viewport(0, 0, px, px); gl.uniform2f(uRes, px, px); }
     }
@@ -360,7 +360,7 @@
       // refracted by its faces — so it changes with whatever scrolls underneath
       var pw = r.width || 76, S = Math.max(220, pw * 3.4);
       var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      if ((tick++ & 1) === 0 || still) {
+      if ((tick++ % 3) === 0 || still) {
         var pic = page.paint(cx - S / 2, cy - S / 2, S);
         if (pic) { try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pic); } catch (e) { page.reset(); } }
       }
@@ -370,8 +370,15 @@
       gl.uniform1f(uAng, ang);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
+    // The prism is drawn about 30 times a second, and about 12 while the page is scrolling,
+    // so it never takes frames away from the scrolling itself (it turns slowly, so this looks the same)
+    var scrolledAt = 0;
+    window.addEventListener('scroll', function () { scrolledAt = performance.now(); }, { passive: true });
+    window.addEventListener('wheel', function () { scrolledAt = performance.now(); }, { passive: true });
     function frame(now) {
       raf = 0;
+      var gap = now - scrolledAt < 220 ? 80 : 32;
+      if (last && now - last < gap) { if (!document.hidden) raf = requestAnimationFrame(frame); return; }
       var dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
       var target = hover ? FAST : BASE;
       speed += (target - speed) * Math.min(1, dt * 3);

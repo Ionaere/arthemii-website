@@ -851,7 +851,7 @@
   // The stained-glass prism in the corner that opens the 3D space (space-portal.js), on every page except the space itself
   if (!/^\/space(\/|$)/.test(location.pathname)) {
     var portal = document.createElement('script');
-    portal.src = BASE + 'space-portal.js?v=20261122d';
+    portal.src = BASE + 'space-portal.js?v=20261123s';
     portal.defer = true;
     document.head.appendChild(portal);
   }
