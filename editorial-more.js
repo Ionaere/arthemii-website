@@ -9,7 +9,7 @@
   'use strict';
 
   var MIN_W = 769;
-  var ROW_H = 330;
+  function rowH() { return window.innerWidth < 769 ? 150 : 330; }
   var GAP = 8;
   var SECTION_HERO = {
     exhibitions: 'img/opt/2024-12-IMG_9484-Enhanced-NR-scaled-1600.jpg',
@@ -63,7 +63,8 @@
     '.tb-meta{display:none}.exhibition-block.tb-on.is-open .tb-meta{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.75rem;margin:var(--spacing-lg) 0 0}' +
     '.tb-meta .exhibition-block__date{margin:0!important}.tb-meta .exhibition-block__type{margin:0!important}' +
     '.exhibition-block.tb-on.is-open .exhibition-block__chev{color:#fff!important}' +
-    '.exhibition-block.is-open .exhibition-block__body .tb-editorial{padding-top:0!important}';
+    '.exhibition-block.is-open .exhibition-block__body .tb-editorial{padding-top:0!important}' +
+    '@media (max-width:768px){.exhibition-block.tb-on.is-open .exhibition-block__head{padding-left:var(--spacing-sm);padding-right:var(--spacing-sm)}.tb-editorial>.tb-text{text-align:left;margin-bottom:var(--spacing-lg)}.tb-editorial>.tb-text .exhibition-block__stats{justify-content:flex-start}.exb-hero{margin-bottom:var(--spacing-lg)}.tb-gallery,.tb-gallery .tb-row{gap:6px}.exb-hero--pair{gap:6px}}';
   var st = document.createElement('style');
   st.textContent = css;
   document.head.appendChild(st);
@@ -139,14 +140,16 @@
       /* two photos: side by side as one large picture under the title */
       b.hero.classList.add('exb-hero--pair');
       b.hero.appendChild(rest[0]);
-      var hh = Math.round(Math.min((W - GAP) / (ratio(hero) + ratio(rest[0])), window.innerHeight * 0.74));
+      var hh = Math.round(Math.min((W - GAP) / (ratio(hero) + ratio(rest[0])), window.innerHeight * (window.innerWidth < 769 ? 0.6 : 0.74)));
       hero.style.height = rest[0].style.height = hh + 'px';
       return;
     }
-    hero.style.height = Math.round(Math.min(W / ratio(hero), window.innerHeight * 0.74)) + 'px';
+    var h1 = Math.min(W / ratio(hero), window.innerHeight * (window.innerWidth < 769 ? 0.6 : 0.74));
+    if (window.innerWidth < 769) h1 = Math.max(h1, W * 0.72);
+    hero.style.height = Math.round(h1) + 'px';
     if (!rest.length) return;
     var rs = rest.map(ratio), total = rs.reduce(function (a, c) { return a + c; }, 0);
-    var k = Math.max(1, Math.min(rest.length, Math.round(total * ROW_H / W)));
+    var k = Math.max(1, Math.min(rest.length, Math.round(total * rowH() / W)));
     bestRows(rs, k).forEach(function (g) {
       var row = document.createElement('div');
       row.className = 'tb-row';
@@ -239,7 +242,7 @@
 
   function update() {
     var d = desk();
-    exb.forEach(function (b) { if (d) exApply(b); else exRestore(b); });
+    exb.forEach(function (b) { exApply(b); });
     secs.forEach(secUpdate);
   }
 
@@ -253,11 +256,11 @@
     var mo = new MutationObserver(function (list) {
       list.forEach(function (m) {
         var t = m.target;
-        if (!t.classList || !t.classList.contains('is-open') || !desk()) return;
+        if (!t.classList || !t.classList.contains('is-open')) return;
         exb.forEach(function (b) {
           if (b.block === t) { var w = b.header.clientWidth; if (w && w !== b.packedW) { b.packedW = w; exPack(b); } headHeight(b.block, '.exhibition-block__head', '--tb-head-h'); }
         });
-        secs.forEach(function (s) { if (s.sec === t) secUpdate(s); });
+        if (desk()) secs.forEach(function (s) { if (s.sec === t) secUpdate(s); });
       });
     });
     exb.forEach(function (b) { mo.observe(b.block, { attributes: true, attributeFilter: ['class'] }); });
