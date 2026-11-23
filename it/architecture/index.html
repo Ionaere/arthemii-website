@@ -499,7 +499,9 @@
         function ease(p) { p = Math.min(Math.max(p, 0), 1); return p * p * (3 - 2 * p); }
         function update() {
             ticking = false;
-            var h = window.innerHeight, t = el.getBoundingClientRect().top / h;
+            /* measured on the (unmoved) header around the title — measuring the moving title itself
+               made the animation chase its own position, so it jerked, jumped and vanished */
+            var h = window.innerHeight, t = (el.parentElement || el).getBoundingClientRect().top / h;
             var ein = ease((t - 0.55) / 0.4);   /* 1 while below the screen, 0 once at 55% height */
             var eout = ease((0.2 - t) / 0.45);  /* 0 until it reaches 20% height, 1 when gone */
             var e = Math.max(ein, eout);
