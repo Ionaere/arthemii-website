@@ -42,6 +42,8 @@
     '.exb-hero{margin:0 0 var(--spacing-xl)}' +
     '.exb-hero>.exhibition-block__photo{display:block!important;position:relative;width:100%;border-radius:10px;overflow:hidden;background:var(--bg-alt)}' +
     '.exb-hero>.exhibition-block__photo img{width:100%!important;height:100%!important;object-fit:cover}' +
+    '.exb-hero--pair{display:flex;gap:' + GAP + 'px}' +
+    '.exb-hero--pair>.exhibition-block__photo{flex:var(--r) 1 0;min-width:0;width:auto}' +
     '.exb-hero>.exhibition-block__photo::after{content:"";position:absolute;left:0;right:0;top:0;height:min(50%,280px);background:' + shade + ';pointer-events:none}' +
     '.tb-editorial>.tb-text{max-width:780px;margin:0 auto var(--spacing-xl);text-align:center}' +
     '.tb-editorial>.tb-text .exhibition-block__stats{justify-content:center}' +
@@ -76,6 +78,7 @@
     }
     var groups = [], e2 = n;
     for (var j3 = k; j3 > 0; j3--) { var s3 = cut[j3][e2]; groups.unshift([s3, e2]); e2 = s3; }
+    groups.cost = cost[k][n];
     return groups;
   }
 
@@ -110,22 +113,39 @@
     return { block: block, header: header, cont: cont, photos: photos, text: text, photoCol: photoCol, on: false };
   }
 
+  function bestRows(rs, k0) {
+    var best = null;
+    for (var k = Math.max(1, k0 - 1); k <= Math.min(rs.length, k0 + 1); k++) {
+      var g = partition(rs, k);
+      if (!best || g.cost < best.cost - 1e-9) best = g;
+    }
+    return best;
+  }
+
   function exPack(b) {
     var rest = b.photos.slice(1);
     if (!b.gallery) return;
     b.gallery.innerHTML = '';
-    if (!rest.length) return;
     var W = b.header.clientWidth || 1200;
+    var hero = b.photos[0];
+    if (rest.length === 1) {
+      /* two photos: side by side as one large picture under the title */
+      b.hero.classList.add('exb-hero--pair');
+      b.hero.appendChild(rest[0]);
+      var hh = Math.round(Math.min((W - GAP) / (ratio(hero) + ratio(rest[0])), window.innerHeight * 0.74));
+      hero.style.height = rest[0].style.height = hh + 'px';
+      return;
+    }
+    hero.style.height = Math.round(Math.min(W / ratio(hero), window.innerHeight * 0.74)) + 'px';
+    if (!rest.length) return;
     var rs = rest.map(ratio), total = rs.reduce(function (a, c) { return a + c; }, 0);
     var k = Math.max(1, Math.min(rest.length, Math.round(total * ROW_H / W)));
-    partition(rs, k).forEach(function (g) {
+    bestRows(rs, k).forEach(function (g) {
       var row = document.createElement('div');
       row.className = 'tb-row';
       for (var i = g[0]; i < g[1]; i++) row.appendChild(rest[i]);
       b.gallery.appendChild(row);
     });
-    var hero = b.photos[0];
-    hero.style.height = Math.round(Math.min(W / ratio(hero), window.innerHeight * 0.74)) + 'px';
   }
 
   function exApply(b) {
@@ -151,6 +171,7 @@
     if (!b.on) return;
     var nav = b.cont.querySelector('.exhibition-block__nav');
     b.photos.forEach(function (p) { p.style.height = ''; b.cont.insertBefore(p, nav || null); });
+    b.hero.classList.remove('exb-hero--pair');
     b.hero.remove(); b.gallery.remove(); b.hero = b.gallery = null;
     if (b.text) b.text.classList.remove('tb-text');
     if (b.photoCol) b.photoCol.classList.remove('tb-hidden');

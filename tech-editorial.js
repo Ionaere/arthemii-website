@@ -77,6 +77,7 @@
     }
     var groups = [], e2 = n;
     for (var j3 = k; j3 > 0; j3--) { var s3 = cut[j3][e2]; groups.unshift([s3, e2]); e2 = s3; }
+    groups.cost = cost[k][n];
     return groups;
   }
 
@@ -84,6 +85,15 @@
     if (!b.heroItem) return;
     var W = b.inner.clientWidth || 1200;
     b.heroItem.style.height = Math.round(Math.min(W / ratio(b.heroItem), window.innerHeight * 0.78)) + 'px';
+  }
+
+  function bestRows(rs, k0) {
+    var best = null;
+    for (var k = Math.max(1, k0 - 1); k <= Math.min(rs.length, k0 + 1); k++) {
+      var g = partition(rs, k);
+      if (!best || g.cost < best.cost - 1e-9) best = g;
+    }
+    return best;
   }
 
   function pack(b) {
@@ -94,7 +104,7 @@
     var W = b.photos.clientWidth || b.inner.clientWidth || 1200;
     var rs = rest.map(ratio), total = rs.reduce(function (a, c) { return a + c; }, 0);
     var k = Math.max(1, Math.min(rest.length, Math.round(total * ROW_H / W)));
-    partition(rs, k).forEach(function (g) {
+    bestRows(rs, k).forEach(function (g) {
       var el = document.createElement('div');
       el.className = 'tech-block__row tb-row';
       for (var i = g[0]; i < g[1]; i++) { rest[i].style.flex = ''; rest[i].style.width = ''; el.appendChild(rest[i]); }
