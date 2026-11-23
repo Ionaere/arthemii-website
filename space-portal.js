@@ -68,7 +68,7 @@
     '.sp-prism--gl .sp-prism__spin{display:none}' +
     '.sp-prism__gl{position:absolute;left:-16px;top:-28px;width:152px;height:152px;display:block;pointer-events:none}' +
     '.sp-prism--gl .sp-prism__shadow{bottom:6px;width:68px;height:14px;margin-left:-34px;background:radial-gradient(rgba(0,0,0,.22),transparent 70%)}' +
-    '.sp-prism--gl .sp-prism__rays{bottom:8px;width:104px;height:18px;margin-left:-52px;opacity:.8}' +
+    '.sp-prism__rays{display:none!important}' +
     '@media (max-width:640px){.sp-prism__gl{left:-12px;top:-21px;width:114px;height:114px}}' +
     '@media print{.sp-prism{display:none}}';
 
