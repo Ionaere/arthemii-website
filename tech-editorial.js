@@ -6,8 +6,8 @@
 (function () {
   'use strict';
 
-  var MIN_W = 769;          /* desktop from here */
-  var ROW_H = 330;          /* target height of a photo row, px */
+  var MIN_W = 0;            /* phones too: large photo with the title on it */
+  function rowH() { return window.innerWidth < 769 ? 150 : 330; }  /* target height of a photo row, px */
   var GAP = 8;
 
   var css =
@@ -29,6 +29,7 @@
     '.tech-block.tb-on.is-open .tech-block__head .wm-num{color:rgba(255,255,255,.8)!important}' +
     '.tech-block.tb-on.is-open .tech-block__chev{color:#fff!important}' +
     '.tb-hero>*{position:relative;width:100%!important;aspect-ratio:auto!important}' +
+    '@media (max-width:768px){.tech-block.tb-on.is-open .tech-block__head{padding-left:var(--spacing-sm);padding-right:var(--spacing-sm);margin-top:var(--spacing-md)}.tb-editorial>.tb-text{text-align:left;margin-bottom:var(--spacing-lg)}.tb-editorial>.tb-text .tech-block__desc{font-size:1rem}.tb-hero{margin-bottom:var(--spacing-lg)}.tb-editorial>.tech-block__photos,.tb-editorial .tech-block__row{gap:6px!important}.tb-editorial .tech-block__row{flex-wrap:nowrap!important}.tb-editorial .tech-block__row>*{aspect-ratio:var(--r)!important;height:auto!important;width:auto!important;min-width:0!important;flex:var(--r) 1 0!important}}' +
     '.tb-hero>*::after{content:"";position:absolute;left:0;right:0;top:0;height:min(45%,260px);background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,0));pointer-events:none;z-index:1}';
   var st = document.createElement('style');
   st.textContent = css;
@@ -84,7 +85,9 @@
   function sizeHero(b) {
     if (!b.heroItem) return;
     var W = b.inner.clientWidth || 1200;
-    b.heroItem.style.height = Math.round(Math.min(W / ratio(b.heroItem), window.innerHeight * 0.78)) + 'px';
+    var hh = Math.min(W / ratio(b.heroItem), window.innerHeight * (window.innerWidth < 769 ? 0.62 : 0.78));
+    if (window.innerWidth < 769) hh = Math.max(hh, W * 0.72);   /* phones: tall enough for the title */
+    b.heroItem.style.height = Math.round(hh) + 'px';
   }
 
   function bestRows(rs, k0) {
@@ -104,7 +107,7 @@
     if (!rest.length) return;
     var W = b.photos.clientWidth || b.inner.clientWidth || 1200;
     var rs = rest.map(ratio), total = rs.reduce(function (a, c) { return a + c; }, 0);
-    var k = Math.max(1, Math.min(rest.length, Math.round(total * ROW_H / W)));
+    var k = Math.max(1, Math.min(rest.length, Math.round(total * rowH() / W)));
     bestRows(rs, k).forEach(function (g) {
       var el = document.createElement('div');
       el.className = 'tech-block__row tb-row';
