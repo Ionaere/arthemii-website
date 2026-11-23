@@ -2665,6 +2665,34 @@
         html.surf-io main > section.section { opacity: 0.35; transform: translate3d(0, 24px, 0) scale(0.97); }
         html.surf-io main > section.section.is-surfaced { opacity: 1; transform: none; }
         html main > section.section.is-open, html.surf-io main > section.section.is-open { animation: none !important; opacity: 1 !important; transform: none !important; }
+        /* ===== Smooth opening / closing of sections and of the groups inside them ===== */
+        .section__body, .tech-block__body, .exhibition-block__body {
+            transition: grid-template-rows 0.9s cubic-bezier(.45, 0, .2, 1) !important;
+        }
+        .section__body-inner, .tech-block__body-inner, .exhibition-block__body-inner {
+            opacity: 0; transform: translate3d(0, -14px, 0);
+            transition: opacity 0.35s ease, transform 0.5s ease;
+        }
+        .section.is-open > .container > .section__body > .section__body-inner,
+        .tech-block.is-open .tech-block__body-inner,
+        .exhibition-block.is-open .exhibition-block__body-inner {
+            opacity: 1; transform: none;
+            transition: opacity 0.7s ease 0.15s, transform 0.9s cubic-bezier(.2, .7, .2, 1) 0.1s;
+        }
+        /* the header row re-arranges itself softly instead of jumping */
+        @keyframes row-soft-open  { from { opacity: 0; transform: translate3d(0, 8px, 0); } to { opacity: 1; transform: none; } }
+        @keyframes row-soft-close { from { opacity: 0; transform: translate3d(0, -6px, 0); } to { opacity: 1; transform: none; } }
+        .section.is-open > .container > .section__toggle > *:not(.section__thumbs),
+        .tech-block.is-open > .tech-block__head > *,
+        .exhibition-block.is-open > .exhibition-block__head > * { animation: row-soft-open 0.75s cubic-bezier(.2, .7, .2, 1) both; }
+        .section.is-collapsible.was-opened:not(.is-open) > .container > .section__toggle > *,
+        .tech-block.was-opened:not(.is-open) > .tech-block__head > *,
+        .exhibition-block.was-opened:not(.is-open) > .exhibition-block__head > * { animation: row-soft-close 0.6s cubic-bezier(.2, .7, .2, 1) both; }
+        .section__thumbs { transition: opacity 0.5s ease !important; }
+        @media (prefers-reduced-motion: reduce) {
+            .section__body-inner, .tech-block__body-inner, .exhibition-block__body-inner { transition: none !important; opacity: 1; transform: none; }
+            .section__toggle > *, .tech-block__head > *, .exhibition-block__head > * { animation: none !important; }
+        }
     </style>
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ionaere.com/#artist","name":"Arthemii Ionaere","url":"https://ionaere.com/fr/","image":"https://ionaere.com/img/opt/portrait-arthemii-1600.jpg","jobTitle":"Stained glass artist","description":"Berlin-based contemporary stained glass artist creating three-dimensional glass sculptures in the Tiffany technique, kinetic prisms, lamps and light installations.","email":"mailto:info@ionaere.com","address":{"@type":"PostalAddress","addressLocality":"Berlin","addressCountry":"DE"},"knowsAbout":["Stained glass","Tiffany technique","Glass sculpture","Kinetic art","Light installation","Contemporary art"],"sameAs":["https://www.instagram.com/ionaerestudio/","https://www.instagram.com/ionaere/","https://www.instagram.com/lonaere/","https://www.youtube.com/@IonaereArthe"]},{"@type":"WebSite","@id":"https://ionaere.com/#website","url":"https://ionaere.com/fr/","name":"Arthemii Ionaere","description":"Contemporary stained glass art by Arthemii Ionaere, Berlin","inLanguage":"en","publisher":{"@id":"https://ionaere.com/#artist"}}{% for ex in site.data.exhibitions.items %}{% assign ds = ex.date_start | strip | split: "." %}{% if ds.size == 3 %},{"@type":"ExhibitionEvent","name":{{ ex.title | jsonify }},"startDate":"{{ ds[2] }}-{{ ds[1] }}-{{ ds[0] }}"{% assign de = ex.date_end | strip | split: "." %}{% if de.size == 3 %},"endDate":"{{ de[2] }}-{{ de[1] }}-{{ de[0] }}"{% endif %},"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode"{% if ex.location and ex.location != "" %},"location":{"@type":"Place","name":{{ ex.location | strip | jsonify }},"address":{{ ex.location | strip | jsonify }}}{% endif %}{% if ex.photos.size > 0 %},"image":"https://ionaere.com{{ ex.photos[0] | relative_url }}"{% endif %},"organizer":{"@id":"https://ionaere.com/#artist"},"performer":{"@id":"https://ionaere.com/#artist"}}{% endif %}{% endfor %}]}
@@ -4642,6 +4670,16 @@
         var img = sec.querySelector('.about-image img'); if (img) img.addEventListener('load', clip);
         sync();
     })();
+    </script>
+    <script>
+    /* mark blocks that have been opened once, so closing them also fades softly (but nothing animates on page load) */
+    document.addEventListener('click', function (e) {
+        var b = e.target.closest && e.target.closest('.section.is-collapsible, .tech-block, .exhibition-block');
+        if (b) setTimeout(function () { document.querySelectorAll('.is-open').forEach(function (o) { o.classList.add('was-opened'); }); }, 0);
+    }, true);
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') setTimeout(function () { document.querySelectorAll('.is-open').forEach(function (o) { o.classList.add('was-opened'); }); }, 0);
+    }, true);
     </script>
 </body>
 </html>
