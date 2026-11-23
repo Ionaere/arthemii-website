@@ -1662,7 +1662,7 @@
             transition: grid-template-rows 0.6s var(--ease-out-expo);
         }
         .section.is-open > .container > .section__body { grid-template-rows: 1fr; }
-        .section__body-inner { overflow: hidden; min-height: 0; }
+        .section__body-inner { overflow: hidden; min-height: 0; position: relative; } /* positioned: hidden helpers inside a closed section stay clipped instead of stretching the page */
         .section.is-open.is-settled .section__body-inner { overflow: visible; }
         .has-synthetic-header .residency-banner__body > .section__label,
         .has-synthetic-header .residency-banner__title { display: none; }
