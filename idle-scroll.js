@@ -1,6 +1,6 @@
 /*
- * Gallery and Videos pages: right away (and again 1 s after any activity) the page starts to
- * scroll down slowly by itself (Videos), or travel from photo to photo resting on each (Gallery); at the end it goes back up. Any movement of the mouse, a touch,
+ * Gallery and Videos pages: right away (and again 1 s after any activity) the page travels by
+ * itself from photo to photo / video to video, resting on each; at the end it goes back up. Any movement of the mouse, a touch,
  * a key, the wheel or a click stops it at once; it starts again after 3 more quiet
  * seconds. It rests while a photo or video is open full
  * screen, and while the tab is in the background.
@@ -24,7 +24,13 @@
     // a lightbox or menu is open (they lock the page scroll)
     if (getComputedStyle(b).overflow === 'hidden' || getComputedStyle(h).overflow === 'hidden') return true;
     if (document.fullscreenElement || document.webkitFullscreenElement) return true;
-    if (document.querySelector('.lightbox.is-open, .video-lightbox.is-open, .mobile-nav.is-open, [aria-modal="true"]')) return true;
+    if (document.querySelector('.lightbox.is-open, .video-lightbox.is-open, .vlightbox.is-open, .mobile-nav.is-open')) return true;
+    // other dialogs count only while they are actually shown (the video viewer keeps aria-modal even when closed)
+    var dl = document.querySelectorAll('[aria-modal="true"]');
+    for (var i = 0; i < dl.length; i++) {
+      var cs = getComputedStyle(dl[i]);
+      if (cs.display !== 'none' && cs.visibility !== 'hidden' && +cs.opacity > 0) return true;
+    }
     return false;
   }
   function maxY() { return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
@@ -53,10 +59,11 @@
     raf = requestAnimationFrame(step);
   }
 
-  /* Gallery page: instead of a steady glide it travels from photo to photo — quickly
+  /* Gallery and Videos pages: instead of a steady glide it travels from photo to photo
+     (video to video) — quickly
      between them, slowing down as it arrives, resting 5 s on each photo centred on the
      screen, then easing away slowly to the next. At the last photo it goes back up. */
-  var slides = document.querySelectorAll('.gslide');
+  var slides = document.querySelectorAll('.gslide, .video-slides > .video-card');
   var SLIDE_MODE = slides.length > 1;
   var HOLD = 5000;
   var move = null, holdUntil = 0, idx = -1;
