@@ -3,6 +3,9 @@ window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["fi"] = {
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Viisi erilaista tapaa työskennellä värilasin kanssa — perinteisestä Tiffany-tekniikasta kokeellisiin varjoprisma-installaatioihin.",
   "Kinetic Prizm": "Kineettinen prisma",
+  "Stepper motor and Fresnel lens — 2026": "Askelmoottori ja Fresnel-linssi — 2026",
+  "Shadows and caustics — 2024": "Varjot ja kaustiikka — 2024",
+  "Analog mapping — 2023–2024": "Analoginen mappaus — 2023–2024",
   "Moving works that light passes through: as they turn, their shadows create striking analog visual effects. A custom drive was developed for this project, allowing the rotation speed to be adjusted.": "Liikkuvia teoksia, joiden läpi valo kulkee: niiden pyöriessä varjot luovat kiehtovia analogisia visuaalisia efektejä. Projektia varten kehitettiin oma käyttölaite, jolla pyörimisnopeutta voi säätää.",
   "36 stained glass panels — 7.2 × 1.8 m": "36 lasimaalauspaneelia — 7,2 × 1,8 m",
   "Recent exhibitions & events": "Viimeisimmät näyttelyt ja tapahtumat",

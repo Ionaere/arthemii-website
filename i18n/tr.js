@@ -3,6 +3,9 @@ window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["tr"] = {
   "Five distinct approaches to working with colored glass — from traditional Tiffany technique to experimental shadow prism installations.": "Renkli camla çalışmaya beş farklı yaklaşım — geleneksel Tiffany tekniğinden deneysel gölge prizması enstalasyonlarına.",
   "Kinetic Prizm": "Kinetik Prizma",
+  "Stepper motor and Fresnel lens — 2026": "Step motor ve Fresnel merceği — 2026",
+  "Shadows and caustics — 2024": "Gölgeler ve kostikler — 2024",
+  "Analog mapping — 2023–2024": "Analog mapping — 2023–2024",
   "Moving works that light passes through: as they turn, their shadows create striking analog visual effects. A custom drive was developed for this project, allowing the rotation speed to be adjusted.": "Işığın içinden geçtiği hareketli eserler: döndükçe gölgeleri ilgi çekici analog görsel efektler yaratır. Bu proje için dönüş hızının ayarlanmasını sağlayan özel bir tahrik mekanizması geliştirildi.",
   "36 stained glass panels — 7.2 × 1.8 m": "36 vitray panel — 7,2 × 1,8 m",
   "Recent exhibitions & events": "Son sergiler ve etkinlikler",
