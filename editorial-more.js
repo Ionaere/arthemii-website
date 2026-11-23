@@ -12,7 +12,6 @@
   function rowH() { return window.innerWidth < 769 ? 150 : 330; }
   var GAP = 8;
   var SECTION_HERO = {
-    exhibitions: 'img/opt/2024-12-IMG_9484-Enhanced-NR-scaled-1600.jpg',
     architecture: 'img/renders/ai-arch/668576996bf8931945c8b2a57d952caa_d3836f46-a22f-410d-a825-8df7bd98af56.webp'
   };
   var OVERLAY = { architecture: true };   /* name lies on the photo; for Exhibitions it stays above it */
