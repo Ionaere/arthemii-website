@@ -344,7 +344,7 @@
     a.classList.add('sp-prism--gl');
 
     function size() {
-      var w = cv.clientWidth || 76, r = Math.min(window.devicePixelRatio || 1, 1.5);
+      var w = cv.clientWidth || 76, r = Math.min(window.devicePixelRatio || 1, 2);
       var px = Math.round(w * r);
       if (cv.width !== px) { cv.width = cv.height = px; gl.viewport(0, 0, px, px); gl.uniform2f(uRes, px, px); }
     }
