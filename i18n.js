@@ -47,7 +47,7 @@
   var IDX = { de: 0, 'de-at': 0, 'de-ch': 0, es: 1, fr: 2, ru: 3, zh: 4, ja: 5 };
   // Languages kept in their own file (i18n/<code>.js), loaded on demand
   var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1 };
-  var EXT_VERSION = '20261123i';
+  var EXT_VERSION = '20261123j';
   var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT', 'de-ch': 'de-CH' };
   // Regional variants: the short code shown in the menu
   var CODE_LABEL = { 'de-at': 'AT', 'de-ch': 'CH' };
@@ -75,6 +75,8 @@
   })();
   window.I18N_DATA = window.I18N_DATA || {};
   var T = {
+    "Small Architecture": ["Kleinarchitektur", "Pequeña arquitectura", "Petite architecture", "Малая архитектура", "小型建筑", "スモール・アーキテクチャ"],
+    "Bionic Gothic in small architecture": ["Bionische Gotik in der Kleinarchitektur", "Gótico biónico en la pequeña arquitectura", "Gothique bionique en petite architecture", "Бионическая готика в малой архитектуре", "小型建筑中的仿生哥特", "スモール・アーキテクチャにおけるバイオニック・ゴシック"],
     "Enter the Void, Bashmet Centre (2023)": ["Enter the Void, Baschmet-Zentrum (2023)", "Enter the Void, Centro Bashmet (2023)", "Enter the Void, Centre Bachmet (2023)", "Enter the Void, Центр Башмета (2023)", "Enter the Void，巴什梅特中心（2023）", "Enter the Void、バシュメト・センター（2023）"],
     "Bashmet Centre": ["Baschmet-Zentrum", "Centro Bashmet", "Centre Bachmet", "Центр Башмета", "巴什梅特中心", "バシュメト・センター"],
     "Abstract stained glass · 2023": ["Abstrakte Glasmalerei · 2023", "Vitral abstracto · 2023", "Vitrail abstrait · 2023", "Абстрактный витраж · 2023", "抽象彩色玻璃 · 2023", "抽象ステンドグラス · 2023"],

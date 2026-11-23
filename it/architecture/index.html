@@ -115,6 +115,46 @@
             .ai-arch__videos > .video-card:last-child .video-card__embed { aspect-ratio: 16/10; height: auto; }
         }
         .renders__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+        /* ===== Bigger drawings, videos and renders (2 per row) ===== */
+        .ai-source { max-width: none; }
+        .ai-source__text { max-width: 760px; }
+        .ai-source__drawings { max-width: none; gap: var(--spacing-md); }
+        @media (max-width: 640px) { .ai-source__drawings { flex-wrap: wrap; gap: var(--spacing-xs); }
+            .ai-source__drawing { flex: 1 1 calc(50% - var(--spacing-xs)); } }
+        .ai-arch__videos { grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md); }
+        .ai-arch__videos > .video-card:first-child { grid-column: auto; }
+        .ai-arch__videos > .video-card:first-child .video-card__embed { aspect-ratio: 16/10; height: auto; }
+        .ai-arch__videos > .video-card:first-child video { position: static; }
+        .ai-arch__videos > .video-card:last-child { grid-column: 1 / -1; }
+        .ai-arch__videos > .video-card:last-child .video-card__embed { aspect-ratio: 16/9; height: auto; }
+        .ai-arch__videos > .video-card:last-child video { position: static; }
+        @media (max-width: 768px) { .ai-arch__videos { grid-template-columns: 1fr; gap: var(--spacing-sm); }
+            .ai-arch__videos > .video-card:last-child .video-card__embed { aspect-ratio: 16/10; } }
+        .renders__videos { grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md); }
+        @media (max-width: 768px) { .renders__videos { grid-template-columns: 1fr; gap: var(--spacing-sm); } }
+        /* renders two per row, each row no taller than the screen */
+        .renders__photos { display: flex; flex-direction: column; gap: var(--spacing-md); }
+        .renders__photos .gallery__row { gap: var(--spacing-md); width: min(100%, calc((100svh - 140px) * var(--sum))); margin-inline: auto; flex-wrap: nowrap; }
+        @media (max-width: 640px) {
+            .renders__photos { gap: var(--spacing-xs); }
+            .renders__photos .gallery__row { gap: var(--spacing-xs); width: 100%; }
+            .renders__photos .gallery__row > .gallery__item { flex: var(--r) 1 0; aspect-ratio: var(--r); height: auto; }
+        }
+        /* SMALL ARCHITECTURE wordmark: flies in from above when it scrolls into view, flies away up */
+        .small-arch { margin: var(--spacing-2xl) 0 var(--spacing-lg); text-align: center; }
+        .small-arch__header { font-size: clamp(1.1rem, 4.2vw, 4.6rem); pointer-events: none; position: relative; z-index: 3; }
+        .small-arch__title { display: flex; align-items: center; justify-content: center; gap: clamp(0.75rem, 2.5vw, 2.5rem);
+            margin: 0; font-family: 'Italiana', var(--font-serif); font-weight: 400; font-size: 1em; line-height: 1;
+            letter-spacing: 0.34em; text-transform: uppercase; white-space: nowrap; color: var(--text); transform-origin: 50% 60%; will-change: transform, opacity; }
+        .small-arch__title span { margin-right: -0.34em; }
+        .small-arch__title::before, .small-arch__title::after { content: ""; flex: 1 1 0; max-width: 220px; height: 1px; background: currentColor; opacity: 0.45; }
+        .small-arch__sub { font-family: 'Montserrat', var(--font-sans); font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase;
+            font-size: clamp(0.75rem, 1.1vw, 0.95rem); color: var(--text-secondary); margin-top: var(--spacing-md); }
+        @media (max-width: 768px) { .small-arch__header { font-size: 5vw; }
+            .small-arch__title { letter-spacing: 0.2em; gap: 0.5rem; white-space: normal; }
+            .small-arch__title span { margin-right: -0.2em; }
+            .small-arch__title::before, .small-arch__title::after { max-width: 22px; } }
     </style>
 </head>
 <body class="ai-content-page">
@@ -171,10 +211,10 @@
                     <p class="ai-source__text">Tutte le opere di questa sezione sono generate con l’intelligenza artificiale, ma ognuna nasce da un disegno a mano. Prima faccio un disegno su carta — molti si possono vedere nella sezione Disegni. L’architettura viene poi generata da quel disegno originale, senza alcuna richiesta di deformarlo. È possibile perché il disegno è, in sostanza, grafica: uno schema chiaro attraverso cui l’architettura viene visualizzata.</p>
                     <a href="../drawings/" class="ai-source__link">Guarda i disegni <span aria-hidden="true">→</span></a>
                     <div class="ai-source__drawings">
-                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.825" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-01-800.webp 800w" sizes="160px"><img src="../../img/drawings/drawing-01-1600.jpg" alt="Drawing 01 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
-                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.796" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-08-800.webp 800w" sizes="160px"><img src="../../img/drawings/drawing-08-1600.jpg" alt="Drawing 08 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
-                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.81" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-16-800.webp 800w" sizes="160px"><img src="../../img/drawings/drawing-16-1600.jpg" alt="Drawing 16 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
-                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.837" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-20-800.webp 800w" sizes="160px"><img src="../../img/drawings/drawing-20-1600.jpg" alt="Drawing 20 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
+                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.825" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-01-800.webp 800w" sizes="(max-width: 640px) 50vw, 25vw"><img src="../../img/drawings/drawing-01-1600.jpg" alt="Drawing 01 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
+                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.796" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-08-800.webp 800w" sizes="(max-width: 640px) 50vw, 25vw"><img src="../../img/drawings/drawing-08-1600.jpg" alt="Drawing 08 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
+                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.81" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-16-800.webp 800w" sizes="(max-width: 640px) 50vw, 25vw"><img src="../../img/drawings/drawing-16-1600.jpg" alt="Drawing 16 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
+                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.837" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../../img/drawings/drawing-20-800.webp 800w" sizes="(max-width: 640px) 50vw, 25vw"><img src="../../img/drawings/drawing-20-1600.jpg" alt="Drawing 20 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
                     </div>
                 </div>
                     <div class="video-grid ai-arch__videos">
@@ -245,9 +285,11 @@
                         </article>
                     </div>
                 </div>
+                <div class="small-arch">
+                    <div class="small-arch__header"><h2 class="small-arch__title"><span>Piccola architettura</span></h2></div>
+                    <p class="small-arch__sub">Gotico bionico nella piccola architettura</p>
+                </div>
                 <header class="section__header reveal">
-                    <div class="section__label" data-i18n="ai_label">Architettura</div>
-                    <h1 class="section__title" data-i18n="renders_title">Gotico bionico, renderizzato</h1>
                     <p class="section__desc" data-i18n="renders_desc">Render digitali e studi in movimento in cui l’architettura gotica e quella astratta si fondono in forme bioniche — le idee dietro il vetro, esplorate prima di essere costruite.</p>
                     <a class="yt-channel ig-channel" href="https://www.instagram.com/lonaere/" target="_blank" rel="noopener" aria-label="Instagram @lonaere">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="rendersIgGradient" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset="0.05" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6.5" fill="url(#rendersIgGradient)"/><rect x="5" y="5" width="14" height="14" rx="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="16.4" cy="7.6" r="1.05" fill="#fff"/></svg>
@@ -256,21 +298,27 @@
                 </header>
 
                 <div class="gallery__rows renders__photos">
-                    <div class="gallery__row gallery__row--wide">
+                    <div class="gallery__row" style="--sum:3.553">
                         <div class="gallery__item" style="--r:1.776"><picture><source type="image/webp" srcset="../../img/renders/DQz7gIWjB1K-800.webp 800w, ../../img/renders/DQz7gIWjB1K.webp 1160w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DQz7gIWjB1K.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                         <div class="gallery__item" style="--r:1.777"><picture><source type="image/webp" srcset="../../img/renders/DQzk_FEDLWP-800.webp 800w, ../../img/renders/DQzk_FEDLWP.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DQzk_FEDLWP.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
-                        <div class="gallery__item" style="--r:1.429"><picture><source type="image/webp" srcset="../../img/renders/DLYRSOatKe8-800.webp 800w, ../../img/renders/DLYRSOatKe8.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYRSOatKe8.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                     </div>
-                    <div class="gallery__row gallery__row--tall">
+                    <div class="gallery__row" style="--sum:2.230">
+                        <div class="gallery__item" style="--r:1.429"><picture><source type="image/webp" srcset="../../img/renders/DLYRSOatKe8-800.webp 800w, ../../img/renders/DLYRSOatKe8.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYRSOatKe8.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                         <div class="gallery__item" style="--r:0.801"><picture><source type="image/webp" srcset="../../img/renders/DLYRNOoNzgs-800.webp 800w, ../../img/renders/DLYRNOoNzgs.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYRNOoNzgs.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                    </div>
+                    <div class="gallery__row" style="--sum:1.600">
                         <div class="gallery__item" style="--r:0.801"><picture><source type="image/webp" srcset="../../img/renders/DLYPO9vt64e-800.webp 800w, ../../img/renders/DLYPO9vt64e.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYPO9vt64e.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                         <div class="gallery__item" style="--r:0.799"><picture><source type="image/webp" srcset="../../img/renders/DLYORUJNpNI-800.webp 800w, ../../img/renders/DLYORUJNpNI.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYORUJNpNI.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                    </div>
+                    <div class="gallery__row" style="--sum:1.600">
                         <div class="gallery__item" style="--r:0.8"><picture><source type="image/webp" srcset="../../img/renders/DJC2v00N5dh-800.webp 800w, ../../img/renders/DJC2v00N5dh.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DJC2v00N5dh.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                         <div class="gallery__item" style="--r:0.8"><picture><source type="image/webp" srcset="../../img/renders/DIXzTh1tzQR-800.webp 800w, ../../img/renders/DIXzTh1tzQR.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DIXzTh1tzQR.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                     </div>
-                    <div class="gallery__row gallery__row--wide">
+                    <div class="gallery__row" style="--sum:2.818">
                         <div class="gallery__item" style="--r:1.041"><picture><source type="image/webp" srcset="../../img/renders/DLYPVHXNwOJ-800.webp 800w, ../../img/renders/DLYPVHXNwOJ.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DLYPVHXNwOJ.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                         <div class="gallery__item" style="--r:1.777"><picture><source type="image/webp" srcset="../../img/renders/DHw90RHsCvf-800.webp 800w, ../../img/renders/DHw90RHsCvf.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DHw90RHsCvf.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
+                    </div>
+                    <div class="gallery__row" style="--sum:3.112">
                         <div class="gallery__item" style="--r:1.777"><picture><source type="image/webp" srcset="../../img/renders/DHwdRMayRNe-800.webp 800w, ../../img/renders/DHwdRMayRNe.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DHwdRMayRNe.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                         <div class="gallery__item" style="--r:1.335"><picture><source type="image/webp" srcset="../../img/renders/DHwcuj9y5sb-800.webp 800w, ../../img/renders/DHwcuj9y5sb.webp 1100w" sizes="(max-width: 640px) 50vw, 33vw"><img src="../../img/renders/DHwcuj9y5sb.jpg" alt="Render by Arthemii Ionaere" loading="lazy" decoding="async"></picture></div>
                     </div>
@@ -421,7 +469,7 @@
     <script src="../../lightbox.js"></script>
     <script src="../../video-lightbox.js"></script>
     <script src="../../smooth-scroll.js" defer></script>
-    <script src="../../i18n.js?v=20261123i"></script>
+    <script src="../../i18n.js?v=20261123j"></script>
     <script>
     /* ARCHITECTURE wordmark flies up and out while scrolling down, comes back on the way up */
     (function () {
@@ -434,6 +482,29 @@
             var p = Math.min(Math.max(window.scrollY / Math.max(h * 0.6, 280), 0), 1);
             var e = p * p * (3 - 2 * p);
             el.style.transform = 'translate3d(0,' + (-e * h * 1.1).toFixed(1) + 'px,0) scale(' + (1 + e * 0.9).toFixed(3) + ')';
+            el.style.opacity = (1 - e * e).toFixed(3);
+        }
+        function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        update();
+    })();
+    </script>
+    <script>
+    /* SMALL ARCHITECTURE wordmark: drops in from above as it enters the screen, flies up and out as it leaves */
+    (function () {
+        var el = document.querySelector('.small-arch__title');
+        if (!el) return;
+        var ticking = false;
+        function ease(p) { p = Math.min(Math.max(p, 0), 1); return p * p * (3 - 2 * p); }
+        function update() {
+            ticking = false;
+            var h = window.innerHeight, t = el.getBoundingClientRect().top / h;
+            var ein = ease((t - 0.55) / 0.4);   /* 1 while below the screen, 0 once at 55% height */
+            var eout = ease((0.2 - t) / 0.45);  /* 0 until it reaches 20% height, 1 when gone */
+            var e = Math.max(ein, eout);
+            var y = ein > 0 ? -ein * h * 0.7 : -eout * h * 1.1;
+            el.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0) scale(' + (1 + e * 0.9).toFixed(3) + ')';
             el.style.opacity = (1 - e * e).toFixed(3);
         }
         function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }

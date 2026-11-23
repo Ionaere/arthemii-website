@@ -500,5 +500,7 @@ window.I18N_DATA["tr"] = {
   "Photos": "Fotoğraflar",
   "E-mail": "E-posta",
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Başmet Merkezi (2023)",
-  "Bashmet Centre": "Başmet Merkezi"
+  "Bashmet Centre": "Başmet Merkezi",
+  "Small Architecture": "Küçük mimari",
+  "Bionic Gothic in small architecture": "Küçük mimaride biyonik gotik"
 };

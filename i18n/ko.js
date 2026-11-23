@@ -500,5 +500,7 @@ window.I18N_DATA["ko"] = {
   "Photos": "사진",
   "E-mail": "이메일",
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, 바시메트 센터 (2023)",
-  "Bashmet Centre": "바시메트 센터"
+  "Bashmet Centre": "바시메트 센터",
+  "Small Architecture": "스몰 아키텍처",
+  "Bionic Gothic in small architecture": "스몰 아키텍처 속 바이오닉 고딕"
 };

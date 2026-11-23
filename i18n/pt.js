@@ -500,5 +500,7 @@ window.I18N_DATA["pt"] = {
   "Photos": "Fotos",
   "E-mail": "E-mail",
   "Enter the Void, Bashmet Centre (2023)": "Enter the Void, Centro Bashmet (2023)",
-  "Bashmet Centre": "Centro Bashmet"
+  "Bashmet Centre": "Centro Bashmet",
+  "Small Architecture": "Pequena arquitetura",
+  "Bionic Gothic in small architecture": "Gótico biónico na pequena arquitetura"
 };
