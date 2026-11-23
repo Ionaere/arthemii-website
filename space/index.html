@@ -443,11 +443,32 @@ let mode = (() => {
   return 'prism';
 })();
 const cosmosFog = new THREE.FogExp2(0x000000, 0.013);
+// In the kaleidoscope the works gather closer together (so the triangle is always full of them, not of black space)
+// and the picture inside the mirrors is filmed with a wider lens, so many works fall into it at once
+const KAL_PACK = 0.5;
+const packOf = m => m === 'kaleido' ? KAL_PACK : 1;
+let packed = 1;
+function layoutFor(m) {
+  const k = packOf(m);
+  if (k === packed) return;
+  for (const o of items) {
+    if (!o.home) o.home = { x: o.group.position.x, z: o.group.position.z, y: o.baseY };
+    o.group.position.x = o.home.x * k; o.group.position.z = o.home.z * k;
+    o.baseY = o.home.y * k; o.group.position.y = o.baseY;
+  }
+  camera.position.multiplyScalar(k / packed);   // you stay at the same place among the works
+  packed = k;
+}
 function applyMode() {
+  const kaleido = mode === 'kaleido';
+  layoutFor(mode);
   if (room) room.visible = mode === 'prism';
   if (mode !== 'prism') stars();
   if (starGroup) starGroup.visible = mode !== 'prism';
-  scene.fog = mode === 'prism' ? null : cosmosFog;
+  scene.fog = mode === 'cosmos' ? cosmosFog : null;
+  // mirrored writing looks wrong: in the kaleidoscope only the works themselves are shown
+  for (const o of items) if (o.label) o.label.material.visible = !kaleido;
+  if (title) title.visible = !kaleido;
   document.querySelectorAll('#modes button').forEach(b => {
     const on = b.dataset.mode === mode;
     b.classList.toggle('is-on', on);
@@ -458,7 +479,12 @@ function setMode(m) {
   if (!MODES.includes(m) || m === mode) return;
   mode = m;
   try { localStorage.setItem('spaceView', m); } catch (e) {}
+  focus = null; glide = null;
+  // the works may have moved closer or apart: the tour plans its curve again from here
+  const carry = tour ? { head: tour.tan.clone(), speed: tour.speed, yawV: tour.yawV, pitchV: tour.pitchV } : null;
+  if (tour) endTour();
   applyMode();
+  if (carry) startTour(carry);
 }
 MODES.forEach((m, i) => {
   const b = document.createElement('button');
@@ -474,7 +500,9 @@ MODES.forEach((m, i) => {
 // sides of an equilateral triangle until it lands inside it — exactly what three mirrors in a tube show.
 // Each mirroring takes a little light away, like real mirrors. The tube turns very slowly.
 const KAL_IN = isTouch ? 0.25 : 0.2;   // inradius of the triangle, as a share of the shorter side of the screen (a bit larger on phones)
-const KAL_TURN = 0.025;      // radians per second
+const KAL_TURN = 0.018;      // radians per second
+const KAL_FOV = 100;         // the wider lens that films the picture inside the mirrors
+const kalCam = new THREE.PerspectiveCamera(KAL_FOV, 1, 0.05, 420);
 let kal = null, kalRot = 0;
 const kalSize = new THREE.Vector2();
 function ensureKal() {
@@ -499,7 +527,7 @@ function ensureKal() {
             n += 1.0;
           }
           vec2 uv = (turn(p, rot) + 0.5 * res) / res;
-          gl_FragColor = vec4(texture2D(tDiffuse, uv).rgb * pow(0.955, n), 1.0);
+          gl_FragColor = vec4(texture2D(tDiffuse, uv).rgb * pow(0.99, n), 1.0);
           #include <colorspace_fragment>
         }`,
       depthTest: false, depthWrite: false
@@ -536,8 +564,11 @@ function kalFold(x, y) {
 function present() {
   if (mode === 'kaleido') {
     ensureKal();
+    kalCam.position.copy(camera.position);
+    kalCam.quaternion.copy(camera.quaternion);
+    if (kalCam.aspect !== camera.aspect) { kalCam.aspect = camera.aspect; kalCam.updateProjectionMatrix(); }
     renderer.setRenderTarget(kal.rt);
-    renderer.render(scene, camera);
+    renderer.render(scene, kalCam);
     renderer.setRenderTarget(null);
     renderer.render(kal.scene, kal.cam);
   } else {
@@ -757,7 +788,7 @@ const ndc = new THREE.Vector2();
 function pick(x, y) {
   if (mode === 'kaleido') [x, y] = kalFold(x, y);
   ndc.set((x / innerWidth) * 2 - 1, -(y / innerHeight) * 2 + 1);
-  ray.setFromCamera(ndc, camera);
+  ray.setFromCamera(ndc, mode === 'kaleido' ? kalCam : camera);
   ray.far = 16;
   const meshes = [];
   for (const o of items) { if (o.dist !== undefined && o.dist < 40) { meshes.push(o.pic); meshes.push(o.back); } }
@@ -938,7 +969,7 @@ function passPoint(o, prev, next) {
     if (dir.lengthSq() < 0.09) dir.crossVectors(a, upV).addScaledVector(a, 0.4);
   }
   dir.normalize();
-  const pt = p.addScaledVector(dir, tourDist(o) * TOUR_PASS);
+  const pt = p.addScaledVector(dir, tourDist(o) * (mode === 'kaleido' ? 2.2 : TOUR_PASS));
   const hr = Math.hypot(pt.x, pt.z), lim = ROOM_IN - 2;
   if (hr > lim) { pt.x *= lim / hr; pt.z *= lim / hr; }
   pt.y = Math.max(-ROOM_H + 2.5, Math.min(ROOM_H + ROOM_R * 0.25 - 1, pt.y));
@@ -1007,7 +1038,7 @@ function tourTick(dt) {
   const ahead = tourQ.clone().sub(tourP);
   let bend = 0;
   if (tanNow.lengthSq() > 1e-8 && ahead.lengthSq() > 1e-4) bend = tanNow.angleTo(ahead);
-  const want = TOUR_SPEED * (1 - 0.4 * Math.min(1, bend / 0.9));
+  const want = (mode === 'kaleido' ? 0.28 : TOUR_SPEED) * (1 - 0.4 * Math.min(1, bend / 0.9));
   T.speed += (want - T.speed) * (1 - Math.exp(-dt / 1.6));
   seg.s += T.speed * dt;
   while (seg.s >= seg.len) {
@@ -1033,8 +1064,9 @@ function tourTick(dt) {
   const errY = wrapA(wantYaw - yaw), errP = wantPitch - pitch;
   T.yawV += (TURN_W * TURN_W * errY - 2 * TURN_W * T.yawV) * dt;
   T.pitchV += (TURN_W * TURN_W * errP - 2 * TURN_W * T.pitchV) * dt;
-  T.yawV = Math.max(-TURN_MAX, Math.min(TURN_MAX, T.yawV));
-  T.pitchV = Math.max(-TURN_MAX * 0.6, Math.min(TURN_MAX * 0.6, T.pitchV));
+  const tm = mode === 'kaleido' ? TURN_MAX * 0.45 : TURN_MAX;   // in the mirrors every turn is multiplied: turn slower
+  T.yawV = Math.max(-tm, Math.min(tm, T.yawV));
+  T.pitchV = Math.max(-tm * 0.6, Math.min(tm * 0.6, T.pitchV));
   yaw = wrapA(yaw + T.yawV * dt);
   pitch = Math.max(-1.2, Math.min(1.2, pitch + T.pitchV * dt));
   camera.rotation.set(pitch, yaw, 0);
@@ -1128,7 +1160,7 @@ function tick() {
     right.crossVectors(fwd, upV).normalize();
     target.set(0, 0, 0).addScaledVector(fwd, f).addScaledVector(right, s).addScaledVector(upV, u);
     if (target.lengthSq() > 1) target.normalize();
-    target.multiplyScalar(4.6 * run);
+    target.multiplyScalar(4.6 * run * (mode === 'kaleido' ? 0.5 : 1));   // the works are packed closer in the kaleidoscope
     if (wheelPush) { target.addScaledVector(fwd, wheelPush * 6); wheelPush *= 0.82; if (Math.abs(wheelPush) < 0.02) wheelPush = 0; }
     vel.lerp(target, 1 - Math.pow(0.002, dt));
     camera.position.addScaledVector(vel, dt);
@@ -1144,7 +1176,7 @@ function tick() {
     if (out) { cp.x += (cp.x * k - cp.x) * soft; cp.z += (cp.z * k - cp.z) * soft; cp.y += (y - cp.y) * soft; }
     else { cp.x *= k; cp.z *= k; cp.y = y; }
   } else {
-    const maxR = RADIUS + 28, r = cp.length();
+    const maxR = mode === 'kaleido' ? RADIUS * KAL_PACK + 6 : RADIUS + 28, r = cp.length();
     if (r > maxR + 0.5) cp.multiplyScalar(1 + (maxR / r - 1) * soft);
     else if (r > maxR) cp.multiplyScalar(maxR / r);
   }
