@@ -106,7 +106,9 @@
         .about-top > .about-studio {
             grid-column: 1 / -1; grid-row: 1; align-self: start;
             padding: 0;
-            margin: clamp(1.5rem, 4.5vw, 4.5rem) 0 var(--spacing-xl);
+            /* the name runs across the chest of the portrait, below the face: the photo is 40% of
+               the width and ~1:1, so 58% down the photo is ~24% of the width (minus half a letter) */
+            margin: calc(24% - 0.5em) 0 var(--spacing-xl);
         }
         .about-top > .section__header { grid-column: 1; grid-row: 2; align-self: start; margin-bottom: 0; }
         .about-portrait { grid-column: 2; grid-row: 1 / span 2; align-self: start; margin: 0; }
@@ -114,7 +116,7 @@
         @media (max-width: 768px) {
             .about-top { grid-template-columns: minmax(0, 1fr); }
             .about-portrait { grid-column: 1; grid-row: 1; }
-            .about-top > .about-studio { grid-row: 1; margin-top: 12vw; }
+            .about-top > .about-studio { grid-row: 1; margin-top: calc(65% - 1.05em); }   /* phones: across the chest too (two lines, kept below the chin) */
             .about-top > .section__header { grid-column: 1; grid-row: 2; margin-top: var(--spacing-lg); }
         }
         /* Artist name opening the About text */
