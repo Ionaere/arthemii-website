@@ -1821,6 +1821,12 @@
         .page-top__media--paper img { object-fit: contain; object-position: 50% 50% !important; padding: 4% 6%; }
         /* Contact page: the form sits under the e-mail, in the left column beside the photo */
         .contact.contact--in-top { max-width: none; margin: var(--spacing-xl) 0 0; text-align: left; }
+        /* Projects page: text of the blocks alternates sides — 1st left, 2nd right, 3rd left… */
+        .page-top ~ .tech-block:nth-of-type(even) .tech-block__inner > div:first-child {
+            justify-self: end;
+            margin-left: auto;
+            text-align: right;
+        }
         /* less empty space above the page name */
         .section:has(> .container > .page-top) { padding-top: var(--spacing-md); }
         @media (max-width: 768px) {
