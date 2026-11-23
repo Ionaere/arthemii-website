@@ -21,6 +21,17 @@
     background: rgba(22,18,44,.6); color: #fff; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: .02em;
     backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 20px rgba(0,0,0,.12); border: 0; cursor: pointer; }
   .back:hover { background: rgba(60,48,110,.8); }
+  /* top left: back to the site, then the view switch (Prism · Cosmos · Kaleidoscope) */
+  .topbar { top: 16px; left: 16px; display: flex; align-items: center; gap: 8px; max-width: calc(100vw - 32px); }
+  .topbar .back { position: static; flex: none; }
+  .modes { display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: rgba(22,18,44,.6);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+  .modes button { flex: none; display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: rgba(255,255,255,.78);
+    padding: 7px 11px 7px 9px; border-radius: 999px; font: 600 12px/1 system-ui, -apple-system, sans-serif; letter-spacing: .02em; cursor: pointer;
+    white-space: nowrap; transition: background .2s ease, color .2s ease; }
+  .modes button:hover { background: rgba(255,255,255,.12); color: #fff; }
+  .modes button.is-on { background: rgba(255,255,255,.92); color: #111; }
+  .modes svg { width: 14px; height: 14px; flex: none; }
   .back svg { width: 16px; height: 16px; }
   /* the theme bar: small, at the very bottom of the screen */
   .sections { bottom: max(8px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; gap: 2px; padding: 3px; border-radius: 999px;
@@ -73,11 +84,16 @@
   @media (max-width: 640px) {
     .back span { display: none; }
     .back { padding: 10px; }
+    .modes button { padding: 7px 9px 7px 8px; font-size: 11px; gap: 5px; }
+  }
+  @media (max-width: 360px) {
+    .modes button span { display: none; }
+    .modes button.is-on span { display: inline; }
   }
 </style>
 </head>
 <body><div class="sr-only"><h1>3D Space — Arthemii Ionaere</h1><p>Walk through a virtual 3D gallery of all work by Arthemii Ionaere: stained glass sculpture and installations, Kinetic Prizm, drawings, videos, architecture and exhibitions.</p><a href="/gallery/">Gallery</a> <a href="/projects/">Projects</a> <a href="/drawings/">Drawings</a> <a href="/videos/">Videos</a> <a href="/architecture/">Architecture</a> <a href="/exhibitions/">Exhibitions</a> <a href="/">Arthemii Ionaere — home</a></div>
-<button class="ui back" type="button" id="back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span id="backTxt">ionaere.com</span></button>
+<div class="ui topbar"><button class="back" type="button" id="back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span id="backTxt">ionaere.com</span></button><div class="modes" id="modes" role="group" aria-label="View"></div></div>
 <nav class="ui sections" id="sections" aria-label="Sections"></nav>
 <div class="ui hint is-hidden" id="hint"></div>
 <div class="ui tip" id="tip"></div>
@@ -290,7 +306,11 @@ function averageColor(img) {
   } catch (e) { return new THREE.Color(0xffffff); }
 }
 
+let starGroup = null;
 function stars() {
+  if (starGroup) return;
+  starGroup = new THREE.Group();
+  scene.add(starGroup);
   const c = new THREE.Color();
   function cloud(n, size, opacity, near) {
     const pos = new Float32Array(n * 3), col = new Float32Array(n * 3);
@@ -311,7 +331,7 @@ function stars() {
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
-    scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ size, sizeAttenuation: true, vertexColors: true, map: glowTex, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending, fog: false })));
+    starGroup.add(new THREE.Points(geo, new THREE.PointsMaterial({ size, sizeAttenuation: true, vertexColors: true, map: glowTex, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending, fog: false })));
   }
   cloud(2500, 0.6, 0.8, false);
   cloud(3000, 0.07, 0.75, true);
@@ -387,7 +407,7 @@ function buildRoom() {
 let cubeTick = 0;
 const CUBE_EVERY = isTouch ? 2 : 1;
 function updateReflections() {
-  if (!cubeCam || (cubeTick++ % CUBE_EVERY) !== 0) return;
+  if (!cubeCam || mode !== 'prism' || (cubeTick++ % CUBE_EVERY) !== 0) return;
   // the soft halos behind the works are left out of the reflection, so it stays crisp
   for (const o of items) if (o.glow) o.glow.visible = false;
   // film into one picture while the walls show the other, then swap
@@ -399,6 +419,130 @@ function updateReflections() {
   room.material.envMap = into.texture;
   cubeSide = 1 - cubeSide;
   for (const o of items) if (o.glow) o.glow.visible = true;
+}
+
+/* ---------- three views, switched at the top left ----------
+   prism   — inside the huge mirror-faceted glass prism (the works and their reflections)
+   cosmos  — the open black cosmos with stars and a faint haze, as the space first was
+   kaleido — a three-mirror kaleidoscope: the view is folded into a triangle and mirrored in its three sides */
+const MODES = ['prism', 'cosmos', 'kaleido'];
+const MODE_NAMES = {
+  en: ['Prism', 'Cosmos', 'Kaleidoscope'], de: ['Prisma', 'Kosmos', 'Kaleidoskop'], es: ['Prisma', 'Cosmos', 'Caleidoscopio'],
+  fr: ['Prisme', 'Cosmos', 'Kaléidoscope'], it: ['Prisma', 'Cosmo', 'Caleidoscopio'], ru: ['Призма', 'Космос', 'Калейдоскоп']
+};
+const MODE_L = MODE_NAMES[T[LANG] ? LANG : 'en'] || MODE_NAMES.en;
+const MODE_ICONS = [
+  '<path d="M12 2.5l7 6.2-7 12.8-7-12.8z"/><path d="M5 8.7h14M12 2.5v19"/>',
+  '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.2 2.2M15.5 15.5l2.2 2.2M6.3 17.7l2.2-2.2M15.5 8.5l2.2-2.2"/><circle cx="12" cy="12" r="1.6"/>',
+  '<path d="M12 3.5l8.5 15h-17z"/><path d="M12 3.5v15M3.5 18.5l12.8-7.4M20.5 18.5L7.7 11.1"/>'
+];
+let mode = (() => {
+  const q = params.get('view');
+  if (MODES.includes(q)) return q;
+  try { const m = localStorage.getItem('spaceView'); if (MODES.includes(m)) return m; } catch (e) {}
+  return 'prism';
+})();
+const cosmosFog = new THREE.FogExp2(0x000000, 0.013);
+function applyMode() {
+  if (room) room.visible = mode === 'prism';
+  if (mode !== 'prism') stars();
+  if (starGroup) starGroup.visible = mode !== 'prism';
+  scene.fog = mode === 'prism' ? null : cosmosFog;
+  document.querySelectorAll('#modes button').forEach(b => {
+    const on = b.dataset.mode === mode;
+    b.classList.toggle('is-on', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+}
+function setMode(m) {
+  if (!MODES.includes(m) || m === mode) return;
+  mode = m;
+  try { localStorage.setItem('spaceView', m); } catch (e) {}
+  applyMode();
+}
+MODES.forEach((m, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.dataset.mode = m;
+  b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">' + MODE_ICONS[i] + '</svg><span></span>';
+  b.querySelector('span').textContent = MODE_L[i];
+  b.addEventListener('click', () => { setMode(m); el.focus(); });
+  $('modes').appendChild(b);
+});
+
+// The kaleidoscope: the scene is drawn into a picture, then every pixel of the screen is mirrored in the three
+// sides of an equilateral triangle until it lands inside it — exactly what three mirrors in a tube show.
+// Each mirroring takes a little light away, like real mirrors. The tube turns very slowly.
+const KAL_IN = isTouch ? 0.25 : 0.2;   // inradius of the triangle, as a share of the shorter side of the screen (a bit larger on phones)
+const KAL_TURN = 0.025;      // radians per second
+let kal = null, kalRot = 0;
+const kalSize = new THREE.Vector2();
+function ensureKal() {
+  renderer.getDrawingBufferSize(kalSize);
+  if (!kal) {
+    const rt = new THREE.WebGLRenderTarget(kalSize.x, kalSize.y, { type: THREE.HalfFloatType, samples: isTouch ? 2 : 4 });
+    const mat = new THREE.ShaderMaterial({
+      uniforms: { tDiffuse: { value: rt.texture }, res: { value: new THREE.Vector2() }, r: { value: 100 }, rot: { value: 0 } },
+      vertexShader: 'void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }',
+      fragmentShader: `
+        uniform sampler2D tDiffuse; uniform vec2 res; uniform float r; uniform float rot;
+        vec2 turn(vec2 v, float a) { float c = cos(a), s = sin(a); return vec2(c * v.x - s * v.y, s * v.x + c * v.y); }
+        void main() {
+          vec2 p = turn(gl_FragCoord.xy - 0.5 * res, -rot);
+          const vec2 N0 = vec2(0.0, -1.0), N1 = vec2(0.8660254, 0.5), N2 = vec2(-0.8660254, 0.5);
+          float n = 0.0;
+          for (int i = 0; i < 48; i++) {
+            float d0 = dot(p, N0) - r, d1 = dot(p, N1) - r, d2 = dot(p, N2) - r;
+            float m = max(d0, max(d1, d2));
+            if (m <= 0.0) break;
+            if (m == d0) p -= 2.0 * d0 * N0; else if (m == d1) p -= 2.0 * d1 * N1; else p -= 2.0 * d2 * N2;
+            n += 1.0;
+          }
+          vec2 uv = (turn(p, rot) + 0.5 * res) / res;
+          gl_FragColor = vec4(texture2D(tDiffuse, uv).rgb * pow(0.955, n), 1.0);
+          #include <colorspace_fragment>
+        }`,
+      depthTest: false, depthWrite: false
+    });
+    const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat);
+    quad.frustumCulled = false;
+    const sc = new THREE.Scene();
+    sc.add(quad);
+    kal = { rt, mat, scene: sc, cam: new THREE.Camera() };
+  }
+  if (kal.rt.width !== kalSize.x || kal.rt.height !== kalSize.y) kal.rt.setSize(kalSize.x, kalSize.y);
+  const u = kal.mat.uniforms;
+  u.res.value.copy(kalSize);
+  u.r.value = KAL_IN * Math.min(kalSize.x, kalSize.y);
+  u.rot.value = kalRot;
+}
+// the same mirroring for a point on the screen (CSS pixels), so the reflected works can be clicked too
+function kalFold(x, y) {
+  const w = innerWidth, h = innerHeight, r = KAL_IN * Math.min(w, h);
+  const c = Math.cos(-kalRot), s = Math.sin(-kalRot);
+  let px = x - w / 2, py = h / 2 - y;
+  let qx = c * px - s * py, qy = s * px + c * py;
+  const N = [[0, -1], [0.8660254, 0.5], [-0.8660254, 0.5]];
+  for (let i = 0; i < 48; i++) {
+    let m = 0, k = -1;
+    for (let j = 0; j < 3; j++) { const d = qx * N[j][0] + qy * N[j][1] - r; if (d > m) { m = d; k = j; } }
+    if (k < 0) break;
+    qx -= 2 * m * N[k][0]; qy -= 2 * m * N[k][1];
+  }
+  const c2 = Math.cos(kalRot), s2 = Math.sin(kalRot);
+  px = c2 * qx - s2 * qy; py = s2 * qx + c2 * qy;
+  return [w / 2 + px, h / 2 - py];
+}
+function present() {
+  if (mode === 'kaleido') {
+    ensureKal();
+    renderer.setRenderTarget(kal.rt);
+    renderer.render(scene, camera);
+    renderer.setRenderTarget(null);
+    renderer.render(kal.scene, kal.cam);
+  } else {
+    renderer.render(scene, camera);
+  }
 }
 
 async function build(data) {
@@ -425,7 +569,8 @@ async function build(data) {
   // The name floats in the middle
   title = new THREE.Mesh(new THREE.PlaneGeometry(9, 1.7), new THREE.MeshBasicMaterial({ map: textTex('Arthemii Ionaere', { size: 150, w: 1600, h: 300, weight: 300, color: '#ffffff', sub: L.welcome, subColor: '#b9a8ff' }), transparent: true, depthWrite: false }));
   scene.add(title);
-  buildRoom();   // no star dots: only the works and their reflections
+  buildRoom();   // prism view: no star dots, only the works and their reflections
+  applyMode();
   // Start just outside the cloud of works, looking into it
   camera.position.set(0, 0, Math.min(RADIUS + 7, ROOM_IN - 1));
 }
@@ -610,6 +755,7 @@ const ray = new THREE.Raycaster();
 const mouse = { x: 0, y: 0, in: false };
 const ndc = new THREE.Vector2();
 function pick(x, y) {
+  if (mode === 'kaleido') [x, y] = kalFold(x, y);
   ndc.set((x / innerWidth) * 2 - 1, -(y / innerHeight) * 2 + 1);
   ray.setFromCamera(ndc, camera);
   ray.far = 16;
@@ -988,10 +1134,21 @@ function tick() {
     camera.position.addScaledVector(vel, dt);
   }
   if (tour || focus) { lookYaw = yaw; lookPitch = pitch; }
-  // stay inside the glass prism
-  const cp = camera.position, hr = Math.hypot(cp.x, cp.z);
-  if (hr > ROOM_IN) { cp.x *= ROOM_IN / hr; cp.z *= ROOM_IN / hr; }
-  cp.y = Math.max(-ROOM_H + 1.8, Math.min(ROOM_H + ROOM_R * 0.25, cp.y));
+  // prism view: stay inside the glass prism; cosmos and kaleidoscope: stay near the works.
+  // Coming back from outside (after switching the view) is a soft glide, not a jump.
+  const cp = camera.position, soft = 1 - Math.pow(0.02, dt);
+  if (mode === 'prism') {
+    const hr = Math.hypot(cp.x, cp.z), y = Math.max(-ROOM_H + 1.8, Math.min(ROOM_H + ROOM_R * 0.25, cp.y));
+    const k = hr > ROOM_IN ? ROOM_IN / hr : 1;
+    const out = hr > ROOM_IN + 0.5 || Math.abs(y - cp.y) > 0.5;
+    if (out) { cp.x += (cp.x * k - cp.x) * soft; cp.z += (cp.z * k - cp.z) * soft; cp.y += (y - cp.y) * soft; }
+    else { cp.x *= k; cp.z *= k; cp.y = y; }
+  } else {
+    const maxR = RADIUS + 28, r = cp.length();
+    if (r > maxR + 0.5) cp.multiplyScalar(1 + (maxR / r - 1) * soft);
+    else if (r > maxR) cp.multiplyScalar(maxR / r);
+  }
+  if (mode === 'kaleido') kalRot += dt * KAL_TURN;
 
   // works drift a little and always turn their face to you
   const t = now * 0.001;
@@ -1010,7 +1167,7 @@ function tick() {
   idleCheck(now);
   updateReflections();
   adaptQuality(dt);
-  renderer.render(scene, camera);
+  present();
   requestAnimationFrame(tick);
 }
 
@@ -1029,7 +1186,7 @@ fetch('content.json', { cache: 'no-cache' })
   .then(build)
   .then(() => {
     stream(performance.now() + 300);
-    renderer.render(scene, camera);
+    present();
     requestAnimationFrame(tick);
     // Straight into space: no start screen
     el.focus();
