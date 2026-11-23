@@ -430,8 +430,9 @@ function updateReflections() {
    prism   — inside the huge mirror-faceted glass prism (the works and their reflections)
    cosmos  — the open black cosmos with stars and a faint haze, as the space first was
    kaleido — a three-mirror kaleidoscope: the view is folded into a triangle and mirrored in its three sides
-   fractal — the kaleidoscope as a fractal: in the middle of every triangle sits a smaller kaleidoscope, in its middle
-             a smaller one again, endlessly, and the view slowly dives into it */
+   fractal — the kaleidoscope as a fractal you fly into: every corner of the triangle holds the whole kaleidoscope
+             again, twice smaller, and the view flies straight on into one corner, level after level, without end;
+             each new level shows another part of the works, so the content keeps changing */
 const MODES = ['prism', 'cosmos', 'kaleido', 'fractal'];
 const kalLike = m => m === 'kaleido' || m === 'fractal';
 const MODE_NAMES = {
@@ -512,9 +513,9 @@ MODES.forEach((m, i) => {
 const KAL_IN = isTouch ? 0.25 : 0.2;   // inradius of the triangle, as a share of the shorter side of the screen (a bit larger on phones)
 const KAL_TURN = 0.018;      // radians per second
 const KAL_FOV = 100;         // the wider lens that films the picture inside the mirrors
-const KAL_DIVE = 16;         // fractal: seconds for the view to dive one level deeper (everything grows twice as large)
+const KAL_DIVE = 10;         // fractal: seconds to fly one level deeper (everything grows twice as large)
 const kalCam = new THREE.PerspectiveCamera(KAL_FOV, 1, 0.05, 420);
-let kal = null, kalRot = 0, kalZoom = 0;
+let kal = null, kalRot = 0, kalZoom = 0, kalDive = 0;
 const kalSize = new THREE.Vector2();
 function ensureKal() {
   renderer.getDrawingBufferSize(kalSize);
@@ -522,18 +523,19 @@ function ensureKal() {
     const rt = new THREE.WebGLRenderTarget(kalSize.x, kalSize.y, { type: THREE.HalfFloatType, samples: isTouch ? 2 : 4 });
     const mat = new THREE.ShaderMaterial({
       uniforms: { tDiffuse: { value: rt.texture }, res: { value: new THREE.Vector2() }, r: { value: 100 }, rot: { value: 0 },
-        frac: { value: 0 }, zoom: { value: 0 }, px: { value: 1 } },
+        frac: { value: 0 }, zoom: { value: 0 }, cyc: { value: 0 }, px: { value: 1 } },
       vertexShader: 'void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }',
       fragmentShader: `
         uniform sampler2D tDiffuse; uniform vec2 res; uniform float r; uniform float rot;
-        uniform float frac; uniform float zoom; uniform float px;
+        uniform float frac; uniform float zoom; uniform float cyc; uniform float px;
         vec2 turn(vec2 v, float a) { float c = cos(a), s = sin(a); return vec2(c * v.x - s * v.y, s * v.x + c * v.y); }
         void main() {
           vec2 p = turn(gl_FragCoord.xy - 0.5 * res, -rot);
           float unit = 1.0;   // one screen pixel, measured in the current level
-          // fractal: dive in — after one full dive the picture is twice as large and half a turn round, which is
-          // exactly the next level, so the dive never ends
-          if (frac > 0.5) { float z = exp2(zoom); p = turn(p, -3.14159265 * zoom) / z; unit = 1.0 / z; }
+          // fractal: the middle of the screen is the top corner of the triangle and the view flies straight into it.
+          // After one level everything is twice as large, which is exactly the next level, so the flight never ends.
+          vec2 V = vec2(0.0, 2.0 * r);
+          if (frac > 0.5) { float z = exp2(zoom); p = (gl_FragCoord.xy - 0.5 * res) / z + V; unit = 1.0 / z; }
           const vec2 N0 = vec2(0.0, -1.0), N1 = vec2(0.8660254, 0.5), N2 = vec2(-0.8660254, 0.5);
           float n = 0.0;
           for (int i = 0; i < 48; i++) {
@@ -544,17 +546,23 @@ function ensureKal() {
             n += 1.0;
           }
           float edge = 1e6, depth = 0.0;
-          if (frac > 0.5) {
-            // the middle quarter of the triangle (the upside-down one between the side midpoints) holds the whole
-            // kaleidoscope again, twice smaller and turned half round — and so on inside it
-            for (int d = 0; d < 10; d++) {
-              float e = max(dot(p, -N0), max(dot(p, -N1), dot(p, -N2))) - 0.5 * r;
-              edge = min(edge, abs(e) / unit);
-              if (e > 0.0) break;
-              p = -2.0 * p; unit *= 2.0; depth += 1.0;
-            }
-          }
           vec2 uv = (turn(p, rot) + 0.5 * res) / res;
+          if (frac > 0.5) {
+            // the top quarter of the triangle (above the line between the side midpoints) holds the whole
+            // kaleidoscope again, twice smaller — and so on, deeper and deeper into the corner
+            for (int d = 0; d < 16; d++) {
+              float e = p.y - 0.5 * r;
+              edge = min(edge, abs(e) / unit);
+              if (e < 0.0) break;
+              p = 2.0 * p - V; unit *= 2.0; depth += 1.0;
+            }
+            // every level (counted from the very start of the flight) shows the works differently:
+            // the triangle turned and mirrored another way, so new levels keep bringing new pictures
+            float L = depth + cyc;
+            vec2 q = turn(p, 2.0943951 * mod(L, 3.0));
+            if (mod(L, 2.0) > 0.5) q.x = -q.x;
+            uv = (q + 0.5 * res) / res;
+          }
           vec3 c = texture2D(tDiffuse, uv).rgb * pow(0.99, n);
           // thin brass lines between the levels, like the came between pieces of stained glass
           c = mix(c, vec3(0.86, 0.72, 0.46), (1.0 - smoothstep(0.35 * px, 1.25 * px, edge)) * 0.7);
@@ -573,22 +581,20 @@ function ensureKal() {
   const u = kal.mat.uniforms;
   u.res.value.copy(kalSize);
   u.r.value = KAL_IN * Math.min(kalSize.x, kalSize.y);
-  u.rot.value = kalRot;
+  u.rot.value = mode === 'fractal' ? 0 : kalRot;   // the fractal flies straight on: no turning
   u.frac.value = mode === 'fractal' ? 1 : 0;
   u.zoom.value = kalZoom;
+  u.cyc.value = Math.floor(kalDive);
   u.px.value = kalSize.x / innerWidth;
 }
 // the same mirroring for a point on the screen (CSS pixels), so the reflected works can be clicked too
 function kalFold(x, y) {
   const w = innerWidth, h = innerHeight, r = KAL_IN * Math.min(w, h);
-  const c = Math.cos(-kalRot), s = Math.sin(-kalRot);
+  const frac = mode === 'fractal', rot = frac ? 0 : kalRot;
+  const c = Math.cos(-rot), s = Math.sin(-rot);
   let px = x - w / 2, py = h / 2 - y;
   let qx = c * px - s * py, qy = s * px + c * py;
-  if (mode === 'fractal') {
-    const z = Math.pow(2, kalZoom), a = -Math.PI * kalZoom, ca = Math.cos(a), sa = Math.sin(a);
-    const tx = (ca * qx - sa * qy) / z, ty = (sa * qx + ca * qy) / z;
-    qx = tx; qy = ty;
-  }
+  if (frac) { const z = Math.pow(2, kalZoom); qx /= z; qy = qy / z + 2 * r; }
   const N = [[0, -1], [0.8660254, 0.5], [-0.8660254, 0.5]];
   for (let i = 0; i < 48; i++) {
     let m = 0, k = -1;
@@ -596,12 +602,16 @@ function kalFold(x, y) {
     if (k < 0) break;
     qx -= 2 * m * N[k][0]; qy -= 2 * m * N[k][1];
   }
-  if (mode === 'fractal') {
-    for (let d = 0; d < 10; d++) {
-      const e = Math.max(qy, -0.8660254 * qx - 0.5 * qy, 0.8660254 * qx - 0.5 * qy) - 0.5 * r;
-      if (e > 0) break;
-      qx *= -2; qy *= -2;
+  if (frac) {
+    let depth = 0;
+    for (let d = 0; d < 16; d++) {
+      if (qy < 0.5 * r) break;
+      qx = 2 * qx; qy = 2 * qy - 2 * r; depth++;
     }
+    const L = depth + Math.floor(kalDive), a = 2.0943951 * (L % 3), ca = Math.cos(a), sa = Math.sin(a);
+    let tx = ca * qx - sa * qy, ty = sa * qx + ca * qy;
+    if (L % 2) tx = -tx;
+    return [w / 2 + tx, h / 2 - ty];
   }
   const c2 = Math.cos(kalRot), s2 = Math.sin(kalRot);
   px = c2 * qx - s2 * qy; py = s2 * qx + c2 * qy;
@@ -1226,8 +1236,8 @@ function tick() {
     if (r > maxR + 0.5) cp.multiplyScalar(1 + (maxR / r - 1) * soft);
     else if (r > maxR) cp.multiplyScalar(maxR / r);
   }
-  if (kalLike(mode)) kalRot += dt * KAL_TURN;
-  if (mode === 'fractal') kalZoom = (kalZoom + dt / KAL_DIVE) % 1;
+  if (mode === 'kaleido') kalRot += dt * KAL_TURN;
+  if (mode === 'fractal') { kalDive += dt / KAL_DIVE; kalZoom = kalDive % 1; }
 
   // works drift a little and always turn their face to you
   const t = now * 0.001;
