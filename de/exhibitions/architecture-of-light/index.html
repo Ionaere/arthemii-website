@@ -76,6 +76,26 @@
         .ex-photos > div { border-radius: var(--radius-md); overflow: hidden; background: var(--bg-alt); }
         .ex-photos img { width: 100%; display: block; }
         .exhibition-block__stats { margin-bottom: var(--spacing-lg); }
+        /* Exhibition name on top in the Ionaere Studio style; the photo slides under its lower half */
+        .event__title.event__title--wm {
+            position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: clamp(0.8rem, 2.4vw, 2.4rem);
+            font-family: 'Italiana', var(--font-serif); font-weight: 400; text-transform: uppercase; text-align: center;
+            font-size: clamp(1.4rem, 3.1vw, 3rem); line-height: 1.15; letter-spacing: 0.22em;
+            color: #fff; mix-blend-mode: difference;
+            margin: var(--spacing-md) 0 -0.62em; padding: 0 0.2em;
+        }
+        .event__title.event__title--wm > span { margin-right: -0.22em; }
+        .event__title.event__title--wm::before, .event__title.event__title--wm::after {
+            content: ""; flex: 1 1 0; min-width: 18px; max-width: 160px; height: 1px; background: #fff;
+        }
+        .event__hero { position: relative; z-index: 1; }
+        main:has(.event__title--wm) { isolation: isolate; background: var(--bg); }
+        @media (min-width: 641px) { .event__title.event__title--wm { width: min(94vw, 1320px); left: 50%; translate: -50% 0; } }
+        @media (max-width: 640px) {
+            .event__title.event__title--wm { font-size: clamp(1.05rem, 5.6vw, 1.7rem); letter-spacing: 0.16em; gap: 0.5rem; margin-bottom: -0.58em; }
+            .event__title.event__title--wm > span { margin-right: -0.16em; }
+            .event__title.event__title--wm::before, .event__title.event__title--wm::after { max-width: 24px; }
+        }
     </style>
     <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "ExhibitionEvent", "name": "Architecture of Light: Form and Reflections of Reality", "description": "In der Ausstellung „Architecture of Light: Form and Reflections of Reality“ dienen architektonische Formen aus Farbglas dazu, die physikalischen Eigenschaften des Lichts sichtbar zu machen — Brechung, Reflexion und Dichroismus. Die Ausstellung zeigt, wie Veränderungen in Struktur und Form von Glasobjekten die optischen Effekte beeinflussen, die durch das Zusammenspiel von Licht und Material entstehen. Jedes Werk zeigt eine einzigartige Kombination architektonischer freier Formen, die die Prinzipien der optischen Physik erkunden. Asymmetrische Formen und Farbglas ermöglichen komplexe visuelle Effekte, die Lichtstrahlen zu unerwarteten Mustern und Formen reflektieren und streuen. Die Ausstellung versteht sich als eigene innere Erkundung und als Demonstration, wie Kunstobjekte mit dem Raum interagieren können. Sie bietet die Gelegenheit, optische Phänomene durch das Prisma künstlerischer Wahrnehmung zu betrachten und Ästhetik mit Wissenschaft zu verbinden — auf der Suche nach neuen visuellen und architektonischen Ausdrucksformen. Eine Ausstellung über das Zusammenspiel von Licht und Farbglas, die gemeinsam eine visuell-optische Architektur erschaffen. Gezeigt werden sechs kinetische Skulpturen aus dem Sommer 2024, die Brechung, Reflexion und Beugung des Lichts nutzen. 35 Werke in 7 Sälen vereinen statische und kinetische Skulpturen sowie Glasinstallationen.", "url": "https://ionaere.com/de/exhibitions/architecture-of-light/", "image": "https://ionaere.com/img/opt/2024-12-IMG_9373-Enhanced-NR-scaled-1600.jpg", "location": {"@type": "Place", "name": "Bashmet Centre"}, "organizer": {"@type": "Person", "@id": "https://ionaere.com/#artist", "name": "Arthemii Ionaere", "url": "https://ionaere.com/"}}
@@ -129,10 +149,10 @@
         <section class="section">
             <div class="container event">
                 <a href="../../#exhibitions" class="event__back">← Zurück zu den Ausstellungen</a>
+                <h1 class="event__title event__title--wm"><span>Architecture of Light: Form and Reflections of Reality</span></h1>
                 <div class="event__hero"><img decoding="async" src="../../../img/opt/2024-12-IMG_9373-Enhanced-NR-scaled-1600.jpg" alt="Architecture of Light — Architecture of Light: Form and Reflections of Reality, Arthemii Ionaere"></div>
                 <div class="exhibition-block__date">01.11.2024 — 03.11.2024</div>
                 <span class="exhibition-block__type">Einzelausstellung</span>
-                <h1 class="event__title">Architecture of Light: Form and Reflections of Reality</h1>
                 <div class="event__location">Bashmet Centre</div>
                 <p class="ex-desc">In der Ausstellung „Architecture of Light: Form and Reflections of Reality“ dienen architektonische Formen aus Farbglas dazu, die physikalischen Eigenschaften des Lichts sichtbar zu machen — Brechung, Reflexion und Dichroismus. Die Ausstellung zeigt, wie Veränderungen in Struktur und Form von Glasobjekten die optischen Effekte beeinflussen, die durch das Zusammenspiel von Licht und Material entstehen. Jedes Werk zeigt eine einzigartige Kombination architektonischer freier Formen, die die Prinzipien der optischen Physik erkunden. Asymmetrische Formen und Farbglas ermöglichen komplexe visuelle Effekte, die Lichtstrahlen zu unerwarteten Mustern und Formen reflektieren und streuen. Die Ausstellung versteht sich als eigene innere Erkundung und als Demonstration, wie Kunstobjekte mit dem Raum interagieren können. Sie bietet die Gelegenheit, optische Phänomene durch das Prisma künstlerischer Wahrnehmung zu betrachten und Ästhetik mit Wissenschaft zu verbinden — auf der Suche nach neuen visuellen und architektonischen Ausdrucksformen. Eine Ausstellung über das Zusammenspiel von Licht und Farbglas, die gemeinsam eine visuell-optische Architektur erschaffen. Gezeigt werden sechs kinetische Skulpturen aus dem Sommer 2024, die Brechung, Reflexion und Beugung des Lichts nutzen. 35 Werke in 7 Sälen vereinen statische und kinetische Skulpturen sowie Glasinstallationen.</p>
                 <div class="exhibition-block__stats">
