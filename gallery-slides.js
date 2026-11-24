@@ -18,7 +18,7 @@
     var desk = window.innerWidth >= 900;
     var n = 0;
     slides.forEach(function (s) {
-      var side = desk && (parseFloat(s.style.getPropertyValue('--r')) || 1) < WIDE;
+      var side = desk && ((parseFloat(s.style.getPropertyValue('--r')) || 1) < WIDE || s.hasAttribute('data-side'));   // data-side: keep a wide photo beside its text
       var i = side ? n++ : n;
       var frame = s.querySelector('.gslide__frame');
       if (!frame) return;
