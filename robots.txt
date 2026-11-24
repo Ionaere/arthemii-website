@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /press/
 
 Sitemap: https://ionaere.com/sitemap.xml
