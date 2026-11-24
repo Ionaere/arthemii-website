@@ -523,5 +523,6 @@ window.I18N_DATA["ko"] = {
   "Drawing is where it all began: Arthemii first started out by drawing. In essence, these drawings are graphics, and they pair naturally with the stained-glass technique — stained glass can be made directly from them. But, as it turned out, with their clear contours and precise forms they can also be visualised in other fields.": "모든 것은 드로잉에서 시작되었습니다. Arthemii는 처음에 그림을 그리는 것으로 출발했습니다. 이 드로잉들은 본질적으로 그래픽이며 스테인드글라스 기법과 자연스럽게 어울립니다 — 이를 바탕으로 바로 스테인드글라스를 만들 수 있습니다. 그런데 뚜렷한 윤곽과 명확한 형태 덕분에 다른 분야에서도 시각화할 수 있다는 것이 밝혀졌습니다.",
   "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "이 드로잉들은 훗날 그의 건축의 원천이 되었습니다. 하나하나가 정밀한 도식이며, 인공지능이 이를 읽어 건축, 주얼리 및 다른 형태로 바꿉니다.",
   "Collected here are Arthemii’s projects, ranging from stained glass to sculpture on a metal frame. He is constantly looking for new paths and new projects. A new project will be ready soon: metal frames that can be assembled into one whole, taken apart and installed in any way. It will be presented shortly.": "이곳에는 스테인드글라스부터 금속 프레임 조각까지 Arthemii의 프로젝트가 모여 있습니다. 그는 늘 새로운 길과 새로운 프로젝트를 찾고 있습니다. 곧 새로운 프로젝트가 완성됩니다. 하나로 조립하고, 분해하고, 원하는 방식으로 설치할 수 있는 금속 프레임으로 이루어진 작업이며 곧 공개될 예정입니다.",
-  "Sculptures, exhibitions, the studio, installations, theatre and more": "조각, 전시, 작업실, 설치 작품, 연극 등"
+  "Sculptures, exhibitions, the studio, installations, theatre and more": "조각, 전시, 작업실, 설치 작품, 연극 등",
+  "See more": "더 보기"
 };

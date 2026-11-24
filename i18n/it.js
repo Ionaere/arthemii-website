@@ -573,5 +573,6 @@ window.I18N_DATA["it"] = {
   "Concept 09": "Concetto 09",
   "Free line drawing No. 29": "Disegno a linea libera n. 29",
   "Concept 11": "Concetto 11",
-  "Concept 12": "Concetto 12"
+  "Concept 12": "Concetto 12",
+  "See more": "Vedi di più"
 };
