@@ -16,6 +16,10 @@
   // Only for a real mouse or trackpad: phones and tablets keep their own (already smooth) scrolling
   if (!mq('(hover: hover) and (pointer: fine)')) return;
   if (mq('(any-pointer: coarse)') && !mq('(any-hover: hover)')) return;
+  // Safari (and every browser on iPhone/iPad, all WebKit): its own wheel and trackpad scrolling is
+  // already smooth and runs off the main thread, while a scroll moved by script on every frame is
+  // snapped to whole pixels and capped at 60 fps there, which looks jerky. Leave it to Safari.
+  if (/Apple/.test(navigator.vendor || '')) return;
 
   var EASE = 0.11;       // share of the remaining distance covered per frame (60 fps)
   var target = 0, current = 0, running = false, last = 0, disabled = false;
