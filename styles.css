@@ -2062,6 +2062,10 @@
             column-gap: clamp(2rem, 4vw, 4.5rem);
         }
         .gp--side .photo-view { width: min(62vw, calc(var(--gp-h) * var(--r, 0.8))); }
+        /* the frame is exactly as wide as the photo at the height the photo is allowed to have
+           (otherwise tall photos left an empty grey strip on the right) */
+        .gp--side .photo-view { width: min(62vw, calc(min(var(--gp-h), 78svh, 820px) * var(--r, 0.8))); }
+        .gp--side .photo-view.is-tall { width: min(62vw, calc(min(var(--gp-h), 64svh, 680px) * var(--r, 0.8))); }
         .gp--side .gp-text { max-width: 520px; }
         .gp--side .gp-title { font-size: clamp(1.6rem, 3.2vw, 3.6rem); }
         .gp--side.gp--text-left { grid-template-columns: minmax(0, 1fr) auto; }
