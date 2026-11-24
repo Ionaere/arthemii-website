@@ -1744,8 +1744,8 @@
         }
 
         /* "Works" is no longer in the top navigation (header and mobile menu); the footer keeps it */
-        .header__link[href$="works/"],
-        .mobile-nav__link[href$="works/"] { display: none; }
+        .header__link[href$="works/"]:not([href$="artworks/"]),
+        .mobile-nav__link[href$="works/"]:not([href$="artworks/"]) { display: none; }
 
         /* ===== Page name as a big wordmark, like IONAERE STUDIO on the home page:
            wide-tracked Italiana capitals with side rules; drops in from above when the
@@ -2109,7 +2109,7 @@
         }
         /* Exhibitions and Workshop are in the top menu too: switch to the menu button a little earlier,
            so the links never run into the logo */
-        @media (max-width: 1119px) {
+        @media (max-width: 1339px) {
             .header__nav { display: none; }
             .header__menu-btn { display: block; }
         }
