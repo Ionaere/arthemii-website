@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Todas las obras de Arthemii Ionaere, artista del vidrio en Berlín, de un vistazo: esculturas, objetos de luz e instalaciones.">
+    <meta name="theme-color" content="#fafafa">
+    <title>Obras — Todas las obras de Arthemii Ionaere, Berlín</title>
+    <link rel="canonical" href="https://ionaere.com/es/artworks/">
+    <link rel="alternate" hreflang="en" href="https://ionaere.com/artworks/">
+    <link rel="alternate" hreflang="de" href="https://ionaere.com/de/artworks/">
+    <link rel="alternate" hreflang="es" href="https://ionaere.com/es/artworks/">
+    <link rel="alternate" hreflang="fr" href="https://ionaere.com/fr/artworks/">
+    <link rel="alternate" hreflang="it" href="https://ionaere.com/it/artworks/">
+    <link rel="alternate" hreflang="x-default" href="https://ionaere.com/artworks/">
+    <meta property="og:title" content="Obras — Todas las obras de Arthemii Ionaere, Berlín">
+    <meta property="og:image" content="https://ionaere.com/../img/opt/2024-12-Arthemii-ionaere-lamp-fgj-1600.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Italiana&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../img/2024-05-cropped-Screenshot-2024-05-25-at-06.54.34-32x32.jpg" sizes="32x32">
+    <link rel="stylesheet" href="../../styles.css?v=20261124aw">
+    <style>
+        .header { transform: none !important; animation: none !important; }
+        .reveal, .video-card, .work-card, .philosophy-card, .exhibition-block, .tech-block {
+            opacity: 1 !important; transform: none !important; transition: none !important;
+        }
+        .hero__eyebrow, .hero__title, .hero__subtitle, .hero__desc, .hero__actions, .hero__image {
+            opacity: 1 !important; transform: none !important; animation: none !important;
+        }
+
+        /* ===== Artworks: every Gallery work as a thumbnail, 4 in a row ===== */
+        .aw-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1rem, 2.4vw, 2.25rem) clamp(0.75rem, 1.8vw, 1.75rem); margin-top: var(--spacing-xl, 3rem); }
+        .aw-item { display: flex; flex-direction: column; align-items: center; text-align: center; color: inherit; text-decoration: none; min-width: 0; }
+        .aw-item__img { display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 1; padding: 7%; box-sizing: border-box; background: #f1f1f1; border-radius: 10px; overflow: hidden; }
+        .aw-item__img picture { display: contents; }
+        .aw-item__img img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+        .aw-item:hover .aw-item__img img, .aw-item:focus-visible .aw-item__img img { transform: scale(1.04); }
+        .aw-item__name { margin-top: 0.85rem; font-family: 'Italiana', 'Cormorant Garamond', Georgia, serif; font-size: clamp(0.8rem, 1vw, 0.98rem); letter-spacing: 0.18em; text-transform: uppercase; line-height: 1.35; color: #111; overflow-wrap: anywhere; }
+        .aw-item__year { margin-top: 0.3rem; font-size: 0.72rem; letter-spacing: 0.3em; color: #9a9a9a; }
+        @media (max-width: 900px) { .aw-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 640px) { .aw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .aw-item__name { letter-spacing: 0.12em; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="../" class="header__logo">Ionaere Studio</a>
+        <nav class="header__nav">
+            <a href="../artworks/" class="header__link">Obras</a>
+            <a href="../about/" class="header__link">Acerca de</a>
+            <a href="../works/" class="header__link">Obras</a>
+            <a href="../projects/" class="header__link">Proyectos</a>
+            <a href="../exhibitions/" class="header__link">Exposiciones</a>
+            <a href="../architecture/" class="header__link">Arquitectura</a>
+            <a href="../drawings/" class="header__link">Dibujos</a>
+            <a href="../working-moments/" class="header__link">Taller</a>
+            <a href="../videos/" class="header__link">Vídeos</a>
+            <a href="../gallery/" class="header__link">Galería</a>
+            <a href="../contact/" class="header__link">Contacto</a>
+            <div class="header__lang" role="group" aria-label="Language">
+                <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+                <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+                <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+                <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+                <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+            </div>
+        </nav>
+        <button class="header__menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span></button>
+    </header>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close"></button>
+        <a href="../artworks/" class="mobile-nav__link">Obras</a>
+        <a href="../about/" class="mobile-nav__link">Acerca de</a>
+        <a href="../works/" class="mobile-nav__link">Obras</a>
+        <a href="../projects/" class="mobile-nav__link">Proyectos</a>
+        <a href="../exhibitions/" class="mobile-nav__link">Exposiciones</a>
+        <a href="../architecture/" class="mobile-nav__link">Arquitectura</a>
+        <a href="../drawings/" class="mobile-nav__link">Dibujos</a>
+        <a href="../working-moments/" class="mobile-nav__link">Taller</a>
+        <a href="../videos/" class="mobile-nav__link">Vídeos</a>
+        <a href="../gallery/" class="mobile-nav__link">Galería</a>
+        <a href="../contact/" class="mobile-nav__link">Contacto</a>
+        <div class="header__lang" role="group" aria-label="Language">
+            <button type="button" class="header__lang-btn is-active" data-lang="en" aria-label="English">EN</button>
+            <button type="button" class="header__lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
+            <button type="button" class="header__lang-btn" data-lang="es" aria-label="Español">ES</button>
+            <button type="button" class="header__lang-btn" data-lang="fr" aria-label="Français">FR</button>
+            <button type="button" class="header__lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+        </div>
+    </div>
+    <main style="padding-top:calc(72px + 2rem)">
+        <section class="section" id="artworks">
+            <div class="container">
+                <div class="page-wordmark"><div class="page-wordmark__inner"><span class="page-wordmark__rule" aria-hidden="true"></span><div class="page-wordmark__name">Obras</div><span class="page-wordmark__rule" aria-hidden="true"></span></div></div>
+                <header class="section__header reveal" style="text-align:center;max-width:760px;margin-left:auto;margin-right:auto">
+                    <h1 class="section__title">Todas las obras</h1>
+                    <p class="section__desc" style="margin-left:auto;margin-right:auto">Todas las obras de la Galería de un vistazo. Abre una para verla completa, con su historia y detalles.</p>
+                </header>
+                <div class="aw-grid">
+                    <a class="aw-item" href="../gallery/glass-lamp-sculpture/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Arthemii-ionaere-lamp-fgj-800.webp?v=8 800w, ../../../img/opt/2024-12-Arthemii-ionaere-lamp-fgj-1600.webp?v=8 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Arthemii-ionaere-lamp-fgj-1600.jpg?v=8" alt="Frame Sculpting · 2021 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Frame Sculpting</span><span class="aw-item__year">2021</span></a>
+                    <a class="aw-item" href="../gallery/colored-glass-sculpture/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/glass-sculpting-2020-800.webp 800w, ../../../img/opt/glass-sculpting-2020-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/glass-sculpting-2020-1600.jpg" alt="Epsilon S · 2020 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Epsilon S</span><span class="aw-item__year">2020</span></a>
+                    <a class="aw-item" href="../gallery/process-documentation/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Screenshot-2024-12-24-at-01.32.58-800.webp 800w, ../../../img/opt/2024-12-Screenshot-2024-12-24-at-01.32.58-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Screenshot-2024-12-24-at-01.32.58-1600.jpg" alt="Acuario de vitral · 2022 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Acuario de vitral</span><span class="aw-item__year">2022</span></a>
+                    <a class="aw-item" href="../gallery/glass-composition-study/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Screenshot-2024-12-24-at-01.05.09-800.webp?v=2 800w, ../../../img/opt/2024-12-Screenshot-2024-12-24-at-01.05.09-1600.webp?v=2 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Screenshot-2024-12-24-at-01.05.09-1600.jpg?v=2" alt="Glass Kaleidoscope (36 paneles) — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Glass Kaleidoscope (36 paneles)</span></a>
+                    <a class="aw-item" href="../gallery/light-installation-2/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Screenshot-2024-12-24-at-01.20.32-800.webp 800w, ../../../img/opt/2024-12-Screenshot-2024-12-24-at-01.20.32-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Screenshot-2024-12-24-at-01.20.32-1600.jpg" alt="Kinetic Prizm — vista de la instalación · 2024 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Kinetic Prizm — vista de la instalación</span><span class="aw-item__year">2024</span></a>
+                    <a class="aw-item" href="../gallery/light-study/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-IMG_9352-Enhanced-NR-scaled-800.webp 800w, ../../../img/opt/2024-12-IMG_9352-Enhanced-NR-scaled-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-IMG_9352-Enhanced-NR-scaled-1600.jpg" alt="Architecture of Light — vista de la exposición — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Architecture of Light — vista de la exposición</span></a>
+                    <a class="aw-item" href="../gallery/abstract-glass-composition/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Arthemii-Ionaere-dsaaiHHk1-800.webp 800w, ../../../img/opt/2024-12-Arthemii-Ionaere-dsaaiHHk1-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Arthemii-Ionaere-dsaaiHHk1-1600.jpg" alt="Composición abstracta de vidrio · 2020 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Composición abstracta de vidrio</span><span class="aw-item__year">2020</span></a>
+                    <a class="aw-item" href="../gallery/workshop-scene/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-02-IMG_3762-800.webp?v=4 800w, ../../../img/opt/2024-02-IMG_3762-1600.webp?v=4 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-02-IMG_3762-1600.jpg?v=4" alt="Albert Hofmann · 2022 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Albert Hofmann</span><span class="aw-item__year">2022</span></a>
+                    <a class="aw-item" href="../gallery/huweado-artwork/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-05-IMG_7517-800.webp 800w, ../../../img/opt/2024-05-IMG_7517-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-05-IMG_7517-1600.jpg" alt="Glass Parts n.º 3 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Glass Parts n.º 3</span></a>
+                    <a class="aw-item" href="../gallery/glass-composition/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-IMG_9199-Enhanced-NR-scaled-800.webp 800w, ../../../img/opt/2024-12-IMG_9199-Enhanced-NR-scaled-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-IMG_9199-Enhanced-NR-scaled-1600.jpg" alt="Kinetic Prizm n.º 3 · 2024 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Kinetic Prizm n.º 3</span><span class="aw-item__year">2024</span></a>
+                    <a class="aw-item" href="../gallery/glass-depth-study/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-arthemii-ionaere-professional-camera-depth__77285-800.webp?v=4 800w, ../../../img/opt/2024-12-arthemii-ionaere-professional-camera-depth__77285-1600.webp?v=4 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-arthemii-ionaere-professional-camera-depth__77285-1600.jpg?v=4" alt="Vitral abstracto · 2023 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Vitral abstracto</span><span class="aw-item__year">2023</span></a>
+                    <a class="aw-item" href="../gallery/stained-glass-composition/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-02-IMG_1539-800.webp?v=2 800w, ../../../img/opt/2024-02-IMG_1539-1600.webp?v=2 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-02-IMG_1539-1600.jpg?v=2" alt="Frame Sculpting · 2020 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Frame Sculpting</span><span class="aw-item__year">2020</span></a>
+                    <a class="aw-item" href="../gallery/prism-sculpture/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Arthemii-Ionaere-prizmas-800.webp 800w, ../../../img/opt/2024-12-Arthemii-Ionaere-prizmas-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Arthemii-Ionaere-prizmas-1600.jpg" alt="Falling Shadows en Enter the Void · 2023 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Falling Shadows en Enter the Void</span><span class="aw-item__year">2023</span></a>
+                    <a class="aw-item" href="../gallery/huerrytop-sculpture/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Arthemii-Ionaere-Huerrytop-800.webp?v=2 800w, ../../../img/opt/2024-12-Arthemii-Ionaere-Huerrytop-1600.webp?v=2 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Arthemii-Ionaere-Huerrytop-1600.jpg?v=2" alt="Glass Parts n.º 2 · 2021 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Glass Parts n.º 2</span><span class="aw-item__year">2021</span></a>
+                    <a class="aw-item" href="../gallery/fish-lamp/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.20-800.webp?v=3 800w, ../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.20-1600.webp?v=3 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../img/opt/2024-05-Screenshot-2024-05-13-at-21.58.20-1600.jpg?v=3" alt="Fish Lamp · 2023 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Fish Lamp</span><span class="aw-item__year">2023</span></a>
+                    <a class="aw-item" href="../gallery/exhibition-piece/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-05-IMG_7127-scaled-800.webp 800w, ../../../img/opt/2024-05-IMG_7127-scaled-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-05-IMG_7127-scaled-1600.jpg" alt="Epsilon Y · 2020 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Epsilon Y</span><span class="aw-item__year">2020</span></a>
+                    <a class="aw-item" href="../gallery/sculpture-detail/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-05-98C1A378-F05B-44F6-A2ED-2F142955EE0F-scaled-800.webp?v=4 800w, ../../../img/opt/2024-05-98C1A378-F05B-44F6-A2ED-2F142955EE0F-scaled-1600.webp?v=4 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-05-98C1A378-F05B-44F6-A2ED-2F142955EE0F-scaled-1600.jpg?v=4" alt="Crypto Whale · 2020 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Crypto Whale</span><span class="aw-item__year">2020</span></a>
+                    <a class="aw-item" href="../gallery/enhanced-glass-study/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-IMG_8977-Enhanced-NR-scaled-800.webp 800w, ../../../img/opt/2024-12-IMG_8977-Enhanced-NR-scaled-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-IMG_8977-Enhanced-NR-scaled-1600.jpg" alt="Kinetic Prizm n.º 1 · 2024 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Kinetic Prizm n.º 1</span><span class="aw-item__year">2024</span></a>
+                    <a class="aw-item" href="../gallery/light-installation-with-deep-colored-shadows/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Arthemii-Ionaere-visual-light-installation-with-deep-coloured-shado-scaled-800.webp 800w, ../../../img/opt/2024-12-Arthemii-Ionaere-visual-light-installation-with-deep-coloured-shado-scaled-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Arthemii-Ionaere-visual-light-installation-with-deep-coloured-shado-scaled-1600.jpg" alt="Composición de tres obras · 2023 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Composición de tres obras</span><span class="aw-item__year">2023</span></a>
+                    <a class="aw-item" href="../gallery/exhibition-view/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-05-IMG_7349-scaled-800.webp 800w, ../../../img/opt/2024-05-IMG_7349-scaled-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-05-IMG_7349-scaled-1600.jpg" alt="Enter the Void — jardín de invierno · 2023 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Enter the Void — jardín de invierno</span><span class="aw-item__year">2023</span></a>
+                    <a class="aw-item" href="../gallery/glass-and-shadow/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-05-IMG_7175-scaled-800.webp?v=3 800w, ../../../img/opt/2024-05-IMG_7175-scaled-1600.webp?v=3 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-05-IMG_7175-scaled-1600.jpg?v=3" alt="Glass Kaleidoscope (18 paneles) — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Glass Kaleidoscope (18 paneles)</span></a>
+                    <a class="aw-item" href="../gallery/glass-artwork-detail/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-02-06C52AD8-82B2-46BB-B951-3B6548D050B4-800.webp 800w, ../../../img/opt/2024-02-06C52AD8-82B2-46BB-B951-3B6548D050B4-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-02-06C52AD8-82B2-46BB-B951-3B6548D050B4-1600.jpg" alt="Frame Sculpting · 2018 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Frame Sculpting</span><span class="aw-item__year">2018</span></a>
+                    <a class="aw-item" href="../gallery/exhibition-installation/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-11-IMG_7791-800.webp 800w, ../../../img/opt/2024-11-IMG_7791-1600.webp 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-11-IMG_7791-1600.jpg" alt="Kinetic Prizm n.º 2 · 2024 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Kinetic Prizm n.º 2</span><span class="aw-item__year">2024</span></a>
+                    <a class="aw-item" href="../gallery/olymp-glass-sculpture/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Arthemii-Ionaere-olymp-800.webp?v=3 800w, ../../../img/opt/2024-12-Arthemii-Ionaere-olymp-1600.webp?v=3 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Arthemii-Ionaere-olymp-1600.jpg?v=3" alt="Olymp · 2020 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Olymp</span><span class="aw-item__year">2020</span></a>
+                    <a class="aw-item" href="../gallery/colored-glass-sculpture/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Arthemii-Ionaere-Coloured-glass-sculpture-scaled-800.webp?v=2 800w, ../../../img/opt/2024-12-Arthemii-Ionaere-Coloured-glass-sculpture-scaled-1600.webp?v=2 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Arthemii-Ionaere-Coloured-glass-sculpture-scaled-1600.jpg?v=2" alt="Epsilon S · 2020 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Epsilon S</span><span class="aw-item__year">2020</span></a>
+                    <a class="aw-item" href="../gallery/glass-installation/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-05-IMG_0179-scaled-800.webp?v=2 800w, ../../../img/opt/2024-05-IMG_0179-scaled-1600.webp?v=2 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-05-IMG_0179-scaled-1600.jpg?v=2" alt="Escultura experimental — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Escultura experimental</span></a>
+                    <a class="aw-item" href="../gallery/evening-studio-session/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-12-Screenshot-2024-12-24-at-18.57.04-800.webp?v=4 800w, ../../../img/opt/2024-12-Screenshot-2024-12-24-at-18.57.04-1600.webp?v=4 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-12-Screenshot-2024-12-24-at-18.57.04-1600.jpg?v=4" alt="Samurai · 2018 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Samurai</span><span class="aw-item__year">2018</span></a>
+                    <a class="aw-item" href="../gallery/colored-light/"><span class="aw-item__img"><picture><source type="image/webp" srcset="../../../img/opt/2024-05-IMG_7198-scaled-800.webp?v=4 800w, ../../../img/opt/2024-05-IMG_7198-scaled-1600.webp?v=4 1600w" sizes="(max-width: 640px) 46vw, 24vw"><img src="../../../img/opt/2024-05-IMG_7198-scaled-1600.jpg?v=4" alt="Sombras de dieciocho obras · 2023 — Arthemii Ionaere" loading="lazy" decoding="async"></picture></span><span class="aw-item__name">Sombras de dieciocho obras</span><span class="aw-item__year">2023</span></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__brand">Arthemii Ionaere</div>
+                <nav class="footer__nav">
+                    <a href="../about/" class="footer__link">Acerca de</a>
+                    <a href="../works/" class="footer__link">Obras</a>
+                    <a href="../exhibitions/" class="footer__link">Exposiciones</a>
+                    <a href="../gallery/" class="footer__link">Galería</a>
+                    <a href="../contact/" class="footer__link">Contacto</a>
+                </nav>
+                <div class="footer__contacts">
+                    <a class="footer__instagram" href="https://www.instagram.com/ionaerestudio/" target="_blank" rel="noopener" aria-label="Instagram @ionaerestudio">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="footerIgGradient" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset="0.05" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6.5" fill="url(#footerIgGradient)"/><rect x="5" y="5" width="14" height="14" rx="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="16.4" cy="7.6" r="1.05" fill="#fff"/></svg>
+                        <span>@ionaerestudio</span>
+                    </a>
+                    <a class="footer__email" href="mailto:info@ionaere.com">info@ionaere.com</a>
+                </div>
+                <div class="footer__copy">&copy; 2026 Arthemii Ionaere</div>
+            </div>
+        </div>
+    </footer>
+    <script>
+    var mb=document.getElementById("menuBtn"),mn=document.getElementById("mobileNav"),mc=document.getElementById("mobileNavClose");
+    if(mb&&mn)mb.onclick=function(){mn.classList.add("is-open")};
+    if(mc&&mn)mc.onclick=function(){mn.classList.remove("is-open")};
+    if(mn){var ls=mn.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].onclick=function(){mn.classList.remove("is-open")}};
+    var yts=document.querySelectorAll(".yt-placeholder");
+    for(var i=0;i<yts.length;i++){(function(el){
+        el.onclick=function(){
+            var id=this.getAttribute("data-yt");
+            var f=document.createElement("iframe");
+            f.src="https://www.youtube.com/embed/"+id+"?autoplay=1&mute=0&controls=1&rel=0";
+            f.allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+            f.allowFullscreen=true;
+            f.style.cssText="width:100%;height:100%;border:none";
+            this.parentNode.replaceChild(f,this);
+        };
+    })(yts[i])};
+    var vcs=document.querySelectorAll(".video-card");
+    for(var i=0;i<vcs.length;i++){(function(c){
+        var v=c.querySelector("video");if(!v)return;
+        c.onmouseenter=function(){v.play().catch(function(){})};
+        c.onmouseleave=function(){v.pause();v.currentTime=0};
+    })(vcs[i])};
+    window.addEventListener('load', function() {
+        document.querySelectorAll('.exhibition-block__desc').forEach(function(desc) {
+            var btn = desc.nextElementSibling;
+            if (!btn || !btn.classList.contains('exhibition-block__toggle')) return;
+            if (desc.scrollHeight > desc.clientHeight + 2) {
+                btn.classList.add('is-visible');
+            }
+            btn.addEventListener('click', function() {
+                var expanded = desc.classList.toggle('is-expanded');
+                btn.classList.toggle('is-open', expanded);
+                btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                btn.querySelector('.exhibition-block__toggle-label').textContent = expanded ? 'Show less' : 'Show more';
+            });
+        });
+    });
+    </script>
+    <script src="../../lightbox.js"></script>
+    <script src="../../smooth-scroll.js?v=20261124saf" defer></script>
+    <script src="../../i18n.js?v=20261124aw"></script>
+    <script src="../../page-wordmark.js?v=20261122h" defer></script>
+</body>
+</html>
