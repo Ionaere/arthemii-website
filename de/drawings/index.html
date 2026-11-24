@@ -29,6 +29,10 @@
             opacity: 1 !important; transform: none !important; animation: none !important;
         }
         .drawings-origin { margin-top: var(--spacing-md); }
+        /* the drawing on top starts below the DRAWINGS name: the letters may lie on the white paper, not on the drawing */
+        .page-top__media--paper img { padding: 150px 6% 4% !important; box-sizing: border-box; }
+        @media (max-width: 1024px) { .page-top__media--paper img { padding: 100px 7% 5% !important; } }
+        @media (max-width: 640px) { .page-top__media--paper img { padding: 92px 8% 5% !important; } }
     </style>
 </head>
 <body>
@@ -218,7 +222,7 @@
     </script>
     <script src="../../lightbox.js"></script>
     <script src="../../smooth-scroll.js" defer></script>
-    <script src="../../idle-scroll.js?v=20261123g" defer></script>
+    <script src="../../idle-scroll.js?v=20261124a" defer></script>
     <script src="../../i18n.js?v=20261123ar"></script>
     <script src="../../page-wordmark.js?v=20261122h" defer></script>
 </body>

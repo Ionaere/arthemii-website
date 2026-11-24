@@ -11,6 +11,7 @@
 
   var IDLE_MS = 2000;        // quiet time after the visitor's own activity before it moves again
   var FIRST_MS = 2000;       // on page open it starts after about two seconds
+  if (document.querySelector('.drawings__rows') && !document.querySelector('.gslide, .video-slides')) FIRST_MS = 3500;   // Drawings: a longer look at the top first
   var SPEED = 64;            // pixels per second at full speed
   var RAMP = 1.5;            // seconds to ease from still to full speed
 
