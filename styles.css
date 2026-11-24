@@ -1479,7 +1479,7 @@
             transition: max-height 0.35s ease, opacity 0.35s ease;
         }
         .photo-view.is-tall img { max-height: min(64vh, 680px); max-height: min(64svh, 680px); }
-        .photo-extra img { max-height: min(64vh, 640px); max-height: min(64svh, 640px); width: 100% !important; object-fit: cover; }
+        .photo-extra img { width: 100% !important; height: auto !important; max-height: none; object-fit: contain; }   /* extra photos on a work page: always whole, never cropped */
 
         /* Arrows stay fixed in the lower corners of the screen
            (the right one sits above the 3D-portal corner) */
