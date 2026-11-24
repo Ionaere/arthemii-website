@@ -399,6 +399,10 @@ function buildRoom() {
     depthWrite: false, side: THREE.DoubleSide, fog: false, toneMapped: false
   });
   room = new THREE.Mesh(geo, mat);
+  // the fractal view sees the same prism with its facets melted into one smooth curved mirror:
+  // no edges, no corners, and the mirror-in-mirror reflections flow into each other like a fractal
+  room.userData.flat = geo;
+  room.userData.smooth = smoothCopy(geo);
   room.renderOrder = -1;          // after the works, before the glows, labels and stars
   scene.add(room);
   // no visible edge lines: the facets show only through what they reflect
@@ -407,12 +411,27 @@ function buildRoom() {
   roomEdges.renderOrder = -1;
   roomEdges.visible = false;
 }
+function smoothCopy(geo) {
+  const g = geo.clone(), pos = g.attributes.position, nor = g.attributes.normal;
+  if (!nor) g.computeVertexNormals();
+  const n = g.attributes.normal, sum = new Map(), key = i => Math.round(pos.getX(i) * 20) + ',' + Math.round(pos.getY(i) * 20) + ',' + Math.round(pos.getZ(i) * 20);
+  for (let i = 0; i < pos.count; i++) {
+    const k = key(i), v = sum.get(k) || [0, 0, 0];
+    v[0] += n.getX(i); v[1] += n.getY(i); v[2] += n.getZ(i); sum.set(k, v);
+  }
+  for (let i = 0; i < pos.count; i++) {
+    const v = sum.get(key(i)), l = Math.hypot(v[0], v[1], v[2]) || 1;
+    n.setXYZ(i, v[0] / l, v[1] / l, v[2] / l);
+  }
+  n.needsUpdate = true;
+  return g;
+}
 // The whole reflection is refreshed together, every frame (every other frame on phones), from where you are:
 // all six sides always match, so nothing jumps; mipmaps keep the small facets from flickering
 let cubeTick = 0;
 const CUBE_EVERY = isTouch ? 2 : 1;
 function updateReflections() {
-  if (!cubeCam || mode !== 'prism' || (cubeTick++ % CUBE_EVERY) !== 0) return;
+  if (!cubeCam || (mode !== 'prism' && mode !== 'fractal') || (cubeTick++ % CUBE_EVERY) !== 0) return;
   // the soft halos behind the works are left out of the reflection, so it stays crisp
   for (const o of items) if (o.glow) o.glow.visible = false;
   // film into one picture while the walls show the other, then swap
@@ -430,7 +449,7 @@ function updateReflections() {
    prism   — inside the huge mirror-faceted glass prism (the works and their reflections)
    cosmos  — the open black cosmos with stars and a faint haze, as the space first was
    kaleido — a three-mirror kaleidoscope: the view is folded into a triangle and mirrored in its three sides
-   fractal — a real Mandelbrot fractal flown into without end, made of the works themselves */
+   fractal — the glass prism seen through soft, curved mirrors: works clear ahead, mirrored copies flowing round them */
 const MODES = ['prism', 'cosmos', 'kaleido', 'fractal'];
 const kalLike = m => m === 'kaleido' || m === 'fractal';
 const MODE_NAMES = {
@@ -471,9 +490,13 @@ function layoutFor(m) {
 function applyMode() {
   const kaleido = kalLike(mode);
   layoutFor(mode);
-  if (room) room.visible = mode === 'prism';
-  if (mode !== 'prism') stars();
-  if (starGroup) starGroup.visible = mode !== 'prism';
+  if (room) {
+    room.visible = mode === 'prism' || mode === 'fractal';   // the fractal is seen inside the prism
+    room.geometry = mode === 'fractal' ? room.userData.smooth : room.userData.flat;
+  }
+  const starry = mode === 'cosmos' || mode === 'kaleido';
+  if (starry) stars();
+  if (starGroup) starGroup.visible = starry;
   scene.fog = mode === 'cosmos' ? cosmosFog : null;
   // mirrored writing looks wrong: in the kaleidoscope only the works themselves are shown
   for (const o of items) if (o.label) o.label.material.visible = !kaleido;
@@ -512,48 +535,31 @@ const KAL_IN = isTouch ? 0.25 : 0.2;   // inradius of the triangle, as a share o
 const KAL_TURN = 0.018;      // radians per second
 const KAL_FOV = 100;         // the wider lens that films the picture of the works
 const kalCam = new THREE.PerspectiveCamera(KAL_FOV, 1, 0.05, 420);
-let kal = null, kalRot = 0;
+let kal = null, kalRot = 0, frT = 0, frPhase = 0;
 const kalSize = new THREE.Vector2();
 
-// The fractal: a real Mandelbrot set, flown into without end. Its pictures are the works themselves:
-// wherever the orbit of a point passes through a small window, that point shows the works seen through the
-// window, so the works appear again and again at every scale of the fractal; the rest of it is drawn with the
-// works stretched along its bands. The flight goes into a point a little to the side of the middle, like the
-// usual fractal zoom films, and the works keep changing as the slow tour drifts through them.
-// A float on the graphics card is only precise to about 14 doublings, so after each flight the picture
-// cross-fades to the next one, into another famous spot of the set.
-const FR_TARGETS = [
-  [-0.743643887, 0.131825904],     // Seahorse Valley
-  [-0.101096364, 0.956286511],     // spiral near the top bulb
-  [0.001643722, 0.822467633],      // branching spirals
-  [-0.774680611, 0.137416886],     // double spirals
-  [-1.768778833, -0.001738996],    // mini Mandelbrot on the antenna
-  [0.281717921, 0.577105460]       // Elephant Valley edge
+// The fractal: the glass prism — its facets melted into one smooth curved mirror — seen as an endless tunnel.
+// Around the point the view flies towards (a little to the side of the middle) the works ahead are seen as they
+// are; outside that circle the same picture repeats in rings, each twice as large as the one inside it, so towards
+// the corners the works come big and close. The rings flow outwards without end, as if flying in, and blend softly
+// into each other; overlaid waves (big, smaller, smaller again) bend every ring, so there are no edges or corners.
+const FR_IN = 0.34;          // radius of the clear circle ahead, as a share of the shorter side of the screen
+const FR_LEVEL = 6;          // seconds for a ring to grow into the next one
+const FR_FX = 0.42, FR_FY = 0.5;   // the point flown towards: a little to the left of the middle
+const FR_WAVES = [           // direction x, direction y, frequency (per shorter side), amplitude (share of shorter side), speed
+  [0.8, 0.6, 2.1, 0.050, 0.11], [-0.5, 0.86, 4.3, 0.026, -0.17], [0.97, -0.24, 8.9, 0.013, 0.23], [-0.3, -0.95, 17.5, 0.0065, -0.31]
 ];
-const FR_START = 3.2;        // height of the screen in the set at the start of each flight
-const FR_DOUBLE = 5;         // seconds to fly one doubling deeper
-const FR_DEPTH = 14;         // doublings per flight
-const FR_FADE = 2.5;         // seconds of cross-fade into the next flight
-const FR_ITER = isTouch ? 300 : 460;
-const fr = { k: 0, t: Math.max(0, +params.get('frt') || 0) };
-function frView(k, t) {
-  const tg = FR_TARGETS[k % FR_TARGETS.length], side = k % 2 ? 1 : -1;
-  const d = Math.min(t / FR_DOUBLE, FR_DEPTH + FR_FADE / FR_DOUBLE);
-  return {
-    cx: tg[0], cy: tg[1], s: FR_START * Math.pow(2, -d),
-    fx: 0.5 + side * 0.14, fy: 0.5 + 0.07,                 // the point flown into: a little to the side, above the middle
-    it: Math.min(FR_ITER, 110 + 24 * d)
-  };
+// the same bending for the shader and for clicks: the further from the point flown towards, the stronger
+function frWarp(x, y, m, t) {
+  const d = Math.hypot(x, y) / m, k = 0.25 + 0.75 * Math.min(1, Math.max(0, (d - 0.08) / 0.5));
+  let wx = 0, wy = 0;
+  for (const [dx, dy, f, a, sp] of FR_WAVES) {
+    const ph = (x * dx + y * dy) / m * f + t * sp, ph2 = (x * dy - y * dx) / m * f * 0.93 - t * sp * 0.8;
+    wx += Math.sin(ph) * a; wy += Math.cos(ph2) * a;
+  }
+  return [x + wx * m * k, y + wy * m * k];
 }
-function frStep(dt) {
-  fr.t += dt;
-  if (fr.t > FR_DEPTH * FR_DOUBLE + FR_FADE) { fr.k++; fr.t -= FR_DEPTH * FR_DOUBLE; }
-}
-function frState() {
-  const a = frView(fr.k, fr.t), over = fr.t - FR_DEPTH * FR_DOUBLE;
-  if (over <= 0) return { a, b: null, m: 0 };
-  return { a, b: frView(fr.k + 1, over), m: Math.min(1, over / FR_FADE) };
-}
+const FR_WAVE_GLSL = FR_WAVES.map(w => `vec2(${w[0].toFixed(3)}, ${w[1].toFixed(3)}), ${w[2].toFixed(3)}, ${w[3].toFixed(4)}, ${w[4].toFixed(3)}`);
 
 function ensureKal() {
   renderer.getDrawingBufferSize(kalSize);
@@ -562,63 +568,51 @@ function ensureKal() {
     const mat = new THREE.ShaderMaterial({
       uniforms: {
         tDiffuse: { value: rt.texture }, res: { value: new THREE.Vector2() }, r: { value: 100 }, rot: { value: 0 },
-        frac: { value: 0 }, fA: { value: new THREE.Vector4() }, fB: { value: new THREE.Vector4() },
-        fAf: { value: new THREE.Vector3() }, fBf: { value: new THREE.Vector3() }, fMix: { value: 0 }
+        frac: { value: 0 }, ft: { value: 0 }, fph: { value: 0 }
       },
       vertexShader: 'void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }',
       fragmentShader: `
         uniform sampler2D tDiffuse; uniform vec2 res; uniform float r; uniform float rot;
-        uniform float frac; uniform vec4 fA; uniform vec4 fB; uniform vec3 fAf; uniform vec3 fBf; uniform float fMix;
+        uniform float frac; uniform float ft; uniform float fph;
         vec2 turn(vec2 v, float a) { float c = cos(a), s = sin(a); return vec2(c * v.x - s * v.y, s * v.x + c * v.y); }
-        float tri(float x) { return abs(fract(x * 0.5) * 2.0 - 1.0); }
-        vec3 tex(vec2 uv) { return texture2D(tDiffuse, uv).rgb; }
-        // one view of the Mandelbrot set: f = (centre x, centre y, screen height in the set, -), ff = (focus x, focus y, iterations)
-        vec2 hash2(vec2 p) { return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453); }
-        // one view of the Mandelbrot set: f = (centre x, centre y, screen height in the set, -), ff = (focus x, focus y, iterations)
-        // Outside the set, the bands of equal escape time and the rays round it cut the plane into panes that shrink
-        // endlessly towards the edge of the set; every pane holds a piece of the works, and brass lines run between
-        // the panes like the came in stained glass. The set itself is dark glass.
-        vec3 mandel(vec4 f, vec3 ff) {
-          vec2 c = f.xy + (gl_FragCoord.xy - ff.xy * res) * (f.z / res.y);
-          vec2 z = vec2(0.0);
-          float n = 0.0;
-          for (int i = 0; i < 480; i++) {
-            if (n >= ff.z) break;
-            z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + c;
-            if (dot(z, z) > 256.0) {
-              float mu = n + 1.0 - log2(log2(dot(z, z)) * 0.5);
-              float a = (atan(z.y, z.x) / 6.2831853 + 0.5) * 6.0;
-              vec2 cell = vec2(a, mu), id = floor(cell), loc = fract(cell);
-              vec2 uv = 0.5 + (loc - 0.5) * vec2(0.3, 0.3 * res.x / res.y) * 0.9 + (hash2(id) - 0.5) * 0.42;
-              vec2 w = fwidth(cell);
-              vec2 e = min(loc, 1.0 - loc) / max(w, vec2(1e-5));
-              // where the panes get only a few pixels small (close to the edge of the set) they melt into a smooth
-              // flow of the works, and their lines fade, so the finest detail never turns into a mesh of lines
-              float tiny = smoothstep(0.08, 0.3, max(w.x, w.y));
-              vec3 fine = mix(vec3(0.012, 0.009, 0.006), tex(0.2 + 0.6 * vec2(tri(a / 3.0), tri(mu * 0.06))), 0.14);   // (linear light: this reads as a dark glitter)
-              vec3 col = mix(tex(uv), fine, tiny);
-              float line = (1.0 - smoothstep(0.6, 1.8, min(e.x, e.y))) * (1.0 - tiny);
-              return mix(col, vec3(0.86, 0.72, 0.46), line * 0.7);
-            }
-            n += 1.0;
+        vec3 tex(vec2 uv) { return texture2D(tDiffuse, clamp(uv, 0.001, 0.999)).rgb; }
+        const vec2 N0 = vec2(0.0, -1.0), N1 = vec2(0.8660254, 0.5), N2 = vec2(-0.8660254, 0.5);
+        vec2 fold(vec2 p, float rr) {
+          for (int i = 0; i < 48; i++) {
+            float d0 = dot(p, N0) - rr, d1 = dot(p, N1) - rr, d2 = dot(p, N2) - rr;
+            float m = max(d0, max(d1, d2));
+            if (m <= 0.0) break;
+            if (m == d0) p -= 2.0 * d0 * N0; else if (m == d1) p -= 2.0 * d1 * N1; else p -= 2.0 * d2 * N2;
           }
-          // inside the set: dark glass with the works only faintly showing, so the shape of the set reads
-          return mix(vec3(0.002, 0.002, 0.004), tex(0.5 + vec2(z.x, z.y * res.x / res.y) * 0.3), 0.035);
+          return p;
+        }
+        vec2 wave(vec2 p, float m, vec2 d, float f, float a, float sp) {
+          float ph = dot(p, d) / m * f + ft * sp, ph2 = dot(p, vec2(d.y, -d.x)) / m * f * 0.93 - ft * sp * 0.8;
+          return vec2(sin(ph), cos(ph2)) * a;
         }
         void main() {
           if (frac > 0.5) {
-            vec3 col = mandel(fA, fAf);
-            if (fMix > 0.0) col = mix(col, mandel(fB, fBf), fMix);
-            gl_FragColor = vec4(col, 1.0);
+            float m = min(res.x, res.y);
+            vec2 F = vec2(${FR_FX.toFixed(3)}, ${FR_FY.toFixed(3)}) * res;
+            vec2 p = gl_FragCoord.xy - F;
+            float d = length(p) / m, k = 0.25 + 0.75 * clamp((d - 0.08) / 0.5, 0.0, 1.0);
+            vec2 w = wave(p, m, ${FR_WAVE_GLSL[0]}) + wave(p, m, ${FR_WAVE_GLSL[1]})
+                   + wave(p, m, ${FR_WAVE_GLSL[2]}) + wave(p, m, ${FR_WAVE_GLSL[3]});
+            p += w * m * k;
+            float rho = max(length(p), 1e-3);
+            float t = log2(rho / r) - fph;          // which ring, and how far across it
+            float lv = ceil(t), f = t - (lv - 1.0); // f in (0, 1]
+            vec2 q = p / exp2(lv + fph);            // back into the clear circle (between half and full radius)
+            vec3 ring = mix(tex((q + F) / res), tex((q * 0.5 + F) / res), smoothstep(0.78, 1.0, f));
+            gl_FragColor = vec4(mix(tex((p + F) / res), ring, smoothstep(r * 0.9, r * 1.12, rho)), 1.0);
           } else {
             vec2 p = turn(gl_FragCoord.xy - 0.5 * res, -rot);
-            const vec2 N0 = vec2(0.0, -1.0), N1 = vec2(0.8660254, 0.5), N2 = vec2(-0.8660254, 0.5);
             float n = 0.0;
             for (int i = 0; i < 48; i++) {
               float d0 = dot(p, N0) - r, d1 = dot(p, N1) - r, d2 = dot(p, N2) - r;
-              float m = max(d0, max(d1, d2));
-              if (m <= 0.0) break;
-              if (m == d0) p -= 2.0 * d0 * N0; else if (m == d1) p -= 2.0 * d1 * N1; else p -= 2.0 * d2 * N2;
+              float mm = max(d0, max(d1, d2));
+              if (mm <= 0.0) break;
+              if (mm == d0) p -= 2.0 * d0 * N0; else if (mm == d1) p -= 2.0 * d1 * N1; else p -= 2.0 * d2 * N2;
               n += 1.0;
             }
             vec2 uv = (turn(p, rot) + 0.5 * res) / res;
@@ -626,7 +620,6 @@ function ensureKal() {
           }
           #include <colorspace_fragment>
         }`,
-      extensions: { derivatives: true },
       depthTest: false, depthWrite: false
     });
     const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat);
@@ -638,42 +631,14 @@ function ensureKal() {
   if (kal.rt.width !== kalSize.x || kal.rt.height !== kalSize.y) kal.rt.setSize(kalSize.x, kalSize.y);
   const u = kal.mat.uniforms;
   u.res.value.copy(kalSize);
-  u.r.value = KAL_IN * Math.min(kalSize.x, kalSize.y);
+  u.r.value = (mode === 'fractal' ? FR_IN : KAL_IN) * Math.min(kalSize.x, kalSize.y);
   u.rot.value = kalRot;
   u.frac.value = mode === 'fractal' ? 1 : 0;
-  if (mode === 'fractal') {
-    const st = frState();
-    u.fA.value.set(st.a.cx, st.a.cy, st.a.s, 0); u.fAf.value.set(st.a.fx, st.a.fy, st.a.it);
-    if (st.b) { u.fB.value.set(st.b.cx, st.b.cy, st.b.s, 0); u.fBf.value.set(st.b.fx, st.b.fy, st.b.it); }
-    u.fMix.value = st.m;
-  }
+  u.ft.value = frT;
+  u.fph.value = frPhase;
 }
-// the same mapping for a point on the screen (CSS pixels), so the works can be clicked in the mirrors and in the fractal
-function frPoint(v, x, y) {
-  const w = innerWidth, h = innerHeight;
-  const cx = v.cx + (x - v.fx * w) * (v.s / h), cy = v.cy + ((h - y) - v.fy * h) * (v.s / h);
-  const fr2 = t => t - Math.floor(t);
-  const hash = (px, py) => [fr2(Math.sin(px * 127.1 + py * 311.7) * 43758.5453), fr2(Math.sin(px * 269.5 + py * 183.3) * 43758.5453)];
-  let zx = 0, zy = 0;
-  for (let n = 0; n < v.it; n++) {
-    const t = zx * zx - zy * zy + cx; zy = 2 * zx * zy + cy; zx = t;
-    const m = zx * zx + zy * zy;
-    if (m > 256) {
-      const mu = n + 1 - Math.log2(Math.log2(m) * 0.5), a = (Math.atan2(zy, zx) / (2 * Math.PI) + 0.5) * 6;
-      const hx = hash(Math.floor(a), Math.floor(mu));
-      const ux = 0.5 + (fr2(a) - 0.5) * 0.27 + (hx[0] - 0.5) * 0.42;
-      const uy = 0.5 + (fr2(mu) - 0.5) * 0.27 * w / h + (hx[1] - 0.5) * 0.42;
-      return [ux * w, (1 - uy) * h];
-    }
-  }
-  return [(0.5 + zx * 0.3) * w, (0.5 - zy * 0.3 * w / h) * h];
-}
-function kalFold(x, y) {
-  if (mode === 'fractal') { const st = frState(); return frPoint(st.m > 0.5 && st.b ? st.b : st.a, x, y); }
-  const w = innerWidth, h = innerHeight, r = KAL_IN * Math.min(w, h);
-  const c = Math.cos(-kalRot), s = Math.sin(-kalRot);
-  let px = x - w / 2, py = h / 2 - y;
-  let qx = c * px - s * py, qy = s * px + c * py;
+// the same mapping for a point on the screen (CSS pixels), so the works can be clicked in the mirrors too
+function triFold(qx, qy, r) {
   const N = [[0, -1], [0.8660254, 0.5], [-0.8660254, 0.5]];
   for (let i = 0; i < 48; i++) {
     let m = 0, k = -1;
@@ -681,6 +646,24 @@ function kalFold(x, y) {
     if (k < 0) break;
     qx -= 2 * m * N[k][0]; qy -= 2 * m * N[k][1];
   }
+  return [qx, qy];
+}
+function kalFold(x, y) {
+  const w = innerWidth, h = innerHeight, m = Math.min(w, h);
+  if (mode === 'fractal') {
+    const Fx = FR_FX * w, Fy = FR_FY * h;
+    let [px, py] = frWarp(x - Fx, (h - y) - Fy, m, frT);
+    const r = FR_IN * m, rho = Math.max(Math.hypot(px, py), 1e-3);
+    if (rho > r) {
+      const t = Math.log2(rho / r) - frPhase, lv = Math.ceil(t), sc = Math.pow(2, lv + frPhase);
+      px /= sc; py /= sc;
+    }
+    return [Fx + px, h - (Fy + py)];
+  }
+  const r = KAL_IN * m;
+  const c = Math.cos(-kalRot), s = Math.sin(-kalRot);
+  let px = x - w / 2, py = h / 2 - y;
+  let [qx, qy] = triFold(c * px - s * py, s * px + c * py, r);
   const c2 = Math.cos(kalRot), s2 = Math.sin(kalRot);
   px = c2 * qx - s2 * qy; py = s2 * qx + c2 * qy;
   return [w / 2 + px, h / 2 - py];
@@ -1305,7 +1288,7 @@ function tick() {
     else if (r > maxR) cp.multiplyScalar(maxR / r);
   }
   if (mode === 'kaleido') kalRot += dt * KAL_TURN;
-  if (mode === 'fractal') frStep(dt);
+  if (mode === 'fractal') { frT += dt; frPhase = (frPhase + dt / FR_LEVEL) % 1; }
 
   // works drift a little and always turn their face to you
   const t = now * 0.001;
