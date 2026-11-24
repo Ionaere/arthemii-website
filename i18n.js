@@ -49,7 +49,7 @@
   var IDX = { de: 0, 'de-at': 0, 'de-ch': 0, es: 1, fr: 2, ru: 3, zh: 4, ja: 5 };
   // Languages kept in their own file (i18n/<code>.js), loaded on demand
   var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1, ar: 1 };
-  var EXT_VERSION = '20261124sm';
+  var EXT_VERSION = 'v20261124eps';
   var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT', 'de-ch': 'de-CH' };
   // Regional variants: the short code shown in the menu
   var CODE_LABEL = { 'de-at': 'AT', 'de-ch': 'CH' };
