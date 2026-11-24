@@ -112,6 +112,43 @@
     b.photos.innerHTML = '';
     if (!rest.length) return;
     var W = b.photos.clientWidth || b.inner.clientWidth || 1200;
+    /* data-layout="tall-left": the tall works side by side on the left, the wide ones two per row on the right */
+    if (b.block.getAttribute('data-layout') === 'tall-left') {
+      var tall = rest.filter(function (m) { return ratio(m) < 1; }), wide = rest.filter(function (m) { return ratio(m) >= 1; });
+      if (tall.length && wide.length) {
+        var G = 8;
+        var wr = [];
+        for (var q = 0; q < wide.length; q += 2) wr.push(wide.slice(q, q + 2));
+        var rowSum = wr.map(function (r) { return r.reduce(function (a, m) { return a + ratio(m); }, 0); });
+        var tallSum = tall.reduce(function (a, m) { return a + ratio(m); }, 0);
+        /* equal heights: left height = right height (sum of the rows, with gaps) */
+        var lo = 50, hi = W, Wl = W / 3;
+        for (var it = 0; it < 40; it++) {
+          Wl = (lo + hi) / 2;
+          var Wr = W - Wl - G, hl = (Wl - G * (tall.length - 1)) / tallSum, hr = 0;
+          rowSum.forEach(function (rsum, ri) { hr += (Wr - G * (wr[ri].length - 1)) / rsum; });
+          hr += G * (wr.length - 1);
+          if (hl > hr) hi = Wl; else lo = Wl;
+        }
+        var wrap = document.createElement('div');
+        wrap.className = 'tb-split';
+        wrap.style.cssText = 'display:flex;gap:' + G + 'px;align-items:stretch';
+        var left = document.createElement('div');
+        left.className = 'tech-block__row tb-row';
+        left.style.cssText = 'flex:0 0 ' + Wl.toFixed(1) + 'px;width:' + Wl.toFixed(1) + 'px';
+        tall.forEach(function (m) { m.style.flex = ''; m.style.width = ''; left.appendChild(m); });
+        var right = document.createElement('div');
+        right.style.cssText = 'flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:' + G + 'px';
+        wr.forEach(function (r) {
+          var el = document.createElement('div'); el.className = 'tech-block__row tb-row';
+          r.forEach(function (m) { m.style.flex = ''; m.style.width = ''; el.appendChild(m); });
+          right.appendChild(el);
+        });
+        wrap.appendChild(left); wrap.appendChild(right);
+        b.photos.appendChild(wrap);
+        return;
+      }
+    }
     var rs = rest.map(ratio), total = rs.reduce(function (a, c) { return a + c; }, 0);
     var k = Math.max(1, Math.min(rest.length, Math.round(total * rowH() / W)));
     bestRows(rs, k).forEach(function (g) {
