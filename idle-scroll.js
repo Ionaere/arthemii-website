@@ -65,7 +65,8 @@
      screen, then easing away slowly to the next. At the last photo it goes back up. */
   // Drawings page: every visual line of drawings is a stop (one drawing per line stands for it)
   function collect() {
-    var list = document.querySelectorAll('.gslide, .video-slides > .video-card');
+    var list = Array.prototype.filter.call(document.querySelectorAll('.gslide, .video-slides > .video-card'),
+      function (el) { return el.offsetParent !== null || getComputedStyle(el).position === 'fixed'; });   // skip folded (hidden) videos
     if (list.length) return list;
     var out = [], lastTop = null;
     document.querySelectorAll('.drawings__rows .drawing').forEach(function (d) {
