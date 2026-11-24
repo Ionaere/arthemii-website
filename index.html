@@ -4862,5 +4862,35 @@
         });
     })();
     </script>
+    <style>
+        /* Arrow at the end of an opened home section: folds the section back */
+        .section-close { display: flex; justify-content: center; margin: var(--spacing-xl) 0 var(--spacing-md); }
+        .section-close button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color .3s, border-color .3s, transform .3s; }
+        .section-close button:hover { color: var(--text); border-color: var(--text-tertiary); transform: translateY(-2px); }
+        .section-close svg { width: 18px; height: 18px; }
+    </style>
+    <script>
+    (function () {
+        function add() {
+            document.querySelectorAll('main > section.section.is-collapsible').forEach(function (sec) {
+                var inner = sec.querySelector(':scope > .container > .section__body > .section__body-inner');
+                if (!inner || inner.querySelector(':scope > .section-close') || !sec._setOpen) return;
+                var box = document.createElement('div'); box.className = 'section-close';
+                var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Close section');
+                b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 15 12 9 18 15"></polyline></svg>';
+                b.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    sec._setOpen(false);
+                    var top = sec.getBoundingClientRect().top + window.scrollY - 80;
+                    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+                });
+                box.appendChild(b); inner.appendChild(box);
+            });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(add, 300); });
+        else setTimeout(add, 300);
+        window.addEventListener('load', add);
+    })();
+    </script>
 </body>
 </html>
