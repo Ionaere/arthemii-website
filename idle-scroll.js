@@ -15,6 +15,19 @@
   var SPEED = 64;            // pixels per second at full speed
   var RAMP = 1.5;            // seconds to ease from still to full speed
 
+  // Safari: a scroll moved by script on every frame is snapped to whole pixels and capped at 60 fps,
+  // so the slow glides judder there. Safari's own smooth scrolling runs on its scrolling thread and
+  // is fluid, so in Safari the trips from photo to photo use it instead.
+  var SAFARI = /Apple/.test(navigator.vendor || '');
+  var nativeMove = false;
+  function jumpTo(y) {
+    try { window.scrollTo({ top: y, behavior: 'instant' }); }
+    catch (err) {
+      var st = document.documentElement.style, was = st.scrollBehavior;
+      st.scrollBehavior = 'auto'; window.scrollTo(window.scrollX, y); st.scrollBehavior = was;
+    }
+  }
+
   var timer = 0, raf = 0, last = 0, started = 0, pos = 0, dir = 1, pauseUntil = 0;
   var END_PAUSE = 1500;      // ms to rest at the bottom / top before turning round
 
@@ -48,7 +61,7 @@
     var t = (now - started) / 1000;
     var k = t < RAMP ? (t / RAMP) * (t / RAMP) : 1;
     pos = Math.min(maxY(), Math.max(0, pos + dir * SPEED * k * dt));
-    window.scrollTo({ top: pos, behavior: 'instant' });
+    jumpTo(pos);
     raf = requestAnimationFrame(step);
   }
   function start() {
@@ -96,10 +109,23 @@
   function slideStep(now) {
     raf = 0;
     if (blocked()) { stop(); return; }
-    if (move) {
+    if (move && SAFARI) {
+      if (!move.sent) {
+        move.sent = true; nativeMove = true; move.lastY = window.scrollY; move.still = 0;
+        window.scrollTo({ top: move.to, behavior: 'smooth' });
+      }
+      var y = window.scrollY;
+      pos = y;
+      move.still = Math.abs(y - move.lastY) < 0.5 ? move.still + 1 : 0;
+      move.lastY = y;
+      // arrived, or stopped short (end of the page), or taking far too long
+      if (Math.abs(y - move.to) < 2 || (move.still > 12 && now - move.t0 > 400) || now - move.t0 > 6000) {
+        move = null; nativeMove = false; holdUntil = now + HOLD;
+      }
+    } else if (move) {
       var t = Math.min(1, (now - move.t0) / move.dur);
       pos = move.from + (move.to - move.from) * ease(t);
-      window.scrollTo({ top: pos, behavior: 'instant' });
+      jumpTo(pos);
       if (t >= 1) { move = null; holdUntil = now + HOLD; }
     } else if (now >= holdUntil && !videoBusy()) {
       var n = idx + dir;
@@ -128,6 +154,8 @@
   function stop() {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
+    nativeMove = false;
+    if (move && move.sent) move = null;
   }
 
   /* Videos page: resting the cursor on a video stops the travelling until that video has played
@@ -191,7 +219,7 @@
   });
   // a scroll that we did not make ourselves (scrollbar, keyboard, anchor link) also counts
   window.addEventListener('scroll', function () {
-    if (raf && Math.abs(window.scrollY - pos) < 4) return;   // our own slow scroll
+    if (raf && (nativeMove || Math.abs(window.scrollY - pos) < 4)) return;   // our own scroll
     if (!raf && timer) return;                              // already waiting
     activity();
   }, { passive: true });
