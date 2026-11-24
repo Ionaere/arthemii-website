@@ -14,6 +14,8 @@
     '.section.is-open>.container>.section__toggle .section__thumbs{opacity:0;pointer-events:none;transition:opacity .35s ease}' +
     '.section.is-open>.container>.section__toggle.has-thumbs>:not(.section__thumbs){max-width:none!important;margin-left:0!important;margin-right:0!important}' +
     '.section.is-open>.container>.section__toggle{min-height:0!important}' +
+    /* closed rows: the section name sits in the middle of the row; photos stay left / right */
+    '@media (min-width:1025px){.section:not(.is-open)>.container>.section__toggle.has-thumbs .section__label-row,.section:not(.is-open)>.container>.section__toggle.has-thumbs.thumbs-left .section__label-row{left:50%!important;right:auto!important;transform:translate(-50%,-50%)!important;top:50%!important;justify-content:center!important}.section:not(.is-open)>.container>.section__toggle.has-thumbs .section__label-row .section__chevron{position:absolute!important;left:100%!important;margin-left:.6rem!important;order:0!important}}' +
     /* opened section: the open/close arrow sits centred above the name, clearly visible */
     '.section.is-open>.container>.section__toggle .section__label-row{flex-direction:column!important;align-items:center!important;gap:.6rem!important}' +
     '.section.is-open>.container>.section__toggle .section__chevron{order:-1!important;margin:0!important;width:2.6rem!important;height:2.6rem!important;border:1px solid currentColor;border-radius:50%;display:flex!important;align-items:center;justify-content:center;opacity:.75}' +
