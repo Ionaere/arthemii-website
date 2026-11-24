@@ -162,21 +162,28 @@
         .arch-note::before { content: ""; display: block; width: 56px; height: 1px; background: #bdbdbd; margin: 0 auto var(--spacing-lg); }
         @media (max-width: 640px) { .ai-arch__photos > .arch-note { margin: var(--spacing-lg) auto; text-align: left; } .arch-note::before { margin-left: 0; } .arch-note__text { font-size: 1rem; } }
 
-        /* HOW IT IS MADE: folds open under the arrow, like the sections on the home page */
-        .arch-method { margin: var(--spacing-xl) 0 var(--spacing-2xl); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .am__head { display: flex; align-items: center; gap: var(--spacing-md); width: 100%; min-height: 72px; padding: var(--spacing-md) 0; background: none; border: 0; cursor: pointer; text-align: left; color: var(--text); font: inherit; }
-        .am__head:focus-visible { outline: 2px solid var(--text); outline-offset: 6px; border-radius: 4px; }
-        .am__label { font-family: 'Montserrat', var(--font-sans); font-weight: 400; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-secondary); white-space: nowrap; }
-        .am__title { font-family: 'Montserrat', var(--font-sans); font-weight: 300; font-size: clamp(1.15rem, 2vw, 1.6rem); letter-spacing: 0.01em; }
-        .am__chev { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; margin-left: auto; flex-shrink: 0; color: var(--text-secondary); transition: transform 0.45s var(--ease-out-expo), color 0.3s ease; }
-        .am__chev svg { width: 22px; height: 22px; display: block; }
-        .am__head:hover .am__chev { color: var(--text); }
-        .arch-method.is-open .am__chev { transform: rotate(180deg); }
-        .am__body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s var(--ease-out-expo); }
-        .arch-method.is-open .am__body { grid-template-rows: 1fr; }
-        .am__inner { overflow: hidden; min-height: 0; }
-        .am__inner > :first-child { margin-top: var(--spacing-md); }
-        .am__inner > :last-child { margin-bottom: var(--spacing-2xl); }
+        /* HOW IT IS MADE: big wordmark heading with lines (like ARCHITECTURE), the content always open */
+        .arch-method { margin: var(--spacing-2xl) 0; }
+        .am-mark, .arch-more__mark { margin: 0 0 var(--spacing-xl); text-align: center; }
+        .am-mark__title, .arch-more__title { display: flex; align-items: center; justify-content: center; gap: clamp(0.75rem, 2.5vw, 2.5rem);
+            margin: 0; font-family: 'Italiana', var(--font-serif); font-weight: 400; font-size: clamp(1.1rem, 4.2vw, 4.6rem); line-height: 1;
+            letter-spacing: 0.34em; text-transform: uppercase; white-space: nowrap; color: var(--text); }
+        .am-mark__title span, .arch-more__title span { margin-right: -0.34em; }
+        .am-mark__title::before, .am-mark__title::after, .arch-more__title::before, .arch-more__title::after { content: ""; flex: 1 1 0; max-width: 220px; height: 1px; background: currentColor; opacity: 0.45; }
+        .am-mark__sub { font-family: 'Montserrat', var(--font-sans); font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase;
+            font-size: clamp(0.75rem, 1.1vw, 0.95rem); color: var(--text-secondary); margin: var(--spacing-md) 0 0; }
+        /* MORE CONTENT: the videos and Small Architecture fold open under the arrow */
+        .arch-more { margin: var(--spacing-2xl) 0 0; }
+        .arch-more__head { display: block; width: 100%; padding: var(--spacing-md) 0; background: none; border: 0; cursor: pointer; color: var(--text); font: inherit; }
+        .arch-more__head:focus-visible { outline: 2px solid var(--text); outline-offset: 6px; border-radius: 4px; }
+        .arch-more__head .arch-more__mark { display: block; margin: 0; }
+        .arch-more__chev { display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; margin-top: var(--spacing-sm); color: var(--text-secondary); transition: transform 0.45s var(--ease-out-expo), color 0.3s ease; }
+        .arch-more__chev svg { width: 26px; height: 26px; display: block; }
+        .arch-more__head:hover .arch-more__chev { color: var(--text); }
+        .arch-more.is-open .arch-more__chev { transform: rotate(180deg); }
+        .arch-more__body { display: none; padding-top: var(--spacing-xl); }
+        .arch-more.is-open .arch-more__body { display: block; }
+        .am__intro { margin-left: auto !important; margin-right: auto !important; text-align: center; }
         .am__intro, .am__p { font-family: 'Montserrat', var(--font-sans); font-weight: 300; font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.75; max-width: 860px; margin: 0 0 var(--spacing-lg); color: var(--text); }
         .am__h { font-family: 'Montserrat', var(--font-sans); font-weight: 400; font-size: clamp(1.1rem, 1.6vw, 1.35rem); margin: var(--spacing-2xl) 0 var(--spacing-sm); }
         .am__note { font-size: 0.8rem; color: var(--text-secondary); margin: var(--spacing-sm) 0 0; }
@@ -213,8 +220,9 @@
         .am-princ li { border-top: 1px solid var(--border); padding-top: var(--spacing-sm); }
         .arch-method .am__closing { margin: var(--spacing-2xl) auto 0; max-width: 860px; text-align: center; }
         @media (max-width: 768px) {
-            .am__head { flex-wrap: wrap; gap: 0.35rem var(--spacing-sm); }
-            .am__label { width: 100%; order: -1; }
+            .am-mark__title, .arch-more__title { letter-spacing: 0.2em; gap: 0.5rem; white-space: normal; font-size: 5vw; }
+            .am-mark__title span, .arch-more__title span { margin-right: -0.2em; }
+            .am-mark__title::before, .am-mark__title::after, .arch-more__title::before, .arch-more__title::after { max-width: 22px; }
             .am-steps, .am-pairs { grid-template-columns: 1fr; }
             .am-trio { flex-direction: column; }
             .am-trio .am-pair__arrow { transform: rotate(90deg); }
@@ -275,10 +283,10 @@
                         <h2 class="ai-arch__title"><span class="ai-arch__word" data-i18n="ai_arch_title">Architecture</span></h2>
                     </header>
                     <div class="drawings__rows ai-arch__photos" style="margin-bottom: var(--spacing-xl)"><div class="drawings__row"><div class="drawing" style="--r:1.339"><picture><source type="image/webp" srcset="../img/renders/ai-arch/0b41f6896938d308b593a8fa628e4991_e253deee-ed82-4704-a1fe-87fa48459a2e-800.webp 800w, ../img/renders/ai-arch/0b41f6896938d308b593a8fa628e4991_e253deee-ed82-4704-a1fe-87fa48459a2e.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/0b41f6896938d308b593a8fa628e4991_e253deee-ed82-4704-a1fe-87fa48459a2e.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="1195" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:0.747"><picture><source type="image/webp" srcset="../img/renders/ai-arch/2c241e97647da65d7cb79e472e6a0b04_30cb9297-53de-4db6-8059-8520d7c75555-800.webp 800w, ../img/renders/ai-arch/2c241e97647da65d7cb79e472e6a0b04_30cb9297-53de-4db6-8059-8520d7c75555.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/2c241e97647da65d7cb79e472e6a0b04_30cb9297-53de-4db6-8059-8520d7c75555.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="2143" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:1.339"><picture><source type="image/webp" srcset="../img/renders/ai-arch/27bc4f100435b3aca642d6427d1e84a3_aedf5aad-f288-454b-8f5b-78604bdf6f48-800.webp 800w, ../img/renders/ai-arch/27bc4f100435b3aca642d6427d1e84a3_aedf5aad-f288-454b-8f5b-78604bdf6f48.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/27bc4f100435b3aca642d6427d1e84a3_aedf5aad-f288-454b-8f5b-78604bdf6f48.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="1195" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:1.339"><picture><source type="image/webp" srcset="../img/renders/ai-arch/78c9c6a762f7971d58579f8ee0f68407_c303b23c-7591-4b32-a3ff-1dae0c357a0f-800.webp 800w, ../img/renders/ai-arch/78c9c6a762f7971d58579f8ee0f68407_c303b23c-7591-4b32-a3ff-1dae0c357a0f.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/78c9c6a762f7971d58579f8ee0f68407_c303b23c-7591-4b32-a3ff-1dae0c357a0f.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="1195" loading="lazy" decoding="async"></picture></div></div><div class="drawings__row"><div class="drawing" style="--r:0.747"><picture><source type="image/webp" srcset="../img/renders/ai-arch/91e7df8430da92522a119616fb87117d_71017c84-9c67-45d8-a826-70573e7d0aeb-800.webp 800w, ../img/renders/ai-arch/91e7df8430da92522a119616fb87117d_71017c84-9c67-45d8-a826-70573e7d0aeb.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/91e7df8430da92522a119616fb87117d_71017c84-9c67-45d8-a826-70573e7d0aeb.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="2143" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:0.747"><picture><source type="image/webp" srcset="../img/renders/ai-arch/092a2db1c3e4cf2a5cd5662269e97e56_d866703e-a854-42cd-aa58-8270dedd376f-800.webp 800w, ../img/renders/ai-arch/092a2db1c3e4cf2a5cd5662269e97e56_d866703e-a854-42cd-aa58-8270dedd376f.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/092a2db1c3e4cf2a5cd5662269e97e56_d866703e-a854-42cd-aa58-8270dedd376f.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="2143" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:0.747"><picture><source type="image/webp" srcset="../img/renders/ai-arch/03883b454c3b012285d22e236493f365_31827b7b-740a-4ab6-8d83-b4eb93beedd5-800.webp 800w, ../img/renders/ai-arch/03883b454c3b012285d22e236493f365_31827b7b-740a-4ab6-8d83-b4eb93beedd5.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/03883b454c3b012285d22e236493f365_31827b7b-740a-4ab6-8d83-b4eb93beedd5.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="2143" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:1.339"><picture><source type="image/webp" srcset="../img/renders/ai-arch/668576996bf8931945c8b2a57d952caa_d3836f46-a22f-410d-a825-8df7bd98af56-800.webp 800w, ../img/renders/ai-arch/668576996bf8931945c8b2a57d952caa_d3836f46-a22f-410d-a825-8df7bd98af56.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/668576996bf8931945c8b2a57d952caa_d3836f46-a22f-410d-a825-8df7bd98af56.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="1195" loading="lazy" decoding="async"></picture></div></div><div class="arch-note"><p class="arch-note__text">All the works in this section are generated with artificial intelligence, but each of them begins with a drawing by hand. First Arthemii makes a drawing on paper — many of them can be seen in the Drawings section. The architecture is then generated from that original drawing, without any request to distort it. This is possible because the drawing is, in essence, graphics: a clear schematic through which the architecture is visualised.</p><a href="../drawings/" class="ai-source__link">See the drawings <span aria-hidden="true">→</span></a></div><div class="drawings__row"><div class="drawing" style="--r:0.747"><picture><source type="image/webp" srcset="../img/renders/ai-arch/a6fd20065be21d897b2aa9e0a4a5ebb2_20bc34fb-29c9-409a-9edd-c8cec8895f96-800.webp 800w, ../img/renders/ai-arch/a6fd20065be21d897b2aa9e0a4a5ebb2_20bc34fb-29c9-409a-9edd-c8cec8895f96.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/a6fd20065be21d897b2aa9e0a4a5ebb2_20bc34fb-29c9-409a-9edd-c8cec8895f96.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="2143" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:0.747"><picture><source type="image/webp" srcset="../img/renders/ai-arch/b5ec148f1fa2aaac781ea0a8e6462237_4c61078b-d739-4e79-87a1-f5704b3fe5ea-800.webp 800w, ../img/renders/ai-arch/b5ec148f1fa2aaac781ea0a8e6462237_4c61078b-d739-4e79-87a1-f5704b3fe5ea.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/b5ec148f1fa2aaac781ea0a8e6462237_4c61078b-d739-4e79-87a1-f5704b3fe5ea.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="2143" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:0.747"><picture><source type="image/webp" srcset="../img/renders/ai-arch/badf799923685409de492a83a2a83be9_9c7730d1-2689-471c-9d21-864bdcb05857-800.webp 800w, ../img/renders/ai-arch/badf799923685409de492a83a2a83be9_9c7730d1-2689-471c-9d21-864bdcb05857.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/badf799923685409de492a83a2a83be9_9c7730d1-2689-471c-9d21-864bdcb05857.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="2143" loading="lazy" decoding="async"></picture></div></div><div class="drawings__row"><div class="drawing" style="--r:0.747"><picture><source type="image/webp" srcset="../img/renders/ai-arch/d65480b73d28334b7988ebdb0e23dbfb_e5fd8e39-6b5b-4f8e-b36d-7f9ad5aed755-800.webp 800w, ../img/renders/ai-arch/d65480b73d28334b7988ebdb0e23dbfb_e5fd8e39-6b5b-4f8e-b36d-7f9ad5aed755.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/d65480b73d28334b7988ebdb0e23dbfb_e5fd8e39-6b5b-4f8e-b36d-7f9ad5aed755.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="2143" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:0.747"><picture><source type="image/webp" srcset="../img/renders/ai-arch/dccca6c88cd1825e2663c0966a9cade2_f56fa11f-6789-4379-b7a7-f75520688859-800.webp 800w, ../img/renders/ai-arch/dccca6c88cd1825e2663c0966a9cade2_f56fa11f-6789-4379-b7a7-f75520688859.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/dccca6c88cd1825e2663c0966a9cade2_f56fa11f-6789-4379-b7a7-f75520688859.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="2143" loading="lazy" decoding="async"></picture></div><div class="drawing" style="--r:1.339"><picture><source type="image/webp" srcset="../img/renders/ai-arch/e72f88aae76419263f2769844341e77f_23a5f073-989f-45b0-bf87-c93e1f2ffa6c-800.webp 800w, ../img/renders/ai-arch/e72f88aae76419263f2769844341e77f_23a5f073-989f-45b0-bf87-c93e1f2ffa6c.webp 1600w" sizes="(max-width: 640px) 50vw, (max-width: 1400px) 33vw, 460px"><img src="../img/renders/ai-arch/e72f88aae76419263f2769844341e77f_23a5f073-989f-45b0-bf87-c93e1f2ffa6c.jpg" alt="Architecture by Arthemii Ionaere" width="1600" height="1195" loading="lazy" decoding="async"></picture></div></div></div>
-                    <!-- How it is made (folds open under the arrow) -->
+                    <!-- How it is made -->
                     <div class="arch-method" id="how-it-is-made">
-                        <button type="button" class="am__head" aria-expanded="false" aria-controls="arch-method-body"><span class="am__label">How it is made</span><span class="am__title">From drawing to building</span><span class="am__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></button>
-                        <div class="am__body" id="arch-method-body"><div class="am__inner">
+                        <div class="am-mark"><h2 class="am-mark__title"><span>How it is made</span></h2><p class="am-mark__sub">From drawing to building</p></div>
+                        <div class="am__inner">
                             <p class="am__intro">Every building in this section begins as a free line drawing on paper. The line is drawn intuitively, without a preliminary sketch, plan or brief, and the finished drawing is a clear graphic: a schematic of curves, ribbons and enclosed spaces. That graphic is the score from which the architecture is generated.</p>
                             <ol class="am-steps"><li class="am-step"><figure class="am-step__img"><picture><source type="image/webp" srcset="../img/renders/ai-arch/method/drawing-24-600.webp"><img src="../img/renders/ai-arch/method/drawing-24.jpg" alt="Free line drawing No. 24" loading="lazy" decoding="async"></picture></figure><span class="am-step__num">01</span><h4 class="am-step__h">Free line drawing</h4><p class="am-step__p">Each concept begins by hand, on paper. The line is drawn intuitively, without a preliminary sketch, plan or brief.</p></li><li class="am-step"><figure class="am-step__img"><picture><source type="image/webp" srcset="../img/renders/ai-arch/method/concept-01-drawing-24-600.webp"><img src="../img/renders/ai-arch/method/concept-01-drawing-24.jpg" alt="Free line drawing No. 24, turned 180°" loading="lazy" decoding="async"></picture></figure><span class="am-step__num">02</span><h4 class="am-step__h">Turned and read as a structure</h4><p class="am-step__p">The drawing is turned until it stands as a building and is read as a structure: lines become ribbons and frames, closed shapes become rooms, terraces and voids. The drawing itself is not changed.</p></li><li class="am-step"><figure class="am-step__img"><picture><source type="image/webp" srcset="../img/renders/ai-arch/0b41f6896938d308b593a8fa628e4991_e253deee-ed82-4704-a1fe-87fa48459a2e-800.webp 800w, ../img/renders/ai-arch/0b41f6896938d308b593a8fa628e4991_e253deee-ed82-4704-a1fe-87fa48459a2e.webp 1600w" sizes="(max-width: 640px) 50vw, 30vw"><img src="../img/renders/ai-arch/0b41f6896938d308b593a8fa628e4991_e253deee-ed82-4704-a1fe-87fa48459a2e.jpg" alt="Concept 01" width="1600" height="1195" loading="lazy" decoding="async"></picture></figure><span class="am-step__num">03</span><h4 class="am-step__h">Render</h4><p class="am-step__p">The drawing is then visualised as architecture with generative AI, with no request to distort it. The software gives the lines scale, material, light and context; the form itself comes from the hand drawing.</p></li></ol>
                             <p class="am__note">Example: Concept 01, generated from free line drawing No. 24 turned 180°.</p>
@@ -291,16 +299,13 @@
                             <h3 class="am__h">Principles of the method</h3>
                             <ul class="am-princ"><li><h4>The hand stays the author</h4><p>The form is decided on paper. The software visualises the drawing; it does not invent the building from a text prompt.</p></li><li><h4>No distortion</h4><p>The renders keep the proportions and curves of the drawing; nothing is stretched or redrawn to fit a building.</p></li><li><h4>Turning, not redrawing</h4><p>A drawing can be read upright, upside down or on its side. Turning it by 90°, 180° or 270° is the only change made before it becomes architecture.</p></li><li><h4>One drawing, many buildings</h4><p>The same drawing, turned differently or placed in another setting, can produce several distinct buildings.</p></li><li><h4>From stained glass to architecture</h4><p>The drawings share their language with the stained glass works: lines that frame light. In the buildings they become ribbons of structure with light and greenery between them.</p></li></ul>
                             <div class="arch-note am__closing"><p class="arch-note__text">Free Line Architecture is a research series rather than commissioned buildings. It asks how the freedom of a drawn line could inform future facades, public structures and light-filled spaces.</p><a href="../drawings/" class="ai-source__link">See the drawings <span aria-hidden="true">→</span></a></div>
-                        </div></div>
-                    </div>
-                <div class="ai-source" data-no-thumbs>
-                    <div class="ai-source__drawings">
-                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.825" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../img/drawings/drawing-01-800.webp 800w" sizes="(max-width: 640px) 50vw, 25vw"><img src="../img/drawings/drawing-01-1600.jpg" alt="Drawing 01 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
-                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.796" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../img/drawings/drawing-08-800.webp 800w" sizes="(max-width: 640px) 50vw, 25vw"><img src="../img/drawings/drawing-08-1600.jpg" alt="Drawing 08 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
-                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.81" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../img/drawings/drawing-16-800.webp 800w" sizes="(max-width: 640px) 50vw, 25vw"><img src="../img/drawings/drawing-16-1600.jpg" alt="Drawing 16 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
-                        <a href="../drawings/" class="ai-source__drawing" style="--r:0.837" aria-label="Open the Drawings page"><picture><source type="image/webp" srcset="../img/drawings/drawing-20-800.webp 800w" sizes="(max-width: 640px) 50vw, 25vw"><img src="../img/drawings/drawing-20-1600.jpg" alt="Drawing 20 — the source of the architecture renders" loading="lazy" decoding="async"></picture></a>
+                        </div>
                     </div>
                 </div>
+                <!-- More content: folds open under the arrow -->
+                <div class="arch-more" id="more-content">
+                    <button type="button" class="arch-more__head" aria-expanded="false" aria-controls="arch-more-body"><span class="arch-more__mark"><span class="arch-more__title" role="heading" aria-level="2"><span>More content</span></span></span><span class="arch-more__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+                    <div class="arch-more__body" id="arch-more-body">
                     <div class="video-grid ai-arch__videos">
                         <article class="video-card">
                             <div class="video-card__embed">
@@ -368,7 +373,6 @@
                             </div>
                         </article>
                     </div>
-                </div>
                 <div class="small-arch">
                     <div class="small-arch__header"><h2 class="small-arch__title"><span>Small Architecture</span></h2></div>
                     <p class="small-arch__sub">Bionic Gothic in small architecture</p>
@@ -482,7 +486,8 @@
                         </div>
                     </article>
                 </div>
-                
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -553,7 +558,7 @@
     <script src="../lightbox.js"></script>
     <script src="../video-lightbox.js"></script>
     <script src="../smooth-scroll.js" defer></script>
-    <script src="../i18n.js?v=20261124am"></script>
+    <script src="../i18n.js?v=20261124mc"></script>
     <script>
     /* ARCHITECTURE wordmark flies up and out while scrolling down, comes back on the way up */
     (function () {
@@ -601,14 +606,14 @@
     </script>
 
     <script>
-    /* HOW IT IS MADE: the arrow opens and closes the block */
+    /* MORE CONTENT: the arrow opens and closes the videos and Small Architecture */
     (function () {
-        var box = document.querySelector('.arch-method');
+        var box = document.querySelector('.arch-more');
         if (!box) return;
-        var head = box.querySelector('.am__head');
+        var head = box.querySelector('.arch-more__head');
         function set(open) { box.classList.toggle('is-open', open); head.setAttribute('aria-expanded', open ? 'true' : 'false'); }
-        head.addEventListener('click', function () { set(!box.classList.contains('is-open')); });
-        if (location.hash === '#how-it-is-made') set(true);
+        head.addEventListener('click', function () { set(!box.classList.contains('is-open')); window.dispatchEvent(new Event('scroll')); });
+        if (location.hash === '#more-content') set(true);
     })();
     </script>
 </body>
