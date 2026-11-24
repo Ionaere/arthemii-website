@@ -49,7 +49,7 @@
   var IDX = { de: 0, 'de-at': 0, 'de-ch': 0, es: 1, fr: 2, ru: 3, zh: 4, ja: 5 };
   // Languages kept in their own file (i18n/<code>.js), loaded on demand
   var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1, ar: 1 };
-  var EXT_VERSION = 'v20261124aw';
+  var EXT_VERSION = 'v20261124aw2';
   var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT', 'de-ch': 'de-CH' };
   // Regional variants: the short code shown in the menu
   var CODE_LABEL = { 'de-at': 'AT', 'de-ch': 'CH' };
@@ -402,7 +402,7 @@
     "Kinetic Sculptures": ["Kinetische Skulpturen", "Esculturas cinéticas", "Sculptures cinétiques", "Кинетических скульптур", "动态雕塑", "キネティック彫刻"],
     "Stained-glass": ["Glasbilder", "Vidrieras", "Vitraux", "Витражей", "彩色玻璃", "ステンドグラス"],
     "Graphic Drawings": ["Grafische Zeichnungen", "Dibujos gráficos", "Dessins graphiques", "Графических рисунков", "素描作品", "グラフィック・ドローイング"],
-    "Artworks": ["Kunstwerke", "Obras", "Œuvres", "Работ", "作品", "作品"],
+    "Artworks": ["Kunstwerke", "Obras", "Œuvres", "Работы", "作品", "作品"],
     "Musicians": ["Musiker", "Músicos", "Musiciens", "Музыкантов", "音乐人", "ミュージシャン"],
     "Visitors": ["Besucher", "Visitantes", "Visiteurs", "Посетителей", "观众", "来場者"],
     "2×4m": ["2×4 m", "2×4 m", "2 × 4 m", "2 × 4 м", "2×4 米", "2×4m"],
