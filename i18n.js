@@ -49,7 +49,7 @@
   var IDX = { de: 0, 'de-at': 0, 'de-ch': 0, es: 1, fr: 2, ru: 3, zh: 4, ja: 5 };
   // Languages kept in their own file (i18n/<code>.js), loaded on demand
   var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1, ar: 1 };
-  var EXT_VERSION = '20261124mc';
+  var EXT_VERSION = '20261124sm';
   var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT', 'de-ch': 'de-CH' };
   // Regional variants: the short code shown in the menu
   var CODE_LABEL = { 'de-at': 'AT', 'de-ch': 'CH' };
@@ -79,6 +79,7 @@
   })();
   window.I18N_DATA = window.I18N_DATA || {};
   var T = {
+    "See more": ["Mehr ansehen", "Ver más", "Voir plus", "Смотреть больше", "查看更多", "もっと見る"],
     "Rotating glass sculptures — 2024": ["Rotierende Glasskulpturen — 2024", "Esculturas de vidrio giratorias — 2024", "Sculptures de verre en rotation — 2024", "Вращающиеся стеклянные скульптуры — 2024", "旋转的玻璃雕塑 — 2024", "回転するガラス彫刻 — 2024"],
     "Solo exhibition — 2024": ["Einzelausstellung — 2024", "Exposición individual — 2024", "Exposition personnelle — 2024", "Персональная выставка — 2024", "个展 — 2024", "個展 — 2024"],
     "Photos and video from the exhibition — 2024": ["Fotos und Video von der Ausstellung — 2024", "Fotos y vídeo de la exposición — 2024", "Photos et vidéo de l’exposition — 2024", "Фото и видео с выставки — 2024", "展览照片与视频 — 2024", "展覧会の写真と映像 — 2024"],
