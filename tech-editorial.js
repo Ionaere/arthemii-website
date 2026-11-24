@@ -171,7 +171,7 @@
 
   function init() {
     document.querySelectorAll('#projects .tech-block').forEach(function (block, i) {
-      if (i >= 3) block.classList.add('tb-above');   /* Glass Parts Sculpting, Tiffany: title above the photo */
+      if (i >= 3) block.classList.add('tb-above');   /* Epsilon S, Tiffany: title above the photo */
       var b = prepare(block);
       if (b) blocks.push(b);
     });
