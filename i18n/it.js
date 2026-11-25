@@ -5,6 +5,8 @@ window.I18N_DATA["it"] = {
   "2023 · approx. 150 × 35 × 45 cm · slumped coloured glass, dichroic film, built-in lamps · Berlin": "2023 · ca. 150 × 35 × 45 cm · vetro colorato curvato, pellicola dicroica, lampade integrate · Berlino",
   "A flame-shaped light sculpture of coloured glass, with two built-in lamps. Made by students of Ionaere Studio under the direction of Arthemii Ionaere.": "Una scultura luminosa a forma di fiamma, in vetro colorato, con due lampade integrate. Realizzata dagli studenti di Ionaere Studio sotto la direzione di Arthemii Ionaere.",
   "2020 · approx. 65 × 35 × 35 cm · coloured glass, two built-in lamps": "2020 · ca. 65 × 35 × 35 cm · vetro colorato, due lampade integrate",
+  "A double stained glass panel: two layers of stained glass are set one over the other, so that their lines and colours overlap and create an effect of depth that changes with the light and the viewing angle.": "Una doppia vetrata: due strati di vetrata sovrapposti, così che linee e colori si intrecciano e creano un effetto di profondità che cambia con la luce e l’angolo di osservazione.",
+  "2020 · approx. 60 × 180 cm · two layers of stained glass": "2020 · ca. 60 × 180 cm · due strati di vetrata",
   "Rotating glass sculptures — 2024": "Sculture di vetro rotanti — 2024",
   "Solo exhibition — 2024": "Mostra personale — 2024",
   "Photos and video from the exhibition — 2024": "Foto e video dalla mostra — 2024",
