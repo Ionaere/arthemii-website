@@ -467,8 +467,7 @@ const MODE_ICONS = [
 let mode = (() => {
   const q = params.get('view');
   if (MODES.includes(q)) return q;
-  try { const m = localStorage.getItem('spaceView'); if (MODES.includes(m)) return m; } catch (e) {}
-  return 'prism';
+  return 'cosmos';   // entering the space always opens the cosmos (a ?view= link can still open another view)
 })();
 const cosmosFog = new THREE.FogExp2(0x000000, 0.013);
 // In the kaleidoscope the works gather closer together (so the triangle is always full of them, not of black space)
@@ -510,7 +509,6 @@ function applyMode() {
 function setMode(m) {
   if (!MODES.includes(m) || m === mode) return;
   mode = m;
-  try { localStorage.setItem('spaceView', m); } catch (e) {}
   focus = null; glide = null;
   // the works may have moved closer or apart: the tour plans its curve again from here
   const carry = tour ? { head: tour.tan.clone(), speed: tour.speed, yawV: tour.yawV, pitchV: tour.pitchV } : null;
