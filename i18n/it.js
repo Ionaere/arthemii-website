@@ -3,6 +3,8 @@ window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["it"] = {
   "A horizontal light sculpture of slumped coloured glass covered with dichroic film, with built-in lamps. Depending on the angle and the light, the dichroic surfaces shift through the whole spectrum.": "Una scultura luminosa orizzontale in vetro colorato curvato rivestito di pellicola dicroica, con lampade integrate. A seconda dell'angolo e della luce, le superfici dicroiche attraversano l'intero spettro.",
   "2023 · approx. 150 × 35 × 45 cm · slumped coloured glass, dichroic film, built-in lamps · Berlin": "2023 · ca. 150 × 35 × 45 cm · vetro colorato curvato, pellicola dicroica, lampade integrate · Berlino",
+  "A flame-shaped light sculpture of coloured glass, with two built-in lamps. Made by students of Ionaere Studio under the direction of Arthemii Ionaere.": "Una scultura luminosa a forma di fiamma, in vetro colorato, con due lampade integrate. Realizzata dagli studenti di Ionaere Studio sotto la direzione di Arthemii Ionaere.",
+  "2020 · approx. 65 × 35 × 35 cm · coloured glass, two built-in lamps": "2020 · ca. 65 × 35 × 35 cm · vetro colorato, due lampade integrate",
   "Rotating glass sculptures — 2024": "Sculture di vetro rotanti — 2024",
   "Solo exhibition — 2024": "Mostra personale — 2024",
   "Photos and video from the exhibition — 2024": "Foto e video dalla mostra — 2024",
