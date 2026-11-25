@@ -420,6 +420,7 @@ window.I18N_DATA["ko"] = {
   "Workshop scene — Arthemii Ionaere": "공방 풍경 — Arthemii Ionaere",
   "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "공방 풍경 — Arthemii Ionaere의 현대 스테인드글라스 작품.",
   "Working moments": "작업의 순간",
+  "and working moments": "그리고 작업의 순간",
   "Working moments — Arthemii Ionaere": "작업의 순간 — Arthemii Ionaere",
   "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "작업실의 한 장면들: 유리를 자르고, 다듬고, 납땜하고, 조립하는 과정 — 작품이 빛을 만나기 전에 이루어지는 작업.",
   "← Back to the studio": "← 작업실로 돌아가기",

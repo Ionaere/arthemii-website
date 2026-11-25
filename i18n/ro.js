@@ -420,6 +420,7 @@ window.I18N_DATA["ro"] = {
   "Workshop scene — Arthemii Ionaere": "Scenă din atelier — Arthemii Ionaere",
   "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Scenă din atelier — lucrare contemporană de vitraliu de Arthemii Ionaere.",
   "Working moments": "Momente de lucru",
+  "and working moments": "și momente de lucru",
   "Working moments — Arthemii Ionaere": "Momente de lucru — Arthemii Ionaere",
   "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Imagini din atelier: tăierea, șlefuirea, lipirea și asamblarea sticlei — munca ce are loc înainte ca o lucrare să întâlnească lumina.",
   "← Back to the studio": "← Înapoi la atelier",

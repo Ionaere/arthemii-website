@@ -420,6 +420,7 @@ window.I18N_DATA["pt"] = {
   "Workshop scene — Arthemii Ionaere": "Cena da oficina — Arthemii Ionaere",
   "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Cena da oficina — obra contemporânea de vitral de Arthemii Ionaere.",
   "Working moments": "Momentos de trabalho",
+  "and working moments": "e momentos de trabalho",
   "Working moments — Arthemii Ionaere": "Momentos de trabalho — Arthemii Ionaere",
   "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Vislumbres do ateliê: cortar, lapidar, soldar e montar o vidro — o trabalho que acontece antes de uma peça encontrar a luz.",
   "← Back to the studio": "← Voltar ao ateliê",

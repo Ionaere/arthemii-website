@@ -49,7 +49,7 @@
   var IDX = { de: 0, 'de-at': 0, 'de-ch': 0, es: 1, fr: 2, ru: 3, zh: 4, ja: 5 };
   // Languages kept in their own file (i18n/<code>.js), loaded on demand
   var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1, ar: 1 };
-  var EXT_VERSION = 'v20261125gx';
+  var EXT_VERSION = 'v20261126wm';
   var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT', 'de-ch': 'de-CH' };
   // Regional variants: the short code shown in the menu
   var CODE_LABEL = { 'de-at': 'AT', 'de-ch': 'CH' };
@@ -284,6 +284,7 @@
     "Workspace": ["Atelier", "Taller", "Atelier", "Мастерская", "工作室", "アトリエ"],
     "Workshop": ["Werkstatt", "Taller", "Atelier", "Мастерская", "工作室", "工房"],
     "Working moments": ["Arbeitsmomente", "Momentos de trabajo", "Moments de travail", "Рабочие моменты", "工作瞬间", "制作のひととき"],
+    "and working moments": ["und Arbeitsmomente", "y momentos de trabajo", "et moments de travail", "и рабочие моменты", "以及工作瞬间", "そして制作のひととき"],
     "Working moments — Arthemii Ionaere": ["Arbeitsmomente — Arthemii Ionaere", "Momentos de trabajo — Arthemii Ionaere", "Moments de travail — Arthemii Ionaere", "Рабочие моменты — Arthemii Ionaere", "工作瞬间 — Arthemii Ionaere", "制作のひととき — Arthemii Ionaere"],
     "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": ["Einblicke ins Atelier: Schneiden, Einfassen, Löten und Zusammensetzen des Glases — die Arbeit, bevor ein Werk zum ersten Mal ins Licht kommt.", "Escenas del estudio: cortar, ribetear, soldar y montar el vidrio — el trabajo que ocurre antes de que una obra encuentre la luz.", "Instants d’atelier : découper, sertir, souder et assembler le verre — le travail qui précède la rencontre d’une œuvre avec la lumière.", "Кадры из мастерской: резка, окантовка, пайка и сборка стекла — работа, которая происходит до того, как работа впервые встретится со светом.", "工作室的片段：切割、包边、焊接与组装玻璃——作品第一次与光相遇之前的工作。", "アトリエの断片：ガラスを切り、縁取り、はんだ付けし、組み上げる——作品が初めて光に出会う前の仕事。"],
     "← Back to the studio": ["← Zurück zum Atelier", "← Volver al estudio", "← Retour à l’atelier", "← Назад в мастерскую", "← 返回工作室", "← アトリエに戻る"],

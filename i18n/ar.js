@@ -194,6 +194,7 @@ window.I18N_DATA["ar"] = {
   "Workspace": "مكان العمل",
   "Workshop": "الورشة",
   "Working moments": "لحظات العمل",
+  "and working moments": "ولحظات العمل",
   "Working moments — Arthemii Ionaere": "لحظات العمل — Arthemii Ionaere",
   "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "لمحات من المرسم: قصّ الزجاج وتحفيفه ولحامه وتجميعه، العمل الذي يجري قبل أن يلتقي العمل بالضوء.",
   "← Back to the studio": "→ العودة إلى المرسم",
