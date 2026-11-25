@@ -1,6 +1,8 @@
 /* Arthemii Ionaere — Italiano translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["it"] = {
+  "A horizontal light sculpture of slumped coloured glass covered with dichroic film, with built-in lamps. Depending on the angle and the light, the dichroic surfaces shift through the whole spectrum.": "Una scultura luminosa orizzontale in vetro colorato curvato rivestito di pellicola dicroica, con lampade integrate. A seconda dell'angolo e della luce, le superfici dicroiche attraversano l'intero spettro.",
+  "2023 · approx. 150 × 35 × 45 cm · slumped coloured glass, dichroic film, built-in lamps · Berlin": "2023 · ca. 150 × 35 × 45 cm · vetro colorato curvato, pellicola dicroica, lampade integrate · Berlino",
   "Rotating glass sculptures — 2024": "Sculture di vetro rotanti — 2024",
   "Solo exhibition — 2024": "Mostra personale — 2024",
   "Photos and video from the exhibition — 2024": "Foto e video dalla mostra — 2024",
