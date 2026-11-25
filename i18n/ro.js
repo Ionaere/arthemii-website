@@ -1,6 +1,8 @@
 /* Arthemii Ionaere — Română translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["ro"] = {
+  "A sculpture from the Glass Parts Sculpting series: coloured glass parts are assembled on one frame and set on a stand. It has no built-in lamps, but works as a prism: when light is aimed at it correctly, the glass casts coloured shadows onto the wall behind it.": "O sculptură din seria Glass Parts Sculpting: piese de sticlă colorată sunt asamblate pe un singur cadru și așezate pe un suport. Nu are lămpi încorporate, dar funcționează ca o prismă: când lumina este îndreptată corect spre ea, sticla proiectează umbre colorate pe peretele din spate.",
+  "2026 · Glass Parts Sculpting · approx. 65 × 35 × 15 cm · coloured glass, brass · Berlin": "2026 · Glass Parts Sculpting · cca 65 × 35 × 15 cm · sticlă colorată, alamă · Berlin",
   "Rotating glass sculptures — 2024": "Sculpturi de sticlă rotative — 2024",
   "Solo exhibition — 2024": "Expoziție personală — 2024",
   "Photos and video from the exhibition — 2024": "Fotografii și video de la expoziție — 2024",

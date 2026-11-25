@@ -1,6 +1,8 @@
 /* Arthemii Ionaere — Türkçe translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["tr"] = {
+  "A sculpture from the Glass Parts Sculpting series: coloured glass parts are assembled on one frame and set on a stand. It has no built-in lamps, but works as a prism: when light is aimed at it correctly, the glass casts coloured shadows onto the wall behind it.": "Glass Parts Sculpting serisinden bir heykel: renkli cam parçalar tek bir çerçeve üzerinde birleştirilmiş ve bir standın üzerine yerleştirilmiştir. Yerleşik lambası yoktur, ancak bir prizma gibi çalışır: ışık doğru şekilde üzerine yöneltildiğinde cam, arkadaki duvara renkli gölgeler düşürür.",
+  "2026 · Glass Parts Sculpting · approx. 65 × 35 × 15 cm · coloured glass, brass · Berlin": "2026 · Glass Parts Sculpting · yakl. 65 × 35 × 15 cm · renkli cam, pirinç · Berlin",
   "Rotating glass sculptures — 2024": "Dönen cam heykeller — 2024",
   "Solo exhibition — 2024": "Kişisel sergi — 2024",
   "Photos and video from the exhibition — 2024": "Sergiden fotoğraflar ve video — 2024",
