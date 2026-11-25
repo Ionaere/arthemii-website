@@ -7,6 +7,8 @@ window.I18N_DATA["it"] = {
   "2020 · approx. 65 × 35 × 35 cm · coloured glass, two built-in lamps": "2020 · ca. 65 × 35 × 35 cm · vetro colorato, due lampade integrate",
   "A double stained glass panel: two layers of stained glass are set one over the other, so that their lines and colours overlap and create an effect of depth that changes with the light and the viewing angle.": "Una doppia vetrata: due strati di vetrata sovrapposti, così che linee e colori si intrecciano e creano un effetto di profondità che cambia con la luce e l’angolo di osservazione.",
   "2020 · approx. 60 × 180 cm · two layers of stained glass": "2020 · ca. 60 × 180 cm · due strati di vetrata",
+  "A sculpture from the Glass Parts Sculpting series: coloured glass parts are assembled on one frame and set on a stand, with two lamps built in among them.": "Una scultura della serie Glass Parts Sculpting: parti in vetro colorato assemblate su un unico telaio e poste su un supporto, con due lampade integrate tra di esse.",
+  "2021 · Glass Parts Sculpting · approx. 50 × 40 × 30 cm · coloured glass, two built-in lamps": "2021 · Glass Parts Sculpting · ca. 50 × 40 × 30 cm · vetro colorato, due lampade integrate",
   "Rotating glass sculptures — 2024": "Sculture di vetro rotanti — 2024",
   "Solo exhibition — 2024": "Mostra personale — 2024",
   "Photos and video from the exhibition — 2024": "Foto e video dalla mostra — 2024",
