@@ -1,6 +1,8 @@
 /* Arthemii Ionaere — Dansk translations, loaded by i18n.js on demand. Keys are the English texts. */
 window.I18N_DATA = window.I18N_DATA || {};
 window.I18N_DATA["da"] = {
+  "A sculpture from the Glass Parts Sculpting series: coloured glass parts are assembled on one frame and set on a stand. It has no built-in lamps, but works as a prism: when light is aimed at it correctly, the glass casts coloured shadows onto the wall behind it.": "En skulptur fra serien Glass Parts Sculpting: farvede glasdele er samlet på én ramme og sat på et stativ. Den har ingen indbyggede lamper, men virker som et prisme: når lyset rettes rigtigt mod den, kaster glasset farvede skygger på væggen bagved.",
+  "2026 · Glass Parts Sculpting · approx. 65 × 35 × 15 cm · coloured glass, brass · Berlin": "2026 · Glass Parts Sculpting · ca. 65 × 35 × 15 cm · farvet glas, messing · Berlin",
   "Rotating glass sculptures — 2024": "Roterende glasskulpturer — 2024",
   "Solo exhibition — 2024": "Separatudstilling — 2024",
   "Photos and video from the exhibition — 2024": "Fotos og video fra udstillingen — 2024",
