@@ -108,6 +108,7 @@ window.I18N_DATA["it"] = {
   "Workspace": "Spazio di lavoro",
   "Workshop": "Laboratorio",
   "Working moments": "Momenti di lavoro",
+  "and working moments": "e momenti di lavoro",
   "Working moments — Arthemii Ionaere": "Momenti di lavoro — Arthemii Ionaere",
   "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Scorci dello studio: tagliare, bordare, saldare e assemblare il vetro — il lavoro che avviene prima che un’opera incontri la luce.",
   "← Back to the studio": "← Torna allo studio",

@@ -420,6 +420,7 @@ window.I18N_DATA["sv"] = {
   "Workshop scene — Arthemii Ionaere": "Verkstadsscen — Arthemii Ionaere",
   "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "Verkstadsscen — samtida glaskonst av Arthemii Ionaere.",
   "Working moments": "Arbetsstunder",
+  "and working moments": "och arbetsstunder",
   "Working moments — Arthemii Ionaere": "Arbetsstunder — Arthemii Ionaere",
   "Glimpses from the studio: cutting, edging, soldering and assembling the glass — the work that happens before a piece ever meets the light.": "Glimtar från ateljén: att skära, slipa, löda och montera glaset — arbetet som sker innan ett verk någonsin möter ljuset.",
   "← Back to the studio": "← Tillbaka till ateljén",
