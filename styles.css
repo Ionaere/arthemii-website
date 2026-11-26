@@ -2033,6 +2033,8 @@
            alternating left and right) or below it (wide photos); photo-nav.js sets the classes ===== */
         .gp { --gp-h: calc(100svh - 72px - 9rem); }
         .gp .photo-view { margin-bottom: 0 !important; }
+        /* more photos under a photo with the text beside it: keep a gap, so the photos don't touch */
+        .gp--side + .photo-more { margin-top: var(--spacing-lg); }
         .gp-title {
             margin: 0 0 0.55em;
             font-family: 'Italiana', var(--font-serif); font-weight: 400;
