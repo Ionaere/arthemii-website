@@ -104,6 +104,31 @@
     }
   }
 
+  /* closed rows: if section names are wider than the row (narrow phones), all names on the page
+     are scaled down together by the same factor (--hg-fit in the page CSS), so they stay one size;
+     a single very long name (some languages) is scaled down a bit more on its own */
+  function fitClosed() {
+    var items = [];
+    document.querySelectorAll('main > section.section.is-collapsible:not(.is-open)').forEach(function (sec) {
+      var toggle = sec.querySelector(':scope > .container > .section__toggle');
+      var label = toggle && toggle.querySelector('.section__label');
+      if (!label || label.style.fontSize) return;   /* none, or still shrinking back after closing */
+      label.style.setProperty('--hg-fit', '1');
+      items.push([toggle, label]);
+    });
+    var fits = items.map(function (it) {
+      var chev = it[0].querySelector('.section__chevron');
+      var side = chev ? chev.offsetWidth + 12 : 0;
+      var avail = it[0].clientWidth - 2 * side, need = it[1].scrollWidth;
+      return avail > 0 && need > avail ? avail / need * 0.98 : 1;
+    });
+    var common = Math.max(0.8, Math.min.apply(null, fits.concat([1])));
+    items.forEach(function (it, i) {
+      var f = Math.min(common, fits[i]);
+      if (f < 1) it[1].style.setProperty('--hg-fit', f.toFixed(3));
+    });
+  }
+
   function shrink(block) {
     var el = block.classList.contains('section')
       ? block.querySelector(':scope > .container > .section__toggle .section__label')
@@ -111,7 +136,7 @@
     if (!el) return;
     el.style.removeProperty('font-size');
     var t = el;
-    setTimeout(function () { if (!t.style.fontSize) t.classList.remove('hg-grown', 'hg-wrap'); }, 800);
+    setTimeout(function () { if (!t.style.fontSize) t.classList.remove('hg-grown', 'hg-wrap'); fitClosed(); }, 800);
   }
 
   /* while a block unfolds, its title stays where it was clicked (no jump up or down the page) */
@@ -153,15 +178,20 @@
       if (b.classList.contains('is-open')) check(b);
       mo.observe(b, { attributes: true, attributeFilter: ['class'] });
     });
+    fitClosed();
+    window.addEventListener('load', fitClosed);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitClosed);
     var rt;
     window.addEventListener('resize', function () {
       clearTimeout(rt);
       rt = setTimeout(function () {
+        fitClosed();
         document.querySelectorAll(SEL).forEach(function (b) { if (b.classList.contains('is-open')) grow(b); });
       }, 150);
     });
     /* titles that change language must be re-fitted */
     document.addEventListener('i18n:changed', function () {
+      fitClosed();
       document.querySelectorAll(SEL).forEach(function (b) { if (b.classList.contains('is-open')) grow(b); });
     });
   }
