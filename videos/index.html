@@ -405,8 +405,11 @@
             if(!ph||ph.hasAttribute("data-autoplay"))return; // played by yt-autoplay.js
             v=document.createElement("video");
             v.preload="none";
-            v.setAttribute("data-src","../video-files/yt-"+ph.getAttribute("data-yt")+".mp4");
-            v.poster="../video-posters/yt-"+ph.getAttribute("data-yt")+".jpg";
+            // Paths are joined from parts so no half-finished URL appears in the page source
+            // (Google tried to crawl "../video-files/yt-" and reported it as a 404).
+            var ytId=ph.getAttribute("data-yt");
+            v.setAttribute("data-src",["..","video-files","yt-"+ytId+".mp4"].join("/"));
+            v.poster=["..","video-posters","yt-"+ytId+".jpg"].join("/");
             v.style.cssText="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none";
             if(getComputedStyle(ph).position==="static")ph.style.position="relative";
             ph.appendChild(v);
