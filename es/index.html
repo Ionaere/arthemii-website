@@ -759,11 +759,13 @@
             .hero__content .hero__desc { text-align: left; }
         }
         @media (max-width: 768px) {
+            /* phones: IONAERE stands above the video, STUDIO lies on the top of the video */
             .hero__studio {
-                margin: 0 0 -2.1em;
+                margin: 0 0 -1.45em;
                 padding: 0 3%;
-                top: calc(min((100vw - 2 * var(--spacing-md)) * 0.625, 50vh - 9rem) - 1.05em);
+                top: 0;
             }
+            .hero__studio-name { line-height: 1.45; }
         }
         @media (min-width: 1025px) {
             /* intro centred on top, then the wordmark running onto the video,
