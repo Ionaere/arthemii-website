@@ -72,11 +72,10 @@
         .renders__videos .video-card__embed { background: #111; }
         .ai-arch { margin-top: var(--spacing-2xl); }
         /* Architecture first, its title as a big wordmark (like IONAERE STUDIO on the home page)
-           that drops in from above, runs onto the first photos and flies away on scroll */
+           — static, no animation (only the home page title is animated) */
         .ai-arch.ai-arch--first { margin-top: 0; margin-bottom: var(--spacing-2xl); }
         .ai-arch--first .ai-arch__header { max-width: none; margin: 0 0 var(--spacing-lg); position: relative; z-index: 3;
-            font-size: clamp(1.3rem, 5vw, 5.5rem); pointer-events: none; mix-blend-mode: difference;
-            opacity: 0; animation: aiArchFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both; }
+            font-size: clamp(1.3rem, 5vw, 5.5rem); pointer-events: none; mix-blend-mode: difference; }
         .ai-arch--first .ai-arch__title {
             display: flex; align-items: center; justify-content: center; gap: clamp(0.75rem, 2.5vw, 2.5rem);
             margin: 0; font-family: 'Italiana', var(--font-serif); font-weight: 400; font-size: 1em; line-height: 1;
@@ -88,11 +87,6 @@
             content: ""; flex: 1 1 0; max-width: 220px; height: 1px; background: rgba(255, 255, 255, 0.55);
         }
         .ai-arch--first .ai-arch__desc { margin-top: var(--spacing-md); max-width: 640px; }
-        @keyframes aiArchFlyIn {
-            0%   { opacity: 0; transform: translate3d(0, -110vh, 0) scale(1.9); }
-            25%  { opacity: 1; }
-            100% { opacity: 1; transform: none; }
-        }
         @media (max-width: 768px) {
             .ai-arch--first .ai-arch__header { font-size: 5.4vw; }
             .ai-arch--first .ai-arch__title { letter-spacing: 0.24em; gap: 0.5rem; }
@@ -143,12 +137,12 @@
             .renders__photos .gallery__row { gap: var(--spacing-xs); width: 100%; }
             .renders__photos .gallery__row > .gallery__item { flex: var(--r) 1 0; aspect-ratio: var(--r); height: auto; }
         }
-        /* SMALL ARCHITECTURE wordmark: flies in from above when it scrolls into view, flies away up */
+        /* SMALL ARCHITECTURE wordmark: static */
         .small-arch { margin: var(--spacing-2xl) 0 var(--spacing-lg); text-align: center; }
         .small-arch__header { font-size: clamp(1.1rem, 4.2vw, 4.6rem); pointer-events: none; position: relative; z-index: 3; }
         .small-arch__title { display: flex; align-items: center; justify-content: center; gap: clamp(0.75rem, 2.5vw, 2.5rem);
             margin: 0; font-family: 'Italiana', var(--font-serif); font-weight: 400; font-size: 1em; line-height: 1;
-            letter-spacing: 0.34em; text-transform: uppercase; white-space: nowrap; color: var(--text); transform-origin: 50% 60%; will-change: transform, opacity; }
+            letter-spacing: 0.34em; text-transform: uppercase; white-space: nowrap; color: var(--text); transform-origin: 50% 60%; }
         .small-arch__title span { margin-right: -0.34em; }
         .small-arch__title::before, .small-arch__title::after { content: ""; flex: 1 1 0; max-width: 220px; height: 1px; background: currentColor; opacity: 0.45; }
         .small-arch__sub { font-family: 'Montserrat', var(--font-sans); font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase;
@@ -563,51 +557,6 @@
     <script src="../../video-lightbox.js"></script>
     <script src="../../smooth-scroll.js?v=20261124saf" defer></script>
     <script src="../../i18n.js?v=20261126wm"></script>
-    <script>
-    /* ARCHITECTURE wordmark flies up and out while scrolling down, comes back on the way up */
-    (function () {
-        var el = document.querySelector('.ai-arch--first .ai-arch__title');
-        if (!el) return;
-        var ticking = false;
-        function update() {
-            ticking = false;
-            var h = window.innerHeight;
-            var p = Math.min(Math.max(window.scrollY / Math.max(h * 0.6, 280), 0), 1);
-            var e = p * p * (3 - 2 * p);
-            el.style.transform = 'translate3d(0,' + (-e * h * 1.1).toFixed(1) + 'px,0) scale(' + (1 + e * 0.9).toFixed(3) + ')';
-            el.style.opacity = (1 - e * e).toFixed(3);
-        }
-        function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
-        update();
-    })();
-    </script>
-    <script>
-    /* SMALL ARCHITECTURE wordmark: drops in from above as it enters the screen, flies up and out as it leaves */
-    (function () {
-        var el = document.querySelector('.small-arch__title');
-        if (!el) return;
-        var ticking = false;
-        function ease(p) { p = Math.min(Math.max(p, 0), 1); return p * p * (3 - 2 * p); }
-        function update() {
-            ticking = false;
-            /* measured on the (unmoved) header around the title — measuring the moving title itself
-               made the animation chase its own position, so it jerked, jumped and vanished */
-            var h = window.innerHeight, t = (el.parentElement || el).getBoundingClientRect().top / h;
-            var ein = ease((t - 0.55) / 0.4);   /* 1 while below the screen, 0 once at 55% height */
-            var eout = ease((0.2 - t) / 0.45);  /* 0 until it reaches 20% height, 1 when gone */
-            var e = Math.max(ein, eout);
-            var y = ein > 0 ? -ein * h * 0.7 : -eout * h * 1.1;
-            el.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0) scale(' + (1 + e * 0.9).toFixed(3) + ')';
-            el.style.opacity = (1 - e * e).toFixed(3);
-        }
-        function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
-        update();
-    })();
-    </script>
 
     <script>
     /* MORE CONTENT: the arrow opens and closes the videos and Small Architecture */
