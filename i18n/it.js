@@ -585,5 +585,6 @@ window.I18N_DATA["it"] = {
   "Free line drawing No. 29": "Disegno a linea libera n. 29",
   "Concept 11": "Concetto 11",
   "Concept 12": "Concetto 12",
-  "See more": "Vedi di più"
+  "See more": "Vedi di più",
+  "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": "2023 · Tiffany Vitrage · 90 × 60 cm · vetro colorato, nastro di rame, stagno · Berlino"
 };
