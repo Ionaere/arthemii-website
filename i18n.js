@@ -49,7 +49,7 @@
   var IDX = { de: 0, 'de-at': 0, 'de-ch': 0, es: 1, fr: 2, ru: 3, zh: 4, ja: 5 };
   // Languages kept in their own file (i18n/<code>.js), loaded on demand
   var EXT = { it: 1, nl: 1, pt: 1, ko: 1, fi: 1, sv: 1, ro: 1, pl: 1, da: 1, tr: 1, ar: 1 };
-  var EXT_VERSION = 'v20261126parus';
+  var EXT_VERSION = 'v20261126gv';
   var HTML_LANG = { zh: 'zh-Hans', 'de-at': 'de-AT', 'de-ch': 'de-CH' };
   // Regional variants: the short code shown in the menu
   var CODE_LABEL = { 'de-at': 'AT', 'de-ch': 'CH' };
@@ -275,6 +275,7 @@
     "Blue Vitrage": ["Blaues Glasbild", "Vitral azul", "Vitrail bleu", "Синий витраж", "蓝色彩窗", "青のステンドグラス"],
     "A Tiffany stained-glass panel of flowing, interwoven lines in blues and greys on white glass, made in the copper-foil technique after Arthemii’s own drawing, shown here beside it.": ["Ein Tiffany-Glasbild aus fließenden, verflochtenen Linien in Blau- und Grautönen auf weißem Glas, in Kupferfolientechnik nach Arthemiis eigener Zeichnung gefertigt, die hier daneben zu sehen ist.", "Un vitral Tiffany de líneas fluidas y entrelazadas en azules y grises sobre vidrio blanco, realizado con la técnica de lámina de cobre a partir del propio dibujo de Arthemii, que se muestra a su lado.", "Un vitrail Tiffany aux lignes fluides et entrelacées dans des bleus et gris sur verre blanc, réalisé selon la technique du ruban de cuivre d’après le dessin d’Arthemii, présenté ici à côté.", "Витраж Тиффани из плавных переплетающихся линий синих и серых оттенков на белом стекле, выполненный в технике медной фольги по собственному рисунку Артемия, который показан рядом.", "一幅蒂芙尼彩色玻璃画：白色玻璃上交织流动的蓝色和灰色线条，采用铜箔工艺，依据 Arthemii 本人的素描制作，素描展示在旁边。", "白いガラスに青とグレーの流れるように絡み合う線を描いたティファニー・ステンドグラス。Arthemii 自身のドローイングをもとにカッパーフォイル技法で制作され、そのドローイングを隣に添えています。"],
     "Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": ["Tiffany Vitrage · 90 × 60 cm · Farbglas, Kupferfolie, Lot · Berlin", "Tiffany Vitrage · 90 × 60 cm · vidrio de color, lámina de cobre, estaño · Berlín", "Tiffany Vitrage · 90 × 60 cm · verre coloré, ruban de cuivre, soudure · Berlin", "Tiffany Vitrage · 90 × 60 см · цветное стекло, медная фольга, припой · Берлин", "Tiffany Vitrage · 90 × 60 厘米 · 彩色玻璃、铜箔、焊锡 · 柏林", "Tiffany Vitrage · 90 × 60 cm · 色ガラス、銅箔、はんだ · ベルリン"],
+    "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": ["2023 · Tiffany Vitrage · 90 × 60 cm · Farbglas, Kupferfolie, Lot · Berlin", "2023 · Tiffany Vitrage · 90 × 60 cm · vidrio de color, lámina de cobre, estaño · Berlín", "2023 · Tiffany Vitrage · 90 × 60 cm · verre coloré, ruban de cuivre, soudure · Berlin", "2023 · Tiffany Vitrage · 90 × 60 см · цветное стекло, медная фольга, припой · Берлин", "2023 · Tiffany Vitrage · 90 × 60 厘米 · 彩色玻璃、铜箔、焊锡 · 柏林", "2023 · Tiffany Vitrage · 90 × 60 cm · 色ガラス、銅箔、はんだ · ベルリン"],
     "← Back to Artworks": ["← Zurück zu den Kunstwerken", "← Volver a las obras", "← Retour aux œuvres", "← Назад к работам", "← 返回作品", "← 作品一覧に戻る"],
     "Epsilon S": ["Epsilon S", "Epsilon S", "Epsilon S", "Epsilon S", "Epsilon S", "Epsilon S"],
     "Glass Parts Sculpting": ["Glass Parts Sculpting", "Glass Parts Sculpting", "Glass Parts Sculpting", "Glass Parts Sculpting", "Glass Parts Sculpting", "Glass Parts Sculpting"],

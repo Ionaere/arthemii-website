@@ -526,5 +526,6 @@ window.I18N_DATA["ar"] = {
   "Vertical glass work — contemporary stained glass artwork by Arthemii Ionaere.": "عمل زجاجي عمودي — عمل زجاج معشّق معاصر من Arthemii Ionaere.",
   "Workshop scene": "مشهد من الورشة",
   "Workshop scene — Arthemii Ionaere": "مشهد من الورشة — Arthemii Ionaere",
-  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "مشهد من الورشة — عمل زجاج معشّق معاصر من Arthemii Ionaere."
+  "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "مشهد من الورشة — عمل زجاج معشّق معاصر من Arthemii Ionaere.",
+  "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": "2023 · Tiffany Vitrage · 90 × 60 سم · زجاج ملوّن، شريط نحاسي، لحام · برلين"
 };

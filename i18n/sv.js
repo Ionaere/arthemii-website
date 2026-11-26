@@ -527,5 +527,6 @@ window.I18N_DATA["sv"] = {
   "These drawings later became the source of his architecture: each one is a precise schematic that artificial intelligence reads and turns into architecture, jewellery and other forms.": "Dessa teckningar blev senare källan till hans arkitektur: var och en är ett exakt schema som artificiell intelligens läser och förvandlar till arkitektur, smycken och andra former.",
   "Collected here are Arthemii’s projects, ranging from stained glass to sculpture on a metal frame. He is constantly looking for new paths and new projects. A new project will be ready soon: metal frames that can be assembled into one whole, taken apart and installed in any way. It will be presented shortly.": "Här samlas Arthemiis projekt, från glasmålning till skulptur på en metallram. Han söker ständigt nya vägar och nya projekt. Snart är ett nytt projekt klart: metallramar som kan fogas samman till en helhet, plockas isär och installeras på valfritt sätt. Det presenteras inom kort.",
   "Sculptures, exhibitions, the studio, installations, theatre and more": "Skulpturer, utställningar, ateljé, installationer, teater och mer",
-  "See more": "Se mer"
+  "See more": "Se mer",
+  "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": "2023 · Tiffany Vitrage · 90 × 60 cm · färgat glas, kopparfolie, lödtenn · Berlin"
 };
