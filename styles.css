@@ -1748,16 +1748,14 @@
         .mobile-nav__link[href$="works/"]:not([href$="artworks/"]) { display: none; }
 
         /* ===== Page name as a big wordmark, like IONAERE STUDIO on the home page:
-           wide-tracked Italiana capitals with side rules; drops in from above when the
-           page opens and flies away while scrolling down (page-wordmark.js) ===== */
+           wide-tracked Italiana capitals with side rules; static on the inner pages
+           (the fly-in animation is only on the home page title) ===== */
         .page-wordmark {
             position: relative; z-index: 3;
             margin: 0 0 var(--spacing-xl);
             font-size: clamp(1.4rem, 5.4vw, 6rem);
             pointer-events: none;
             mix-blend-mode: difference;
-            opacity: 0;
-            animation: pageWordmarkFlyIn 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
         }
         .page-wordmark__inner {
             display: flex; align-items: center; justify-content: center;
@@ -1772,11 +1770,6 @@
             letter-spacing: 0.38em; margin-right: -0.38em;
             text-transform: uppercase; white-space: nowrap;
             color: #fff;
-        }
-        @keyframes pageWordmarkFlyIn {
-            0%   { opacity: 0; transform: translate3d(0, -110vh, 0) scale(1.9); }
-            25%  { opacity: 1; }
-            100% { opacity: 1; transform: none; }
         }
         @media (max-width: 768px) {
             /* phones: one word per line, like IONAERE / STUDIO on the home page */
