@@ -98,19 +98,6 @@
         @media (max-width: 899px) { .vg-toggle { order: 3; margin-top: 1.1rem; } }
     </style>
     <style>
-        /* Short Videos: a tab that opens smoothly */
-        .sv { margin-top: var(--spacing-2xl); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .sv-toggle { position: relative; display: flex; flex-direction: column; align-items: center; gap: .6rem; padding: clamp(1.4rem, 2.6vw, 2.1rem) 0; cursor: pointer; text-align: center; outline: none; -webkit-tap-highlight-color: transparent; }
-        .sv-toggle .ai-arch__title { margin: 0 !important; }
-        .sv-chev { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: transform .9s cubic-bezier(.16,1,.3,1), color .3s, border-color .3s; }
-        .sv-chev svg { width: 15px; height: 15px; }
-        .sv-toggle:hover .sv-chev { color: var(--text); border-color: var(--text-tertiary); }
-        .sv.is-open .sv-chev { transform: rotate(180deg); }
-        .sv-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 1.1s cubic-bezier(.16,1,.3,1); }
-        .sv.is-open .sv-body { grid-template-rows: 1fr; }
-        .sv-inner { min-height: 0; overflow: hidden; opacity: 0; transition: opacity .8s ease .1s; }
-        .sv.is-open .sv-inner { opacity: 1; padding-bottom: var(--spacing-xl); }
-        .sv-inner > .ai-arch__desc { text-align: center; max-width: 640px; margin: 0 auto var(--spacing-md); }
     </style>
 </head>
 <body>
@@ -276,80 +263,6 @@
                         </div>
                     </article>
                 </div>
-
-                <div class="ai-arch ai-arch--videos sv">
-                    <div class="sv-toggle" role="button" tabindex="0" aria-expanded="false"><h3 class="ai-arch__title" data-i18n="short_videos">Short Videos</h3><span class="sv-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
-                    <div class="sv-body"><div class="sv-inner">
-                    <p class="ai-arch__desc" data-i18n="ai_arch_desc">Moving studies of bionic buildings and sculptures in real landscapes and cities, generated with AI.</p>
-                    <div class="video-grid ai-arch__videos">
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-02-poster.jpg" src="../video-files/ai/ai-02.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-01-poster.jpg" src="../video-files/ai/ai-01.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-03-poster.jpg" src="../video-files/ai/ai-03.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-04-poster.jpg" src="../video-files/ai/ai-04.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-05-poster.jpg" src="../video-files/ai/ai-05.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-06-poster.jpg" src="../video-files/ai/ai-06.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-07-poster.jpg" src="../video-files/ai/ai-07.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-08-poster.jpg" src="../video-files/ai/ai-08.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-09-poster.jpg" src="../video-files/ai/ai-09.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-10-poster.jpg" src="../video-files/ai/ai-10.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-11-poster.jpg" src="../video-files/ai/ai-11.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-12-poster.jpg" src="../video-files/ai/ai-12.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                        <article class="video-card">
-                            <div class="video-card__embed">
-                                <video poster="../img/renders/ai-13-poster.jpg" src="../video-files/ai/ai-13.mp4" muted loop playsinline preload="metadata" aria-label="Architecture video by Arthemii Ionaere"></video>
-                            </div>
-                        </article>
-                    </div>
-                    </div></div>
-                </div>
             </div>
         </section>
     </main>
@@ -458,16 +371,5 @@
     <script src="../i18n.js?v=20261126gv"></script>
     <script src="../page-wordmark.js?v=20261126st" defer></script>
     <script src="../video-slides.js?v=20261123u" defer></script>
-    <script>
-    (function(){
-        var sv=document.querySelector('.sv'); if(!sv) return;
-        var t=sv.querySelector('.sv-toggle');
-        function go(){ var open=!sv.classList.contains('is-open'); sv.classList.toggle('is-open',open); t.setAttribute('aria-expanded',open?'true':'false');
-            if(!open) sv.querySelectorAll('video').forEach(function(v){try{v.pause()}catch(e){}});
-            else setTimeout(function(){ window.dispatchEvent(new Event('scroll')); },1200); }
-        t.addEventListener('click',go);
-        t.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
-    })();
-    </script>
 </body>
 </html>
