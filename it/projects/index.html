@@ -41,6 +41,10 @@
            the row grouping is computed by the script at the bottom and redone on resize. */
         .tech-block__inner { grid-template-columns: 1fr; gap: var(--spacing-md); }
         .tech-block__inner > div:first-child { max-width: 720px; }
+        /* all project texts centred (overrides the alternating left/right sides from styles.css) */
+        .page-top ~ .tech-block:nth-of-type(n) .tech-block__inner > div:first-child {
+            justify-self: center; margin-left: auto; margin-right: auto; text-align: center;
+        }
         .tech-gallery { display: flex; flex-wrap: wrap; gap: var(--gap); --gap: 8px; min-width: 0; }
         /* Fallback before the script runs: proportional flex rows */
         .tech-gallery .tech-block__photo {
@@ -299,7 +303,9 @@
     })(vcs[i])};
     </script>
     <script>
-    /* Projects page: justified rows — every photo visible, uncropped, nothing wider than the screen */
+    /* Projects page: justified rows — every photo visible, uncropped, and every row fills the full width
+       (no white gaps). Photos are split into rows so that the row heights stay as close as possible to the
+       preferred height; the split is redone on resize. */
     (function () {
         var galleries = document.querySelectorAll('.tech-gallery');
         function target(w) { return w < 500 ? 150 : w < 900 ? 210 : 300; }   // preferred row height (px)
@@ -307,27 +313,37 @@
             var W = g.clientWidth; if (!W) return;
             var gap = parseFloat(getComputedStyle(g).columnGap) || 8;
             var items = Array.prototype.slice.call(g.querySelectorAll('.tech-block__photo, .tech-video'));
+            var n = items.length; if (!n) return;
             var H = target(W);
             var maxH = Math.min(H * 1.6, window.innerHeight * 0.8);
-            var row = [], sum = 0, lastH = 0;
-            function place(r, h) {
-                lastH = h;
-                r.forEach(function (it) {
-                    it.style.width = Math.floor(it._r * h * 100) / 100 + 'px';
-                    it.style.height = Math.floor(h * 100) / 100 + 'px';
-                });
+            items.forEach(function (it) { it._r = parseFloat(getComputedStyle(it).getPropertyValue('--r')) || 1.5; });
+            function rowH(i, j) { var s = 0; for (var k = i; k < j; k++) s += items[k]._r; return (W - gap * (j - i - 1)) / s; }
+            function cost(h) {
+                var c = Math.log(h / H); c = c * c;
+                if (h > maxH) c += 4 + 40 * (h / maxH - 1) * (h / maxH - 1);   // a row taller than allowed: only if nothing else works
+                return c;
             }
-            items.forEach(function (it) {
-                it._r = parseFloat(getComputedStyle(it).getPropertyValue('--r')) || 1.5;
-                row.push(it); sum += it._r;
-                var h = (W - gap * (row.length - 1)) / sum;
-                if (h <= H) { place(row, Math.min(h, maxH)); row = []; sum = 0; }
+            // best split of items[0..j) into full-width rows
+            var best = [0], from = [0];
+            for (var j = 1; j <= n; j++) {
+                best[j] = Infinity;
+                for (var i = j - 1; i >= 0; i--) {
+                    var h = rowH(i, j);
+                    if (h < H * 0.35) break;                    // rows only get flatter with more photos
+                    var c = best[i] + cost(h);
+                    if (c < best[j]) { best[j] = c; from[j] = i; }
+                }
+                if (best[j] === Infinity) { best[j] = best[j - 1] + cost(rowH(j - 1, j)); from[j] = j - 1; }
+            }
+            var rows = [], end = n;
+            while (end > 0) { rows.unshift([from[end], end]); end = from[end]; }
+            rows.forEach(function (r) {
+                var h = Math.floor(rowH(r[0], r[1]) * 100) / 100;
+                for (var k = r[0]; k < r[1]; k++) {
+                    items[k].style.width = Math.floor(items[k]._r * h * 100) / 100 + 'px';
+                    items[k].style.height = h + 'px';
+                }
             });
-            if (row.length) {
-                // last row: same height as the rows above (fills the width only if that makes it smaller)
-                var h = (W - gap * (row.length - 1)) / sum;
-                place(row, Math.min(h, lastH || H, maxH));
-            }
             g.classList.add('is-laid-out');
         }
         function all() { for (var i = 0; i < galleries.length; i++) layout(galleries[i]); }
