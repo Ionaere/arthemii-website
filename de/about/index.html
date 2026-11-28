@@ -106,9 +106,9 @@
         .about-top > .about-studio {
             grid-column: 1 / -1; grid-row: 1; align-self: start;
             padding: 0;
-            /* the name runs across the chest of the portrait, below the face: the photo is 40% of
-               the width and ~1:1, so 58% down the photo is ~24% of the width (minus half a letter) */
-            margin: calc(24% - 0.5em) 0 var(--spacing-xl);
+            /* the name runs across the chest of the portrait, below the chin: the photo is 40% of
+               the width and 1:1, so 78% down the photo is ~31% of the width (minus half a letter) */
+            margin: calc(31% - 0.5em) 0 var(--spacing-xl);
         }
         .about-top > .section__header { grid-column: 1; grid-row: 2; align-self: start; margin-bottom: 0; }
         .about-portrait { grid-column: 2; grid-row: 1 / span 2; align-self: start; margin: 0; }
@@ -116,7 +116,7 @@
         @media (max-width: 768px) {
             .about-top { grid-template-columns: minmax(0, 1fr); }
             .about-portrait { grid-column: 1; grid-row: 1; }
-            .about-top > .about-studio { grid-row: 1; margin-top: calc(65% - 1.05em); }   /* phones: across the chest too (two lines, kept below the chin) */
+            .about-top > .about-studio { grid-row: 1; margin-top: calc(82% - 1.05em); }   /* phones: across the chest too (two lines, kept below the chin) */
             .about-top > .section__header { grid-column: 1; grid-row: 2; margin-top: var(--spacing-lg); }
         }
         /* Artist name opening the About text */
@@ -194,7 +194,7 @@
                         <h1 class="section__title" data-i18n="about_title">Eine neue Architektursprache im bionischen Stil, verwirklicht im Medium Glas.</h1>
                     </header>
                     <figure class="about-image about-portrait">
-                        <picture><source type="image/webp" srcset="../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-800.webp 800w, ../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-1600.webp 1600w, ../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-2400.webp 2400w" sizes="(max-width: 768px) 92vw, 560px"><img src="../../img/opt/2025-07-04490baf-0116-4f87-a7df-6c27f136d6e3-1600.jpg" alt="Arthemii Ionaere portrait, 2025" fetchpriority="high" decoding="async"></picture>
+                        <picture><source type="image/webp" srcset="../../img/opt/about-portrait-green-800.webp 800w, ../../img/opt/about-portrait-green-1152.webp 1152w" sizes="(max-width: 768px) 92vw, 560px"><img src="../../img/opt/about-portrait-green-1152.jpg" alt="Arthemii Ionaere portrait, 2025" width="1152" height="1152" fetchpriority="high" decoding="async"></picture>
                         <figcaption class="about-image__caption" data-i18n="about_image_caption">Porträt des Künstlers — 2025</figcaption>
                     </figure>
                 </div>
