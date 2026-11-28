@@ -527,5 +527,6 @@ window.I18N_DATA["ar"] = {
   "Workshop scene": "مشهد من الورشة",
   "Workshop scene — Arthemii Ionaere": "مشهد من الورشة — Arthemii Ionaere",
   "Workshop scene — contemporary stained glass artwork by Arthemii Ionaere.": "مشهد من الورشة — عمل زجاج معشّق معاصر من Arthemii Ionaere.",
-  "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": "2023 · Tiffany Vitrage · 90 × 60 سم · زجاج ملوّن، شريط نحاسي، لحام · برلين"
+  "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": "2023 · Tiffany Vitrage · 90 × 60 سم · زجاج ملوّن، شريط نحاسي، لحام · برلين",
+  "In 2024 Arthemii began making kinetic objects. In the Kinetic Prizm series, glass works turn slowly while light passes through them, and their moving shadows create analog visual effects in the space around them. A custom drive was developed for the series so that the rotation speed can be adjusted; the newest works (2026) run on a stepper motor and use a Fresnel lens for an additional effect.": "في عام 2024 بدأ Arthemii بصنع أعمال حركية. في سلسلة Kinetic Prizm تدور الأعمال الزجاجية ببطء بينما يمرّ الضوء عبرها، وتخلق ظلالها المتحركة تأثيرات بصرية تناظرية في المكان من حولها. طُوّر للسلسلة نظام تشغيل خاص يتيح ضبط سرعة الدوران؛ وتعمل أحدث الأعمال (2026) بمحرك خطوي وتستخدم عدسة فرينل لإضافة تأثير إضافي."
 };

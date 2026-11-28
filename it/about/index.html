@@ -38,7 +38,11 @@
         }
         /* ===== About page: photos placed between the paragraphs, text flows around them ===== */
         .about-grid { grid-template-columns: 1fr; }
-        .about-text { max-width: 980px; }
+        .about-text { max-width: 1100px; margin-left: auto; margin-right: auto; }
+        /* large portrait at the end of the text, centred */
+        .about-image--portrait-wide { max-width: 1024px; margin-left: auto; margin-right: auto; }
+        .about-image--portrait-wide img { width: 100%; height: auto; }
+        .about-image--kinetic { margin-top: 0.35rem; }
         .about-text::after { content: ""; display: block; clear: both; }
         .about-inline { margin-bottom: var(--spacing-md); }
         .about-inline--right { float: right; width: 42%; margin-left: var(--spacing-xl); }
@@ -227,12 +231,19 @@
                         </figure>
 
                         <p data-i18n="about_p6">Fedeli alla sua filosofia creativa, queste opere architettoniche nascono senza schizzi preliminari né progettazione strutturale, dando vita a forme astratte, futuristiche e del tutto autodeterminate. Eppure restano profondamente legate alle opere bidimensionali (vetrate classiche) da cui la sua pratica è nata: quando la luce attraversa questi oggetti tridimensionali, le ombre proiettate su una superficie riproducono con notevole precisione le stesse composizioni delle sue vetrate. Sono, in sostanza, lo stesso linguaggio visivo — lo stesso gioco di linea, luce e forma — liberato nella terza dimensione.</p>
-                        <figure class="about-image about-image--glass about-inline about-inline--right about-inline--beside-quote">
-                            <picture><source type="image/webp" srcset="../../img/opt/about-arthemii-colour-glass-close-800.webp 800w, ../../img/opt/about-arthemii-colour-glass-close-1024.webp 1024w" sizes="(max-width: 768px) 92vw, 460px"><img src="../../img/opt/about-arthemii-colour-glass-close-1024.jpg" alt="Arthemii Ionaere behind a colourful slumped glass work" width="1024" height="576" loading="lazy" decoding="async"></picture>
+                        <figure class="about-image about-image--kinetic about-inline about-inline--right">
+                            <picture><source type="image/webp" srcset="../../img/opt/about-kinetic-prizm-800.webp 800w, ../../img/opt/about-kinetic-prizm-1280.webp 1280w" sizes="(max-width: 768px) 92vw, 460px"><img src="../../img/opt/about-kinetic-prizm-1280.jpg" alt="Kinetic Prizm — rotating glass sculpture casting coloured shadows" width="1280" height="700" loading="lazy" decoding="async"></picture>
+                            <figcaption class="about-image__caption">Kinetic Prizm</figcaption>
                         </figure>
+                        <p data-i18n="about_p7">Nel 2024 Arthemii ha iniziato a realizzare oggetti cinetici. Nella serie Kinetic Prizm le opere in vetro ruotano lentamente mentre la luce le attraversa, e le loro ombre in movimento creano effetti visivi analogici nello spazio circostante. Per la serie è stato sviluppato un azionamento apposito che permette di regolare la velocità di rotazione; le opere più recenti (2026) funzionano con un motore passo-passo e usano una lente di Fresnel per un effetto aggiuntivo.</p>
+
                          <blockquote class="about-quote">
                             <p data-i18n="about_quote">Oggi Arthemii continua a spingere oltre i confini della sua pratica, avventurandosi nell’architettura della luce stessa. Sta sviluppando prismi cinetici e si sta espandendo nel campo dell’installazione, esplorando come luce, movimento e spazio possano intrecciarsi in ambienti immersivi. Parallelamente porta avanti collaborazioni interdisciplinari — con il teatro, la cultura dei club e la performance dal vivo — mettendo il suo linguaggio visivo in dialogo con altre forme d’arte e ridefinendo i contesti in cui la sua opera può essere vissuta.</p>
                              </blockquote>
+                        <figure class="about-image about-image--wide about-image--portrait-wide">
+                            <picture><source type="image/webp" srcset="../../img/opt/about-arthemii-colour-glass-close-800.webp 800w, ../../img/opt/about-arthemii-colour-glass-close-1024.webp 1024w" sizes="(max-width: 1024px) 92vw, 1024px"><img src="../../img/opt/about-arthemii-colour-glass-close-1024.jpg" alt="Arthemii Ionaere behind a colourful slumped glass work" width="1024" height="576" loading="lazy" decoding="async"></picture>
+                        </figure>
+
                     </div>
 
                 </div>
