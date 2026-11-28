@@ -528,5 +528,6 @@ window.I18N_DATA["ko"] = {
   "Collected here are Arthemii’s projects, ranging from stained glass to sculpture on a metal frame. He is constantly looking for new paths and new projects. A new project will be ready soon: metal frames that can be assembled into one whole, taken apart and installed in any way. It will be presented shortly.": "이곳에는 스테인드글라스부터 금속 프레임 조각까지 Arthemii의 프로젝트가 모여 있습니다. 그는 늘 새로운 길과 새로운 프로젝트를 찾고 있습니다. 곧 새로운 프로젝트가 완성됩니다. 하나로 조립하고, 분해하고, 원하는 방식으로 설치할 수 있는 금속 프레임으로 이루어진 작업이며 곧 공개될 예정입니다.",
   "Sculptures, exhibitions, the studio, installations, theatre and more": "조각, 전시, 작업실, 설치 작품, 연극 등",
   "See more": "더 보기",
-  "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": "2023 · Tiffany Vitrage · 90 × 60 cm · 색유리, 동박, 땜납 · 베를린"
+  "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": "2023 · Tiffany Vitrage · 90 × 60 cm · 색유리, 동박, 땜납 · 베를린",
+  "In 2024 Arthemii began making kinetic objects. In the Kinetic Prizm series, glass works turn slowly while light passes through them, and their moving shadows create analog visual effects in the space around them. A custom drive was developed for the series so that the rotation speed can be adjusted; the newest works (2026) run on a stepper motor and use a Fresnel lens for an additional effect.": "2024년 Arthemii는 키네틱 오브제를 만들기 시작했습니다. Kinetic Prizm 시리즈에서는 빛이 통과하는 유리 작품이 천천히 회전하며, 움직이는 그림자가 주변 공간에 아날로그 시각 효과를 만들어 냅니다. 이 시리즈를 위해 회전 속도를 조절할 수 있는 전용 구동 장치를 개발했으며, 최신 작품(2026)은 스테핑 모터로 작동하고 프레넬 렌즈로 추가적인 효과를 더합니다."
 };

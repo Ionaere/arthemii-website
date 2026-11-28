@@ -586,5 +586,6 @@ window.I18N_DATA["it"] = {
   "Concept 11": "Concetto 11",
   "Concept 12": "Concetto 12",
   "See more": "Vedi di più",
-  "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": "2023 · Tiffany Vitrage · 90 × 60 cm · vetro colorato, nastro di rame, stagno · Berlino"
+  "2023 · Tiffany Vitrage · 90 × 60 cm · coloured glass, copper foil, solder · Berlin": "2023 · Tiffany Vitrage · 90 × 60 cm · vetro colorato, nastro di rame, stagno · Berlino",
+  "In 2024 Arthemii began making kinetic objects. In the Kinetic Prizm series, glass works turn slowly while light passes through them, and their moving shadows create analog visual effects in the space around them. A custom drive was developed for the series so that the rotation speed can be adjusted; the newest works (2026) run on a stepper motor and use a Fresnel lens for an additional effect.": "Nel 2024 Arthemii ha iniziato a realizzare oggetti cinetici. Nella serie Kinetic Prizm le opere in vetro ruotano lentamente mentre la luce le attraversa, e le loro ombre in movimento creano effetti visivi analogici nello spazio circostante. Per la serie è stato sviluppato un azionamento apposito che permette di regolare la velocità di rotazione; le opere più recenti (2026) funzionano con un motore passo-passo e usano una lente di Fresnel per un effetto aggiuntivo."
 };
